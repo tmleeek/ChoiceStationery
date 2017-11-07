@@ -48,6 +48,8 @@ Thumbs.db
 /auto-deploy
 /sitemap.xml
 /dev.choicestationery.com/*
+/choicestationery
+/choicestationery.pub
 sass-cache
 
 /.htaccess

@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<layout version="0.1.0"> 
+
+    <!-- Add "my tickets" tab in customer account-->
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="CrmTicket">
+                <name>customertickets</name>
+                <path>CrmTicket/Front_Ticket/MyTickets</path> <!-- path to the controller method -->
+                <label>My tickets</label>
+            </action>
+        </reference>
+    </customer_account>
+
+    <!-- add a link into product block -->
+    <catalog_product_view>
+        <reference name="product.info.extrahint">
+            <!-- charger d'autres blocs -->
+           <!-- <block type="CrmTicket/Front_Product_AskQuestionButton" name="product.askquestion.button" template="CrmTicket/Product/AskQuestionButton.phtml" />-->
+        </reference>
+        
+        <!-- including javascript files ans CSS -->
+        <reference name="head">
+            <!-- javascript -->
+            <action method="addJs">
+                <script>prototype/window.js</script>
+            </action>
+            <action method="addJs">
+                <script>mdn/CrmTicket.js</script>
+            </action>
+            <action method="addJs">
+                <script>varien/form.js"></script>
+            </action>
+            <!-- CSS -->
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/alphacube.css</name>
+            </action>
+        </reference> 
+        
+    </catalog_product_view>
+    
+    <!-- page with form to ask a question  -->
+    <crmticket_front_ticket_newticket>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+        <update handle="customer_account"/>
+         <!-- including javascript files ans CSS -->
+        <reference name="head">
+            <!-- javascript -->
+            <action method="addJs">
+                <script>prototype/window.js</script>
+            </action>
+            <action method="addJs">
+                <script>mdn/CrmTicket.js</script>
+            </action>
+            <!-- CSS -->
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/alphacube.css</name>
+            </action>
+            <action method="addJs">
+                <name>mage/adminhtml/tools.js</name>
+            </action>
+            <action method="addJs">
+                <name>mage/adminhtml/wysiwyg/tiny_mce/setup.js</name>
+            </action>
+            <action method="addJs">
+                <name>mage/adminhtml/events.js</name>
+            </action>
+        </reference> 
+        <reference name="content">
+            <block type="CrmTicket/Front_Ticket_QuestionForm" name="product.askquestionform" template="CrmTicket/Product/AskQuestionForm.phtml" />
+        </reference>
+    </crmticket_front_ticket_newticket>
+ 
+    <!-- block ticket list on customer account -->
+    <crmticket_front_ticket_mytickets>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+        <update handle="customer_account"/>
+        <reference name="head">
+            <action method="addJs">
+                <script>mdn/CrmTicket.js</script>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="CrmTicket/Front_Customer_Ticket_List" name="customer.ticketlist" template="CrmTicket/Customer/TicketList.phtml" />
+        </reference>
+    </crmticket_front_ticket_mytickets>
+    
+    <!-- block ticket view for editing on customer account -->
+    <crmticket_front_ticket_viewticket>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+        <update handle="customer_account"/>
+        <reference name="head">
+
+            <!-- CSS -->
+            <action method="addJs">
+                <script>mdn/CrmTicket.js</script>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/alphacube.css</name>
+            </action>
+            <action method="addCss">
+                <name>CrmTicket.css</name>
+            </action>
+
+             <!-- javascript -->
+            <action method="addJs">
+                <script>prototype/window.js</script>
+            </action>
+            <action method="addJs">
+                <name>mage/adminhtml/tools.js</name>
+            </action>
+            <action method="addJs">
+                <name>mage/adminhtml/wysiwyg/tiny_mce/setup.js</name>
+            </action>
+            <action method="addJs">
+                <name>mage/adminhtml/events.js</name>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="CrmTicket/Front_Customer_Ticket_View" name="customer.ticketview" template="CrmTicket/Customer/TicketView.phtml" />
+        </reference>
+    </crmticket_front_ticket_viewticket>
+    
+    <!-- database -->
+    <crmticket_front_kb_index>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-right.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="CrmTicket/Front_Database_Products" name="kb_products" template="CrmTicket/Database/Products.phtml" />
+        </reference>
+    </crmticket_front_kb_index>    
+   
+    <crmticket_front_kb_list>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-right.phtml</template>
+            </action>
+        </reference>
+        <reference name="head">
+            <action method="addJs">
+                <script>mdn/CrmTicket.js</script>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="CrmTicket/Front_Database_List" name="kb_list" template="CrmTicket/Database/List.phtml" />
+        </reference>
+    </crmticket_front_kb_list>    
+
+    <crmticket_front_kb_view>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-right.phtml</template>
+            </action>
+        </reference>
+        <reference name="head">
+            <action method="addCss">
+                <name>CrmTicket.css</name>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="CrmTicket/Front_Database_View" name="kb_list" template="CrmTicket/Database/View.phtml" />
+        </reference>
+    </crmticket_front_kb_view>
+    
+    <!-- override of the contact page  -->
+    <contacts_index_index>
+        <reference name="content">
+            <block type="core/template" name="contactForm" />
+            <block type="CrmTicket/Front_Ticket_QuestionForm" name="contactForm2" template="CrmTicket/Product/AskQuestionForm.phtml"/>
+        </reference>
+    </contacts_index_index>
+
+    
+</layout>

@@ -1,0 +1,55 @@
+"Guests To Registered Customers Settings","Gasten naar Klanten"
+"Variable",Variabele"
+"Variable Code","Variabele code"
+"Variable Name","Variabele naam"
+"Use Default Variable Values","Gebruik standaard variabele waarden"
+"Nee","Nee"
+"Yes","Ja"
+"Variable HTML Value","Variabele HTML code"
+"Variable Plain Value","Variable platte tekst"
+"Save and Continue Edit","Opslaan en doorgaan met wijzigen"
+"Custom Variable "%s"","Aangepaste variabele "%s""
+"New Custom Variable","Nieuwe aangepaste variabele"
+"Order #","Order #"
+"Purchased From (Store)","Gekocht in (winkel)"
+"Purchased On","Gekocht op"
+"First Name","Voornaam"
+"Last Name","Achternaam"
+"Email","E-mail"
+"Status","Status"
+"Action","Actie"
+"View Order","Bekijken"
+"Convert to customer","Converteer naar klant"
+"Customer Group","Klant groep"
+"Guests To Registered Customers","Gasten naar Klanten"
+"No Order ID found to convert","Geen order ID gevonden om te converteren"
+"The customer (%s) already exists. So the customer has been merged","De klant %s betaat al. Gast en klant zijn samengevoegd"
+"The guest (%s) is converted to customer","De gast %s is geconverteerd naar een klant account."
+"The order (%s) has been been assigned to the customer (%s)","De order %s is aan de klant %s toegevoegd"
+"The email address already exists so the order has been merged to the existing account.","Het e-mail adres bestaat al De order is toegevoegd aan hnet bestaande account."
+"Your account has been created and a email has been sent to you with their username and password.","Uw account is aangemaakt en er is een e-mail verzonden naar U verzonden met gebruikersnaam en wachtwoord."
+"Sorry this order could not be converted to a customer account.","Oops, deze order kan niet worden omgezet naar een klant account."
+"Enable Automatic Guest to Customer Account At Checkout","Automatische gast naar klant conversie toestaan bij het afrekenen"
+"Disable New Customer Email","Verhinder de welkoms e-mail naar een nieuwe klant"
+"If disabled new (converted) customers will NOT receive a email with a new username and password.","Als aangevinkt dan ontvangen nieuwe (geconverteerde) klanten GEEN e-mail met nieuwe gebruikersnaam en wachtwoord."
+"Enable Guest to Customer Account Button At Success/Checkout","Toon een gast naar klant conversie knop bij het afsluiten van de bestelling"
+"Your order has been received","Uw bestelling is ontvangen"
+"Thank you for your purchase!","Dank U voor Uw bestelling!"
+"Your order # is: %s.","Uw ordernummer is: %s."
+"You will receive an order confirmation email with details of your order and a link to track its progress.","U ontvang een e-mail met de orderbevestiging waarin de details van Uw order en een link om de voortgang te volgen."
+"Your billing agreement # is: %s.","Uw facturatieovereenkomst nummer is: %s."
+"Your recurring payment profiles:","Uw terugkerende betalingsprofielen:"
+
+
+
+
+
+
+
+
+
+
+
+
+
+

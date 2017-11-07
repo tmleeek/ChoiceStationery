@@ -1,0 +1,74 @@
+<?php
+/**
+* @category Customer Version 1.0
+* @package MageB2B_Sublogin
+* @author AIRBYTES GmbH <info@airbytes.de>
+* @copyright AIRBYTES GmbH
+* @license commercial
+*/
+?>
+<?php
+$customerId = $this->getRequest()->getParam('customer_id');
+$customer = Mage::getModel('customer/customer')->load($customerId);
+
+$subloginFields = array(
+	'email' => array(
+		'label' => Mage::helper('sublogin')->__('Email'),
+		'class' => 'input-text validate-email validate-sublogin-email required-entry',
+		'value' => $customer->getEmail(),
+		'additional_attributes' => 'readonly',
+	),
+	'prefix' => array(
+		'label' => Mage::helper('sublogin')->__('Prefix'),
+		'class' => 'input-text',
+		'value' => $customer->getPrefix(),
+	),
+	'firstname' => array(
+		'label' => Mage::helper('sublogin')->__('Firstname'),
+		'class' => 'input-text required-entry',
+		'value' => $customer->getFirstname(),
+	),
+	'lastname' => array(
+		'label' => Mage::helper('sublogin')->__('Lastname'),
+		'class' => 'input-text required-entry',
+		'value' => $customer->getLastname(),
+	),
+	'active' => array(
+		'label' => Mage::helper('sublogin')->__('Active'),
+		'class' => 'input-text',
+		'type'  => 'checkbox',
+		'value' => 1,
+	),
+	'password' => array(
+		'value' => $customer->getPasswordHash(),
+		'type'  => 'hidden',
+	),
+	'store_id' => array(
+		'value' => $customer->getStoreId(),
+		'type'  => 'hidden',
+	),
+	'customer_id' => array(
+		'value' => $customer->getCustomerId(),
+		'type'  => 'hidden',
+	),
+);
+
+$fieldsHtml = '';
+foreach ($subloginFields as $subloginFieldId => $subloginFieldOptions) {
+	$fieldsHtml .= '<tr>';
+	$label = '<td class="label">'.$subloginFieldOptions['label'].'</td>';
+	$additionalAttributes = isset($subloginFieldOptions['additional_attributes']) ? $subloginFieldOptions['additional_attributes'] : '';
+	
+	if ($subloginFieldOptions['type'] == 'checkbox') {
+		$value = '<td class="value"><input class="'.$subloginFieldOptions['class'].'" value="'.$subloginFieldOptions['value'].'" id="'.$subloginFieldId.'" name="'.$subloginFieldId.'" type="checkbox" '.$additionalAttributes.'></td>';
+	} elseif ($subloginFieldOptions['type'] == 'hidden') {
+		$label = '';
+		$value = '<td class="value"><input class="'.$subloginFieldOptions['class'].'" value="'.$subloginFieldOptions['value'].'" id="'.$subloginFieldId.'" name="'.$subloginFieldId.'" type="hidden" '.$additionalAttributes.'></td>';
+	} else {
+		$value = '<td class="value"><input class="'.$subloginFieldOptions['class'].'" value="'.$subloginFieldOptions['value'].'" id="'.$subloginFieldId.'" name="'.$subloginFieldId.'" type="text" '.$additionalAttributes.'></td>';
+	}
+	$fieldsHtml .= $label.$value.'</tr>';
+}
+
+$fieldsHtml = '<div class="hor-scroll"><table class="form-list" cellspacing="0">'.$fieldsHtml.'</table></div>';
+echo $fieldsHtml;

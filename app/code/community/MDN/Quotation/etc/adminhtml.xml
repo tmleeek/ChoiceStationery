@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<config>
+<!-- rajoute un menu dans la partie admin -->
+		<menu>
+            <customer>
+                <children>
+                    <quotation_list translate="title" module="quotation">
+                        <title>Quotations</title>
+                        <action>Quotation/Admin/List</action>
+                        <sort_order>90</sort_order>
+                    </quotation_list>
+                </children>
+             </customer>
+        </menu>     
+        <translate>
+        	<modules>
+                <MDN_Quotation>
+                    <files>
+                        <default>MDN_Quotation.csv</default>
+                    </files>
+                </MDN_Quotation>
+            </modules>
+        </translate>
+		<layout>
+            <updates>
+                <Quotation>
+                    <file>quotation.xml</file>
+                </Quotation>
+            </updates>
+        </layout>
+        <acl>
+	        <resources>
+	            <admin>
+	                <children>
+	                    <system>
+	                        <children>
+	                            <config>
+	                                <children>
+	                                    <quotation module="quotation">
+												<title>Quotations</title>
+	                                    </quotation>
+	                                </children>
+	                            </config>
+	                        </children>
+	                    </system>
+	                    <customer>
+	                    	<children>
+	                    		<quotation_list module="quotation">
+	                    			<title>Quotations</title>
+	                    		</quotation_list>
+	                    	</children>
+	                    </customer>
+	                </children>
+	            </admin>
+	         </resources>
+	    </acl>
+</config>

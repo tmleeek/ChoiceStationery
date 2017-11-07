@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+	<config>
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<rock_productnot_available_configuration translate="title" module="productnotavailable">
+											<title>Configuration Section</title>
+											<sort_order>0</sort_order>
+										</rock_productnot_available_configuration>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</config>

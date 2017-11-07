@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+    <default>
+        <reference name="notifications">
+            <block type="MarketPlace/CheckCron" name="mp_check_cron" as="mp_check_cron"></block>
+        </reference>
+    </default>
+
+    <marketplace_configuration_index>
+        
+        <reference name="head">
+            <action method="addJs"><script>extjs/ext-tree.js</script></action>
+            <action method="addJs"><script>extjs/ext-tree-checkbox.js</script></action>
+            <action method="addItem"><type>js_css</type><name>extjs/resources/css/ext-all.css</name></action>
+            <action method="addCss">
+                <name>MarketPlace.css</name>
+            </action>
+        </reference>
+        
+        <reference name="left">
+            <block type="MarketPlace/Configuration_Tree" name="marketplace_configuration_tree" template="MarketPlace/Configuration/Tree.phtml" />
+        </reference>
+        
+        <reference name="content">
+            <block type="MarketPlace/Configuration_Main" name="marketplace_configuration_main" template="MarketPlace/Configuration/Main.phtml"/>
+        </reference>
+    </marketplace_configuration_index>
+
+    <marketplace_orders_index>
+        <reference name="head">
+            <action method="addJs">
+                <script>mdn/MarketPlace.js</script>
+            </action>
+            <action method="addCss">
+                <name>MarketPlace.css</name>
+            </action>
+        </reference>
+        <reference name="left">
+            <block type="MarketPlace/Orders_Tabs" name="marketplace_orders_tabs" as="marketplace_orders_tabs"/>
+        </reference>
+        <reference name="content">
+            <block type="MarketPlace/Orders_Main" name="marketplace_orders_main" template="MarketPlace/Orders/Main.phtml"/>                
+        </reference>
+    </marketplace_orders_index>
+
+    <marketplace_logs_index>
+        <reference name="head">
+            <action method="addJs">
+                <script>mdn/MarketPlace.js</script>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="MarketPlace/Logs" name="marketplace_logs" template="MarketPlace/Logs.phtml">
+                <block type="MarketPlace/Logs_LogsGrid" name="logs_logsgrid" as="logs_logsgrid" template="MarketPlace/Logs/LogsGrid.phtml"/>
+            </block>
+        </reference>
+    </marketplace_logs_index>
+
+    <marketplace_feed_index>
+        <reference name="head">
+            <action method="addJs">
+                <script>mdn/MarketPlace.js</script>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="MarketPlace/Feed" name="marketplace_feed" template="MarketPlace/Feed.phtml">
+                <block type="MarketPlace/Feed_FeedGrid" name="marketplace_feed_grid" as="marketplace_feed_grid" template="MarketPlace/Feed/FeedGrid.phtml"/>
+            </block>
+        </reference>
+    </marketplace_feed_index>
+    
+    <marketplace_monitoring_index>
+        <reference name="left">
+            <block type="MarketPlace/Monitoring_Tabs" name="marketplace_monitoring_tabs" as="marketplace_monitoring_tabs"/>
+        </reference>
+        <reference name="content">
+            <block type="MarketPlace/Monitoring_Main" name="marketplace_monitoring_main" template="MarketPlace/Monitoring/Main.phtml"/>                
+        </reference>
+    </marketplace_monitoring_index>
+
+    <marketplace_categories_index>
+        <reference name="head">
+            <action method="addJs">
+                <script>mdn/MarketPlace.js</script>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="MarketPlace/Categories_Grid" name="marketplace_categories" template="MarketPlace/Categories/Grid.phtml">
+            </block>
+        </reference>
+    </marketplace_categories_index>
+
+    <marketplace_categories_edit>
+        <reference name="head">
+            <action method="addJs">
+                <script>mdn/MarketPlace.js</script>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="MarketPlace/Categories_Edit" name="marketplace_categories_edit" template="MarketPlace/Categories/Edit.phtml">
+            </block>
+        </reference>
+    </marketplace_categories_edit>
+	
+    <marketplace_internationalization_index>
+        <reference name="head">
+            <action method="addJs">
+                <script>mdn/MarketPlace.js</script>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="MarketPlace/Internationalization_Grid" name="marketplace_Internationalization" template="MarketPlace/Internationalization/Grid.phtml">
+            </block>
+        </reference>
+    </marketplace_internationalization_index>
+
+    <marketplace_internationalization_edit>
+        <reference name="head">
+            <action method="addJs">
+                <script>mdn/MarketPlace.js</script>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="MarketPlace/Internationalization_Edit" name="marketplace_Internationalization_edit" template="MarketPlace/Internationalization/Edit.phtml">
+            </block>
+        </reference>
+    </marketplace_internationalization_edit>
+
+</layout>

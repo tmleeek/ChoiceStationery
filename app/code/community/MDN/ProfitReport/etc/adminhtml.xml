@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<config>
+    <layout>
+        <updates>
+            <ProfitReport>
+                <file>ProfitReport.xml</file>
+            </ProfitReport>
+        </updates>
+    </layout>
+    <menu>
+        <report>
+            <children>
+                <profitreport translate="title" module="ProfitReport">
+                    <title>Profit Report</title>
+                    <action>ProfitReport/Admin/Index</action>
+                </profitreport>
+            </children>
+        </report>
+    </menu>
+    <translate>
+        <modules>
+            <MDN_ProfitReport>
+                <files>
+                    <default>MDN_ProfitReport.csv</default>
+                </files>
+            </MDN_ProfitReport>
+        </modules>
+    </translate>
+
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <profitreport module="ProfitReport">
+                                        <title>Profit Report</title>
+                                    </profitreport>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <report>
+                        <children>
+                            <profitreport module="ProfitReport">
+                                <title>Profit Report</title>
+                            </profitreport>
+                        </children>
+                    </report>
+
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

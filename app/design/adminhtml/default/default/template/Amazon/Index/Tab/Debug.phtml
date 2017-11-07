@@ -1,0 +1,147 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @copyright  Copyright (c) 2013 Boost My Shop (http://www.boostmyshop.com)
+ * @author : Nicolas MUGNIER
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @package MDN_Amazon
+ * @version 2
+ */
+?>
+<div class="grid">
+    <table class="data" cellspacing="0" width="100%">
+        <thead>
+            <tr class="headings">
+                <th><?php echo $this->__('Product Creation'); ?></th>
+                <th><?php echo $this->__('Product Update'); ?></th>
+                <th><?php echo $this->__('Orders'); ?></th>
+                <th><?php echo $this->__('Tracking'); ?></th>
+            </tr>
+        </thead>
+        <tbody style="background-color:#fafafa;">
+            <tr>            
+                <td>
+                    <ol style="margin-left:20px;">
+                        <li><img title="<?php echo $this->__('Run scheduled product creation manually.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonProductCreation/cronCheckProductCreation') ?>');return false;"><?php echo $this->__('Cron check product creation'); ?></a></li>
+                        <li><img title="<?php echo $this->__('Request an inventory report.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonProductCreation/requestListingProducts') ?>'); return false;"><?php echo $this->__('Request listing products'); ?></a></li>
+                        <li><img title="<?php echo $this->__('Download last inventory report.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonProductCreation/showListingProducts') ?>');return false;"><?php echo $this->__('Show listing products'); ?></a></li>
+                    </ol>
+                </td>
+                <td>
+                    <ol style="margin-left:20px;">
+                        <li><img title="<?php echo $this->__('Run update stock & price process.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonProductUpdate/cronExportStockAndPrice') ?>');return false;"><?php echo $this->__('Cron export stock and price'); ?></a></li>
+                        <li><img title="<?php echo $this->__('Download inventory feed.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonProductUpdate/getInventoryFeed') ?>'); return false;"><?php echo $this->__('Get inventory feed'); ?></a></li>
+                        <li><img title="<?php echo $this->__('Send inventory feed on Amazon.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonProductUpdate/sendInventoryFeed') ?>'); return false;"><?php echo $this->__('Send inventory feed'); ?></a></li>
+                        <li><img title="<?php echo $this->__('Download price feed.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonProductUpdate/getPriceFeed') ?>'); return false;"><?php echo $this->__('Get price feed'); ?></a></li>
+                        <li><img title="<?php echo $this->__('Sent price feed on Amazon.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonProductUpdate/sendPriceFeed') ?>'); return false;"><?php echo $this->__('Send price feed'); ?></a></li>
+                        <li><img title="<?php echo $this->__('Download imgae feed.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonProductUpdate/getImageFeed') ?>'); return false;"><?php echo $this->__('Get image feed'); ?></a></li>
+                        <li><img title="<?php echo $this->__('Sent image feed.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonProductUpdate/sendImageFeed') ?>'); return false;"><?php echo $this->__('Send image feed'); ?></a></li>                   
+                    </ol>
+                </td>
+                <td>
+                    <ol style="margin-left:20px;">
+                        <li><img title="<?php echo $this->__('Run order importation process.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonOrders/cronImportOrders') ?>'); return false;"><?php echo $this->__('Cron import orders'); ?></a></li>
+                        <li><img title="<?php echo $this->__('Show orders.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonOrders/getMarketPlaceOrders') ?>'); return false;"><?php echo $this->__('Get marketplace orders'); ?></a></li>
+                    </ol>
+                </td>
+                <td>
+                    <ol style="margin-left:20px;">
+                        <li><img title="<?php echo $this->__('Run tracking update process.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonTracking/cronSendTracking') ?>'); return false;"><?php echo $this->__('Cron send tracking'); ?></a></li>
+                        <li><img title="<?php echo $this->__('Download shipping informations feed.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonTracking/getShippingConfirmationFeed') ?>'); return false;"><?php echo $this->__('Get shipping confirmation feed'); ?></a></li>
+                        <li><img title="<?php echo $this->__('Sent tracking on Amazon.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonTracking/sendTracking') ?>'); return false;"><?php echo $this->__('Send tracking'); ?></a></li>
+                        <li><img title="<?php echo $this->__('Show waiting for shipment orders.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonTracking/requestActionableOrderData') ?>'); return false;"><?php echo $this->__('Request actionnable order data'); ?></a></li>
+                    </ol>
+
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+<div class="grid">
+    <table class="data" cellspacing="0" width="100%">
+        <thead>
+            <tr class="headings">
+                <th><?php echo $this->__('Manage Report'); ?></th>
+                <th><?php echo $this->__('Manage Feeds'); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <ul style="margin-left:20px;">
+                        <li>
+                            <img title="<?php echo $this->__('Download a report.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/>
+                            <form method="POST" action="<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonReport/getReport') ?>" id="getReportForm">
+                                <input id="form_key" name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+                                <input type="text" name="reportId" id="reportId" value=""/>
+                                <button class="scalable"><?php echo $this->__('get report'); ?></button>
+                            </form>
+                        </li>
+                        <li><img title="<?php echo $this->__('Count available reports.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonReport/getReportCount') ?>'); return false;"><?php echo $this->__('Count report'); ?></a></li>
+                        <li><img title="<?php echo $this->__('Download report list.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonReport/getReportList') ?>');return false;"><?php echo $this->__('Get report list'); ?></a></li>
+                        <!-- <li><img title="<?php echo $this->__('Download report request list.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonReport/getReportRequestList') ?>'); return false;"><?php echo $this->__('Get report request list'); ?></a></li>-->
+                        <li>
+                            <img title="<?php echo $this->__('Download report request list.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/>
+                            <form method="POST" action="<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonReport/getReportRequestList') ?>">
+                                <input id="form_key" name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+                                <input type="text" name="token" id="token" value=""/>
+                                <button class="scalable" ><?php echo $this->__('Get report request list'); ?></button>
+                            </form>
+                        </li>
+                        <li>
+                            <img title="<?php echo $this->__('Get report by request id.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/>
+                            <form method="POST" action="<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonReport/getReportById') ?>">
+                                <input id="form_key" name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+                                <input type="text" name="reportRequestId" id="reportRequestId" value=""/>
+                                <button class="scalable" ><?php echo $this->__('Get report by request id'); ?></button>
+                            </form>
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <ul style="margin-left:20px;">
+                        <li>
+                            <img title="<?php echo $this->__('Download feed submission result.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/>
+                            <form method="POST" action="<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonFeed/getFeedSubmissionResult') ?>">
+                                <input id="form_key" name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+                                <input type="text" name="feedSubmissionId" id="feedSubmissionId" value=""/>
+                                <button class="scalable" ><?php echo $this->__('Get feed submission result'); ?></button>
+                            </form>
+                        </li>                
+                        <li><img title="<?php echo $this->__('Download feed submission list.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonFeed/getFeedSubmissionList') ?>'); return false;"><?php echo $this->__('Get feed submission list'); ?></a></li>
+                        <li><img title="<?php echo $this->__('Count feed submission.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/><a href="#" onclick="setLocation('<?php echo $this->getUrlByAccount('Amazon/Debug_AmazonFeed/getFeedSubmissionCount') ?>');return false;"><?php echo $this->__('get feed submission count'); ?></a></li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="grid">
+    <table class="data" cellspacing="0" width="100%">
+        <thead>
+            <tr class="headings">
+                <th><?php echo $this->__('Compare stock & prices'); ?></th>                
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <form method="POST" enctype="multipart/form-data" action="<?php echo mage::helper('adminhtml')->getUrl('Amazon/Debug_Compare/process', array('countryId' => Mage::registry('mp_country')->getId())); ?>">
+                    <input id="form_key" name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+                    <input type="file" name="report" id="report" />
+                    <button class="scalable" ><?php echo $this->__('Process'); ?></button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

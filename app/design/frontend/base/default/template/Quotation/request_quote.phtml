@@ -1,0 +1,10 @@
+<?php $_product = $this->getProduct(); ?>
+<?php $addToCartHelper = Mage::helper('quotation/AddToCart'); ?>
+<?php if (Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+<?php if ($addToCartHelper->canRequestQuote($_product)): ?>
+        <script>
+            var quoteRequestUrl = '<?php echo $this->getUrl('Quotation/Quote/IndividualRequest'); ?>';
+        </script>
+        &nbsp;<button type="button" class="button btn-cart" onclick="requestQuoteForProduct(this);"><span><span><?php echo $this->__('Request a quote') ?></span></span></button>
+<?php endif; ?>
+<?php endif; ?>

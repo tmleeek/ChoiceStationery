@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Mxm_AllInOne>
+            <codePool>community</codePool>
+            <active>false</active>
+            <depends>
+            </depends>
+        </Mxm_AllInOne>
+    </modules>
+</config>

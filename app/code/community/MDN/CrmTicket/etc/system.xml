@@ -1,0 +1,680 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <crm translate="label" module="CrmTicket">
+            <label>CRM Express</label>
+            <sort_order>900</sort_order>
+        </crm>
+    </tabs> 
+   
+    <sections>
+        
+        <crmticket translate="label" module="CrmTicket">
+            <label>Ticket</label>
+            <tab>crm</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>300</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+         
+            <groups>
+                
+                <versionning translate="label">
+                    <label>Version</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <sender translate="label">
+                            <label>Version</label>
+                            <frontend_model>CrmTicket/adminhtml_system_config_version</frontend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sender>                        
+                    </fields>
+                </versionning>
+
+                <notification translate="label">
+                    <label>Notification</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <sender translate="label">
+                            <label>Email Sender</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_identity</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sender>
+                        <template translate="label">
+                            <label>Email Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </template>
+                        <technical_contact translate="label">
+                            <label>Technical contact (for alerts)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </technical_contact>
+                        <disable_admin_notification translate="label">
+                            <label>Disable admin notification</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </disable_admin_notification>
+                    </fields>
+                </notification>
+                
+                <ticket_data translate="label">
+                    <label>Ticket edit form options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>       
+                        <show_priority translate="label">
+                            <label>Show priority</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_priority>
+                        <show_cost translate="label">
+                            <label>Show cost</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_cost>
+                        <show_public translate="label">
+                            <label>Show public</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_public>
+                        <show_invoicing_status translate="label">
+                            <label>Show invoicing status</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_invoicing_status>
+                        <show_sticky translate="label">
+                            <label>Show sticky</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_sticky>
+                        <show_manager translate="label">
+                            <label>Show manager</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_manager>                        
+                        <show_subject translate="label">
+                            <label>Show subject</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_subject>
+                        <edit_subject translate="label">
+                            <label>Subject can be edited</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </edit_subject>
+                        <change_author translate="label">
+                            <label>Change message author</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Author can be changed in ticket response form</comment>
+                        </change_author>
+                        <change_message_type translate="label">
+                            <label>Change message type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Message type can be changed in ticket response form</comment>
+                        </change_message_type>
+                        <change_email_account translate="label">
+                            <label>Change email account</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </change_email_account>
+                        <allow_private_comment_on_ticket translate="label">
+                            <label>Show private comments field</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allow_private_comment_on_ticket>
+                      </fields>
+              </ticket_data>
+
+
+              <ticket_grid translate="label">
+                    <label>Ticket grid options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>                     
+                      <show_view_count translate="label">
+                            <label>Show view count</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_view_count>
+                        <show_message_popup translate="label">
+                            <label>Show messages preview popup</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_message_popup>
+                        <display_first_message_preview translate="label">
+                            <label>Display first message preview</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>If enabled, display a preview of the first message next to subject in ticket grid</comment>
+                        </display_first_message_preview>
+                      </fields>
+              </ticket_grid>
+
+              <ticket_tab translate="label">
+                    <label>Ticket edit tabs options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <show_previous_ticket translate="label">
+                            <label>Tab customer previous tickets</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_previous_ticket>
+                        <show_search_ticket translate="label">
+                            <label>Tab search in existing tickets</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_search_ticket>
+                        <show_affect_ticket translate="label">
+                            <label>Tab ticket customer's assignement</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_affect_ticket>
+                    </fields>
+                </ticket_tab>
+                
+                <attachements translate="label">
+                    <label>Attachements</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <parse_attachement_on_email_import translate="label">
+                            <label>Parse attachements during email import</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </parse_attachement_on_email_import>                        
+                        <allow_attachement_on_message translate="label">
+                            <label>Allow attachements into each ticket's message</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allow_attachement_on_message>
+                        <max_attachements_front translate="label">
+                            <label>Max number of attachements allowed on customer forms</label>
+                            <frontend_type>text</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Value accepted : between 1 and 10, else the default value 3 will be used</comment>
+                        </max_attachements_front>
+                        <max_attachements_back translate="label">
+                            <label>Max number of attachements allowed on admin response form</label>
+                            <frontend_type>text</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Value accepted : between 1 and 10, else the default value 3 will be used</comment>
+                        </max_attachements_back>
+                        <attachements_type_allowed_front translate="label">
+                            <label>Type of attachements allowed on customer form</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Files extensions must be separated by commas</comment>
+                        </attachements_type_allowed_front>
+                        <attachements_type_allowed_back translate="label">
+                            <label>Type of attachements allowed on admin response form</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Files extensions must be separated by commas</comment>
+                        </attachements_type_allowed_back>
+                    </fields>
+                </attachements>
+
+                <manager_affectation translate="label">
+                    <label>Manager affectation</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <default translate="label">
+                            <label>Default manager</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>CrmTicket/System_Config_Source_User</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </default>
+                        <!--<product_manager_attribute translate="label">
+                            <label>Product manager attribute</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>CrmTicket/System_Config_Source_Attribute</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </product_manager_attribute>-->
+                        <do_not_affect_manager_on_new_ticket translate="label">
+                            <label>Do not assign manager on new ticket</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Manager assignment for tickets created on front form</comment>
+                        </do_not_affect_manager_on_new_ticket>
+                    </fields>
+                </manager_affectation>
+
+                <front>
+                    <label>Front</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <allow_ticket_request translate="label">
+                            <label>Allow new ticket request</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allow_ticket_request>
+                        <sender translate="label">
+                            <label>New customer email sender</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_identity</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sender>
+                        <template translate="label">
+                            <label>New customer email template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </template>
+                    </fields>
+                </front>
+
+                <pop>
+                    <label>Email account</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>99</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <max_msg_download translate="label">
+                            <label>Max number of e-mail to download</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Max number of e-mail downloaded on each attempt to downlaod e-mails (by cron or by click on check messages button)</comment>
+                        </max_msg_download>
+                    </fields>
+                    <fields>
+                        <delete_email_aftersave translate="label">
+                            <label>Delete email after download</label>
+                             <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Try to delete e-mails on server after they have been successfully downloaded</comment>
+                        </delete_email_aftersave>
+                    </fields>
+                    <fields>
+                        <delete_mail_month translate="label">
+                            <label>Number of month</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Email downloaded older than this number of month will be purged every month by cron</comment>
+                        </delete_mail_month>
+                    </fields>
+                    <fields>
+                        <date_limit translate="label">
+                            <label>Download message from this date</label>
+                            <frontend_type>Date</frontend_type>
+                            <frontend_model>CrmTicket/adminhtml_system_config_form_field_date</frontend_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Max date of Email to be downloaded on each attempt to downlaod mail</comment>
+                        </date_limit>
+                    </fields>
+                    <fields>
+                      <default_status_during_import translate="label">
+                              <label>Ticket status after email import</label>
+                              <frontend_type>multiselect</frontend_type>
+                              <source_model>CrmTicket/System_Config_Source_Status</source_model>
+                              <sort_order>2</sort_order>
+                              <show_in_default>1</show_in_default>
+                              <show_in_website>1</show_in_website>
+                              <show_in_store>1</show_in_store>
+                              <comment>The default status defined when a mail is imported</comment>
+                      </default_status_during_import>
+                    </fields>
+                </pop>
+
+                <!--<faq>
+                    <label>FAQ</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>7</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <categories translate="label">
+                            <label>Categories</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>CrmTicket/System_Config_Source_Categories</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </categories>
+                    </fields>
+                </faq>-->
+
+                <!--<kb>
+                    <label>Knowledge database</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>7</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <categories translate="label">
+                            <label>Categories</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>CrmTicket/System_Config_Source_Categories</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </categories>
+                        <private translate="label">
+                            <label>Private</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </private>
+                    </fields>
+                </kb>-->
+                
+                <email_spam>
+                    <label>Spam</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <allowed_domains translate="label">
+                            <label>Domain to exclude</label>
+                            <frontend_type>textarea</frontend_type>
+                            <!--<source_model>CrmTicket/System_Config_Source_DomainsToExcludeFromSpam</source_model>-->
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Select the domains to allways exclude from spam detection, separated by comma</comment>
+                        </allowed_domains>                    
+                        <forbidden_domains translate="label">
+                            <label>Domain to include</label>
+                            <frontend_type>textarea</frontend_type>
+                            <!--<source_model>CrmTicket/System_Config_Source_DomainsToIncludeFromSpam</source_model>-->
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Select the domains to allways include in spam detection, separated by comma</comment>
+                        </forbidden_domains>
+                        <allowed_emails translate="label">
+                            <label>Emails to exclude</label>
+                            <frontend_type>textarea</frontend_type>
+                            <!--<source_model>CrmTicket/System_Config_Source_DomainsToExcludeFromSpam</source_model>-->
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Select the emails to allways exclude from spam detection, separated by comma</comment>
+                        </allowed_emails>
+                        <forbidden_emails translate="label">
+                            <label>Emails to include</label>
+                            <frontend_type>textarea</frontend_type>
+                            <!--<source_model>CrmTicket/System_Config_Source_DomainsToIncludeFromSpam</source_model>-->
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Select the emails to allways include in spam detection, separated by comma</comment>
+                        </forbidden_emails>
+                    </fields>
+                </email_spam>
+
+                <general>
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <allow_product_selection translate="label">
+                            <label>Associate product to ticket</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>If enabled, you can select the product with a drop down menu (not recommended if you have many products)</comment>
+                        </allow_product_selection>
+                        <allow_object_selection translate="label">
+                            <label>Associate customer object to ticket</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>If enabled, you can select order / invoice / creditmemo ... to associate to the ticket</comment>
+                        </allow_object_selection>
+                        <delay_to_reply translate="label">
+                            <label>Delay to reply to tickets</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Hours, calculate deadline adding X hours to the last client update</comment>
+                        </delay_to_reply>
+                        <ticket_grid_default_status translate="label">
+                            <label>Default status for the ticket grids</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>CrmTicket/System_Config_Source_Status</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Select the status you want to display as default in the ticket grids</comment>
+                        </ticket_grid_default_status>
+                        <send_invoice_default_reply translate="label">
+                            <label>Default reply assigned to the quick action Send Invoice</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>CrmTicket/System_Config_Source_DefaultReply</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </send_invoice_default_reply>                        
+                    </fields>
+                </general>
+            </groups>
+         
+        </crmticket>
+ 
+    </sections>
+   
+</config>

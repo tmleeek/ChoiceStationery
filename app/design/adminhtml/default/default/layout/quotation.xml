@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+    <quotation_admin_selectorcreatecustomer>
+        <reference name="head">
+            <action method="addJs">
+                <script>mdn/Quotation.js</script>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="Quotation/Adminhtml_SelectCustomer" name="selectcustomer" template="Quotation/SelectCustomer.phtml" />
+        </reference>
+    </quotation_admin_selectorcreatecustomer>
+
+    <quotation_admin_edit>
+        <reference name="head">
+            <action method="addJs">
+                <script>mdn/Quotation.js</script>
+            </action>
+            <action method="addJs">
+                <script>mdn/QuotationProposal.js</script>
+            </action>
+           <action method="addJs">
+                <script>mdn/persistantGridControl.js</script>
+            </action>
+            <action method="addItem"><type>skin_css</type><name>quotation.css</name><params/></action>
+        </reference>
+        <reference name="content">
+            <block type="Quotation/Adminhtml_Edit_Tabs" name="quotation_edit_tab"/>
+            <block type="Quotation/Adminhtml_Edit" name="quotation_edit">
+                <block type="Quotation/Adminhtml_Items" name="quotationitems" template="Quotation/Items.phtml"/>
+            </block>
+        </reference>
+    </quotation_admin_edit>
+            
+    <quotation_admin_list>
+        <reference name="content">
+            <block type="Quotation/Adminhtml_Grid" name="quotationcompletelist" template="Quotation/list.phtml">
+            </block>
+        </reference>
+    </quotation_admin_list>
+    
+    <quotation_admin_new>
+        <reference name="content">
+            <block type="Quotation/Adminhtml_New" name="quotationnew" template="Quotation/new.phtml">
+            </block>
+        </reference>
+    </quotation_admin_new>
+
+    <quotation_admin_duplicate>
+        <reference name="content">
+            <block type="Quotation/Adminhtml_Duplicate" name="quotationduplicate" template="Quotation/duplicate.phtml">
+                <block type="Quotation/Adminhtml_SelectCustomer" name="quotationduplicatecustomer" template="Quotation/SelectCustomer.phtml" />
+            </block>
+        </reference>
+    </quotation_admin_duplicate>
+
+    
+</layout>

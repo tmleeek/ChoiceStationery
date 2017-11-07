@@ -1,0 +1,121 @@
+<div class="content-header">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td><h3><?php echo $this->__('Search &amp; create tickets') ?></h3></td>
+        </tr>
+    </table>
+<br/>
+</div>
+
+<button onclick="javascript:displayNewCustomerForm();" class="scalable" type="button"><span><?php echo $this->__('Create a new customer'); ?></span></button>
+
+<div id="new_customer_form" style="display: none; width: 500px;">
+<br/>
+<form id="edit_form" method="POST" name="edit_form"  action="<?php echo $this->getUrlQuickCreateCustomer(); ?>" enctype="multipart/form-data">
+
+  <div class="entry-edit">
+    <div class="entry-edit-head">
+      <h4><?php echo $this->__('Customer details') ?></h4>
+      <input type="hidden" id="form_key" name="form_key"  value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+    </div>
+    <fieldset class="np">
+      <table class="form-list">
+          <tbody>
+              <tr>
+                  <td class="label"><?php echo $this->__('First name'); ?> <span class="required">*</span></td>
+                  <td class="value" >
+                   <input class="input-text required-entry" type="text" name="customer_first_name" id="customer_first_name" size="100" value="" style="width: 200px;" />
+                  </td>
+              </tr>
+              <tr>
+                  <td class="label"><?php echo $this->__('Last name'); ?> <span class="required">*</span></td>
+                  <td class="value" >
+                   <input class="input-text required-entry" type="text" name="customer_last_name" id="customer_last_name" size="100" value="" style="width: 200px;" />
+                  </td>
+              </tr>
+              <tr>
+                  <td class="label"><?php echo $this->__('Email'); ?> <span class="required">*</span></td>
+                  <td class="value" >
+                   <input class="input-text required-entry" type="text" name="customer_email" id="customer_email" size="100" value="" style="width: 200px;" />
+                  </td>
+              </tr>
+              <tr>
+                  <td class="label"><?php echo $this->__('Phone number'); ?></span></td>
+                  <td class="value" >
+                   <input class="input-text required-entry" type="text" name="customer_phone" id="customer_phone" size="100" value="" style="width: 200px;" />
+                  </td>
+              </tr>
+              <tr>
+                  <td class="label"><?php echo $this->__('Website'); ?></span></td>
+                  <td class="value" >
+                   <select name="customer_store_id" name="customer_store_id">
+                      <?php foreach ($this->getWebsiteCollection() as $website): ?>
+                          <optgroup label="<?php echo $website->getName(); ?>">
+                          <?php foreach ($this->getGroupCollection($website) as $group): ?>
+                              <?php if ($group->getWebsiteId() != $website->getId()) continue; ?>
+                              <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $group->getName(); ?>">
+                              <?php foreach ($this->getStoreCollection($group) as $store): ?>
+                                  <?php if ($store->getGroupId() != $group->getId()) continue; ?>
+                                      <option value="<? echo $store->getId(); ?>" >&nbsp;&nbsp;&nbsp;&nbsp; <?php echo $store->getName(); ?></option>
+                              <?php endforeach; ?>
+                              </optgroup>
+                          <?php endforeach; ?>
+                          </optgroup>
+                      <?php endforeach; ?>
+                   </select>
+                  </td>
+              </tr>
+              <tr>
+                  <td class="value" colspan="2">
+                    <button onclick="javascript:validateQuickCustomerForm();" class="scalable" type="button"><span><?php echo $this->__('Create customer'); ?></span></button>
+                  </td>
+             </tr>
+          </tbody>
+      </table>
+    </fieldset>
+  </div>
+
+</form>
+</div>
+
+<script type="text/javascript">
+
+function displayNewCustomerForm(){
+
+    var e = document.getElementById('new_customer_form');
+    if(e.style.display == 'block') {
+      e.style.display = 'none';
+    }else{
+      e.style.display ='block';
+    }
+
+  }
+
+function validateQuickCustomerForm()
+{
+  var isValid = true;
+  var fields = '';
+  if (document.forms["edit_form"]["customer_first_name"].value=="")
+  {
+    fields = fields + "<?php echo $this->__('First name'); ?>, ";
+    isValid= false;
+  }
+  if (document.forms["edit_form"]["customer_last_name"].value=="")
+  {
+    fields = fields + "<?php echo $this->__('Last name'); ?>, ";
+    isValid= false;
+  }
+  if (document.forms["edit_form"]["customer_email"].value=="")
+  {
+    fields = fields + "<?php echo $this->__('Email'); ?>";
+    isValid = false;
+  }
+  if(isValid){
+    document.getElementById('edit_form').submit();
+  }else{
+    alert(fields + "<?php echo $this->__(' are mandatory'); ?> ");
+  }
+}
+</script>
+
+<?php echo $this->getGridParentHtml(); ?>

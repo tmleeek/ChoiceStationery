@@ -1,0 +1,67 @@
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<div class="page-title">
+    <h1><?php echo $this->__('My Sublogins') ?></h1>
+</div>
+<?php if ($this->getCollection()->getSize() > 0): ?>
+<?php echo $this->getToolbarHtml() ?>
+    <table class="data-table" id="my-orders-table">
+        <col />
+        <col width="1" />
+        <col width="1" />
+        <col width="1" />
+        <col width="1" />
+     <thead>
+            <tr>
+                    <?php if (Mage::helper('core')->isModuleEnabled('MageB2B_CustomerId')): ?>
+                        <th><span class="nobr"><?php echo $this->__('Customer Id') ?></span></th>
+                    <?php endif; ?>
+                    <th><span class="nobr"><?php echo $this->__('Firstname') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->__('Lastname') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->__('Mail') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->__('Active') ?></span></th>
+                    <?php if (!Mage::helper('sublogin')->getCurrentSublogin() || Mage::getSingleton('customer/session')->getLoggedinFromMainLogin()): ?>
+                        <th><span class="nobr"><?php echo $this->__('Actions'); ?></span></th>
+                    <?php endif; ?>
+            </tr>
+     </thead>
+        <tbody>
+            <?php foreach ($this->getCollection() as $i => $_sublogin): ?>
+            <tr class="<?php echo $i%2?'even':'odd'?>">
+                    <?php if (Mage::helper('core')->isModuleEnabled('MageB2B_CustomerId')): ?>
+                        <td><span class="nobr"><?php echo $_sublogin->getData('customer_id') ?></span></td>
+                    <?php endif; ?>
+                    <td><span class="nobr"><?php echo $_sublogin->getData('firstname') ?></span></td>
+                    <td><span class="nobr"><?php echo $_sublogin->getData('lastname') ?></span></td>
+                    <td><span class="nobr"><?php echo $_sublogin->getData('email') ?></span></td>
+                    <td><span class="nobr"><?php echo $_sublogin->getData('active') ? $this->__('Yes') : $this->__('No'); ?></span></td>
+                    <?php if (!Mage::helper('sublogin')->getCurrentSublogin() || Mage::getSingleton('customer/session')->getLoggedinFromMainLogin()): ?>
+                        <td><span class="nobr"></span>
+                        <a href="<?php echo $this->getUrl('sublogin/frontend/edit/', array('id' => $_sublogin->getData('id'))); ?>"><img src="<?php echo $this->getSkinUrl('images/sublogin/edit.png'); ?>" alt="<?php echo Mage::helper('sublogin')->__('Edit'); ?>" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="<?php echo $this->getUrl('sublogin/frontend/delete/', array('id' => $_sublogin->getData('id'))); ?>"><img src="<?php echo $this->getSkinUrl('images/sublogin/delete.png'); ?>" alt="<?php echo Mage::helper('sublogin')->__('Delete'); ?>" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        <?php if (Mage::getStoreConfig('sublogin/general/enable_mainaccount_login')): ?>
+                            <?php if (Mage::getSingleton('customer/session')->getLoggedinFromMainLogin() && Mage::helper('sublogin')->getCurrentSublogin()->getEmail() == $_sublogin->getEmail()): ?>
+                                <a href="<?php echo $this->getUrl('sublogin/frontend/subloginLogout/', array('id' => $_sublogin->getData('id'))); ?>"><img src="<?php echo $this->getSkinUrl('images/sublogin/logout.png'); ?>" alt="<?php echo Mage::helper('sublogin')->__('Logout'); ?>" /></a>
+                            <?php else: ?>
+                                <a href="<?php echo $this->getUrl('sublogin/frontend/subloginLogin/', array('id' => $_sublogin->getData('id'))); ?>"><img src="<?php echo $this->getSkinUrl('images/sublogin/login.png'); ?>" alt="<?php echo Mage::helper('sublogin')->__('Login'); ?>" /></a>
+                            <?php endif; ?>	
+                        <?php endif; ?>						
+                        </td>
+                    <?php endif;?>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p><?php echo Mage::helper('sublogin')->__('No sublogins created for your account yet. Just click on create new sublogin to create a new one.'); ?></p>
+<?php endif; ?>
+<?php echo $this->getToolbarHtml() ?>
+<div class="buttons-set">
+    <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+    <?php if ($this->noticeOnMaxSublogin()): ?>
+        <p style="color:red;"><?php echo Mage::helper('sublogin')->__('You have reached the maximum sublogins you are able to create.'); ?></p>
+    <?php endif; ?>
+    <?php if ($this->accessNewSubloginButton()): ?>
+        <button type="button" onclick="window.location='<?php echo $this->getUrl('sublogin/frontend/create/') ?>';" title="<?php echo $this->__('Create new sublogin') ?>" class="button"><span><span><?php echo $this->__('Create new sublogin') ?></span></span></button>
+    <?php endif; ?>
+</div>

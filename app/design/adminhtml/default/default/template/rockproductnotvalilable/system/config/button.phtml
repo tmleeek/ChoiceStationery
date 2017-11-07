@@ -1,0 +1,36 @@
+<script type="text/javascript">
+    //<![CDATA[
+    function importProduct() {
+        new Ajax.Request('<?php echo $this->getAjaxCheckUrl() ?>', {
+            method:     'get',
+            onSuccess: function(transport){
+                if (transport.responseText){
+                    alert(transport.responseText)
+                }
+            }
+        });
+    }
+
+    var enable=document.getElementById("rock_productnot_available_configuration_rock_productnot_available_general_enabled");
+    var importButtonRow=document.getElementById("row_rock_productnot_available_configuration_rock_productnot_available_general_import");
+
+    if(enable.value==1){
+        importButtonRow.style.display='';
+    }
+    else{
+        importButtonRow.style.display='none';
+    }
+
+    document.getElementById("rock_productnot_available_configuration_rock_productnot_available_general_enabled").onchange = function() {
+        if(enable.value==1){
+            importButtonRow.style.display='';
+        }
+        else{
+            importButtonRow.style.display='none';
+        }
+    }
+
+    //]]>
+</script>
+
+<?php echo $this->getButtonHtml() ?>

@@ -1,0 +1,33 @@
+<?php
+$size = Mage::getStoreConfig("tonerconfigurator/options/category_depth")+1;
+?>
+
+<?php for($level = 1; $level <= $size; $level++): ?>
+                 <?php  switch($level){
+                   case 1:
+                   $class="printer-make";
+                   break;
+                   case 2:
+                   $class="printer-family";
+                   break;
+                   case 3:
+                   $class="printer-model";
+                   break;
+                   default:
+                   break;
+                 }?>
+                 <div class="<?php echo $class?>">
+							<select tabindex="<?php echo $level?>" class="toner-select-<?php echo $level ?>" <?php if(($level == $size) && ($this->getData('button_based')==1)){ echo "onchange=\"changeLastLevel(this.value, $(this).up('.toner-configurator'))\""; } else { echo "onchange=\"changeCategory(" . $level . ", this.options[this.selectedIndex], $(this).up('.toner-configurator'))\""; } ?>>         <?php if (isset($this->TonerConfiguratorTitles['title'.($level)])):?>
+								<option value=""><?php echo $this->TonerConfiguratorTitles['title'.$level]?></option>
+                             <?php endif; ?>
+                           </select>
+                         </div>
+
+<?php endfor; ?>
+       
+				   <?php //if($this->getData('button_based')==1): ?>
+				   <button type="button" class="toner-button-submit submit" onclick="changeCategory(<?php echo $size ?>, $(this).up('.toner-configurator').getElementsByClassName('toner-select-<?php echo $size ?>')[0].options[$(this).up('.toner-configurator').getElementsByClassName('toner-select-<?php echo $size ?>')[0].selectedIndex].value, $(this).up('.toner-configurator'))"><?php echo($this->getData('search_text')) ?></button>
+				   <?php //endif;?>
+<script type="text/javascript">
+</script>
+

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config>
+        <layout>
+          <updates>
+              <amlist module="Amasty_List">
+                  <file>amlist.xml</file>
+              </amlist>
+          </updates>
+        </layout>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all> 
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <amlist translate="title" module="amlist">
+                                            <title>Favorites Section</title>
+                                        </amlist>
+                                    </children>
+                                </config>
+                            </children>
+                        </system> 
+                     </children>
+                </admin> 
+			</resources>
+		</acl>
+        <translate>
+            <modules>
+                <Amasty_List>
+                    <files>
+                        <default>Amasty_List.csv</default>
+                    </files>
+                </Amasty_List>
+            </modules>
+        </translate>
+</config>

@@ -1,0 +1,632 @@
+<form id="edit_form" method="POST" name="edit_form" action="<?php echo $this->getUrl('*/*/Save') ?>" enctype="multipart/form-data">
+
+    <div class="content-header">
+        <table cellspacing="0" class="grid-header">
+            <tr>
+                <td><h3><?php echo $this->getTitle(); ?></h3></td>
+                <td align="right">
+                    <button onclick="document.location.href='<?php echo $this->getBackUrl() ?>'" class="scalable back" type="button"><span><?php echo $this->__('Back') ?></span></button>
+                    <?php if ($this->getTicket()->getId()): ?>
+                        <button onclick="if (confirm('<?php echo $this->__('Are you sure to delete this ticket ?'); ?>')) {document.location.href='<?php echo $this->getDeleteUrl($this->getTicket()->getct_id()) ?>';}" class="scalable delete" type="button"><span><?php echo $this->__('Delete') ?></span></button>
+                        <button onclick="document.location.href='<?php echo $this->getNotifyAdminUrl() ?>'" class="scalable" type="button"><span><?php echo $this->__('Notify admin') ?></span></button>
+                        <button onclick="document.location.href='<?php echo $this->getNotifyCustomerUrl() ?>'" class="scalable" type="button"><span><?php echo $this->__('Notify customer') ?></span></button>
+                    <?php endif; ?>
+                    <button onclick="editForm.submit();" class="scalable save" type="button"><span><?php echo $this->__('Save') ?></span></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+  <style>
+    .crm_mess_box ul{
+      list-style-type: disc;
+      display: block;
+      margin : 20px !important;
+    }
+    .crm_mess_box li{
+      display: list-item;      
+      float: inherit !important;
+    }
+  </style>
+
+     <div class="entry-edit box-left">
+        <div>
+            <input type="hidden" id="ct_id" name="ct_id" value="<?php echo $this->getTicket()->getId(); ?>">
+            <input type="hidden" id="form_key" name="form_key"  value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+        </div>
+        <div class="entry-edit-head collapseable">
+            <a href="#" name="ticket_link" onclick="javascript:hideDisplayBlock(this, 'ticket_fieldset');" class="open" ><?php echo $this->__('Ticket information'); ?></a>
+        </div>
+        <div id="ticket_fieldset" class="fieldset" style="display: block;">
+            <div class="hor-scroll">
+                <table class="form-list">
+                    <tbody>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Subject'); ?> <span class="required">*</span></td>
+                            <td class="value" >
+                              <?php  if (Mage::getStoreConfig('crmticket/ticket_data/edit_subject')): ?>
+                                <input class="input-text required-entry" type="text" name="ticket[ct_subject]" id="ct_subject" size="60" value="<?php echo $this->htmlEscape($this->getTicket()->getct_subject()); ?>" style="width: 400px;" />
+                              <?php else: ?>
+                                <p name="ticket[ct_subject]" id="ct_subject"><b><?php echo $this->htmlEscape($this->getTicket()->getct_subject()); ?></b><p/>
+                              <?php endif; ?>
+                            </td>
+                        </tr>                       
+                        <tr>
+                            <td class="label"><?php echo $this->__('Status'); ?> <span class="required">*</span></td>
+                            <td class="value">
+                                <select class="required-entry select" name="ticket[ct_status]" id="ct_status">
+                                    <?php foreach (mage::getModel('CrmTicket/Ticket')->getStatuses() as $k => $v) : ?>
+                                        <option <?php if ($this->getTicket()->getct_status() == $k) echo "selected" ?> value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                    <?php endforeach; ?>    
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Created at'); ?> <span class="required">*</span></td>
+                            <td class="value">
+                                <?php echo Mage::helper('core')->formatDate($this->getTicket()->getct_created_at(), 'medium', true); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Dead line'); ?></td>
+                            <td class="value">
+                                <?php if ($this->getTicket()->getct_deadline()): ?>
+                                    <?php echo Mage::helper('core')->formatDate($this->getTicket()->getct_deadline(), 'medium', true); ?>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Reply delay'); ?></td>
+                            <td class="value">
+                                <select class="select" name="ticket[ct_reply_delay]" id="ct_reply_delay">
+                                    <option value=""><?php echo $this->__('No specific delay'); ?></option>
+                                    <?php for($i=1;$i<99;$i++): ?>
+                                        <option value="<?php echo $i; ?>" <?php echo ($i == $this->getTicket()->getct_reply_delay() ? ' selected ' : ''); ?>><?php echo $i; ?></option>
+                                    <?php endfor; ?>
+                                </select> <i>&nbsp;<?php echo $this->__('hours'); ?></i>
+                            </td>
+                        </tr> 
+                        
+                        <tr>
+                            <td class="label"><?php echo $this->__('Product'); ?></td>
+                            <td class="value">
+                                <?php if (Mage::helper('CrmTicket')->allowProductSelection()): ?>
+                                    <select class="select" name="ticket[ct_product_id]" id="ct_manager">
+                                        <option value="0">-</option>
+                                        <?php foreach ($this->getProducts() as $product) : ?>
+                                            <option <?php if ($this->getTicket()->getct_product_id() == $product->getId()) echo "selected" ?> value="<?php echo $product->getId(); ?>"><?php echo $product->getname(); ?></option>
+                                        <?php endforeach; ?>    
+                                    </select>
+                                <?php else: ?>
+                                    -
+                                <?php endif; ?>
+                            </td>
+                        </tr>    
+                                              
+                        
+                        <tr>
+                            <td class="label"><?php echo $this->__('Manager'); ?> <span class="required">*</span></td>
+                            <td class="value">
+                                <select class="required-entry select" name="ticket[ct_manager]" id="ct_manager">
+                                    <?php foreach ($this->getManagers() as $manager) : ?>
+                                        <option <?php if ($this->getTicket()->getct_manager() == $manager->getId()) echo "selected" ?> value="<?php echo $manager->getId(); ?>"><?php echo $manager->getusername(); ?></option>
+                                    <?php endforeach; ?>    
+                                </select>
+                            </td>
+                        </tr>                                                                  
+
+
+                        <tr>
+                            <td class="label"><?php echo $this->__('Category'); ?> <span class="required">*</span></td>
+                            <td class="value">
+                                <?php
+                                $block = $this->getLayout()->createBlock('CrmTicket/Admin_Category_Select');
+                                echo $block->getHtmlMenu($this->getTicket()->getct_category_id(), 'ticket[ct_category_id]', 'required-entry select', 0, null, true);
+                                ?>
+                            </td>
+                        </tr>                  
+                        <?php if (Mage::getStoreConfig('crmticket/ticket_data/show_priority')): ?>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Priority'); ?> <span class="required">*</span></td>
+                            <td class="value">
+                                <select class="required-entry select" name="ticket[ct_priority]" id="ct_priority">
+                                    <?php foreach ($this->getPriorities() as $priority) : ?>
+                                        <option <?php if ($this->getTicket()->getct_priority() == $priority->getId()) echo "selected" ?> value="<?php echo $priority->getId(); ?>"><?php echo $priority->getctp_name(); ?></option>
+                                    <?php endforeach; ?>    
+                                </select>
+                            </td>                           
+                            
+                        </tr>                        
+                        <?php endif; ?>
+                        <?php if (Mage::getStoreConfig('crmticket/ticket_data/show_cost')): ?>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Cost'); ?></td>
+                            <td class="value">
+                                <input type="text" name="ticket[ct_cost]" id="ct_cost" value="<?php echo $this->getTicket()->getct_cost(); ?>">
+                            </td>
+                        </tr>    
+                        <?php endif; ?>
+                        <?php if (Mage::getStoreConfig('crmticket/ticket_data/show_public')): ?>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Is public'); ?> <span class="required">*</span></td>
+                            <td class="value">
+                                <select class="required-entry select" name="ticket[ct_is_public]" id="ct_is_public">
+                                    <?php foreach ($this->getBooleans() as $k => $v) : ?>
+                                        <option <?php if ($this->getTicket()->getct_is_public() == $k) echo "selected" ?> value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                    <?php endforeach; ?>    
+                                </select>
+                            </td>
+                        </tr> 
+                        <?php endif; ?>
+                        <?php if (Mage::getStoreConfig('crmticket/ticket_data/change_email_account')): ?>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Email account'); ?> <span class="required">*</span></td>
+                            <td class="value">
+                                <select class="required-entry select" name="ticket[ct_email_account]" id="ct_is_public">
+                                    <option value=""><?php echo $this->__('No email account selected'); ?></option>
+                                    <?php foreach ($this->getEmailAccounts() as $emailAccount) : ?>
+                                        <option <?php if ($this->matchEmailAccount($emailAccount)) echo "selected" ?> value="<?php echo $emailAccount->getConsolidedLogin() ?>"><?php echo $emailAccount->getcea_name(); ?></option>
+                                    <?php endforeach; ?>    
+                                </select>
+                            </td>
+                        </tr> 
+                        <?php endif; ?>
+
+                        <tr>
+                            <td class="label"><?php echo $this->__('CC email'); ?></td>
+                            <td class="value">
+                                <input type="text" size="60" name="ticket[ct_cc_email]" id="ct_cc_email" value="<?php echo $this->getTicket()->getct_cc_email(); ?>">
+                            </td>
+                        </tr> 
+                        <tr>
+                            <td class="label"><?php echo $this->__('Store'); ?></td>
+                            <td class="value">
+                                <select name="ticket[ct_store_id]" name="ct_store_id">
+                                    <?php foreach ($this->getWebsiteCollection() as $website): ?>
+                                        <optgroup label="<?php echo $website->getName(); ?>">
+                                        <?php foreach ($this->getGroupCollection($website) as $group): ?>
+                                            <?php if ($group->getWebsiteId() != $website->getId()) continue; ?>
+                                            <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $group->getName(); ?>">
+                                            <?php foreach ($this->getStoreCollection($group) as $store): ?>
+                                                <?php if ($store->getGroupId() != $group->getId()) continue; ?>
+                                                    <option value="<? echo $store->getId(); ?>" <?php echo ($this->getTicket()->getct_store_id() == $store->getId() ? ' selected="selected"' : ''); ?>>&nbsp;&nbsp;&nbsp;&nbsp; <?php echo $store->getName(); ?></option>
+                                            <?php endforeach; ?>
+                                            </optgroup>
+                                        <?php endforeach; ?>
+                                        </optgroup>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                        </tr>  
+                        <?php if (Mage::getStoreConfig('crmticket/ticket_data/show_invoicing_status')): ?>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Invoicing status'); ?></td>
+                            <td class="value">
+                                <select class="select" name="ticket[ct_invoicing_status]" id="ct_invoicing_status">
+                                    <?php foreach ($this->getInvoicingStatus() as $k => $v) : ?>
+                                        <option <?php if ($this->getTicket()->getct_invoicing_status() == $k) echo "selected" ?> value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                    <?php endforeach; ?>    
+                                </select>
+                            </td>
+                        </tr>
+                        <?php endif; ?>
+                        <?php if (Mage::getStoreConfig('crmticket/ticket_data/show_sticky')): ?>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Sticky ticket'); ?></td>
+                            <td class="value">
+                                <select class="select" name="ticket[ct_sticky]" id="ct_sticky">
+                                    <?php foreach ($this->getBooleans() as $k => $v) : ?>
+                                        <option <?php if ($this->getTicket()->getct_sticky() == $k) echo "selected" ?> value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                    <?php endforeach; ?>    
+                                </select>
+                            </td>
+                        </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+                
+            </div>
+         
+        </div>
+                   
+        <?php /* -------------------------- CUSTOMER DETAILS ----------------------------------------------------------------------------------- */ ?>
+        <div class="entry-edit-head collapseable">
+            <a href="#ticket_link" name="customer_link" onclick="javascript:hideDisplayBlock(this, 'customer_fieldset');" class="open" ><?php echo $this->__('Customer details'); ?></a>
+        </div>
+        <div id="customer_fieldset" class="fieldset" style="display: block;">
+            <?php
+            $customerId = $this->getTicket()->getct_customer_id();
+            $customer = mage::getModel('customer/customer')->load($customerId);
+            ?>
+            <input type="hidden" name="ticket[ct_customer_id]" id="ct_customer_id" value="<?php echo $customerId; ?>" />
+            <div id="ticket_fieldset" class="fieldset" style="display: block;">
+                <table class="form-list">                                       
+                    <tr>
+                        <td class="label"><?php echo $this->__('Name'); ?></td>
+                        <td class="value"><a href="<?php echo $this->getCustomerUrl(); ?>"><?php echo $this->getCustomerInformation(); ?></a></td>
+                    </tr>
+                    <?php
+                    $groups = $this->getCustomerGroups($customer);
+                    if ($groups): ?>
+                    <tr>
+                        <td class="label"><?php echo $this->__('Group'); ?></td>
+                        <td class="value"><?php echo $groups; ?></td>
+                    </tr>
+                    <?php endif; ?>
+                    <?php
+                    $phones = $this->getCustomerPhones($customer);
+                    if ($phones): ?>
+                    <tr>
+                        <td class="label"><?php echo $this->__('Phone'); ?></td>
+                        <td class="value"><?php echo $phones; ?></td>
+                    </tr>
+                    <?php endif; ?>
+                    <?php
+                    $address = $this->getBillingAddress($customer);
+                    if ($address): ?>
+                    <tr>
+                        <td class="label"><?php echo $this->__('Billing address'); ?></td>
+                        <td class="value"><?php echo $address; ?></td>
+                    </tr>
+                    <?php endif; ?>
+                    <?php
+                    $address = $this->getShippingAddress($customer);
+                    if ($address): ?>
+                    <tr>
+                        <td class="label"><?php echo $this->__('Delivery address'); ?></td>
+                        <td class="value"><?php echo $address; ?></td>
+                    </tr>
+                    <?php endif; ?>
+                </table>
+              </div>
+              <p><?php echo $this->getCustomContent(); ?></p>
+        </div>
+
+        <?php /* -------------------------- PRIVATE COMMENT ----------------------------------------------------------------------------------- */ ?>
+
+       <?php if (Mage::getStoreConfig('crmticket/ticket_data/allow_private_comment_on_ticket')): ?>
+        <div class="entry-edit-head collapseable">
+            <a href="#ticket_link" name="private_link" onclick="javascript:hideDisplayBlock(this, 'private_fieldset');" class="open" ><?php echo $this->__('Private comments'); ?></a>
+        </div>
+        <div id="private_fieldset" class="fieldset" style="display: block;">
+            <textarea cols="100%" rows="5" name="ticket[ct_private_comments]" id="ct_private_comments"><?php echo trim($this->getTicket()->getct_private_comments()); ?></textarea>
+        </div>
+        <?php endif; ?>
+
+        <?php /* -------------------------- OBJECT ----------------------------------------------------------------------------------- */ ?>
+
+        <?php if (Mage::helper('CrmTicket')->allowCustomerObjectSelection()): ?>
+
+            <div class="entry-edit-head collapseable">
+              <a href="#ticket_link" name="object_link" onclick="javascript:hideDisplayBlock(this, 'object_fieldset');" class="open" ><?php echo $this->__('Object'); ?></a>
+            </div>
+            <div id="object_fieldset" class="fieldset" style="display: block;">
+              <table cellspacing="0" class="grid-header">
+                 <tr>
+                     <td class="label"><?php echo $this->__('Customer object'); ?>&nbsp;&nbsp;</td>
+                     <td class="value">
+                        <select onchange="refreshObject(this.value)" class="select" name="ticket[ct_object_id]" id="ct_object_id">
+                            <option value="">-</option>
+                            <?php foreach ($this->getCustomerObjects() as $group => $items) : ?>
+                                <optgroup label="<?php echo $group; ?>">
+                                    <?php foreach($items as $k => $v): ?>
+                                        <option <?php if ($this->getTicket()->getct_object_id() == $k) echo "selected" ?> value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                    <?php endforeach; ?>
+                                </optgroup>
+                            <?php endforeach; ?>    
+                        </select>
+                     </td>
+                 </tr>
+              </table>
+            <br/>
+            <div id="ticket_object" style="margin-bottom:15px;" class="fieldset" >
+                <?php
+                  $ticketObjectId = $this->getTicket()->getct_object_id();                  
+                  if (!empty($ticketObjectId)) {
+                    $object = explode('_', $ticketObjectId);
+                    $objectType = $object[0];
+                    $objectId = $object[1];
+                    $block = $this->getLayout()->createBlock('CrmTicket/Admin_Object_Popup');
+                    $block->setObjectType($objectType);
+                    $block->setObjectId($objectId);
+                    $block->setTemplate('CrmTicket/ObjectPopup/' . $objectType . '.phtml');
+                    $html = $block->toHtml();
+                    if($html){
+                      echo '<div>'.$html;
+                    }
+                  }
+                ?>
+            </div>
+            </div>
+        <?php endif; ?>
+         
+        <?php if (Mage::getStoreConfig('crmticket/attachements/allow_attachement_on_ticket')): ?>       
+        <?php /* -------------------------- ATTACHMENTS ----------------------------------------------------------------------------------- */ ?>
+        <div class="entry-edit-head collapseable">
+            <a href="#ticket_link" name="attachements_link" onclick="javascript:hideDisplayBlock(this, 'attachements_fieldset');" class="open" ><?php echo $this->__('Attachments'); ?></a>
+        </div>
+        <div id="attachements_fieldset" class="fieldset" style="display: block;">
+            <?php foreach ($this->getTicket()->getAttachments() as $attachment): ?>
+                <div class="crm-attachment">
+                    <?php
+                    $attFileName=$attachment->getFileName();
+                    if($attachment->canPreview()): ?>
+                      <a href="#" onclick="showImageAttachementPopup('<?php echo $this->getAttachmentDownloadLink($attachment); ?>','<?php echo $attFileName; ?>')"><?php echo $attFileName; ?></a>
+                    <?php else: ?>
+                      <a href="<?php echo $this->getAttachmentDownloadLink($attachment); ?>"><?php echo $attFileName; ?></a>
+                     <?php endif; ?>
+                      &nbsp;<a href="<?php echo $this->getAttachmentDeleteLink($attachment); ?>"><img src="<?php echo $this->getSkinUrl('images/cancel_icon.gif') ?>" /></a>
+                </div>
+            <?php endforeach; ?>
+
+            <p>
+                <?php echo $this->__('Add attachment : '); ?>
+                <input type="file" name="new_attachment" id="new_attachment">
+            </p>
+        </div>
+        <?php endif; ?>
+     </div>
+ 
+    <div class="entry-edit box-right">
+        
+        <?php /* -------------------------- MESSAGES VIEW ----------------------------------------------------------------------------------- */ ?>
+        <div class="entry-edit-head collapseable">
+            <a href="#" name="history_link" onclick="javascript:hideDisplayBlock(this, 'history_fieldset');" class="open" ><?php echo $this->__('Messages'); ?></a>
+        </div>
+        <div id="history_fieldset" class="fieldset " style="display: block;">
+            <?php foreach ($this->getTicket()->getMessages() as $message) : ?>
+                <div class="box message-<?php echo $message->getCssStyle(); ?>">
+                    <table cellspacing="0" width="100%">
+                        <tr>
+                            <td>
+                                <p style="margin-bottom: 15px;">
+                                    <?php $author = $message->getctm_author(); ?>
+
+                                    <?php if ($message->getAdminUser()): ?>
+                                        <?php $author = $author . ' (' . $message->getAdminUser()->getusername() . ')'; ?>
+                                    <?php endif; ?>
+
+                                    <?php  if (Mage::getStoreConfig('crmticket/ticket_data/change_message_type')): ?>
+                                      <?php $author = $author . ' (' .$message->getSourceType() . ')'; ?>
+                                    <?php endif; ?>
+
+                                    <b><?php echo $this->__('By %s, %s', $author, $message->getctm_updated_at()); ?></b>
+                                </p>
+                            </td>
+                            <td align="right">
+                                <button name="edit_messages[<?php echo $message->getId(); ?>]" id="edit_messages[<?php echo $message->getId(); ?>]" type="button" onclick="window.open('<?php echo $this->getUrl('CrmTicket/Admin_Ticket/EditMessage', array('ticket_id' => $this->getTicket()->getct_id(), 'message_id' => $message->getctm_id())); ?>')"><?php echo $this->__('Edit message'); ?></button>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="box-content crm_mess_box">
+                        <p><?php echo $message->getctm_content(); ?></p>
+                    </div>
+                   <?php if (Mage::getStoreConfig('crmticket/attachements/allow_attachement_on_message')): ?>
+                    <?php $messageAttachements = $message->getAttachments(); ?>
+                    <?php if(count($messageAttachements)>0) :?>
+                       <div class="box-attachements">
+                           <p><hr/><br/><b><?php echo $this->__('Attachments : '); ?></b></p>
+                           <p>
+                           <?php foreach ($messageAttachements as $attachment): ?>
+                               <div class="crm-attachment">
+                                   <?php
+                                   $attFileName=$attachment->getFileName();
+                                   if($attachment->canPreview()): ?>
+                                     <a href="#" onclick="showImageAttachementPopup('<?php echo $this->getAttachmentMessageDownloadLink($message,$attachment); ?>','<?php echo $attFileName; ?>')"><?php echo $attFileName; ?></a>
+                                   <?php else: ?>
+                                     <a href="<?php echo $this->getAttachmentMessageDownloadLink($message,$attachment); ?>"><?php echo $attFileName; ?></a>
+                                    <?php endif; ?>
+                                     &nbsp;<a href="<?php echo $this->getAttachmentMessageDeleteLink($message, $attachment); ?>"><img src="<?php echo $this->getSkinUrl('images/cancel_icon.gif') ?>" /></a>
+                               </div>
+                           <?php endforeach; ?>
+                           </p>
+                       </div>
+                    <?php endif; ?>
+                   <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <?php /* ------------------------------------ MESSAGE FORM ------------------------------------  */ ?>
+        <div class="entry-edit-head collapseable">
+            <a href="#message_link" name="message_link" onclick="javascript:hideDisplayBlock(this, 'message_fieldset');" class="open" ><?php echo $this->__('New message'); ?></a>
+        </div>
+        <div id="message_fieldset" class="fieldset " style="display: block;">
+            <div class="hor-scroll">
+                <table class="form-list">
+                    <tbody>
+                        <tr>
+                        <?php  if (Mage::getStoreConfig('crmticket/ticket_data/change_message_type')): ?>
+                            <td class="label"><?php echo $this->__('Type'); ?></td>
+                            <td class="value" colspan="5">
+                                <select name="new_message[ctm_source_type]" id="ctm_source_type">
+                                    <?php foreach (mage::getModel('CrmTicket/Message')->getSourceTypes() as $k => $v): ?>
+                                        <option value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                        <?php else: ?>
+                            <td colspan="2"><input type="hidden" name="new_message[ctm_source_type]" id="ctm_source_type" value="<?php echo MDN_CrmTicket_Model_Message::TYPE_MAIL; ?>"></td>
+                        <?php endif; ?>
+                        </tr>
+                        <tr>
+                        <?php  if (Mage::getStoreConfig('crmticket/ticket_data/change_author')): ?>
+                            <td class="label"><?php echo $this->__('Author'); ?></td>
+                            <td class="value" colspan="5">                              
+                                <select name="new_message[ctm_author]" id="ctm_author">
+                                    <?php foreach (mage::getModel('CrmTicket/Message')->getAuthors() as $k => $v): ?>
+                                        <option value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                    <?php endforeach; ?>
+                                </select>                              
+                            </td>                        
+                        <?php else: ?>
+                            <td colspan="2"><input type="hidden" name="new_message[ctm_author]" id="ctm_author" value="<?php echo MDN_CrmTicket_Model_Message::AUTHOR_ADMIN; ?>"></td>
+                        <?php endif; ?>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Default replies'); ?></td>
+                            <td class="value" colspan="5">
+                                <select id="default_reply" onchange="javascript:setDefaultReplyInCurrentMessage(this.value); ">
+                                    <option></option>
+                                    <?php foreach ($this->getDefaultReplies() as $reply): ?>
+                                        <option value="<?php echo urlencode($reply->getcdr_content()); ?>"><?php echo $reply->getcdr_name(); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Message'); ?></td>
+                            <td class="value" colspan="5">
+                                <?php
+                                $defaultMessage = '';
+                                $currentMessage = trim($this->getTicket()->getct_current_message());
+                                $signature = trim($this->getResponseSignature());
+                                if(strlen($currentMessage)>strlen($signature)){
+                                  $defaultMessage = $currentMessage;
+                                }else{
+                                  $defaultMessage = $signature;
+                                }
+                                echo Mage::helper('CrmTicket/Editor')->getWysiwygHtml('ctm_content', $defaultMessage);
+                                ?>
+                            </td>
+                        </tr>
+                        <?php if (Mage::getStoreConfig('crmticket/attachements/allow_attachement_on_message')): ?>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Add an attachment : '); ?></td>
+                            <td class="value" colspan="5">
+                            <?php foreach ($this->getAttachments() as $attachment): ?>
+                            <div class="crm-attachment">
+                                <?php
+                                $attFileName=$attachment->getFileName();
+                                if($attachment->canPreview()): ?>
+                                  <a href="#" onclick="showImageAttachementPopup('<?php echo $this->getAttachmentDownloadLink($attachment); ?>','<?php echo $attFileName; ?>')"><?php echo $attFileName; ?></a>
+                                <?php else: ?>
+                                  <a href="<?php echo $this->getAttachmentDownloadLink($attachment); ?>"><?php echo $attFileName; ?></a>
+                                 <?php endif; ?>
+                                  &nbsp;<a href="<?php echo $this->getAttachmentDeleteLink($attachment); ?>"><img src="<?php echo $this->getSkinUrl('images/cancel_icon.gif') ?>" /></a>
+                            </div>
+                            <?php endforeach; ?>
+
+                            <?php $max = Mage::helper('CrmTicket/Attachment')->getAdminMaxAttachementAllowed();
+                            $key = Mage::helper('CrmTicket/Attachment')->getAdminMessageAttachementKey();
+                            for ($i = 1; $i <= $max; $i++): ?>
+                            <input type="file" name="<?php echo $key.$i; ?>" id="<?php echo $key.$i; ?>"><br/>
+                            <?php endfor; ?>
+                            </td>
+                         </tr>
+                         <?php endif; ?>
+
+                         <tr>
+                              <td class="label">
+                                <input type="hidden" name="send_email" id="send_email"  value="0"/>
+                              </td>
+                              <td class="value" colspan="5">
+                                <button onclick="javascript:postNewMessage();" class="scalable" type="button"><span><?php echo $this->__('Send message'); ?></span></button>
+                              </td>
+                         </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+
+    <?php Mage::dispatchEvent('crmticket_after_ticket_view', array('ticket' => $this->getTicket())); ?>
+
+</form>
+
+<script type="text/javascript">
+    editForm = new varienForm('edit_form', '');
+
+    function hideDisplayBlock(parent, div_name){
+      var e = document.getElementById(div_name);
+      if(e.style.display == 'block') {
+        e.style.display = 'none';
+        parent.className = 'close';
+      }else{
+        e.style.display ='block';
+        parent.className = 'open';
+      }
+    }
+    
+    function postNewMessage()
+    {
+      document.getElementById('send_email').value=1;
+      document.getElementById('edit_form').submit();
+    }
+
+    function setDefaultReplyInCurrentMessage(value)
+    {
+      if(value){
+
+        var replaceString = ' ';
+
+        var defaultReply = decodeURIComponent(value);
+        defaultReply = defaultReply.replace(/\+/g, replaceString); //replace + by space
+
+        if(tinyMCE){
+          replaceString = '<br/>';
+        }else{
+          replaceString = String.fromCharCode(13);
+        }
+
+        if(tinyMCE){
+          defaultReply = defaultReply.replace(/[\n]/g, replaceString);// \n + by <br/>
+          //defaultReply = defaultReply.replace(/[\r]/g, replaceString);// \r + by <br/> -> generate too much <br/>
+        }
+
+        var initialMessage = '';
+        if(tinyMCE){
+          initialMessage = tinyMCE.get('ctm_content').getContent();
+        }else{
+          initialMessage = document.getElementById('ctm_content').value;
+        }
+
+        var finalMessage = defaultReply + replaceString + initialMessage;
+        
+        if(tinyMCE){
+          tinyMCE.get('ctm_content').setContent(finalMessage);
+        }else{
+          document.getElementById('ctm_content').value = finalMessage;
+        }
+      }
+    }
+
+    function toggleObjectSelection()
+    {
+        div = $('objectSelection');
+        display = div.style.display;
+        if(display == 'block')
+            div.style.display = 'none';
+        else
+            div.style.display = 'block';
+    }
+
+    //send ajax request to update object datas
+    function refreshObject(objectId)
+    {
+        if(objectId == '')
+        {
+            alert('No object selected');
+            return;
+        }
+
+        var url = '<?php echo $this->getPopupObjectUrl(); ?>' + 'object_id/' + objectId;
+    
+        var request = new Ajax.Request(
+        url,
+        {
+            method: 'get',
+            onSuccess: function onSuccess(transport)
+            {
+                var response = transport.responseText;
+                $('ticket_object').innerHTML = response;
+            },
+            onFailure: function onFailure(transport)
+            {
+                $('ticket_object').innerHTML = 'Erreur...';
+            }
+        }
+    );
+    }
+</script>

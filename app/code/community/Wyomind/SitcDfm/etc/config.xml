@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Wyomind_Sitcdfm>
+            <version>1.0.0</version>
+        </Wyomind_Sitcdfm>
+    </modules>
+  
+   
+    <global>
+        <resources>
+            <sitcdfm_setup>
+                <setup>
+                    <module>Wyomind_Sitcdfm</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </sitcdfm_setup>
+            <sitcdfm_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </sitcdfm_write>
+            <sitcdfm_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </sitcdfm_read>
+        </resources>
+    </global>
+</config>

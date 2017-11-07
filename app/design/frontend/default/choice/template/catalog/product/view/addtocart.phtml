@@ -1,0 +1,107 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php $_product = $this->getProduct(); ?>
+<?php $buttonTitle = $this->__('Add to Cart'); ?>
+<?php if($_product->isSaleable()): ?>
+                      <div class="qty">
+                        <p><?php echo $this->__('quantity')?></p>
+                        <?php if(!$_product->isGrouped()): ?>
+                        <input type="text" name="qty" id="qty" class="qty-text" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
+                        <a href="#">
+                        <p class="add-qty" field="qty">+</p>
+                        </a> <a href="#">
+                        <p class="minus-qty" field="qty">-</p>
+                        </a> 
+                    </div>
+                    <?php endif;?>
+                      <!--end of qty--> 
+  </div>
+                    <!--end of top-->
+
+                    <?php if ($_listUrl = $this->helper('amlist')->getAddUrl($_product)): ?>
+                      <div class="linkfav-content"> 
+                        <a class="link-favourite" href="<?php echo $_listUrl?>" class="amlist" onclick="return am_add_to_list(this.href)"><span class="glyphicon glyphicon-thumbs-up"></span> <?php echo $this->helper('amlist')->__('Add to Favourites') ?></a>
+                      </div>
+                    <?php endif; ?>
+                    <!-- <script>
+                        function am_add_to_list(lnk){
+                            var f = $('product_addtocart_form');
+                            if (f){
+                                f.action = lnk;
+                                productAddToCartForm.submit();  
+                            }
+                            else
+                                document.location.href = lnk;
+                                
+                            return false;
+                        }
+                    </script> -->
+                    
+                    <div class="bottom"> <a href="javascript:void(0)">
+                      <div class="add-btn-cart"><button type="button" title="<?php echo $buttonTitle ?>" class="add-to-basket" onclick="productAddToCartForm.submit(this)">
+                      	<span><?php echo $buttonTitle ?></span><span class="cart-img"> <i class="sprite sprite-add-to-basket-img"></i></span></button></div>
+                      </a> </div>
+         <?php endif; ?>
+<script>
+   jQuery(document).ready(function(){
+    // This button will increment the value
+    jQuery('.add-qty').click(function(e){
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        fieldName = jQuery(this).attr('field');
+        // Get its current value
+        var currentVal = parseInt(jQuery('input[name='+fieldName+']').val());
+        // If is not undefined
+        if (!isNaN(currentVal)) {
+            // Increment
+            jQuery('input[name='+fieldName+']').val(currentVal + 1);
+        } else {
+//            // Otherwise put a 0 there
+            jQuery('input[name='+fieldName+']').val(1);
+        }
+    });
+    // This button will decrement the value till 0
+    jQuery(".minus-qty").click(function(e) {
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        fieldName = jQuery(this).attr('field');
+        // Get its current value
+        var currentVal = parseInt(jQuery('input[name='+fieldName+']').val());
+        // If it isn't undefined or its greater than 0
+        if (!isNaN(currentVal) && currentVal > 1) {
+            // Decrement one
+            jQuery('input[name='+fieldName+']').val(currentVal - 1);
+        } else {
+            // Otherwise put a 0 there
+            jQuery('input[name='+fieldName+']').val(1);
+        }
+    });
+});
+
+    </script>

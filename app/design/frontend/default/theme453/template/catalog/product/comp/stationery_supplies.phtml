@@ -1,0 +1,127 @@
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+/*$(document).mousemove(function() {    
+    if($('.parentMenu a').is(':hover')) {
+		alert('Hello');
+        $('#sub1').css({'background':'blue'});
+    }
+    else {
+        $('#sub1').css({'background':'red'});
+    }
+});*/
+</script>
+<style type="text/css">
+@media(min-width: 980px) and (max-width: 1199px) {
+	.cat-thumb img {right: 0px !important;}
+}
+@media(min-width: 800px) and (max-width: 979px) {
+	.wp-custom-menu-popup .block2 .cat-thumb img {
+    top: 372px !important;
+    right: 0px !important;
+    width: 460px !important;}
+}
+.cat-thumb {
+	float:right;
+}
+/*.cat-thumb img {*/
+.wp-custom-menu-popup .block2 .cat-thumb img {
+	position: relative;
+	top: 348px;
+	right: 110px;
+	width: auto;
+	height: auto;
+}
+</style>
+<?php
+$second_id = 7;
+$second_level = get_sub_cat_id($second_id);
+?>
+<div class="navigation">
+            <ul>
+<?php
+/********* End third level name *******/
+if(count($second_level)) 
+{
+	$j=0;
+	foreach($second_level as $second_levels)
+	{
+		$sub_category = Mage::getModel('catalog/category')->load($second_levels);
+		if(is_numeric($sub_category)) { $_sub_category=$sub_category; }
+		else { $_sub_category=0; }
+		if($sub_category->getIsActive() && $_sub_category != 2)
+		{
+		   ?>
+           <li <?php if($j==0){ echo 'class="open"'; } ?>><a class="display_next_ul_sub1" href="<?php echo $sub_category->getUrl(); ?>"><?php echo $sub_category->getName(); ?></a>
+                    <ul class="sub1 special_sub1">
+		   <?php
+		   $third_level = get_sub_cat_id($second_levels);
+		   if(count($third_level))
+		   {
+			   foreach($third_level as $third_levels)
+			   {
+				   $third_category = Mage::getModel('catalog/category')->load($third_levels);
+				   if(is_numeric($third_category)) { $_third_category=$third_category; }
+				   else { $_third_category=0; }
+				   if($third_category->getIsActive() && $_third_category != 2 )
+				   {
+					   ?>
+                       <li><a href="<?php echo $third_category->getUrl(); ?>"><?php echo $third_category->getName(); ?></a></li>
+                       <?php
+				   }
+			   }
+		   }
+		   ?>
+           </ul>
+           </li>
+           <?php
+		}
+		$j++;
+	}
+}
+/********* End third level name *******/
+?>
+</ul>
+</div>
+<?php
+$catimage=Mage::getModel('catalog/category')->load($second_id);
+$image= $catimage->getThumbnail();
+//echo $image.'Hello';
+$image_url = Mage::getBaseUrl('media').'catalog/category/'.$image;
+?>
+<div class="cat-thumb"><img src="<?php echo $image_url; ?>" /></div>
+<?php
+
+function get_sub_cat_id($id)
+{
+	$cats = Mage::getModel('catalog/category')->load($id)->getChildrenCategories();
+	$catId=array();
+	foreach($cats as $category)
+	{
+	   array_push($catId,$category->getId());
+	}    
+	return $catId;
+}
+?>
+
+<script>jQuery.noConflict()</script>
+<script>
+	jQuery(document).ready(function($) {
+		jQuery('.display_next_ul_sub1').mouseover(function(e){
+			e.preventDefault();
+			jQuery('.special_sub1').hide();
+			jQuery('.display_next_ul_sub1').removeClass('ul_sub1_a_hovered');
+			jQuery(this).addClass('ul_sub1_a_hovered');
+			jQuery(this).parent('li').find('ul.special_sub1').show();
+		});
+
+		jQuery('#menu7').mouseover(function(){
+			jQuery('.special_sub1').hide();
+			//alert(jQuery('#wp_custom_menu_7 .special_sub1').length);
+			var special_sub1 = jQuery('.special_sub1')[0];
+			var display_next_ul_sub1 = jQuery('.display_next_ul_sub1')[0];
+			jQuery('.display_next_ul_sub1').removeClass('ul_sub1_a_hovered');
+			jQuery(display_next_ul_sub1).addClass('ul_sub1_a_hovered');
+			jQuery(special_sub1).show();
+		});
+    });
+</script>

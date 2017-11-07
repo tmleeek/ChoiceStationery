@@ -1,0 +1,23 @@
+<?php /* @var $this Mage_Adminhtml_Block_Store_Switcher */ ?>
+<?php if ($websites = $this->getWebsites()): ?>
+<p class="switcher"><label for="website_switcher"><?php echo $this->__('Choose Website:') ?></label>
+<select name="website_switcher" id="website_switcher" onchange="return switchWebsite(this);">
+<?php if ($this->hasDefaultOption()): ?>
+    <option value=""><?php echo $this->getDefaultStoreName() ?></option>
+<?php endif; ?>
+    <?php foreach ($this->getWebsiteCollection() as $_website): ?>
+        <option website="true" value="<?php echo $_website->getId() ?>"<?php if($this->getRequest()->getParam('website') == $_website->getId()): ?> selected<?php endif; ?>><?php echo $_website->getName() ?></option>
+    <?php endforeach; ?>
+</select>
+<?php echo $this->getHintHtml() ?>
+</p>
+<script type="text/javascript">
+    function switchWebsite(obj) {
+        var websiteParam = obj.value ? 'website/' + obj.value + '/' : '';
+        if (obj.switchParams) {
+            websiteParam += obj.switchParams;
+        }
+        setLocation('<?php echo $this->getSwitchUrl() ?>' + websiteParam);
+    }
+</script>
+<?php endif; ?>

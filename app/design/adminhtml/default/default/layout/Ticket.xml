@@ -1,0 +1,435 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    
+    <adminhtml_sales_order_view>
+        <reference name="sales_order_tabs">
+            <action method="addTab">
+                <name>order_tickets</name>
+                <block>CrmTicket/Admin_Sales_Order_View_Tab_Tickets</block>       
+            </action>
+        </reference>
+        <reference name="head">
+            <!-- javascript -->
+            <action method="addJs">
+                <script>prototype/window.js</script>
+            </action>
+            <action method="addJs">
+                <script>mdn/CrmTicket.js</script>
+            </action>
+            <action method="addJs">
+                <script>mdn/GridFilterMultiSelect.js</script>
+            </action>
+            <!-- CSS -->
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/alphacube.css</name>
+            </action>
+            <action method="addCss">
+                <name>CrmTicket.css</name>
+            </action>      
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <!-- grid ticket -->
+    <crmticket_admin_ticket_grid>
+        <reference name="head">
+            <!-- javascript -->
+            <action method="addJs">
+                <script>prototype/window.js</script>
+            </action>
+            <action method="addJs">
+                <script>mdn/CrmTicket.js</script>
+            </action>
+            <action method="addJs">
+                <script>mdn/GridFilterMultiSelect.js</script>
+            </action>
+            <!-- CSS -->
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/alphacube.css</name>
+            </action>
+            <action method="addCss">
+                <name>CrmTicket.css</name>
+            </action>      
+        </reference>
+        <reference name="content">
+            <!-- charger d'autres blocs -->
+            <block type="CrmTicket/Admin_Ticket_Grid" name="crm_ticket_grid" template="CrmTicket/Ticket/Grid.phtml"></block>
+        </reference>
+    </crmticket_admin_ticket_grid>
+
+    <!-- grid email import ticket -->
+    <crmticket_admin_email_grid>
+        <reference name="head">
+            <action method="addJs">
+                <script>mdn/GridFilterMultiSelect.js</script>
+            </action>
+        </reference>
+        <reference name="content">
+            <!-- charger d'autres blocs -->
+            <block type="CrmTicket/Admin_Email_Grid" name="crm_email_grid" template="CrmTicket/Email/Grid.phtml"></block>
+        </reference>
+    </crmticket_admin_email_grid>
+
+    <!-- grid search tickets  -->
+    <crmticket_admin_ticket_search_grid>
+        <reference name="head">
+            <!-- javascript -->
+            <action method="addJs">
+                <script>prototype/window.js</script>
+            </action>
+            <action method="addJs">
+                <script>mdn/CrmTicket.js</script>
+            </action>
+            <action method="addJs">
+                <script>mdn/GridFilterMultiSelect.js</script>
+            </action>
+            <!-- CSS -->
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/alphacube.css</name>
+            </action>
+            <action method="addCss">
+                <name>CrmTicket.css</name>
+            </action>      
+        </reference>
+        <reference name="content">
+            <!-- charger d'autres blocs -->
+            <block type="CrmTicket/Admin_Ticket_Search_Grid" name="crm_email_grid" template="CrmTicket/Ticket/Search/Tab/Grid.phtml"></block>
+        </reference>
+    </crmticket_admin_ticket_search_grid>
+
+    <crmticket_admin_ticket_searchcreate>
+        <reference name="content">
+            <block type="CrmTicket/Admin_Ticket_SearchCreate_Grid" name="crm_ticket_searchcreate" template="CrmTicket/Ticket/SearchCreate/Grid.phtml"></block>
+        </reference>
+    </crmticket_admin_ticket_searchcreate>
+
+    <crmticket_admin_ticket_my>
+        <!-- including javascript files ans CSS -->
+        <reference name="head">
+            <!-- javascript -->
+            <action method="addJs">
+                <script>prototype/window.js</script>
+            </action>
+            <action method="addJs">
+                <script>mdn/CrmTicket.js</script>
+            </action>
+            <action method="addJs">
+                <script>mdn/GridFilterMultiSelect.js</script>
+            </action>
+            <!-- CSS -->
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/alphacube.css</name>
+            </action>
+            <action method="addCss">
+                <name>CrmTicket.css</name>
+            </action>      
+        </reference>
+        <reference name="content">
+            <!-- charger d'autres blocs -->
+            <block type="CrmTicket/Admin_Ticket_My" name="crm_ticket_my" template="CrmTicket/Ticket/My.phtml"></block>
+        </reference>
+    </crmticket_admin_ticket_my>
+
+    <crmticket_admin_ticket_edit>
+        <!-- gsa
+        <reference name="content">
+            <block type="CrmTicket/Admin_Ticket_Edit" name="crm_ticket_edit" template="CrmTicket/Ticket/Edit/Tab/Ticket.phtml"></block>
+        </reference>-->
+        
+        <!-- including javascript files ans CSS -->
+        <reference name="head">
+            <!-- javascript -->
+            <action method="addJs">
+                <script>prototype/window.js</script>
+            </action>
+            <action method="addJs">
+                <script>mdn/CrmTicket.js</script>
+            </action>
+            <action method="addJs">
+                <script>mdn/GridFilterMultiSelect.js</script>
+            </action>
+            <!-- CSS -->
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/alphacube.css</name>
+            </action>
+            <action method="addCss">
+                <name>CrmTicket.css</name>
+            </action>      
+        </reference>
+    </crmticket_admin_ticket_edit>
+    
+    
+    <crmticket_admin_ticket_editmessage>
+
+        <reference name="content">
+            <block type="CrmTicket/Admin_Ticket_Message_Edit" name="crm_ticket_edit_message" template="CrmTicket/Ticket/Message/Edit.phtml"></block>
+        </reference>
+    </crmticket_admin_ticket_editmessage>
+
+  
+    
+    <!-- ###################################################################################################################### -->
+    <!-- CATEGORY -->
+    <!-- ###################################################################################################################### -->
+ 
+
+    <!-- grid category -->
+    <crmticket_admin_category_tree>
+        <reference name="head">
+            <action method="addJs">
+                <script>extjs/ext-tree.js</script>
+            </action>
+            <action method="addJs">
+                <script>extjs/ext-tree-checkbox.js</script>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>extjs/resources/css/ext-all.css</name>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>extjs/resources/css/ytheme-magento.css</name>
+            </action>
+        </reference>
+
+        <reference name="content">
+            <block type="CrmTicket/Admin_Category_Tree" name="crm_category_tree" template="CrmTicket/Category/Tree.phtml"></block>
+        </reference>
+    </crmticket_admin_category_tree>
+    
+    <crmticket_admin_category_newcategory>
+        <reference name="content">
+            <!-- charger d'autres blocs -->
+            <block type="CrmTicket/Admin_Category_New" name="crm_category_edit" template="CrmTicket/Category/New.phtml"></block>
+        </reference>
+    </crmticket_admin_category_newcategory>
+    
+    <crmticket_admin_category_edit>
+        <reference name="content">
+            <block type="CrmTicket/Admin_Category_Edit" name="crm_category_edit" template="CrmTicket/Category/Edit/Tab/Category.phtml"></block>
+        </reference>
+        
+        <!-- including javascript files ans CSS -->
+        <reference name="head">
+            <!-- javascript -->
+            <action method="addJs">
+                <script>prototype/window.js</script>
+            </action>
+            <action method="addJs">
+                <script>mdn/CrmTicket.js</script>
+            </action>
+            <!-- CSS -->
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/alphacube.css</name>
+            </action>
+        </reference>
+    </crmticket_admin_category_edit>
+  
+    <!-- ###################################################################################################################### -->
+    <!-- CUSTOMER -->
+    <!-- ###################################################################################################################### -->
+  
+  
+    <!-- block for admin customer page (add list of tickets)  -->
+    <adminhtml_customer_edit>
+        <reference name="customer_edit_tabs">
+
+            <action method="addTab">
+                <name>customer_ticket</name>
+                <block>CrmTicket/Admin_Customer_Ticket_Grid</block>       
+            </action>
+
+            <!-- including javascript files ans CSS -->
+            <reference name="head">
+                <!-- javascript -->
+                <action method="addJs">
+                    <script>prototype/window.js</script>
+                </action>
+                <action method="addJs">
+                    <script>mdn/CrmTicket.js</script>
+                </action>
+                <action method="addJs">
+                    <script>mdn/GridFilterMultiSelect.js</script>
+                </action>
+                <!-- CSS -->
+                <action method="addItem">
+                    <type>js_css</type>
+                    <name>prototype/windows/themes/default.css</name>
+                </action>
+                <action method="addItem">
+                    <type>js_css</type>
+                    <name>prototype/windows/themes/alphacube.css</name>
+                </action>
+                <action method="addCss">
+                    <name>CrmTicket.css</name>
+                </action>        
+            </reference>
+        </reference>
+    </adminhtml_customer_edit>
+   
+    <!-- block for adding a ticket to the customer -->
+    <crmticket_admin_customer_ticketform>
+        <reference name="content">
+            <block type="CrmTicket/Admin_Customer_Ticket_New" name="new_ticket" template="CrmTicket/Customer/Ticket/New.phtml"></block>
+        </reference>
+    </crmticket_admin_customer_ticketform>
+  
+    <!-- ###################################################################################################################### -->
+    <!-- PRIORITY -->
+    <!-- ###################################################################################################################### -->
+    
+    <crmticket_admin_priority_grid>
+        <reference name="content">
+            <block type="CrmTicket/Admin_Priority_Grid" name="crm_priority_grid" template="CrmTicket/Priority/Grid.phtml"></block>
+        </reference>
+    </crmticket_admin_priority_grid>
+
+    <crmticket_admin_priority_edit>
+        <reference name="content">
+            <block type="CrmTicket/Admin_Priority_Edit" name="crm_priority_edit" template="CrmTicket/Priority/Edit.phtml"></block>
+        </reference>
+    </crmticket_admin_priority_edit>
+  
+    <!-- ###################################################################################################################### -->
+    <!-- SUMMARY -->
+    <!-- ###################################################################################################################### -->
+  
+    <crmticket_admin_summary_category>
+        <reference name="content">
+            <block type="CrmTicket/Admin_Ticket_Summary_Category" name="crm_ticket_summary_category" template="CrmTicket/Ticket/Summary/Category.phtml"></block>
+        </reference>
+    </crmticket_admin_summary_category>
+    
+    <crmticket_admin_summary_user>
+        <reference name="content">
+            <block type="CrmTicket/Admin_Ticket_Summary_User" name="crm_ticket_summary_user" template="CrmTicket/Ticket/Summary/User.phtml"></block>
+        </reference>
+    </crmticket_admin_summary_user>
+  
+    <!-- ###################################################################################################################### -->
+    <!-- STATUS -->
+    <!-- ###################################################################################################################### -->
+    
+    <crmticket_admin_status_grid>
+        <reference name="content">
+            <block type="CrmTicket/Admin_Status_Grid" name="crm_status_grid" template="CrmTicket/Status/Grid.phtml"></block>
+        </reference>
+    </crmticket_admin_status_grid>
+
+    <crmticket_admin_status_edit>
+        <reference name="content">
+            <block type="CrmTicket/Admin_Status_Edit" name="crm_status_edit" template="CrmTicket/Status/Edit.phtml"></block>
+        </reference>
+    </crmticket_admin_status_edit>
+
+    <!-- ###################################################################################################################### -->
+    <!-- router rules -->
+    <!-- ###################################################################################################################### -->
+    
+    <crmticket_admin_routerrules_grid>
+        <reference name="content">
+            <block type="CrmTicket/Admin_RouterRules_Grid" name="crm_routerrules_grid" template="CrmTicket/RouterRules/Grid.phtml"></block>
+        </reference>
+    </crmticket_admin_routerrules_grid>
+
+    <crmticket_admin_routerrules_edit>
+        <reference name="content">
+            <block type="CrmTicket/Admin_RouterRules_Edit" name="crm_routerrules_edit" template="CrmTicket/RouterRules/Edit.phtml"></block>
+        </reference>
+    </crmticket_admin_routerrules_edit>
+
+    <!-- ###################################################################################################################### -->
+    <!-- default reply -->
+    <!-- ###################################################################################################################### -->
+    
+    <crmticket_admin_defaultreply_grid>
+        <reference name="content">
+            <block type="CrmTicket/Admin_DefaultReply_Grid" name="crm_defaultreply_grid" template="CrmTicket/DefaultReply/Grid.phtml"></block>
+        </reference>
+    </crmticket_admin_defaultreply_grid>
+
+    <crmticket_admin_defaultreply_edit>
+        <reference name="content">
+            <block type="CrmTicket/Admin_DefaultReply_Edit" name="crm_defaultreply_edit"></block>
+        </reference>
+    </crmticket_admin_defaultreply_edit>
+
+    <!-- ###################################################################################################################### -->
+    <!-- email account -->
+    <!-- ###################################################################################################################### -->
+    
+    <crmticket_admin_emailaccount_grid>
+        <reference name="content">
+            <block type="CrmTicket/Admin_EmailAccount_Grid" name="crm_emailaccount_grid" template="CrmTicket/EmailAccount/Grid.phtml"></block>
+        </reference>
+    </crmticket_admin_emailaccount_grid>
+
+    <crmticket_admin_emailaccount_edit>
+        <reference name="content">
+            <block type="CrmTicket/Admin_EmailAccount_Edit" name="crm_emailaccount_edit"></block>
+        </reference>
+    </crmticket_admin_emailaccount_edit>
+
+    <crmticket_admin_emailaccount_router>
+        <reference name="content">
+            <block type="CrmTicket/Admin_EmailAccount_Router" name="crm_emailaccount_router" template="CrmTicket/EmailAccount/Router.phtml"></block>
+        </reference>
+    </crmticket_admin_emailaccount_router>
+
+    <!-- ###################################################################################################################### -->
+    <!-- email router rules -->
+    <!-- ###################################################################################################################### -->
+
+    <crmticket_admin_emailrouterrules_grid>
+        <reference name="head">
+            <action method="addJs">
+                <script>mdn/GridFilterMultiSelect.js</script>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="CrmTicket/Admin_Email_Router_Grid" name="crm_emailrouter_grid" template="CrmTicket/Email/Router/Grid.phtml"></block>
+        </reference>
+    </crmticket_admin_emailrouterrules_grid>
+
+    <crmticket_admin_emailrouterrules_new>
+        <reference name="content">
+            <block type="CrmTicket/Admin_Email_Router_New" name="crm_emailrouter_new" template="CrmTicket/Email/Router/New.phtml"></block>
+        </reference>
+    </crmticket_admin_emailrouterrules_new>
+
+    <crmticket_admin_emailrouterrules_edit>
+        <reference name="content">
+            <block type="CrmTicket/Admin_Email_Router_Edit" name="crm_emailrouter_edit" template="CrmTicket/Email/Router/Edit.phtml"></block>
+        </reference>
+    </crmticket_admin_emailrouterrules_edit>
+  
+</layout> 

@@ -1,0 +1,90 @@
+"<p><strong>Important:</strong> In order to insert the &apos;Service API Code&apos;, please select a website to associate to your account.</p>
+<p>If you do not receive the &apos;Service API Code&apos; in your signup email then you can find it in the {wl_name} interface.</p>
+<p>Open the Admin dashboard (customer administrator permissions required) and go to the Services tab for your customer space.</p>","<p><strong>Important:</strong> In order to insert the &apos;Service API Code&apos;, please select a website to associate to your account.</p>
+<p>If you do not receive the &apos;Service API Code&apos; in your signup email then you can find it in the {wl_name} interface.</p>
+<p>Open the Admin dashboard (customer administrator permissions required) and go to the Services tab for your customer space.</p>"
+"<p>All data is synced regularly but if for any reason you want to manually force a sync of any one particular type use the &apos;Force Sync&apos; buttons.</p>","<p>All data is synced regularly but if for any reason you want to manually force a sync of any one particular type use the &apos;Force Sync&apos; buttons.</p>"
+"<p>Enabling this option will add a line of tracking code to all pages within your Magento store allowing {wl_name} to record purchases made as a result of arriving at the store from your emails.</p>","<p>Enabling this option will add a line of tracking code to all pages within your Magento store allowing {wl_name} to record purchases made as a result of arriving at the store from your emails.</p>"
+"<p>Enabling this option will re-route emails sent from your Magento store via your {wl_name} account.</p>
+<p>This offers you better deliverability results and allows {wl_name} to gather basic send, delivered, opened and clicked data.</p>","<p>Enabling this option will re-route emails sent from your Magento store via your {wl_name} account.</p>
+<p>This offers you better deliverability results and allows {wl_name} to gather basic send, delivered, opened and clicked data.</p>"
+"<p>These are additional fields in order to capture additional information in the Magento standard subscribers signup form.</p>
+                    <p>Select from Optional or Required depending on whether you want to force your subscribers to fill in the fields before submitting the form.</p>","<p>These are additional fields in order to capture additional information in the Magento standard subscribers signup form.</p>
+                    <p>Select from Optional or Required depending on whether you want to force your subscribers to fill in the fields before submitting the form.</p>"
+"<p>To automatically start sending out the default shopping cart abandonment email from this store simply Enable this feature and leave the default Basket Type set.</p>
+<p>Altering any of the default settings you will need to access your {wl_name} Customer Space.</p>","<p>To automatically start sending out the default shopping cart abandonment email from this store simply Enable this feature and leave the default Basket Type set.</p>
+<p>Altering any of the default settings you will need to access your {wl_name} Customer Space.</p>"
+"<p>To use related product and customer data within your emails this option must be Enabled. {wl_name} will then keep an up-to-date record of the data outlined below.</p>","<p>To use related product and customer data within your emails this option must be Enabled. {wl_name} will then keep an up-to-date record of the data outlined below.</p>"
+"<ul style=""list-style:disc; margin-left:25px; margin-right:25px;"">
+    <li>Standard SCA Email Design, branded with your store logo. Content of the email shows details of the products abandoned as well as a selection of related products.</li>
+    <li>Emails sent after 20 minutes from the point of abandonment</li>
+    <li>Delay of 1 day set, so no further SCA emails are sent in same day (even if basket is abandoned multiple times)</li>
+</ul>","<ul style=""list-style:disc; margin-left:25px; margin-right:25px;"">
+    <li>Standard SCA Email Design, branded with your store logo. Content of the email shows details of the products abandoned as well as a selection of related products.</li>
+    <li>Emails sent after 20 minutes from the point of abandonment</li>
+    <li>Delay of 1 day set, so no further SCA emails are sent in same day (even if basket is abandoned multiple times)</li>
+</ul>"
+"Additional Fields","Additional Fields"
+"Attempting to retry setup","Attempting to retry setup"
+"Authentication","Authentication"
+"Basket Type","Basket Type"
+"CRAM-MD5","CRAM-MD5"
+"Cannot change API details while performing setup","Cannot change API details while performing setup"
+"Categories","Categories"
+"Category Products","Category Products"
+"Connect","Connect"
+"Data Sync","Data Sync"
+"Don't add","Don't add"
+"Email","Email"
+"Enable/Disable","Enable/Disable"
+"First Name","First Name"
+"First name","First name"
+"Force Sync","Force Sync"
+"Full sync will begin within the next minute","Full sync will begin within the next minute"
+"General","General"
+"Last Name","Last Name"
+"Last name","Last name"
+"Login","Login"
+"Never synced","Never synced"
+"Newsletter","Newsletter"
+"None","None"
+"Optional","Optional"
+"Plain","Plain"
+"Product Sales","Product Sales"
+"Products","Products"
+"Promotions","Promotions"
+"ROI","ROI"
+"Recommended","Recommended"
+"Required","Required"
+"Retry","Retry"
+"Return on Investment","Return on Investment"
+"SSL","SSL"
+"SSL TLS","SSL TLS"
+"Security","Security"
+"Settings","Settings"
+"Setup","Setup"
+"Setup Progress","Setup Progress"
+"Setup complete","Setup complete"
+"Setup failed","Setup failed"
+"Shopping Cart Abandonment","Shopping Cart Abandonment"
+"Sign Up for Our Newsletter:","Sign Up for Our Newsletter:"
+"Sign up for our newsletter","Sign up for our newsletter"
+"Stores","Stores"
+"Subscribe","Subscribe"
+"Subscribers","Subscribers"
+"Sync All","Sync All"
+"Sync of %s will begin within the next minute","Sync of %s will begin within the next minute"
+"Title","Title"
+"To find this code as a customer administrator, open the Admin dashboard and go to the Services tab for your customer space.","To find this code as a customer administrator, open the Admin dashboard and go to the Services tab for your customer space."
+"Transactional","Transactional"
+"Transactional Email","Transactional Email"
+"Waiting for setup","Waiting for setup"
+"categories","categories"
+"category products","category products"
+"product Sales","product Sales"
+"products","products"
+"promotions","promotions"
+"stores","stores"
+"subscribers","subscribers"
+"{wl_name}","{wl_name}"
+"{wl_name} Service API Code","{wl_name} Service API Code"

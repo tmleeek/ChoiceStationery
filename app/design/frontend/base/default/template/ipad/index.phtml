@@ -1,0 +1,57 @@
+<?php
+$baseUrl=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+$currentUrl = Mage::helper('core/url')->getCurrentUrl();
+if($this->isRockIpadEnable()){
+?>
+<div>
+	<?php
+		if(Mage::getSingleton('core/session')->getIpadDrawSuccess()==1){
+			echo "<h3>Your Request Has Been Successfully Submited.</h3>";
+			Mage::getSingleton('core/session')->unsIpadDrawSuccess();
+		}
+	?>
+</div>
+<form action='<?php echo $baseUrl."ipaddraw/index/save"; ?>' name='ipad-draw-form' id='ipad-draw-form' method='post'>
+	<div class="fieldset">
+		<!-- <h2 class="legend">Ipad Giveaway</h2> -->
+		<ul class="form-list ipad-draw">
+		
+		<li class="fields">
+			<div class="field">
+				<label for="name" class="required"><em>*</em>Name</label>
+				<div class="input-box">
+					<input type='hidden' name='ipadUrl' value='<?php echo $currentUrl; ?>' />
+					<input type='hidden' name='ipadSuccessUrl' value='<?php echo $baseUrl."ipaddraw/index/success"; ?>' />
+					<input class="input-text required-entry" type='text' name='ipadName' placeholder='' />	
+				</div>
+			</div>
+		</li>	
+		<li class="fields">
+			<div class="field">
+				<label for="email" class="required"><em>*</em>Email</label>		
+				<div class="input-box">
+					<input type='text' class="input-text required-entry validate-email" name='ipadEmail' placeholder='' />
+				</div>
+			</div>
+		</li>
+		</ul>
+		<div class="buttons-set">
+			<!-- <button type='submit' name='ipadSubmit' value='Submit' class="button" /> -->
+			<button type="submit" title="Submit" name='ipadSubmit' class="button rock-ipad-button">
+				<span>
+					<span>Submit</span>
+				</span>
+			</button>
+			<p class="required rock-ipad-p">* Required Fields</p>
+		</div>
+	</div>
+</form>
+
+<script type="text/javascript">
+    //< ![CDATA[
+        var customForm = new VarienForm('ipad-draw-form');
+    //]]>
+</script>
+<?php
+}
+?>

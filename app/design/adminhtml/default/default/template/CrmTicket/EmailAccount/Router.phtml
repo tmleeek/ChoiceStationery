@@ -1,0 +1,77 @@
+<div class="entry-edit">
+
+<form id="matrix_form" method="POST" name="matrix_form" action="<?php echo $this->getUrl('*/*/SaveRouter') ?>" enctype="multipart/form-data">
+
+<input type="hidden" id="form_key" name="form_key"  value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+
+<div class="content-header">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td><h3><?php echo $this->__('Email account router'); ?></h3></td>
+            <td align="right">
+                <button onclick="document.getElementById('matrix_form').submit()" class="scalable save" type="button"><span><?php echo $this->__('Save') ?></span></button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<?php
+$storeList = $this->getStores();
+$nbStore = count($storeList);
+$emailAccounts = $this->getEmailAccounts();
+$categorys = $this->getCategorys();
+$storeIds = array();//to map the storeId with the selects
+?>
+
+<style>
+#account_matrix th, #account_matrix td, #account_matrix select  { font-size: 8pt; padding: 1px 1px 1px 1px;}
+option.notselected {color: grey}
+</style>
+
+<div class="grid" id="account_matrix">
+    <table class="data">
+
+        <thead>
+          <tr class="headings">
+            <th></th>
+            <?php foreach ($storeList as $store) : ?>
+            <?php $storeIds[] = $store->getId(); ?>
+                <th id="store_<?php echo $store->getId(); ?>"> <?php echo $store->getWebsite()->getName()."<br>".$store->getGroup()->getName()."<br>".$store->getName(); ?></th>
+            <?php endforeach; ?>
+          </tr>
+        </thead>
+
+        <tbody>
+        <?php foreach ($categorys as $category) : ?>
+        <?php $catid = $category->getId(); ?>
+            <tr class="odd">
+              <td id="cat_<?php echo $catid; ?>" style="width: 200px"> <?php echo $category->getCompleteName(); ?></td>
+              <?php for ($i=0; $i<$nbStore; $i++): ?>
+                    <td id="choice_<?php echo $i; ?>">
+                      <?php $key = $storeIds[$i].$this->getSeparator().$catid.$this->getSeparator().$i; ?>
+                      <select class="select" name="rule[<?php echo $key; ?>]" id="acc[<?php echo $key; ?>]">
+                              <option class="notselected" value="<?php echo 0; ?>" ><?php echo $this->__('Not selected') ?></option>
+                          <?php foreach ($emailAccounts as $account) : ?>
+                              <?php 
+                              $limit = 25;
+                              $shorterName = $account->getcea_name();
+                              if(strlen($shorterName)>$limit){
+                                $shorterName = substr($account->getcea_name(), 0, $limit).'...';
+                              }
+                              ?>
+                              <?php $selectKey = $storeIds[$i].$this->getSeparator().$catid.$this->getSeparator().$account->getId(); ?>
+                              <option <?php if ($this->matchesRules($selectKey)) echo "selected" ?> value="<?php echo $selectKey; ?>"><?php echo $shorterName; ?></option>
+                          <?php endforeach; ?>
+                      </select>
+                    </td>
+              <?php endfor; ?>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+
+    </table>
+</div>
+
+</form>
+
+</div>

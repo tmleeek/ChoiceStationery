@@ -1,0 +1,52 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @copyright  Copyright (c) 2013 Boost My Shop (http://www.boostmyshop.com)
+ * @author : Nicolas MUGNIER
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @package MDN_Amazon
+ * @version 2
+ */
+?>
+<?php //if(Mage::getStoreConfig('marketplace/logs/show') == 1): ?>
+<?php //echo $this->getChildHtml('marketplace_last_errors'); ?>
+<?php //endif; ?>
+
+<div style="display:none;width:400px;margin:auto auto;height:50px;text-align:center;font-weight:bold;" id="save_process_message"><?php echo $this->__('Saving data, please wait...') ?></div>
+<div id="product_grid"><?php echo $this->getChildHtml('marketplace_products'); ?></div>
+    
+<?php // TODO : factoriser ce code pour tous les marketplaces ! ?>
+<script type="text/javascript">
+
+    function saveGrid(){
+
+        var form = document.getElementById('ProductsGrid_massaction-form');
+        form.setAttribute('action', "<?php echo mage::helper('adminhtml')->getUrl('Amazon/Main/Save', array('country_id' => Mage::registry('mp_country')->getId())); ?>");
+        form.setAttribute('id', 'form_data');
+        form.setAttribute('method', 'POST');
+
+        var select = document.getElementById('ProductsGrid_massaction-select');
+        select.setAttribute('class', "");
+
+        var table_originale = document.getElementById('ProductsGrid_table');
+        var table = table_originale;
+        table.setAttribute('id', 'submitted_fieds');
+        table.setAttribute('style', 'display:none');
+        form.appendChild(table);
+
+        var formData = new varienForm('form_data');
+
+        document.getElementById('save_process_message').style.display = 'block';
+        document.getElementById('product_grid').style.display = 'none';
+
+        formData.submit();
+    }
+
+</script>

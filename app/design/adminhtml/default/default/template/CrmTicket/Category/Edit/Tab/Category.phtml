@@ -1,0 +1,104 @@
+<div class="content-header">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td><h3><?php echo $this->__('Category') ?></h3></td>
+            <td align="right">
+                <button onclick="document.getElementById('edit_form').submit();" class="scalable save" type="button"><span><?php echo $this->__('Save') ?></span></button>
+                <button onclick="
+                    var url='<?php echo $this->getDeleteUrl($this->getCategory()->getctc_id()) ?>';
+                    var d=confirm('<?php echo Mage::helper('CrmTicket')->__('Do you want to delete this category ?'); ?>');
+                    if(d){                      
+                    var nb=<?php echo $this->getCategory()->getSubCategoriesCount(); ?>;
+                    if(nb==0){document.location.href=url;}else{
+                      var c=confirm('<?php echo Mage::helper('CrmTicket')->__('This category has sub categories, do you want to delete them all ?'); ?>');
+                      if(c){document.location.href=url}; 
+                    }
+                    }" class="scalable delete" type="button"><span><?php echo $this->__('Delete') ?></span></button>                  
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="entry-edit">
+    <?php /* ------------------------------------ CATEGORY FORM ------------------------------------  */ ?>
+    <form id="edit_form" method="POST" name="edit_form" action="<?php echo $this->getUrl('CrmTicket/Admin_Category/Save') ?>">
+        <input type="hidden" id="ctc_id" name="ctc_id" value="<?php echo $this->getCategory()->getctc_id(); ?>">
+        <input type="hidden" id="form_key" name="form_key"  value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Category information'); ?></h4>
+        </div>
+        <div id="ticket_fieldset" class="fieldset ">
+            <div class="hor-scroll">
+                <table class="form-list" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Name'); ?> <span class="required">*</span></td>
+                            <td class="value">
+                                <input class="input-text required-entry" type="text" name="ctc_name" id="ctc_name" size="42" value="<?php echo $this->htmlEscape($this->getCategory()->getctc_name()); ?>"></input>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label"><?php echo $this->__('Parent category'); ?> <span class="required">*</span></td>
+                            <td class="value">
+                                <select class="required-entry select" name="ctc_parent_id" id="ctc_parent_id">
+                                    <option <?php if ($this->getCategory()->getctc_parent_id() == 0) echo "selected"; ?> value="0">-- Parent Category --</option>
+                                    <?php foreach ($this->getParents() as $parent) : ?>
+                                        <option <?php if ($this->getCategory()->getctc_parent_id() == $parent->getctc_id()) echo 'selected="selected"'; ?> value="<?php echo $parent->getctc_id(); ?>" ><?php echo $parent->getctc_name(); ?></option>
+                                    <?php endforeach; ?>    
+                                </select>
+                            </td>
+                        </tr>   
+
+                        <?php if (Mage::helper('CrmTicket')->allowProductSelection()): ?>
+                            <tr>
+                                <td class="label"><?php echo $this->__('Product'); ?> </td>
+                                <td class="value">
+                                    <select class="required-entry select" name="ctc_produit_id" id="ctc_produit_id">
+                                        <option <?php if ($this->getCategory()->getctc_produit_id() == 0) echo "selected"; ?> value="0"></option>
+                                        <?php foreach ($this->getProducts() as $product) : ?>
+                                            <option <?php if ($this->getCategory()->getctc_produit_id() == $product->getId()) echo 'selected="selected"'; ?> value="<?php echo $product->getId(); ?>" ><?php echo $product->getName(); ?></option>
+                                        <?php endforeach; ?>    
+                                    </select>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Manager'); ?> </td>
+                            <td class="value">
+                                <select class=" select" name="ctc_manager" id="ctc_manager">
+                                    <option value=""></option>
+                                    <?php foreach ($this->getManagers() as $manager) : ?>
+                                        <option <?php if ($this->getCategory()->getctc_manager() == $manager->getId()) echo "selected"; ?> value="<?php echo $manager->getId(); ?>"><?php echo $manager->getusername(); ?></option>
+                                    <?php endforeach; ?>  
+                                </select>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <td class="label"><?php echo $this->__('Private'); ?> <span class="required">*</span></td>
+                            <td class="value">
+                                <select class=" select" name="ctc_is_private" id="ctc_is_private">
+                                    <option></option>
+                                    <?php foreach ($this->getBooleans() as $k => $v) : ?>
+                                        <option <?php if ($this->getCategory()->getctc_is_private() == $k) echo "selected"; ?> value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                    <?php endforeach; ?>  
+                                </select>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <td class="label"><?php echo $this->__('Reply delay'); ?></td>
+                            <td class="value">
+                                <input class="input-text" type="text" name="ctc_reply_delay" id="ctc_reply_delay" size="3" value="<?php echo $this->getCategory()->getctc_reply_delay(); ?>"></input>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+      
+    </form>
+    <script type="text/javascript">
+        editForm = new varienForm('edit_form', '');
+    </script>
+</div>

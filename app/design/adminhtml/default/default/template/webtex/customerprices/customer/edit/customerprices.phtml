@@ -1,0 +1,320 @@
+<?php
+/**
+ * Webtex
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Webtex EULA that is bundled with
+ * this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.webtex.com/LICENSE-1.0.html
+ *
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@webtex.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extension
+ * to newer versions in the future. If you wish to customize the extension
+ * for your needs please refer to http://www.webtex.com/ for more information
+ * or send an email to sales@webtex.com
+ *
+ * @category   Webtex
+ * @package    Webtex_CustomerPrices
+ * @copyright  Copyright (c) 2010 Webtex (http://www.webtex.com/)
+ * @license    http://www.webtex.com/LICENSE-1.0.html
+ */
+
+/**
+ * Customer Prices extension
+ *
+ * @category   Webtex
+ * @package    Webtex_CustomerPrices
+ * @author     Webtex Dev Team <dev@webtex.com>
+ */
+?>
+
+<script type="text/javascript">
+var customerPriceControl = {
+
+    showProductGrid: function() {
+        $('customerprices-container-grid').show();
+    },
+
+    selectPrice : function(grid, event){
+        var element = Event.findElement(event, 'tr');
+        if (element.title){
+            new Ajax.Request('<?php echo $this->getUrl('adminhtml/customerprices_customer/getproductrow');?>' , {
+                parameters :{id: element.title},
+                method :'post',
+                onComplete :this.selectPriceComplete.bind(this)
+            });
+        }
+    },
+    
+    selectPriceComplete : function(transport) {
+        var result = transport.responseText.evalJSON();
+        if(result.product_id){
+            $('product-id').value = result.product_id;
+            $('website-id').value = result.store_id;
+            $('product-price').value = result.price;
+            $('product-special-price').value = result.special_price;
+            $('product-qty').value = result.qty;
+            if(Prototype.Browser.IE) {
+                $('product-name').childNodes[0].innerText = result.product_name;
+            } else {
+                $('product-name').childNodes[0].textContent = result.product_name;
+            }
+        }
+    },
+
+    selectProduct : function(grid, event){
+        var element = Event.findElement(event, 'tr');
+        if (element.cells){
+            if(Prototype.Browser.IE) {
+                $('product-id').value = element.cells[0].innerText.trim();
+                $('product-name').childNodes[0].innerText = element.cells[1].innerText.trim();
+                $('product-price').value = element.cells[3].innerText.trim();
+            } else {
+                $('product-id').value = element.cells[0].textContent.trim();
+                $('product-name').childNodes[0].textContent = element.cells[1].textContent.trim();
+                $('product-price').value = element.cells[3].textContent.trim();
+            }
+        }
+        m = parseFloat($('product-price').value);
+        $('product-price').value = m.toFixed(2);
+        $('product-qty').value = "1";
+        $('customerprices-container-grid').hide();
+    },
+    
+    addProductPrice: function(){
+        $('customer_product_prices').removeClassName('ignore-validate');
+        var validationResult = $('customer_product_prices').select('input',
+                'select', 'textarea').collect( function(elm) {
+                 if(elm.id != 'product-price' && elm.id != 'product-special-price' && $(elm.id).value == ""){
+                     $(elm.id).up('td').insert({ bottom: '<div class="validation-advice">This is required field.</div>'});
+                     return false;
+                 }
+                 if(elm.id == 'product-qty' && $(elm.id).value == 0){
+                     $(elm.id).up('td').insert({ bottom: '<div class="validation-advice">This is required field.</div>'});
+                     return false;
+                 }
+                 return true;
+            }).all();
+        $('customer_product_prices').addClassName('ignore-validate');
+
+        if (!validationResult) {
+            return;
+        }
+
+        var params = Form.serializeElements($('customer_product_prices')
+                .select('input', 'select', 'textarea'), true);
+        params.form_key = FORM_KEY;
+        $('messages').update();
+
+        new Ajax.Request('<?php echo $this->getUrl('adminhtml/customerprices_customer/addproductrow');?>' , {
+            parameters :params,
+            method :'post',
+            area :$('customer_product_prices'),
+            onComplete :this.addProductPriceComplete.bind(this)
+        });
+
+    },
+
+    addProductPriceComplete : function(transport) {
+        var result = transport.responseText.evalJSON();
+
+        if (result.error) {
+            if (result.error.message) {
+                alert(result.error.message);
+            } else {
+                alert(result.error);
+            }
+            return;
+        } else if (result.messages) {
+            $('messages').update(result.messages);
+        }
+        
+        if(result.html){
+            $('product-grid-for-update').update(result.html);
+        }
+
+        $('product-id').value = "";
+        if(Prototype.Browser.IE) {
+            $('product-name').childNodes[0].innerText = '<?php echo $this->__('Select Product')?>';
+        } else {
+            $('product-name').childNodes[0].textContent = '<?php echo $this->__('Select Product')?>';
+        }
+        $('product-price').value = "";
+        $('product-special-price').value = "";
+        $('product-qty').value = "";
+    },
+    
+}
+</script>
+
+
+<?php $_showWebsites = Mage::getStoreConfig('catalog/price/scope'); ?>
+<?php $data = $this->getCustomerDiscount(); ?>
+<div class="entry-edit customer-prices product-customer-prices ignore-validate" id="customer_product_prices">
+    <div class="entry-edit-head">
+        <h4><?php echo Mage::helper('catalog')->__('Prices per Customer') ?></h4>
+    </div>
+    <div class="fieldset">
+        <input type="hidden" name="customer_id" id="customer-id" value="<?php echo Mage::registry('current_customer')->getId(); ?>" />
+        <div class="hor-scroll">
+            <table cellspacing="0" class="form-list">
+                <tbody>
+                    <?php if($_showWebsites): ?>
+                    <tr>
+                        <td class="label">
+                            <label for="product_website">
+                                <?php echo $this->helper('catalog')->__('Website'); ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <?php echo $this->getWebsiteSelectHtml();?>
+                        </td>
+                    </tr>
+                    <?php else: ?>
+                        <input type="hidden" name="website_id" value="0" id="website-id"/>
+                    <?php endif; ?>
+                    <tr>
+                        <td class="label">
+                            <label for="product_name">
+                                <?php echo $this->helper('catalog')->__('Product Name')?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="hidden" name="product_id" id="product-id" class="validate-number validate-greater-than-zero" />
+                            <a href="" onclick="$('customerprices-container-grid').show(); return false;" id="product-name"><?php echo $this->__('Select Product')?></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="product_price">
+                                <?php echo $this->helper('catalog')->__('Price')?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="text" class="input-text" name="product_price" id="product-price"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="product_special_price">
+                                <?php echo $this->helper('catalog')->__('Special Price')?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="text" class="input-text" name="product_special_price" id="product-special-price" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="product_qty">
+                                <?php echo $this->helper('catalog')->__('Qty')?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="text" class="input-text validate-number validate-greater-than-zero" name="product_qty" id="product-qty"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label"></td>
+                        <td class="value">
+                            <?php echo $this->getAddButtonHtml();?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<?php echo $this->getCustomerpricesGridHtml() ?>
+
+<div id="product-grid-for-update">
+    <?php echo $this->getCustomerpricesBoxHtml() ?>
+</div>
+
+<div class="entry-edit customer-prices product-customer-prices-grid">
+    <div class="entry-edit-head">
+        <h4><?php echo Mage::helper('catalog')->__('Global Discount') ?></h4>
+    </div>
+    <div class="fieldset">
+        <div class="hor-scroll">
+            <table cellspacing="0" class="form-list">
+                <tbody>
+                    <tr>
+                        <td class="label"><label>Price for all Products</label></td>
+                        <td class="value"><input type="text" name="user_discount" value="<?php echo $data ?>"></input></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function customerPricesDeleteRow(id){
+        var url = "<?php echo $this->getUrl('adminhtml/customerprices_customer/deleterow')?>" + "id/" + id + "/";
+        saveData(url);
+        $('product-id').value = "";
+        if(Prototype.Browser.IE) {
+            $('product-name').childNodes[0].innerText = '<?php echo $this->__('Select Product')?>';
+        } else {
+            $('product-name').childNodes[0].textContent = '<?php echo $this->__('Select Product')?>';
+        }
+        $('product-price').value = "";
+        $('product-special-price').value = "";
+        $('product-qty').value = "";
+        return false;
+    }
+
+    function saveData(url){
+        jQuery('.loading-mask-process').show();
+        
+        jQuery.get(url, function(data){
+            
+            if(data) json = jQuery.parseJSON(data);
+            else json = new Object();
+            
+            if(json.success)
+            {
+                jQuery('.loading-mask-process').hide();
+                if(json.html){
+                    $('product-grid-for-update').update(json.html);
+                }
+                if (json.messages) {
+                    $('messages').update(json.messages);
+                }
+            }
+            else 
+            {  
+                jQuery('.loading-mask-process').hide();
+                jQuery('.loading-mask-error').show();
+                setTimeout(hideLoader, 2000);
+            }
+        });
+    }
+
+    function hideLoader()
+    {
+        jQuery('.loading-mask-success').fadeOut();
+        jQuery('.loading-mask-error').fadeOut();
+    }
+</script>
+
+<div id="loading-mask" class="loading-mask-process" style="display: none; z-index: 1001;">
+    <p class="loader" id="loading_mask_loader"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>adminhtml/default/default/images/ajax-loader-tr.gif" alt="Loading..." /><br />Saving Data...</p>
+</div>
+
+<div id="loading-mask"  class="loading-mask-success" style="display: none;">
+    <p class="loader" id="loading_mask_loader">Saved</p>
+</div>
+
+<div id="loading-mask"  class="loading-mask-error" style="display: none;">
+    <p class="loader" id="loading_mask_loader">Oops!<br />Error Saving Data...</p>
+</div>

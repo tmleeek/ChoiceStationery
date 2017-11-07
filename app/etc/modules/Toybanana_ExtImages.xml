@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Toybanana_ExtImages>
+      <codePool>community</codePool>
+      <active>false</active>
+    </Toybanana_ExtImages>
+  </modules>
+</config>

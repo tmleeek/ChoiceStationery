@@ -1,0 +1,58 @@
+<?php
+class NC_Ordersgrid_Block_Adminhtml_Sales_Order_Renderer_SalesRep extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract {
+ public function render(Varien_Object $row) {
+        $value = $row->getData('salesrep_admin_id');
+		$mysql			=mysql_connect('10.0.0.46', 'choiceQIdX', 'jaequiex');
+		mysql_select_db ('choicestationerycom', $mysql);
+		$sql	="SELECT `firstname`, `lastname` FROM `admin_user` WHERE `user_id` = '".$value."' LIMIT 1";
+		$res	=mysql_query($sql);
+		$data	=mysql_fetch_assoc($res);
+		$output	=$data['firstname'].' '.$data['lastname'];
+		mysql_close($mysql);
+		if($output==" ") { return "None"; }
+		else { return $output; }
+		
+  /* if (Mage::getSingleton('admin/session')->isAllowed('system/config') ||
+   Mage::getStoreConfig('salesrep/setup/users_can_see') == 1 ||
+   Mage::getStoreConfig('salesrep/setup/users_can_see') == 2) {
+   $value =  $row->getData($this->getColumn()->getIndex());
+   return $value;
+  }
+  else {
+   $admin = Mage::getSingleton('admin/session')->getUser();
+   if ($admin->getId() == $row->getData('salesrep_admin_id')) {
+    $value =  $row->getData($this->getColumn()->getIndex());
+    return $value;
+   }
+  } */
+ }
+}
+
+class NC_CustomGrid_Model_Observer extends Varien_Event_Observer {
+ /**
+  * Adds column to admin customers grid
+  *
+  * @param Varien_Event_Observer $observer
+  * @return NC_CustomGrid_Model_Observer
+  */
+ public function appendCustomColumn(Varien_Event_Observer $observer) {
+  $block = $observer->getBlock();
+  if (!isset($block)) {
+   return $this;
+  }
+  
+  if ($block->getType() == 'adminhtml/customer_grid') {
+   /* @var $block Mage_Adminhtml_Block_Customer_Grid */
+   $block->addColumnAfter(	'salesrep_admin_id', array(
+							'header'    => 'Sales Rep',
+							'index'     => 'salesrep_admin_id',
+							'align'     => 'center',
+							'type'		=> 'text',
+							'width'		=> '10px',
+							//'filter_condition_callback' => array($this, '_filterSalesRep'),
+							'renderer' => 'NC_Ordersgrid_Block_Adminhtml_Sales_Order_Renderer_SalesRep'
+						), 'email');			   
+  }
+ }
+}
+?>

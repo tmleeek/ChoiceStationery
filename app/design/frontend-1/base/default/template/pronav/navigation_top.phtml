@@ -1,0 +1,138 @@
+<?php
+	$currentUrl = Mage::helper('core/url')->getCurrentUrl();
+	$selectedStateSegment = Mage::helper('pronav')->getSelectedStateSegment($currentUrl,  $this->getBaseUrl());
+	$selectedStateSegment = $selectedStateSegment ? $selectedStateSegment : 'index';
+	$bodyClass = $this->getLayout()->getBlock('root')->getBodyClass();
+	$bodyClass = explode(" ", $bodyClass);
+	$bodyClass = end($bodyClass);
+	
+	if ($this->getNavConfig('pronav_status')){
+		
+		if ($this->getNavConfig('make_responsive')){
+			$pronavResponsive = "make-responsive";
+		}
+		
+		$pronavPos = Mage::getStoreConfig('pronav/pronavstyle/pronav_position');
+		$output = '<ul id="pronav" class="pn-'.$pronavPos. ' '.$pronavResponsive.'">';
+		$navData = $this->getNavData();
+
+		foreach ($navData as $data) {
+			$urlKey = strlen($data['url_key']) > 0 && $data['url_key'] ? $data['url_key'] : '';
+			
+			if ($data['link'] == 2) {
+				$islink = "no-link ";
+			} else {
+				$islink = "";
+			}
+			
+			if ($data['sub_start'] == 2) {
+				$substart = "sub-align-start ";
+				$substatic = "position-static ";
+			} elseif ($data['sub_start'] == 3) {
+				$substart = "sub-align-end ";
+				$substatic = "position-static ";
+			} else {
+				$substart = "";
+				$substatic ="";
+			}
+			
+			if ($data['no_follow'] == 2) {
+				$nofollow = "nofollow";
+			} else {
+				$nofollow = "";
+			}		
+				
+			if ($data['responsive'] == 2) {
+				$responsive = "non-responsive ";
+			} else {
+				$responsive = "";
+			}
+			
+			if ($data['static_block'] == 0 || ! $data['static_block']) {
+				
+				//if li_css_id is empty
+				if ($data['li_css_id'] == "") {
+					$data['li_css_id'] = "li-primary-pronav-".strtolower(preg_replace('/[^a-z0-9]/i', '-', Mage::helper('pronav')->__($data['name'])));
+				}
+				//if css_id is empty
+				if ($data['css_id'] == ""){
+					$data['css_id'] = "a-primary-".strtolower(preg_replace('/[^a-z0-9]/i', '-', Mage::helper('pronav')->__($data['name'])));
+				}
+				
+				//if item does not have a static block associated...		
+				$output .= '<li id="' . $data['li_css_id'] . '" class="'. $islink . $substatic . 'primary-pronav-item no-sub' . $data['li_css_class'] . '">';
+				$output .= '<a rel="' . $nofollow . '" href="' . $this->getBaseUrl()  . $urlKey . '" id="' . $data['css_id'] . '" class="primary-pronav-link ' . $data['css_class'] . '">';
+				$output .= '<span class="pronav-top-level-span">' . Mage::helper('pronav')->__($data['name']) . '</span>';
+				$output .= '</a>';
+				$output .= '</li>';
+			} else {
+				//if item has static block output the following...
+				
+				//if li_css_id is empty
+				if ($data['li_css_id'] == "") {
+					$data['li_css_id'] = "li-primary-pronav-".strtolower(preg_replace('/[^a-z0-9]/i', '-', Mage::helper('pronav')->__($data['name'])));
+				}
+				//if css_id is empty
+				if ($data['css_id'] == ""){
+					$data['css_id'] = "a-primary-".strtolower(preg_replace('/[^a-z0-9]/i', '-', Mage::helper('pronav')->__($data['name'])));
+				}
+
+				$output .= '<li id="' . $data['li_css_id'] . '" class="'. $islink . $substatic . 'primary-pronav-item ' . $data['li_css_class'] . '">';
+				$output .= '<a rel="' . $nofollow . '" href="' . $this->getBaseUrl()  . $urlKey . '" id="' . $data['css_id'] . '" class="primary-pronav-link ' . $data['css_class'] . '">';
+				$output .= '<span class="pronav-top-level-span">' . Mage::helper('pronav')->__($data['name']) . '</span>';
+				$output .= '</a>';
+							
+				if ($substart) {
+					//if sub is set to start from first nav item...
+					$output .= '<div class="'.$responsive.$substart.'sub">';
+					$blockIdentifier = $this->getStaticBlockIdentifier($data['static_block']);
+					$output .= $this->getLayout()->createBlock('cms/block')->setBlockId($blockIdentifier)->toHtml();
+					$output .= '</div>';
+				} else {
+					//if sub is set for alignment (left/right)...
+					if ($data['sub_position'] == 1) {
+						$subalignment = "sub-align-left";
+					} else {
+						$subalignment = "sub-align-right";
+					}
+					$output .= '<div class="sub '. $responsive.$subalignment .'">';
+					$blockIdentifier = $this->getStaticBlockIdentifier($data['static_block']);
+					$output .= $this->getLayout()->createBlock('cms/block')->setBlockId($blockIdentifier)->toHtml();
+					$output .= '</div>';
+				}
+				$output .= '</li>';				
+			}
+		}
+		$output .= '</ul>';
+		if ( $this->getNavConfig("make_responsive") ) {
+			$output .= '<div id="pronav-selection-container"><a href="#pronav-select" id="pronav-select-toggle">Navigation</a><div id="pronav-selection"></div></div>';
+		}		
+		$output .= '<script type="text/javascript">';
+		$output .= 'myProNav = {};';
+		$output .= 'myProNav.bodyClass = "' . $bodyClass . '";';
+		$output .= 'myProNav.proNavWidth = "' . $this->getNavConfig('pronav_width') . '";';
+		$output .= 'myProNav.proNavPosition = "' . $pronavPos . '";';
+		$output .= 'myProNav.easingMethodShow = "' . $this->getNavConfig("easingmethodshow") . '";';
+		$output .= 'myProNav.easingMethodHide = "' . $this->getNavConfig("easingmethodhide") . '";';
+		$output .= 'myProNav.sensitivity = ' . $this->getNavConfig("sensitivity") . ';';
+		$output .= 'myProNav.interval = ' . $this->getNavConfig("interval") . ';';
+		$output .= 'myProNav.timeout = ' . $this->getNavConfig("timeout") . ';';
+		$output .= 'myProNav.fadeInTime = ' . $this->getNavConfig("fadein") . ';';
+		$output .= 'myProNav.fadeOutTime = ' . $this->getNavConfig("fadeout") . ';';
+		$output .= 'myProNav.currentURL = "' . $currentUrl . '";';
+		$output .= 'myProNav.homeURL = "' . $home_url = Mage::helper("core/url")->getHomeUrl() . '";';
+		$output .= '</script>';
+		if ($this->getNavConfig("include_jquery")) {
+			$output .= '<script type="text/javascript" src="' . Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'pronav/jquery-1.9.1.min.js"></script>';
+		}
+		if ($this->getNavConfig("include_noconflict")) {
+			$output .= '<script type="text/javascript" src="' . Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'pronav/jquery.noConflict.js"></script>';
+		}
+		if ($this->getNavConfig("include_easing")) {
+			$output .= '<script type="text/javascript" src="' . Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'pronav/jquery.easing.1.3.js"></script>';
+		}
+		$output .= '<script type="text/javascript" src="' . Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'pronav/jquery.hoverIntent.minified.js"></script>';
+		$output .= '<script type="text/javascript" src="' . Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'pronav/jquery.proNav.js"></script>';
+		echo $output;
+	}
+?>

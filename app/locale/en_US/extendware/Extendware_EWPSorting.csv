@@ -1,0 +1,111 @@
+"<ol>
+						                            <li><b>Stock Quantity</b> - product is considered out of stock is quantity is zero</li>
+						                            <li><b>Stock Status</b> - product is considered out of stock if stock status is ""Out of Stock""</li>
+						                            <li><b>Is Saleable</b> - will use a combination of stock quantity, stock status, and managed status to determine stock statue (recommended)</li>
+						                            <li><b>Either quantity or stock status</b> - product is considered out of stock if quantity is zero or stock status is ""Out of Stock""</li>
+						                            <li><b>Both quantity and stock status</b> - product is considered out of stock if quantity is zero and stock status is ""Out of Stock""</li>
+						                            </ol>","<ol>
+						                            <li><b>Stock Quantity</b> - product is considered out of stock is quantity is zero</li>
+						                            <li><b>Stock Status</b> - product is considered out of stock if stock status is ""Out of Stock""</li>
+						                            <li><b>Is Saleable</b> - will use a combination of stock quantity, stock status, and managed status to determine stock statue (recommended)</li>
+						                            <li><b>Either quantity or stock status</b> - product is considered out of stock if quantity is zero or stock status is ""Out of Stock""</li>
+						                            <li><b>Both quantity and stock status</b> - product is considered out of stock if quantity is zero and stock status is ""Out of Stock""</li>
+						                            </ol>"
+"A pre-sort will be applied before the selected sort order. The most common use case is to sort by stock status, so that in-stock products are always shown first. You can find the code by lookin in the URL when sorting: yourdomain.com?order=[code]","A pre-sort will be applied before the selected sort order. The most common use case is to sort by stock status, so that in-stock products are always shown first. You can find the code by lookin in the URL when sorting: yourdomain.com?order=[code]"
+"Add after","Add after"
+"Add Order Code","Add Order Code"
+"Add Post-Sort","Add Post-Sort"
+"Add Pre-Sort","Add Pre-Sort"
+"Add Sort Order","Add Sort Order"
+Advanced,Advanced
+Ascending,Ascending
+"Best Sellers","Best Sellers"
+"Best Sellers Period","Best Sellers Period"
+"Both quantity and stock status","Both quantity and stock status"
+builtin,builtin
+"Check Index","Check Index"
+Configuration,Configuration
+"Default Post-sort","Default Post-sort"
+"Default Pre-sort","Default Pre-sort"
+Delete,Delete
+Descending,Descending
+Direction,Direction
+"Disabled Indexes","Disabled Indexes"
+"Disabled Sorts","Disabled Sorts"
+Discount,Discount
+"Duplicate code found (%s). Please change the advanced config so two sort methods with the same code does not exist","Duplicate code found (%s). Please change the advanced config so two sort methods with the same code does not exist"
+"Either quantity or stock status","Either quantity or stock status"
+Extendware,Extendware
+General,General
+Generic,Generic
+"If enabled, an index will be auto disabled when it is not in a good state (green status). If your indexes are working well, then it is faster to disable this.","If enabled, an index will be auto disabled when it is not in a good state (green status). If your indexes are working well, then it is faster to disable this."
+"If enabled, the tier price will be used when calculating the minmimum price for products for the savings / discount sort methods.","If enabled, the tier price will be used when calculating the minmimum price for products for the savings / discount sort methods."
+"If you are using indexes, please re-run indexes in System -> Index Management","If you are using indexes, please re-run indexes in System -> Index Management"
+"In Stock","In Stock"
+"Indexes used for Extendware product sorting","Indexes used for Extendware product sorting"
+"Is Saleable","Is Saleable"
+Main,Main
+Name,Name
+Newest,Newest
+"Order Code","Order Code"
+"Orders Per View","Orders Per View"
+"Out of Stock Mode","Out of Stock Mode"
+"Performance (RPM) Period","Performance (RPM) Period"
+"Please <u>read the help descriptions, field descriptions, fieldset descriptions, and user guides</u> so you may configure this extension to suit your needs.","Please <u>read the help descriptions, field descriptions, fieldset descriptions, and user guides</u> so you may configure this extension to suit your needs."
+Popularity,Popularity
+"Popularity Period","Popularity Period"
+Position,Position
+"Post sorting allows you to finely control the sorting when two products have the same sorted value. For example, if you sort by price and there are two products that are $10, you can use a post sort to show the best selling product first. You can find the code by lookin in the URL when sorting: yourdomain.com?order=[code]","Post sorting allows you to finely control the sorting when two products have the same sorted value. For example, if you sort by price and there are two products that are $10, you can use a post sort to show the best selling product first. You can find the code by lookin in the URL when sorting: yourdomain.com?order=[code]"
+Price,Price
+"Product Sorting","Product Sorting"
+Quantity,Quantity
+Relevance,Relevance
+"Relevancy Periods","Relevancy Periods"
+"Revenue Generated","Revenue Generated"
+"Revenue Per View","Revenue Per View"
+"Reverse Sort Orders","Reverse Sort Orders"
+"Review Count","Review Count"
+"Review Rating","Review Rating"
+Savings,Savings
+"Select any indexes you wish to disable. Use CTRL-Click to select more than one.","Select any indexes you wish to disable. Use CTRL-Click to select more than one."
+"Select any sort methods you wish to disable. Use CTRL-Click to select more than one.","Select any sort methods you wish to disable. Use CTRL-Click to select more than one."
+Settings,Settings
+"Sort Configuration","Sort Configuration"
+"Sort Method Listing Order","Sort Method Listing Order"
+"Sort Order","Sort Order"
+"Stock Quantity","Stock Quantity"
+"Stock status","Stock status"
+"The method used to determine if a product is out of stock or not.","The method used to determine if a product is out of stock or not."
+"The number of days in the past that are used to determine best sellers. Put 0 to use all available history.","The number of days in the past that are used to determine best sellers. Put 0 to use all available history."
+"The number of days in the past that are used to determine popularity. Put 0 to use all available history.","The number of days in the past that are used to determine popularity. Put 0 to use all available history."
+"The number of days in the past that are used to determine revenue genrated. Put 0 to use all available history.","The number of days in the past that are used to determine revenue genrated. Put 0 to use all available history."
+"The number of days in the past that are used to determine RPM (revenue per thousand views). Put 0 to use all available history.","The number of days in the past that are used to determine RPM (revenue per thousand views). Put 0 to use all available history."
+"These sorts will be in the reverse direction of the default","These sorts will be in the reverse direction of the default"
+"These will be used if a rule is not specifically defined in the sort configuration. Use ""asc"" or ""desc"" for direction.","These will be used if a rule is not specifically defined in the sort configuration. Use ""asc"" or ""desc"" for direction."
+"This is for very advanced users. It allows you to set pre-sort / post-sort for each individual sort. It also allows you to change the code / label that a sort uses so that you can rename ""Best Sellers"" to ""Featured"". Here is an example of supported values:
+<xmp>
+	<[original_code]>
+		<code>[new code]</code>
+		<label>[new frontend label]</label>
+		<presort>[pre-sort value that overrides default]</presort>
+		<postsort>[post-sort value that overrides default]</postsort>
+	</[original_code]>
+</xmp>
+														<br/>Please note, if you change the code, you will have to update configuration in other areas that depend on the code (such as reverse sorting, sort method listing order, etc).
+						                        	","This is for very advanced users. It allows you to set pre-sort / post-sort for each individual sort. It also allows you to change the code / label that a sort uses so that you can rename ""Best Sellers"" to ""Featured"". Here is an example of supported values:
+<xmp>
+	<[original_code]>
+		<code>[new code]</code>
+		<label>[new frontend label]</label>
+		<presort>[pre-sort value that overrides default]</presort>
+		<postsort>[post-sort value that overrides default]</postsort>
+	</[original_code]>
+</xmp>
+														<br/>Please note, if you change the code, you will have to update configuration in other areas that depend on the code (such as reverse sorting, sort method listing order, etc).
+						                        	"
+"This will control the order that methods are displayed in the frontend","This will control the order that methods are displayed in the frontend"
+"This will use a database query to check the status of the index so that the index can automatically be disabled if it is in a bad state or is currently building. If your indexes are always in a good state, you may disable this and save the extra database query.","This will use a database query to check the status of the index so that the index can automatically be disabled if it is in a bad state or is currently building. If your indexes are always in a good state, you may disable this and save the extra database query."
+"Tier Price Can Be Min Price","Tier Price Can Be Min Price"
+"Wishlist Popularity","Wishlist Popularity"
+"You can change order code, pre-sort, post-sort, and label text using the config. Please refer to the user guide.","You can change order code, pre-sort, post-sort, and label text using the config. Please refer to the user guide."
+"You can find the code by lookin in the URL when sorting: yourdomain.com?order=[code]","You can find the code by lookin in the URL when sorting: yourdomain.com?order=[code]"

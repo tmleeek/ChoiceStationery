@@ -1,0 +1,129 @@
+<?php
+
+
+
+echo 'ol';exit;
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<?php 
+$route = Mage::app()->getRequest()->getRouteName();
+$id = Mage::getSingleton('cms/page')->getIdentifier();
+
+?>
+<header class="header">
+	<div class="header-outer">
+		
+                    <!-- <div class="header-buttons">
+                        <div class="row-1">
+                            <div class="header-button top-login">
+                                <?php echo $this->getChildHtml('topLinksLeft') ?>
+                            </div>
+                            <div class="header-button menu-list">
+                                <a href="#"></a>
+                                <?php echo $this->getChildHtml('topLinks') ?>
+                            </div>
+                            <?php echo $this->getChildHtml('currency') ?>
+                            <?php echo $this->getChildHtml('store_language') ?>
+                        </div>
+                    </div> -->
+                   
+                    <div class="quick-access header-top">
+                        <div class="container">
+						<div class="row">	
+						<div class="col-md-4">
+						<div class="header-top-left">	
+ <p class="header-top-left-text"><?php echo $this->getWelcome() ?> <?php echo $this->getAdditionalHtml() ?></p></div></div>
+						<div class="col-md-8">
+<div class="header-top-right">
+						<?php echo $this->getChildHtml('topLinksLeft') ?>
+                            <?php echo $this->getChildHtml('topLinks') ?>
+                        </div></div></div></div>
+                    </div>
+                    
+					<div class="header-bottom">
+<div class="container">
+<div class="row">
+		<div class="col-md-3">
+<div class="header-bottom-left">
+					<?php /*if ($this->getIsHomePage()):?>
+                    <h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1>
+                    <?php else:?>
+                        <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
+                    <?php endif*/ ?>
+					<a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><img class="img-responsive" src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
+					</div></div>
+					<div class="col-md-9 ">
+<div class="header-bottom-right clearfix">
+<div class="header-bottom-top clearfix">
+<div class="welcome-msg col-md-3">welcome, guest</div>
+<?php echo $this->getChildHtml('topSearch') ?>
+</div>
+                    <div class="row-2">
+                        <?php echo $this->getChildHtml('cart_header'); ?> 
+                    </div>
+					
+                    
+                    <div class="clear"></div>
+                    <?php echo $this->getChildHtml('topContainer'); ?>
+					</div></div>
+                </div>
+	</div></div>
+	
+		<div class="clear"></div>
+	</div>
+</header>
+
+<div class="mobile-nav-container">
+	<div class="icon_header">
+			<ul>
+				<li class="menu"><img src="<?php echo $this->getSkinUrl('images/menu-24.png');?>" alt="sitename" /> </li>
+				<li class="search"><img src="<?php echo $this->getSkinUrl('images/21.png');?>" alt="sitename" /></li>
+				<li class="cart"><?php echo $this->getChildHtml('cart_header'); ?> </li>
+				<li class="my-account"><img src="<?php echo $this->getSkinUrl('images/12.png');?>" alt="sitename" /></li>
+				<li class="login"><a href="<?php echo $this->getUrl('').'customer/account/login/' ?>"><img src="<?php echo $this->getSkinUrl('images/51-icon.png');?>" alt="sitename" /></a></li>
+			</ul>
+	</div>
+</div>
+<div id="search_box_container" class="mobile_search_box" style="display:none"> <?php echo $this->getChildHtml('topSearch'); ?></div>
+<div id="cart_box_container" class="mobile_search_box" style="display:none"><?php echo $this->getChildHtml('cart_header'); ?></div>
+<div id="accont_box_container" class="mobile_search_box" style="display:none">
+	<a href="#"></a>
+	<?php echo $this->getChildHtml('topLinks'); ?>
+</div>
+<?php echo $this->getChildHtml('topMenu'); ?>
+
+<div style="clear:both;"></div>
+<?php $body_classes = str_replace (' ','',$this->getLayout()->createBlock("page/html")->getBodyClass());  $body_classes_active = "cms-index-index"; ?>
+<?php if($body_classes == $body_classes_active): ?> 
+    <div class="mar-r">
+		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage_finder')->toHtml() ?>
+        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('slider_1')->toHtml() ?>
+        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('banner_list')->toHtml() ?>
+    </div>
+<?php endif;?>

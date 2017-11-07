@@ -1,0 +1,65 @@
+<?php $is_homepage = Mage::getBlockSingleton('page/html_header')->getIsHomePage();?>
+<header class="header">
+            <div class="header-outer">
+                <div class="header-top">
+                   <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="header-top-left">
+                                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('welcome-text')->toHtml();?>
+                                </div><!--end of header-top-left-->
+                            </div><!--end of col-md-3-->
+                            
+                            <div class="col-md-8">
+                                <div class="header-top-right">
+                                    <?php echo $this->getChildHtml('topLinks') ?>                             
+                                </div><!--end of heaader-top-right-->
+                            </div><!--end of col-md-9-->
+                        </div><!--end of rfow-->
+                     </div><!--end of container-->                        
+                   </div><!--end of header-top-->
+                    <div class="header-bottom">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="header-bottom-left">
+                    <?php if ($this->getIsHomePage()):?>
+                    <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" width="204" height="60" /></a>
+                    <?php else:?>
+                        <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" width="204" height="60" /></a>
+                    <?php endif?>
+                                    </div><!--end of header-bottom-left-->
+                                </div><!--end of col-md-3-->
+                                <div class="col-md-9 ">
+                                    <div class="header-bottom-right clearfix">
+                                        <div class="header-bottom-top clearfix">
+<?php 
+if(!Mage::getSingleton('customer/session')->isLoggedIn())
+$guest = $this->__(' Guest');
+else
+$guest = "";
+?>
+                                            <div class="welcome-msg col-md-3"><?php echo $this->getWelcome().$guest ?></div><!--end of welcome-msg-->
+                                            <div class="search-box col-md-9">
+                                                <?php echo $this->getChildHtml('topSearch') ?>
+                                            </div><!--end of search-->
+                                        </div><!--end of header-bottom-top-->
+                                        <div class="header-bottom-bottom clearfix">
+                                            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('header-text')->toHtml();?>
+                                        </div><!--end of header-bottom-bottom-->
+                                    </div><!--end of header-bottom-right-->
+                                </div><!--end of col-md-9-->
+                            </div><!--end of row-->
+                         </div><!--end of container-->
+                    </div><!--end of header-bottom-->
+              </div><!--end of header-outer-->
+          </header><!--end of header-->
+<div class="menu-container">
+        <?php echo $this->getChildHtml('topMenu'); ?>
+</div>
+<!-- Filter under the menu-->
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_content')->toHtml();?>
+<!-- for home page only show the banner and filter block-->
+<?php if ($is_homepage):?>
+	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home-banner')->toHtml();?>
+<?php endif;?>

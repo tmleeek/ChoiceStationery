@@ -1,0 +1,12 @@
+.ewcart-product p.price-from, .ewcart-product p.price-to {
+	display: inline;
+}
+
+.ewcart-product .product-img-box {
+	float: left;
+	margin: 0px 10px 10px 0px;
+}
+
+.ewcart-product-default .product-img-box {
+	margin: 0px 10px 0px 0px;
+}

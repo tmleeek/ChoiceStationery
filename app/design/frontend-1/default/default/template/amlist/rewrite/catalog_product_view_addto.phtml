@@ -1,0 +1,33 @@
+<?php $_product = $this->getProduct() ?>
+<?php
+    $url = $this->getUrl('CrmTicket/Front_Ticket/NewTicket', array('product_id' => $_product->getId()));
+    $productName = str_replace("'"," ",$_product->getName());
+    $productName = str_replace('"'," ",$_product->getName());
+    $onclick = "'".$url."','".$productName."'";
+?>
+<ul class="add-to-links">
+<?php if ($this->helper('wishlist')->isAllow()) : ?>
+    <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>"><?php echo $this->__('Add to Wishlist') ?></a></li>
+<?php endif; ?>
+<?php if ($_compareUrl=$this->helper('catalog/product_compare')->getAddUrl($_product) ): ?>
+    <li><span class="pipe">|</span> <a href="<?php echo $_compareUrl ?>"><?php echo $this->__('Add to Compare') ?></a></li>
+<?php endif; ?>
+<?php if ($_listUrl = $this->helper('amlist')->getAddUrl($_product)): ?>
+    <li><span class="pipe">&nbsp;&nbsp;|&nbsp;&nbsp;</span> <a href="<?php echo $_listUrl?>" class="amlist" onclick="return am_add_to_list(this.href)"><?php echo $this->helper('amlist')->__('Add to Favourites') ?></a></li>
+<?php endif; ?>
+	<li><span class="pipe">&nbsp;&nbsp;|&nbsp;&nbsp;</span> <a href="<?php echo $onclick?>" ><?php echo $this->helper('amlist')->__('Ask a question') ?></a></li>
+</ul>
+<input type="hidden" name="list_next" value="<?php echo $this->getRequest()->getParam('list_next')?>"> 
+<script>
+function am_add_to_list(lnk){
+    var f = $('product_addtocart_form');
+    if (f){
+        f.action = lnk;
+        productAddToCartForm.submit();  
+    }
+    else
+        document.location.href = lnk;
+        
+    return false;
+}
+</script> 

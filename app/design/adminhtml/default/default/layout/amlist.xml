@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_sales_order_create_index>
+        <reference name="sidebar">
+            <block type="amlist/sidebar" template="sales/order/create/sidebar/items.phtml" name="amlist" />
+        </reference>
+    </adminhtml_sales_order_create_index>
+    
+    <adminhtml_sales_order_create_load_block_data> 
+        <reference name="sidebar">
+            <block type="amlist/sidebar" template="sales/order/create/sidebar/items.phtml" name="amlist" />
+        </reference>
+    </adminhtml_sales_order_create_load_block_data> 
+    
+    <adminhtml_sales_order_create_load_block_sidebar> 
+        <reference name="sidebar">
+            <block type="amlist/sidebar" template="sales/order/create/sidebar/items.phtml" name="amlist" />
+        </reference>
+    </adminhtml_sales_order_create_load_block_sidebar> 
+</layout>

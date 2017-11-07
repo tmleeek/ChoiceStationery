@@ -1,0 +1,63 @@
+<?php 
+$category_id = $this->getCategoryId();
+$categories = Mage::getModel('catalog/category')->load($category_id)->getChildrenCategories();
+?> 
+<div class="sub-category-menu">
+      <p class="title">category</p>
+      <!--end of title-->
+      <nav class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+			<?php foreach($categories as $_category):
+				$subCategories = ($_category->hasChildren())?TRUE:FALSE;
+				$showAttributes = ( $subCategories )?'class="dropdown-toggle" data-toggle="dropdown"':NULL;
+			?>
+      		<li>
+          		<a href="<?php echo $_category->getUrl($_category); ?>" <?php echo $showAttributes ;?>  >
+          			<?php echo $_category->getName()?>
+          		</a>
+                  	<?php if ($subCategories): 
+                  		$inner_id = $_category->getId();
+                  		$categories_inner = Mage::getModel('catalog/category')->load($inner_id)->getChildrenCategories();
+                  	?>
+	                  	<ul class="dropdown-menu" role="menu">
+	                      <?php foreach ( $categories_inner as $inner_category ) :?>
+	                      	<li>
+		                      	<a href="<?php echo $inner_category->getUrl($inner_category);?>">
+		                      		<?php echo $inner_category->getName();?>
+		                      	</a>
+	                      	</li>
+	                      <?php endforeach; ?>
+	                    </ul>
+	                <?php endif; ?>
+				<?php
+					endforeach;
+				?>
+			</li>
+        </ul>
+    </nav>
+</div>
+<?php if($category_id == 56):?>            <!--end of sub-category-menu-->
+<style>
+#menu56 .parentMenu a{color:red}
+</style>
+<?php elseif($category_id == 7):?>
+<style>
+#menu7 .parentMenu a{color:red}
+</style>
+<?php elseif($category_id == 14743):?>
+<style>
+#menu14743 .parentMenu a{color:red}
+</style>
+<?php elseif($category_id == 14690):?>
+<style>
+#menu14690 .parentMenu a{color:red}
+</style>
+<?php elseif($category_id == 15295):?>
+<style>
+#menu15295 .parentMenu a{color:red}
+</style>
+<?php elseif($category_id == 6):?>
+<style>
+#menu6 .parentMenu a{color:red}
+</style>
+<?php endif;?>

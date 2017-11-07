@@ -1,0 +1,21 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @copyright  Copyright (c) 2012 Boost My Shop (http://www.boostmyshop.com)
+ * @author : Nicolas MUGNIER
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @package MDN_MarketPlace
+ * @version 2.1
+ */
+?>
+<p><?php echo $this->__('Margin'); ?></p><?php echo $this->getOperatorComp(MDN_MarketPlace_Helper_AutoSubmit::kMargin.'_operator'); ?><?php echo $this->getMarginCriteria(MDN_MarketPlace_Helper_AutoSubmit::kMargin); ?><br/><br/>
+<p><?php echo $this->__('Attribute set'); ?></p><?php echo $this->getOperatorGlobal(MDN_MarketPlace_Helper_AutoSubmit::kAttributeSet.'_operator'); ?><?php echo $this->getAttributeSetCriteria(MDN_MarketPlace_Helper_AutoSubmit::kAttributeSet); ?><br/><br/>
+<p><?php echo $this->__('Visibility'); ?></p><?php echo $this->getOperatorGlobal(MDN_MarketPlace_Helper_AutoSubmit::kVisibility.'_operator'); ?><?php echo $this->getVisibilityCriteria(MDN_MarketPlace_Helper_AutoSubmit::kVisibility); ?><br/><br/>
+<p><?php echo $this->__('Brand'); ?></p><?php echo $this->getOperatorGlobal(MDN_MarketPlace_Helper_AutoSubmit::kBrand.'_operator'); ?><?php echo $this->getBrandCriteria(MDN_MarketPlace_Helper_AutoSubmit::kBrand); ?>

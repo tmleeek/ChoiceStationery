@@ -1,0 +1,4 @@
+2016-03-31 koo
+* custom fix
+* changed files:
+/magentonew/app/code/local/Mirasvit/Fpc/Model/Processor.php

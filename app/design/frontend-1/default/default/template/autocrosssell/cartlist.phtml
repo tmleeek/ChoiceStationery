@@ -1,0 +1,29 @@
+<?php if($this->getEnabled() && count($this->getRelatedProductsCollection())): ?>
+<div class="page-title category-title">
+    <h2><?php echo $this->__('You may also like') ?></h2>
+</div>
+    <?php $_columnCount = 4; ?>
+    <?php $i=0; foreach ($this->getRelatedProductsCollection() as $_product): ?>
+        <?php if ($i++%$_columnCount==0): ?>
+        <ul class="products-grid row">
+        <?php endif ?>
+            <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?> span3">
+                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(268) ?>" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" /></a>
+                <div class="product-shop" style="height: 174px;">
+                    <h3 class="product-name product-name-s" style="height: 70px;"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>"><?php echo $this->htmlEscape($_product->getName()) ?></a></h3>
+                    <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                    <?php echo $this->getPriceHtml($_product, true, '-new') ?>
+                    <div class="actions">
+                        <?php if($_product->isSaleable()): ?>
+                            <button type="button" title="<?php echo $this->__('Add') ?>" class="button view" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add') ?></span></span></button>
+                        <?php else: ?>
+                            <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </li>
+        <?php if ($i%$_columnCount==0 || $i==count($_products)): ?>
+        </ul>
+        <?php endif ?>
+    <?php endforeach; ?>
+<?php endif ?>

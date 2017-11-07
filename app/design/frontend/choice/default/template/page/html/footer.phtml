@@ -1,0 +1,185 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="footer-container">
+	<div class="container">
+		<div class="row">
+			<div class="span12">
+				<div class="footer">
+					  <p id="back-top"><a href="#top"><span></span></a> </p>
+					  <div class="footer-cols-wrapper">
+						<div class="footer-col">			
+							<h4><?php echo $this->__('Information') ?></h4>
+							<div class="footer-col-content">
+								<?php echo $this->getChildHtml('cms_footer_links') ?>
+								<?php echo $this->getChildHtml('footer_links') ?>
+							</div>
+						</div>
+						<?php echo $this->getChildHtml('footer_list') ?>
+						<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_info')->toHtml() ?>
+					  </div>
+                    <img src="<?php echo $this->getSkinUrl('images/cards.png') ?>" alt="Card Accept" />  
+					<address><?php echo $this->getCopyright() ?></address>
+					<?php //echo $this->getChildHtml('store_switcher') ?>
+					<?php $current_page = Mage::app()->getFrontController()->getRequest()->getRouteName(); 
+						if ($current_page == 'cms'):
+							//echo 'More Electronics Store Magento Themes at <a rel="nofollow" href="http://www.templatemonster.com/category/electronics-store-magento-themes/" target="_blank">TemplateMonster.com</a>';
+						endif;
+					?>
+					<div class="clear"></div>
+					<?php //echo $this->getChildHtml('paypal.partner.right.logo'); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--footer-->
+<div class="footer-container-next">
+	<div class="container">
+		<div class="row">
+			<div class="span12">
+				<div class="footer">
+					  <p id="back-top"><a href="#top"><span></span></a> </p>
+					  <div class="footer-cols-wrapper">
+						<div class="footer-col">			
+							<h4>About Us <img src="<?php echo $this->getSkinUrl('images/side-arrow.png');?>" alt="sitename" /></h4>
+							<div class="footer-col-content">
+								<ul>
+<li><a href="http://www.choicestationery.com/about-choice-stationery-supplies">About Us</a></li>
+<li><a href="http://www.choicestationery.com/customer-service">Customer Service</a></li>
+<li><a href="http://www.choicestationery.com/blog">Read Our Blog</a></li>
+<li><a href="http://www.choicestationery.com/terms">Terms & Conditions</a></li>
+<li class="last privacy"><a href="http://www.choicestationery.com/privacy-policy-cookie-restriction-mode">Privacy Policy</a></li>
+</ul>								<ul class="links">
+                        <li class="first" ><a href="http://www.choicestationery.com/catalog/seo_sitemap/category/" title="Site Map" >Site Map</a></li>
+                                <li ><a href="http://www.choicestationery.com/catalogsearch/term/popular/" title="Search Terms" >Search Terms</a></li>
+                                <li ><a href="http://www.choicestationery.com/catalogsearch/advanced/" title="Advanced Search" >Advanced Search</a></li>
+                                <li class="first"><a title="Find My Cartridges" href="http://www.choicestationery.com/find-my-printer-cartridges/">Find My Cartridges</a></li>
+			<li ><a href="https://www.choicestationery.com/sales/guest/form/" title="Orders and Returns" >Orders and Returns</a></li>
+                                <li class=" last" ><a href="http://www.choicestationery.com/contacts/" title="Contact Us" >Contact Us</a></li>
+            </ul>
+							</div>
+						</div>
+						<div class="footer-col">
+	<h4>Customer Service<img src="<?php echo $this->getSkinUrl('images/side-arrow.png');?>" alt="sitename" /></h4>
+	<div class="footer-col-content">
+		<ul>
+			<li><a href="http://www.choicestationery.com/think-2-year-guarantee/">2 Year No Quibble Guarantee</a></li>
+			<li><a href="http://www.choicestationery.com/secure-online-shopping/">Secure Shopping</a></li>
+			<li><a href="http://www.choicestationery.com/safebuy/">SafeBuy Accredited Member</a></li>
+			<li><a href="http://www.choicestationery.com/best-consumable-supplier/">UK's Best Consumable Supplier</a></li>
+            <li><a href="http://www.choicestationery.com/ekomi-first-class-service/">eKomi Gold Award For Customer Service</a></li>
+			<li><a href="http://www.choicestationery.com/business-accounts/">Corporate Accounts</a></li>
+			<li><a href="http://www.choicestationery.com/schools/">Discounts For Schools</a></li>
+			<li><a href="http://www.choicestationery.com/lowest-priced-ink-cartridges/">Price Promise</a></li>
+			<li><a href="http://www.choicestationery.com/think-inkjets-and-toners/">Think Inkjets & Toners</a></li>
+			<li><a href="http://www.choicestationery.com/recycle/">Green Recycling</a></li>
+		</ul>
+	</div>
+</div>
+<div class="footer-col">
+<h4>Privacy policy<img src="<?php echo $this->getSkinUrl('images/side-arrow.png');?>" alt="sitename" /></h4>
+<div class="footer-col-content">
+								<ul>
+<li><a href="http://www.choicestationery.com/about-choice-stationery-supplies">About Us</a></li>
+<li><a href="http://www.choicestationery.com/customer-service">Customer Service</a></li>
+<li><a href="http://www.choicestationery.com/blog">Read Our Blog</a></li>
+<li><a href="http://www.choicestationery.com/terms">Terms & Conditions</a></li>
+<li class="last privacy"><a href="http://www.choicestationery.com/privacy-policy-cookie-restriction-mode">Privacy Policy</a></li>
+</ul>								<ul class="links">
+                        <li class="first" ><a href="http://www.choicestationery.com/catalog/seo_sitemap/category/" title="Site Map" >Site Map</a></li>
+                                <li ><a href="http://www.choicestationery.com/catalogsearch/term/popular/" title="Search Terms" >Search Terms</a></li>
+                                <li ><a href="http://www.choicestationery.com/catalogsearch/advanced/" title="Advanced Search" >Advanced Search</a></li>
+                                <li class="first"><a title="Find My Cartridges" href="http://www.choicestationery.com/find-my-printer-cartridges/">Find My Cartridges</a></li>
+			<li ><a href="https://www.choicestationery.com/sales/guest/form/" title="Orders and Returns" >Orders and Returns</a></li>
+                                <li class=" last" ><a href="http://www.choicestationery.com/contacts/" title="Contact Us" >Contact Us</a></li>
+            </ul>
+							</div>
+	
+</div>						
+<div class="footer-col">			
+							<h4>Corporate Accounts <img src="<?php echo $this->getSkinUrl('images/side-arrow.png');?>" alt="sitename" /></h4>
+	<div class="footer-col-content">
+		<ul>
+			<li><a href="https://www.choicestationery.com/customer/account/login/">Sign In</a></li>
+			<li><a href="http://www.choicestationery.com/checkout/cart/">View Cart</a></li>
+			<li><a href="https://www.choicestationery.com/wishlist/">My Wishlist</a></li>
+			<li><a href="http://www.choicestationery.com/amlist/list/">Favourites</a></li>
+            <li><a href="https://www.choicestationery.com/customer/account/login/">Pay My Bill</a></li>
+            <li><a href="https://www.choicestationery.com/sales/order/history/">Track My Order</a></li>
+			<li><a href="http://www.choicestationery.com/help-centre/">The Help Centre</a></li>
+			<li><a href="http://www.choicestationery.com/technical-help/">Technical Help</a></li>
+			<li><a href="http://www.choicestationery.com/mailing-list/">Join Our Mailing List</a></li>
+		</ul>
+	</div>						
+						</div>				  </div>
+
+<div class="footer-col contacts-new">
+	<h4>Contact Us</h4>
+	
+	<div class="footer-col-content tablet-show">
+		<a href="http://www.choicestationery.com/contacts">contactus@choicestationery.com</a><br>
+                Lea House, Frobisher Way, <br>Taunton, TA2 6BB
+		<span class="tel">t 01823 250060</span>
+	</div>
+	<div>
+	  <ul class="list-icon">
+     <li><a target="_blank" href="http://www.facebook.com/choicestationery"><img src="<?php echo $this->getSkinUrl('images/media/facebook.png');?>" alt="sitename" /></a></li>
+	   <li><a target="_blank" href="http://twitter.com/choiceink"><img src="<?php echo $this->getSkinUrl('images/media/twitter.png');?>" alt="sitename" /></a></li>
+	  </ul>
+	</div>
+	
+	
+	<div class="footer-col-content tablet-hide">
+		<a href="http://www.choicestationery.com/contacts">contactus@choicestationery.com</a><br>
+                Lea House, Frobisher Way, <br>Taunton, TA2 6BB
+		<span class="tel">t 01823 250060</span>
+	</div>
+	
+	
+	
+</div>					  </div>
+
+                    <div class="card_icon"><img src="<?php echo $this->getSkinUrl('images/cards.png') ?>" alt="Card Accept" />  </div>
+					
+					<div class="footer-col-address tablet-show">
+              <address>&copy; <?=date("Y");?> Choice Stationery Supplies, Lea House, Frobisher Way, Taunton, TA2, 6BB. Registered in England Number 4122307</address>
+          </div>
+          
+          <div class="footer-col-address tablet-hide">
+					   <address>&copy; <?=date("Y");?> Choice Stationery Supplies<br>Lea House, Frobisher Way, Taunton, TA2, 6BB. <br> Registered in England Number 4122307</address>
+					</div>
+					
+					
+															<div class="clear"></div>
+									</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--footer ends-->

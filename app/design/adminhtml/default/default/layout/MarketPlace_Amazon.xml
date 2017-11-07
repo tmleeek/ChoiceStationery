@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+    <amazon_main_index>
+        <reference name="head">
+            <action method="addJs"><script>mdn/MarketPlace.js</script></action>
+            <action method="addCss"><name>MarketPlace.css</name></action>
+        </reference>
+        <reference name="content">
+            <block type="Amazon/Amazon" name="amazon_amazon" template="Amazon/Amazon.phtml">
+                <block type="Amazon/Index_Tabs" name="amazon_index_tabs" as="amazon_index_tabs"/>
+            </block>
+        </reference>
+    </amazon_main_index>
+
+    <amazon_requiredfields_edit>
+        <reference name="head">
+            <action method="addJs"><script>mdn/MarketPlace.js</script></action>
+        </reference>
+        <reference name="left">
+            <block type="Amazon/Requiredfields_Tabs" name="amazon_requiredfields_tabs" as="amazon_requiredfields_tabs"/>
+        </reference>
+        <reference name="content">
+            <block type="Amazon/Requiredfields_Edit" name="amazon_requiredfields_edit" template="Amazon/Requiredfields/Edit.phtml"/>
+        </reference>
+    </amazon_requiredfields_edit>
+
+</layout>

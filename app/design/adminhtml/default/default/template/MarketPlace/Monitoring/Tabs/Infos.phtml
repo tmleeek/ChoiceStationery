@@ -1,0 +1,63 @@
+<div class="dashboard-container" style="border:none;">
+    <p class="switcher">
+        <label for="accounts"><?php echo $this->__('Select account'); ?> : </label><?php echo $this->getCountriesAsCombo(); ?>
+    </p>
+</div>
+<?php $data = $this->getInformations(); ?>
+<div class="grid">
+    <table class="data" cellspacing="0" width="100%">
+        <thead>
+            <tr class="headings"><th colspan="5" style="text-align:center;background-color:#ccc;"><?php echo $this->getTitle(); ?></th></tr>
+            <tr class="headings">
+                <th><?php echo $this->__('Status'); ?></th>
+                <th><?php echo $this->__('Qty'); ?></th>
+                <th><?php echo $this->__('Action'); ?></th>
+            </tr>
+        </thead>
+        <tbody style="background-color:#fafafa;">
+            <?php foreach($data as $status => $array): ?>
+            <tr>
+                <td>
+                    <?php echo $this->__($array['label']); ?>
+                    <?php if(count($array['messages']) > 0): ?>
+                        <a href="#" onclick="showList(this, '<?php echo $status.'_list'; ?>');">[+]</a>
+                        <ul id="<?php echo $status.'_list'; ?>" style="display:none;margin-left:50px;list-style-type:square;">
+                            <?php foreach($array['messages'] as $message): ?>
+                            <li><?php echo $message; ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>                    
+                </td>
+                <td>
+                    <?php echo $array['nbr']; ?></td><td><?php echo $this->getActionLink($status); ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    
+    function showList(span, id){
+        
+        span.innerHTML='[-]';
+        span.setAttribute('onclick', 'hideList(this, "'+id+'")');
+        document.getElementById(id).style.display = 'block';
+        
+    }
+    
+    function hideList(span, id){
+        
+        span.innerHTML = '[+]';
+        span.setAttribute('onclick', 'showList(this, "'+id+'")');
+        document.getElementById(id).style.display = "none";
+        
+    }
+    
+    function switchCountry(id){
+        
+        setLocation('<?php echo $this->getUrl('MarketPlace/Monitoring/index', array()); ?>countryId/'+id);
+        
+    }
+    
+</script>

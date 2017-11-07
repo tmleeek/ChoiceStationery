@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <ipad_adminhtml_ipad_index>
+	<reference name="content">
+	  <block type="ipad/adminhtml_ipad" name="ipad" />
+	</reference>
+  </ipad_adminhtml_ipad_index>
+</layout>

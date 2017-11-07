@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <MageB2B_Sublogin>
+            <active>true</active>
+            <codePool>local</codePool>
+        </MageB2B_Sublogin>
+    </modules>
+</config>

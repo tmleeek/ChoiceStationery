@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <mxmallinone_report_sca>
+        <reference name="content">
+            <block type="mxmallinone/adminhtml_report_sca" name="mxmallinone_report_sca">
+                <block type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
+                    <action method="setUseConfirm"><params>0</params></action>
+                </block>
+                <block type="mxmallinone/adminhtml_report_sca_tabs" name="mxmallinone_report_sca_tabs" />
+            </block>
+        </reference>
+    </mxmallinone_report_sca>
+
+    <mxmallinone_report_trx>
+        <reference name="content">
+            <block type="mxmallinone/adminhtml_report_trx" name="mxmallinone_report_trx">
+                <block type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
+                    <action method="setUseConfirm"><params>0</params></action>
+                    <action method="setTemplate"><params>mxmallinone/report/website/switcher.phtml</params></action>
+                </block>
+                <block type="mxmallinone/adminhtml_report_trx_tabs" name="mxmallinone_report_trx_tabs" />
+            </block>
+        </reference>
+    </mxmallinone_report_trx>
+
+    <adminhtml_system_email_template_edit>
+        <update handle="editor"/>
+        <reference name="before_body_end">
+            <block type="core/template" name="mxmallinone_system_email_template" template="mxmallinone/system/email/template/edit.phtml" />
+        </reference>
+    </adminhtml_system_email_template_edit>
+</layout>

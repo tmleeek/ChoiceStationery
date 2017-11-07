@@ -1,0 +1,2 @@
+<?php $inflector = Mage::helper('pronav/inflector') ?>
+<li class="<?php echo 'pronav_product_' . $inflector->underscore($this->htmlEscape($this->getAnchorText())) ?>"><span class="widget pronav-widget-product-link"><a <?php echo $this->getLinkAttributes() ?>><span><img src="<?php echo $this->getIconLink() ?>" border="0" alt="<?php echo $this->htmlEscape($this->getAnchorText())?>" style="display:inline;" /> <?php echo $this->htmlEscape($this->getAnchorText()) ?></span></a></span></li>

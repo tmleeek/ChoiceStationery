@@ -1,0 +1,40 @@
+<script type="text/javascript" po_cmp_ignore>
+    var serveScaledImage = function(el, src, type) {
+        //remove element padding
+        var padding = el.style.padding;
+        var paddingLeft = el.style.paddingLeft;
+        var paddingRight = el.style.paddingRight;
+        var paddingTop = el.style.paddingTop;
+        var paddingBottom = el.style.paddingBottom;
+        el.style.padding = '0px 0px';
+        el.style.paddingLeft = '0px';
+        el.style.paddingRight = '0px';
+        el.style.paddingTop = '0px';
+        el.style.paddingBottom = '0px';
+
+        //calculate image size
+        var clientHeight = Math.max(el.clientHeight, 1);
+        var clientWidth = Math.max(el.clientWidth, 1);
+
+        //restore element padding
+        el.style.padding = padding;
+        el.style.paddingLeft = paddingLeft;
+        el.style.paddingRight = paddingRight;
+        el.style.paddingTop = paddingTop;
+        el.style.paddingBottom = paddingBottom;
+
+        el.onload = function(){
+            this.setAttribute('width', el.clientWidth + 'px');
+            this.setAttribute('height', el.clientHeight + 'px');
+        };
+        var mediaUrl = "<?php echo rtrim(Mage::getBaseUrl('media', Mage::app()->getRequest()->isSecure()), '/') . "/po_cmp_image/"?>" + clientWidth + 'x' + clientHeight + "/" + src;
+        var skinUrl = "<?php echo rtrim(Mage::getBaseUrl('skin', Mage::app()->getRequest()->isSecure()), '/') . "/po_cmp_image/"?>" + clientWidth + 'x' + clientHeight + "/" + src;
+
+        if (type == 'skin') {
+            el.setAttribute('src', skinUrl);
+            return;
+        }
+        el.setAttribute('src', mediaUrl);
+        return;
+    }
+</script>

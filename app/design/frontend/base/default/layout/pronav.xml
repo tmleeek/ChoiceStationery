@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<default>
+		<reference name="head">
+			<action method="addCss" ifconfig="pronav/pronavconfig/pronav_status"><stylesheet>pronav/css/pronav.core.css</stylesheet></action>
+			<block type="page/html_head" name="pronav_theme_inclusion" as="pronav_theme_inclusion" template="pronav/pronav_theme_inclusion.phtml"/>
+			<action method="addItem" ifconfig="pronav/pronavconfig/pronav_status"><type>skin_css</type><name>pronav/css/pronav.patches.ie.css</name><params/><if>lt IE 8</if></action>
+		</reference>		
+       	
+       	<remove name="catalog.topnav"/>
+       	<block type="page/html_topmenu" name="catalog.topnav.left" template="pronav/navigation_top.phtml" before="-"/>
+       	<block type="page/html_topmenu" name="catalog.topnav.right" template="pronav/navigation_top.phtml"/>
+       	<block type="page/html_topmenu" name="catalog.topnav.default" template="pronav/navigation_top.phtml"/>
+       	<block type="page/html_topmenu" name="catalog.topnav.content" template="pronav/navigation_top.phtml"/>
+       
+       	<reference name="top.menu">
+        	<block type="core/template" name="pronav_position_default" as="pronav_position_default" template="pronav/pronav_position_default.phtml" ifconfig="pronav/pronavconfig/pronav_status" />
+       	</reference>
+               
+        <reference name="right">        	
+        	<block type="core/template" name="pronav_position_right" as="pronav_position_right" template="pronav/pronav_position_right.phtml" before="-" ifconfig="pronav/pronavconfig/pronav_status" />
+        </reference>
+        
+        <reference name="left">
+        	<block type="core/template" name="pronav_position_left" as="pronav_position_left" template="pronav/pronav_position_left.phtml" before="-" ifconfig="pronav/pronavconfig/pronav_status" />
+        </reference>
+        
+        <reference name="content">
+        	<block type="core/template" name="pronav_position_content" as="pronav_position_content" template="pronav/pronav_position_content.phtml" before="-" ifconfig="pronav/pronavconfig/pronav_status" />
+        </reference>
+        
+	</default>
+	<pronav_index_index>
+		<reference name="content">
+			<block type="pronav/pronav" name="pronav" template="pronav/pronav.phtml"/>
+		</reference>
+	</pronav_index_index>
+</layout>

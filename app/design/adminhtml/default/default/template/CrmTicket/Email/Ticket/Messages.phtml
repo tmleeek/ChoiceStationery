@@ -1,0 +1,6 @@
+ <hr/>
+<?php foreach ($this->getMessagesInverted() as $message): ?>
+    <p><b><?php echo $this->__('By %s, %s', $message->getctm_author(), Mage::helper('core')->formatDate($message->getctm_updated_at(), 'long', true)); ?></b></p>
+    <p><pre><?php echo $message->getctm_content(); ?></pre></p>
+    <hr/>
+<?php endforeach; ?>

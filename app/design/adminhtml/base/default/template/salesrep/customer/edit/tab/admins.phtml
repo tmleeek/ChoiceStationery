@@ -1,0 +1,42 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$admins = LucidPath_SalesRep_Model_Source_UsersList::toOptionArray();
+$customer = Mage::registry('current_customer');
+?>
+<div class="entry-edit-head">
+  <h4 class="icon-head head-edit-form fieldset-legend">Assign a Sales Rep</h4>
+  <div class="form-buttons"></div>
+</div>
+<div id="_accountpassword_fieldset" class="fieldset ">
+  <div class="hor-scroll">
+    <table cellspacing="0" class="form-list">
+    <tbody>
+    <tr>
+      <td class="label">
+        <label for="_accountnew_password">Representative</label>
+      </td>
+      <td class="value">
+        <?php /* <select class="select" name="salesrep_admin" id="salesrep_admin_id" <?php if (!Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/salesrep/change_salesrep_name')) {echo 'disabled="disabled"';} ?>> */ ?>
+		<select class="select" name="salesrep_admin" id="salesrep_admin_id" readonly="readonly" />
+          <?php
+          foreach ($admins as $admin) {
+            $selected = '';
+            if ($customer->getData('salesrep_admin_id') == $admin['value']) {
+              $selected = ' selected="selected"';
+            }
+
+            echo '<option value="'. $admin['value'] .'"'. $selected .'>'. $admin['label'] .'</option>';
+          }
+          ?>
+        </select>
+        <br />
+        <?php /* <i>The sales rep you assign above will be automatically credited with all of this customer's future orders. If you change the sales rep, only future orders will be credited to the newly assigned rep.</i> */ ?>
+		<i>All Sales Rep changes must now be done through Spitfire, to do this please <a href="http://spitfire/?customers=1&amp;magcus=<?=$customer->getData('entity_id');?>">click here</a>.</i>
+      </td>
+    </tr>
+    </tbody>
+    </table>
+  </div>
+</div>

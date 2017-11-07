@@ -1,0 +1,361 @@
+# Translation of Plugins - Yet Another Related Posts Plugin (YARPP) - Stable (latest release) in English (UK)
+# This file is distributed under the same license as the Plugins - Yet Another Related Posts Plugin (YARPP) - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2017-04-26 16:50:03+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/2.4.0-alpha\n"
+"Language: en_GB\n"
+"Project-Id-Version: Plugins - Yet Another Related Posts Plugin (YARPP) - Stable (latest release)\n"
+
+#. Author of the plugin/theme
+msgid "Adknowledge"
+msgstr "Adknowledge"
+
+#. Description of the plugin/theme
+msgid "Adds related posts to your site and in RSS feeds, based on a powerful, customizable algorithm. Enabling YARPP Pro gives you access to even more powerful features. <a href=\"http://www.yarpp.com\" target=\"_blank\">Find out more</a>."
+msgstr "Adds related posts to your site and in RSS feeds, based on a powerful, customisable algorithm. Enabling YARPP Pro gives you access to even more powerful features. <a href=\"http://www.yarpp.com\" target=\"_blank\">Find out more</a>."
+
+#. #-#-#-#-#  tmp-yet-another-related-posts-plugin.pot (Yet Another Related
+#. Posts Plugin 4.2.5)  #-#-#-#-#
+#. Plugin URI of the plugin/theme
+#. #-#-#-#-#  tmp-yet-another-related-posts-plugin.pot (Yet Another Related
+#. Posts Plugin 4.2.5)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "http://www.yarpp.com/"
+msgstr "http://www.yarpp.com/"
+
+#. Plugin Name of the plugin/theme
+msgid "Yet Another Related Posts Plugin"
+msgstr "Yet Another Related Posts Plugin"
+
+#: includes/yarpp_options.php:133
+msgid "Options saved!"
+msgstr "Options saved!"
+
+#: includes/yarpp_options.php:8
+msgid "The YARPP database has an error which could not be fixed."
+msgstr "The YARPP database has an error which could not be fixed."
+
+#: includes/yarpp_myisam_notice.php:13
+msgid "The MyISAM check has been overridden. You may now use the \"consider titles\" and \"consider bodies\" relatedness criteria."
+msgstr "The MyISAM check has been overridden. You may now use the \"consider titles\" and \"consider bodies\" relatedness criteria."
+
+#: includes/yarpp_meta_boxes_hooks.php:73
+msgid "Contact YARPP"
+msgstr "Contact YARPP"
+
+#: includes/yarpp_meta_boxes_hooks.php:47
+msgid "Display options <small>for RSS</small>"
+msgstr "Display options <small>for RSS</small>"
+
+#: includes/yarpp_meta_boxes_hooks.php:35
+msgid "Display options <small>for your website</small>"
+msgstr "Display options <small>for your website</small>"
+
+#: includes/yarpp_meta_boxes_hooks.php:23
+msgid "\"Relatedness\" options"
+msgstr "\"Relatedness\" options"
+
+#: includes/yarpp_meta_boxes_hooks.php:14
+msgid "\"The Pool\""
+msgstr "\"The Pool\""
+
+#: includes/template_metabox.php:28
+msgid "Whether all of these related entries are actually displayed and how they are displayed depends on your YARPP display options."
+msgstr "Whether all of these related entries are actually displayed and how they are displayed depends on your YARPP display options."
+
+#: includes/template_metabox.php:12
+msgid "These are the related entries for this entry. Updating this post may change these related posts."
+msgstr "These are the related entries for this entry. Updating this post may change these related posts."
+
+#: includes/template_builtin.php:38
+msgid "%f is the YARPP match score between the current entry and this related entry. You are seeing this value because you are logged in to WordPress as an administrator. It is not shown to regular visitors."
+msgstr "%f is the YARPP match score between the current entry and this related entry. You are seeing this value because you are logged in to WordPress as an administrator. It is not shown to regular visitors."
+
+#: classes/YARPP_Meta_Box_Relatedness.php:19
+msgid "Show only previous posts?"
+msgstr "Show only previous posts?"
+
+#: classes/YARPP_Meta_Box_Relatedness.php:18
+msgid "When \"display results from all post types\" is off, only posts will be displayed as related to a post, only pages will be displayed as related to a page, etc."
+msgstr "When \"display results from all post types\" is off, only posts will be displayed as related to a post, only pages will be displayed as related to a page, etc."
+
+#: classes/YARPP_Meta_Box_Relatedness.php:18
+msgid "Display results from all post types"
+msgstr "Display results from all post types"
+
+#: classes/YARPP_Meta_Box_Relatedness.php:12
+msgid "Bodies: "
+msgstr "Bodies: "
+
+#: classes/YARPP_Meta_Box_Relatedness.php:11
+msgid "Titles: "
+msgstr "Titles: "
+
+#: classes/YARPP_Meta_Box_Relatedness.php:10
+msgid "Match threshold:"
+msgstr "Match threshold:"
+
+#: classes/YARPP_Meta_Box_Relatedness.php:7
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgstr "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+
+#: classes/YARPP_Meta_Box_Relatedness.php:7
+msgid "YARPP limits the related posts list by (1) a maximum number and (2) a <em>match threshold</em>."
+msgstr "YARPP limits the related posts list by (1) a maximum number and (2) a <em>match threshold</em>."
+
+#: classes/YARPP_Meta_Box_Display_Web.php:25
+msgid "Also display in archives"
+msgstr "Also display in archives"
+
+#: classes/YARPP_Meta_Box_Display_Web.php:15
+msgid "This option automatically displays related posts right after the content on single entry pages. If this option is off, you will need to manually insert <code>related_posts()</code> or variants (<code>related_pages()</code> and <code>related_entries()</code>) into your theme files."
+msgstr "This option automatically displays related posts right after the content on single entry pages. If this option is off, you will need to manually insert <code>related_posts()</code> or variants (<code>related_pages()</code> and <code>related_entries()</code>) into your theme files."
+
+#: classes/YARPP_Meta_Box_Display_Web.php:11
+msgid "Website display code example"
+msgstr "Website display code example"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:58
+msgid "This option will add the code %s. Try turning it on, updating your options, and see the code in the code example to the right. These links and donations are greatly appreciated."
+msgstr "This option will add the code %s. Try turning it on, updating your options, and see the code in the code example to the right. These links and donations are greatly appreciated."
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:58
+#: classes/YARPP_Meta_Box_Display_Web.php:71
+msgid "Help promote Yet Another Related Posts Plugin?"
+msgstr "Help promote Yet Another Related Posts Plugin?"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:51
+#: classes/YARPP_Meta_Box_Display_Web.php:62
+msgid "Before / after (excerpt):"
+msgstr "Before / after (excerpt):"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:49
+#: classes/YARPP_Meta_Box_Display_Web.php:60
+msgid "Excerpt length (No. of words):"
+msgstr "Excerpt length (No. of words):"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:48
+#: classes/YARPP_Meta_Box_Display_Web.php:59
+msgid "Show excerpt?"
+msgstr "Show excerpt?"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:46
+#: classes/YARPP_Meta_Box_Display_Web.php:57
+msgid "Before / after each related entry:"
+msgstr "Before / after each related entry:"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:45
+#: classes/YARPP_Meta_Box_Display_Feed.php:46
+#: classes/YARPP_Meta_Box_Display_Feed.php:51
+#: classes/YARPP_Meta_Box_Display_Web.php:56
+#: classes/YARPP_Meta_Box_Display_Web.php:57
+#: classes/YARPP_Meta_Box_Display_Web.php:62
+msgid " or "
+msgstr " or "
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:45
+#: classes/YARPP_Meta_Box_Display_Feed.php:46
+#: classes/YARPP_Meta_Box_Display_Feed.php:51
+#: classes/YARPP_Meta_Box_Display_Web.php:56
+#: classes/YARPP_Meta_Box_Display_Web.php:57
+#: classes/YARPP_Meta_Box_Display_Web.php:62
+msgid "For example:"
+msgstr "For example:"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:45
+#: classes/YARPP_Meta_Box_Display_Web.php:56
+msgid "Before / after related entries:"
+msgstr "Before / after related entries:"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:38
+#: classes/YARPP_Meta_Box_Display_Feed.php:53
+#: classes/YARPP_Meta_Box_Display_Web.php:49
+#: classes/YARPP_Meta_Box_Display_Web.php:64
+msgid "Default display if no results:"
+msgstr "Default display if no results:"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:37
+#: classes/YARPP_Meta_Box_Display_Web.php:48
+msgid "Default image (URL):"
+msgstr "Default image (URL):"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:36
+#: classes/YARPP_Meta_Box_Display_Web.php:47
+msgid "Heading:"
+msgstr "Heading:"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:16
+#: classes/YARPP_Meta_Box_Display_Web.php:27
+msgid "Maximum number of related posts:"
+msgstr "Maximum number of related posts:"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:14
+msgid "This option displays the related posts in the RSS description fields, not just the content. If your feeds are set up to only display excerpts, however, only the description field is used, so this option is required for any display at all."
+msgstr "This option displays the related posts in the RSS description fields, not just the content. If your feeds are set up to only display excerpts, however, only the description field is used, so this option is required for any display at all."
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:14
+msgid "Display related posts in the descriptions?"
+msgstr "Display related posts in the descriptions?"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:13
+msgid "This option displays related posts at the end of each item in your RSS and Atom feeds. No template changes are needed."
+msgstr "This option displays related posts at the end of each item in your RSS and Atom feeds. No template changes are needed."
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:13
+msgid "Display related posts in feeds?"
+msgstr "Display related posts in feeds?"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:11
+#: classes/YARPP_Meta_Box_Display_Web.php:11
+msgid "(Update options to reload.)"
+msgstr "(Update options to reload.)"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:11
+msgid "RSS display code example"
+msgstr "RSS display code example"
+
+#: classes/YARPP_Meta_Box_Contact.php:33
+msgid "Review YARPP on WordPress.org"
+msgstr "Review YARPP on WordPress.org"
+
+#: classes/YARPP_Meta_Box_Contact.php:18
+msgid "YARPP on Twitter"
+msgstr "YARPP on Twitter"
+
+#: classes/YARPP_Meta_Box_Contact.php:13
+msgid "YARPP Forum"
+msgstr "YARPP Forum"
+
+#: classes/YARPP_Meta_Box.php:94
+msgid "title (reverse alphabetical)"
+msgstr "title (reverse alphabetical)"
+
+#: classes/YARPP_Meta_Box.php:93
+msgid "title (alphabetical)"
+msgstr "title (alphabetical)"
+
+#: classes/YARPP_Meta_Box.php:92
+msgid "date (old to new)"
+msgstr "date (old to new)"
+
+#: classes/YARPP_Meta_Box.php:91
+msgid "date (new to old)"
+msgstr "date (new to old)"
+
+#: classes/YARPP_Meta_Box.php:90
+msgid "score (low relevance to high)"
+msgstr "score (low relevance to high)"
+
+#: classes/YARPP_Meta_Box.php:89
+msgid "score (high relevance to low)"
+msgstr "score (high relevance to low)"
+
+#: classes/YARPP_Meta_Box.php:85
+msgid "Order results:"
+msgstr "Order results:"
+
+#: classes/YARPP_Meta_Box.php:79
+msgid "consider with extra weight"
+msgstr "consider with extra weight"
+
+#: classes/YARPP_Meta_Box.php:78
+msgid "consider"
+msgstr "consider"
+
+#: classes/YARPP_Meta_Box.php:77
+msgid "do not consider"
+msgstr "do not consider"
+
+#: classes/YARPP_Core.php:1319 classes/YARPP_Meta_Box_Display_Feed.php:58
+msgid "Related posts brought to you by <a href='%s'>Yet Another Related Posts Plugin</a>."
+msgstr "Related posts brought to you by <a href='%s'>Yet Another Related Posts Plugin</a>."
+
+#: classes/YARPP_Core.php:116 classes/YARPP_Core.php:126
+#: classes/YARPP_Core.php:561 classes/YARPP_Core.php:572
+#: includes/template_metabox.php:30 includes/template_widget.php:13
+msgid "No related posts."
+msgstr "No related posts."
+
+#: classes/YARPP_Core.php:114 classes/YARPP_Core.php:124
+#: classes/YARPP_Core.php:151 classes/YARPP_Core.php:153
+#: classes/YARPP_Core.php:559 classes/YARPP_Core.php:570
+#: classes/YARPP_Core.php:925
+msgid "Related posts:"
+msgstr "Related posts:"
+
+#: classes/YARPP_Cache_Bypass.php:99
+msgid "Example post "
+msgstr "Example post "
+
+#: classes/YARPP_Admin.php:429
+msgid "Related entries may be displayed once you save your entry"
+msgstr "Related entries may be displayed once you save your entry"
+
+#: classes/YARPP_Admin.php:399
+msgid "Settings"
+msgstr "Settings"
+
+#: classes/YARPP_Admin.php:366
+msgid "Show example code output"
+msgstr "Show example code output"
+
+#: classes/YARPP_Admin.php:292
+msgid "Thank you for installing <span>Yet Another Related Posts Plugin</span>!"
+msgstr "Thank you for installing <span>Yet Another Related Posts Plugin</span>!"
+
+#: classes/YARPP_Admin.php:288
+msgid "%1$s updated successfully."
+msgstr "%1$s updated successfully."
+
+#: classes/YARPP_Admin.php:203
+msgid "In addition, YARPP also loads an invisible pixel image with your YARPP results to know how often YARPP is being used."
+msgstr "In addition, YARPP also loads an invisible pixel image with your YARPP results to know how often YARPP is being used."
+
+#: classes/YARPP_Admin.php:199
+msgid "The following information is sent back to YARPP:"
+msgstr "The following information is sent back to YARPP:"
+
+#: classes/YARPP_Admin.php:192
+msgid "Contributing this data will help make YARPP better for you and for other YARPP users."
+msgstr "Contributing this data will help make YARPP better for you and for other YARPP users."
+
+#: classes/YARPP_Admin.php:185
+msgid ""
+"This information will be used to improve YARPP in the future and help decide future development\n"
+"\t\t            decisions for YARPP."
+msgstr ""
+"This information will be used to improve YARPP in the future and help decide future development\n"
+"\t\t            decisions for YARPP."
+
+#: classes/YARPP_Admin.php:177
+msgid ""
+"With your permission, YARPP will send information about YARPP's settings, usage, and environment\n"
+"                    back to a central server at "
+msgstr ""
+"With your permission, YARPP will send information about YARPP's settings, usage, and environment\n"
+"                    back to a central server at "
+
+#: classes/YARPP_Admin.php:136
+msgid "Optional Data Collection"
+msgstr "Optional Data Collection"
+
+#: classes/YARPP_Admin.php:130 classes/YARPP_Admin.php:168
+msgid "Developing with YARPP"
+msgstr "Developing with YARPP"
+
+#: classes/YARPP_Admin.php:124 classes/YARPP_Admin.php:154
+msgid "Frequently Asked Questions"
+msgstr "Frequently Asked Questions"
+
+#: classes/YARPP_Admin.php:95
+msgid "Configure"
+msgstr "Configure"
+
+#: classes/YARPP_Admin.php:93
+msgid "Related Posts"
+msgstr "Related Posts"

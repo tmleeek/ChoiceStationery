@@ -1,0 +1,60 @@
+<div class="entry-edit">
+    <div class="content-header">
+        <table class="grid-header" cellspacing="0">
+            <tbody>
+                <tr>
+                    <td>
+                        <h3><?php echo $this->__('Summary - User'); ?></h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="summary">
+        <div class="grid">
+            <div class="hor-scroll">
+
+                <table id="CustomRelationManager_table" class="data" cellspacing="0">
+                    <colgroup>
+                        <col></col>
+                        <col></col>
+                        <col></col>
+                        <col></col>
+                        <col></col>
+                    </colgroup>
+                    <thead>
+                        <tr class="headings">
+                            <th><?php echo $this->__('User'); ?></th>
+                            <?php foreach ($this->getStatuses() as $key => $status): ?>
+                                <th><?php echo $status; ?></th>
+                            <?php endforeach; ?>    
+                            <th><?php echo $this->__('Total'); ?></th>
+                        </tr>
+                        <tr class="filter"></tr>
+                    </thead>
+                    <tbody id="">
+                        <?php foreach ($this->getManagers() as $user): ?>
+
+                            <?php if (($user->getId() % 2) == 0): ?><tr class="even pointer"> <?php endif; ?>
+                            <?php if (($user->getId() % 2) == 1): ?><tr class="pointer"> <?php endif; ?>
+
+                                <td><?php echo $user->getusername(); ?></td>
+                                <?php foreach ($this->getStatuses() as $key => $status): ?>
+                                    <td align="center"><?php echo $this->getTicketCount($key, $user->getId()); ?></td>
+                                <?php endforeach; ?>
+                                <td align="center"><?php echo $this->getTicketCount(null, $user->getId()); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                            <tr>
+                                <td><?php echo $this->__('Total'); ?></td>
+                                <?php foreach ($this->getStatuses() as $key => $status): ?>
+                                    <td align="center"><?php echo $this->getTicketCount($key, null); ?></td>
+                                <?php endforeach; ?>
+                                <td align="center"><?php echo $this->getTicketCount(null, null); ?></td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

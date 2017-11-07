@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Wyomind_Sitcsgs>
+            <version>1.0.0</version>
+        </Wyomind_Sitcsgs>
+    </modules>
+  
+   
+    <global>
+        <resources>
+            <sitcsgs_setup>
+                <setup>
+                    <module>Wyomind_Sitcsgs</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </sitcsgs_setup>
+            <sitcsgs_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </sitcsgs_write>
+            <stcsgs_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            <sitcsgs_read>
+        </resources>
+    </global>
+</config>

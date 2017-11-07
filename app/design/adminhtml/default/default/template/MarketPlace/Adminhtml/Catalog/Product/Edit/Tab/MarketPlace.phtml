@@ -1,0 +1,84 @@
+<div class="grid">
+    <table class="data" cellspacing="0" width="100%">
+        <thead>
+            <tr class="headings">
+                <th><?php echo $this->__('Marketplace'); ?></th>
+                <th><?php echo $this->__('Reference'); ?></th>
+                <th><?php echo $this->__('Status'); ?></th>
+                <th><?php echo $this->__('Account'); ?></th>
+                <th><?php echo $this->__('Country'); ?></th>
+                <th><?php echo $this->__('Last update'); ?></th>
+                <th><?php echo $this->__('Last stock sent'); ?></th>
+                <th><?php echo $this->__('Last price sent'); ?></th>
+                <th><?php echo $this->__('Last delay sent'); ?></th>
+                <th><?php echo $this->__('Update status'); ?></th>
+                <th><?php echo $this->__('Extra'); ?></th>
+                <th><?php echo $this->__('Action'); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->getInfos() as $info): ?>
+                <tr>
+                    <td><?php echo $info['marketplace']; ?></td>
+                    <td><?php echo $info['reference']; ?></td>
+                    <td><?php echo $info['status']; ?></td>
+                    <td><?php echo $info['account']; ?></td>
+                    <td><?php echo $info['country']; ?></td>
+                    <td><?php echo $info['last_update']; ?></td>
+                    <td><?php echo $info['last_stock_sent']; ?></td>
+                    <td><?php echo $info['last_price_sent']; ?></td>
+                    <td><?php echo $info['last_delay_sent']; ?></td>
+                    <td><?php echo $info['update_status']; ?></td>
+                    <td><?php echo $info['extra']; ?></td>
+                    <td><?php echo $this->getActionSwitcher($info); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    
+    function processMarketplaceAction(string){
+    
+        var tmp = string.split('_');
+        
+        var actionLabel = '';
+        var action = tmp[0];
+        var countryId = tmp[1];
+        var productId = tmp[2];
+        var url = "<?php echo $this->getUrl('MarketPlace/Products/processFromProductSheet', array()); ?>action/"+action+"/productId/"+productId+"/countryId/"+countryId;
+    
+        if(action != ''){
+    
+            switch(action){
+				
+                case 'updateimage':
+                    actionLabel = 'update image for';
+                    break;
+                case 'setascreated':
+                    actionLabel = 'set as created';
+                    break;
+                case 'setaspending':
+                    actionLabel = 'set as pending';
+                    break;
+                case 'setasnotcreated':
+                    actionLabel = 'set as not created';
+                    break;
+                default:
+                    actionLabel = action;
+                    break;
+			
+            }
+	
+            if(confirm('Are you sure to '+actionLabel+' product '+productId+' on country '+countryId)){
+                
+                document.location.href = url;
+                               
+            }    
+        }            
+    
+    }
+    
+</script>
+

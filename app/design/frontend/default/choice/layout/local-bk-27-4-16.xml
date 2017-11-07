@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    
+    <default>
+	<!--page.xml-->
+	<reference name="head">
+<!--<action method="addItem"><type>skin_js</type><name>js/jquery-1.11.2.min.js</name><params/></action>-->
+<action method="addItem"><type>skin_js</type><name>js/noconflict.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/jquery.easing.1.3.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/jquery-ui.min.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/html5.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/jquery.elevateZoom-3.0.8.min.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/jquery.selectbox-0.2.min.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/owl.carousel.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/superfish.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/jquery.mobile.customized.min.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/scripts.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/jquery.jcarousel.min.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/jquery.iosslider.min.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/jquery.cycle2.min.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/jquery.cycle2.swipe.min.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/mgt_lazy_image_loader/lazy-image-loader.js</name></action>
+<action method="addItem"><type>skin_js</type><name>js/mgt_lazy_image_loader/common.js</name></action>
+			
+<action method="addItem"><type>skin_css</type><name>css/bootstrap.min.css</name><params/></action>
+<action method="addItem"><type>skin_css</type><name>css/font-awesome.min.css</name><params/></action>
+<action method="addItem"><type>skin_css</type><name>css/jquery.selectbox.css</name><params/></action>
+<action method="addItem"><type>skin_css</type><name>css/owl.carousel.css</name><params/></action>
+<action method="addItem"><type>skin_css</type><name>css/style.css</name><params/></action>
+<action method="addItem"><type>skin_css</type><name>css/custom.css</name><params/></action>
+<action method="addItem"><type>skin_css</type><name>css/styles_edited.css</name><params/></action>
+<action method="addItem"><type>skin_css</type><name>js/cycle2slider.css</name><params/></action>
+	</reference>
+    </default>
+    <catalog_category_layered>
+		<reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+	<reference name="left">
+		<block type="reports/product_viewed" name="product.recently.viewed" as="product_recently_viewed" after="-" template="reports/home_product_viewed.phtml"/>
+	</reference>
+    </catalog_category_layered>
+    <catalogsearch_result_index>
+    	 <reference name="left">
+      <block type="catalogsearch/layer" name="catalogsearch.leftnav" after="currency" template="catalog/layer/view.phtml"/>
+ </reference>
+    </catalogsearch_result_index>
+	<catalog_product_view>
+	<reference name="head">
+		<action method="addItem"><type>skin_js</type><name>js/easyTooltip.js</name><params/></action>
+		<action method="addItem"><type>skin_js</type><name>js/jquery.prettyPhoto.js</name><params/></action>
+		<action method="addItem"><type>skin_js</type><name>js/jquery.fancybox.js</name><params/></action>
+		<action method="addItem"><type>skin_css</type><name>css/jquery.fancybox.css</name><params/></action>
+		</reference>
+	</catalog_product_view>
+	<checkout_onepage_success>
+	<label>One Page Checkout Success</label>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+	</checkout_onepage_success>
+	
+</layout>

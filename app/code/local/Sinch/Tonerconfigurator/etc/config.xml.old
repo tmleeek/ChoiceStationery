@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Sinch_Tonerconfigurator>
+            <version>1.2.3</version>
+        </Sinch_Tonerconfigurator>
+    </modules>
+
+    <frontend>
+        <routers>
+            <tonerconfigurator>
+                <use>standard</use>
+                <args>
+                    <module>Sinch_Tonerconfigurator</module>
+                    <frontName>tonerconfigurator</frontName>
+                </args>
+            </tonerconfigurator>
+        </routers>
+    </frontend>
+    <global>
+        <blocks>
+            <tonerconfigurator>
+                <class>Sinch_Tonerconfigurator_Block</class>
+            </tonerconfigurator>
+        </blocks>
+        <helpers>
+            <tonerconfigurator>
+                <class>Sinch_Tonerconfigurator_Helper</class>
+            </tonerconfigurator>
+            <catalog>
+                <rewrite>
+                    <category>Sinch_Tonerconfigurator_Helper_Category</category>
+                </rewrite>
+            </catalog>
+        </helpers>
+        <models>
+            <tonerconfigurator>
+                <class>Sinch_Tonerconfigurator_Model</class>
+            </tonerconfigurator>
+        </models>
+    </global>
+    <default>
+		<tonerconfigurator>
+			<options>
+				<root_id>5</root_id>
+				<titles>
+					<title1>Printer Make</title1>
+					<title2>Printer Family</title2>
+					<title3>Printer Model</title3>
+				</titles>
+				<category_depth>2</category_depth>
+			</options>
+		</tonerconfigurator>
+    </default>
+</config>

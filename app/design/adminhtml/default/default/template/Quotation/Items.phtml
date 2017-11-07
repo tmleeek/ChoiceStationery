@@ -1,0 +1,13 @@
+<?php echo $this->getGridParentHtml(); ?>
+
+<script type="text/javascript">
+<?php
+//call js functions to display "standard price" considering options and final price
+foreach ($this->getCollection() as $item) {
+    if ($item->getProduct()->gethas_options() == 1) {
+        echo "updatePriceForCustomOptions_" . $item->getId() . "();\n";
+    }
+    echo "DisplayFinalPrice(" . $item->getId() . ");";
+}
+?>
+</script>

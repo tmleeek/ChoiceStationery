@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Flint Technology Ltd
+ *
+ * This module was developed by Flint Technology Ltd (http://www.flinttechnology.co.uk).
+ * For support or questions, contact us via feefo@flinttechnology.co.uk 
+ * Support website: https://www.flinttechnology.co.uk/support/projects/feefo/
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA bundled with this package in the file LICENSE.txt.
+ * It is also available online at http://www.flinttechnology.co.uk/store/module-license-1.0
+ *
+ * @package     flint_feefo-ce-2.0.13.zip
+ * @registrant  Paul Andrews, Choice Stationery Supplies
+ * @license     FFFEA83A-B2B2-4E66-B4F5-AE27E326AAC3
+ * @eula        Flint Module Single Installation License (http://www.flinttechnology.co.uk/store/module-license-1.0
+ * @copyright   Copyright (c) 2014 Flint Technology Ltd (http://www.flinttechnology.co.uk)
+ */
+-->
+<config>
+    <modules>
+        <Flint_Feefo>
+            <version><![CDATA[2.0.13]]></version>
+        </Flint_Feefo>
+    </modules>
+    <frontend>
+        <routers>
+            <flint_feefo>
+                <use>standard</use>
+                <args>
+                    <module>Flint_Feefo</module>
+                    <frontName>feefo</frontName>
+                </args>
+            </flint_feefo>
+        </routers>
+        <translate>
+            <modules>
+                <Flint_Feefo>
+                    <files>
+                        <default>Flint_Feefo.csv</default>
+                    </files>
+                </Flint_Feefo>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <flint_feefo module="Flint_Feefo">
+                    <file>flint_feefo.xml</file>
+                </flint_feefo>
+            </updates>
+        </layout>
+    </frontend>
+    <global>
+        <helpers>
+            <flint_feefo>
+                <class>Flint_Feefo_Helper</class>
+            </flint_feefo>
+        </helpers>
+        <blocks>
+            <flint_feefo>
+                <class>Flint_Feefo_Block</class>
+            </flint_feefo>
+        </blocks>
+        <models>
+            <flint_feefo>
+                <class>Flint_Feefo_Model</class>
+            </flint_feefo>
+        </models>
+        <layouts>
+            <feefo_reviews_popup module="flint_feefo" translate="label">
+                <label>Feefo popup</label>
+                <template>page/empty.phtml</template>
+                <layout_handle>feefo_reviews_popup</layout_handle>
+            </feefo_reviews_popup>
+        </layouts>
+        <resources>
+            <flint_feefo_setup>
+                <setup>
+                    <module>Flint_Feefo</module>
+                    <class>Flint_Feefo_Model_Resource_Setup</class>
+                </setup>
+            </flint_feefo_setup>
+        </resources>
+        <sales>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <feefo_disable_feeds/>
+                        <feefo_sku/>
+                        <feefo_disable_frontend/>
+                        <feefo_business_category/>
+                    </product_attributes>
+                </item>
+            </quote>
+        </sales>
+        <fieldsets>
+            <sales_convert_quote_item>
+                <feefo_disable_feeds>
+                    <to_order_item>*</to_order_item>
+                </feefo_disable_feeds>
+                <feefo_sku>
+                    <to_order_item>*</to_order_item>
+                </feefo_sku>
+                <feefo_disable_frontend>
+                    <to_order_item>*</to_order_item>
+                </feefo_disable_frontend>
+                <feefo_business_category>
+                    <to_order_item>*</to_order_item>
+                </feefo_business_category>
+            </sales_convert_quote_item>
+            <sales_convert_order_item>
+                <feefo_disable_feeds>
+                    <to_quote_item>*</to_quote_item>
+                </feefo_disable_feeds>
+                <feefo_sku>
+                    <to_quote_item>*</to_quote_item>
+                </feefo_sku>
+                <feefo_disable_frontend>
+                    <to_quote_item>*</to_quote_item>
+                </feefo_disable_frontend>
+                <feefo_business_category>
+                    <to_quote_item>*</to_quote_item>
+                </feefo_business_category>
+            </sales_convert_order_item>
+        </fieldsets>
+        <events>
+            <sales_quote_item_set_product>
+                <observers>
+                    <flint_feefo>
+                        <class>flint_feefo/observer</class>
+                        <method>salesQuoteItemSetCustomAttribute</method>
+                    </flint_feefo>
+                </observers>
+            </sales_quote_item_set_product>
+        </events>
+    </global>
+    <adminhtml>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <flint_feefo>
+                                            <title>Flint Feefo</title>
+                                            <sort_order>100</sort_order>
+                                        </flint_feefo>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <translate>
+            <modules>
+                <Flint_Feefo>
+                    <files>
+                        <default>Flint_Feefo.csv</default>
+                    </files>
+                </Flint_Feefo>
+            </modules>
+        </translate>
+    </adminhtml>
+    <default>
+        <flint_feefo>
+            <general>
+                <firewall>89.151.77.8,89.151.77.9,81.29.66.200,81.29.66.201</firewall>
+                <include_store_code>1</include_store_code>
+            </general>
+            <service>
+                <mode>service</mode>
+                <logo_template_checkout_review>cp3.png</logo_template_checkout_review>
+                <logo_position>feefo_logo_service_right,feefo_basket_service_proceed</logo_position>
+            </service>
+            <product>
+                <logo_template_product>N172x39WP.png</logo_template_product>
+                <logo_template_catalog>StarsOnlyBlue.png</logo_template_catalog>
+                <logo_template_basket>StarsOnlyBlue.png</logo_template_basket>
+                <logo_template_reviews>SafetySupplyCoStarsOnly.png</logo_template_reviews>
+                <mode>product</mode>
+                <logo_position>feefo_logo_extrahint,feefo_basket_product_logo</logo_position>
+            </product>
+            <product_reviews>
+                <logo_template_reviews>SafetySupplyCoStarsOnly.png</logo_template_reviews>
+                <limit>20</limit>
+            </product_reviews>
+        </flint_feefo>
+    </default>
+</config>
+

@@ -1,0 +1,48 @@
+<?php 
+/**
+ * @category Customer Version 2.4
+ * @package MageB2B_Sublogin
+ * @author AIRBYTES GmbH <info@airbytes.de>
+ * @copyright AIRBYTES GmbH
+ * @license commercial
+ * @date 11.02.2015
+ */
+?>
+<?php
+$_order = Mage::registry('current_order');
+$subloginModel = Mage::helper('sublogin')->getCurrentSublogin(); ?>
+<!--	// show links to main login only and hide them for sublogin -->
+<?php if (!$subloginModel): ?>
+	<?php
+        echo "<br />";
+		$separator = "";
+		if (!$_order) {
+			$_order = $this->getData('_order');
+		}
+		else {
+			// in else: so we are on order view page so need separator
+			$separator = "<span class='separator'>|</span>";
+		}
+		if ($_order->getStatus() == 'approval') {
+			echo $separator."<a href='".$this->getUrl('sublogin/frontend/approveorder', array('order_id' => $_order->getId()))."'>".Mage::helper('sublogin')->__('Approve Order')."</a>";
+			echo "<br />"."<a href='".$this->getUrl('sublogin/frontend/declineorder', array('order_id' => $_order->getId()))."'>".Mage::helper('sublogin')->__('Decline Order')."</a>";
+		}  
+		
+		if (Mage::helper('sublogin')->canDeleteNotApprovedOrder())
+		{
+			if ($_order->getStatus() == 'not_approved') {
+				echo $separator."<a href='javascript:subloginDeleteOrder(\"".Mage::helper('sublogin')->__("Are you sure?")."\", \"".$this->getUrl('sublogin/frontend/deleteorder', array('order_id' => $_order->getId()))."\")'>".Mage::helper('sublogin')->__('Delete Order')."</a>";
+			}
+		}
+		
+		?>
+<?php endif; ?>
+<script type="text/javascript">
+	subloginDeleteOrder = function (message, url)
+	{
+		if (window.confirm(message))
+		{
+			setLocation(url);
+		}
+	}
+</script>

@@ -1,0 +1,86 @@
+<?php $_element = $this->getElement() ?>
+<tr>
+    <td class="label"><?php echo $this->getElement()->getLabel() ?>
+        <?php if ($_element->getRequired()):?> <span class="required">*</span> <?php endif;?>
+    </td>
+    <td class="value">
+        <style type="text/css">
+            .autocomplete-w1 { position:absolute; top:4px; left:3px; /* IE6 fix: */ _background:none; _top:1px; }
+            .autocomplete-w2 { padding:0 6px 6px 0; }
+            .autocomplete { width:500px; border:1px solid #999; background:#FFF; cursor:default; text-align:left; max-height:350px; overflow:auto; margin:-6px 6px 6px -6px; /* IE specific: */ _height:350px;  _margin:0px 6px 6px 0; overflow-x:hidden; }
+            .autocomplete .selected { background:#F0F0F0; }
+            .autocomplete div { padding:2px 5px; white-space:nowrap; }
+            .autocomplete strong { font-weight:normal; color:#3399FF; }
+        </style>
+
+        <input class="<?php echo $_element->getClass()?>" type="text"
+            value="<?php echo ($_element->getValue()) ? $this->escapeHtml($this->getAutocompleteData($_element->getValue())) : '' ?>"
+            id="<?php echo $_element->getHtmlId()?>"
+            onfocus="this.select()" />
+        <input type="hidden" value="<?php echo $this->getElement()->getValue()?>"
+            name="<?php echo $_element->getName()?>" id="<?php echo $_element->getHtmlId()?>_hidden" />
+
+
+        <?php /*<script type="text/javascript" src="<?php echo $this->getJsUrl('mageb2b/sublogin/autocomplete.js'); ?>"></script>*/?>
+		<script src="<?php echo $this->getJsUrl('mageb2b/sublogin/jquery.min.js'); ?>"></script>
+		<script src="<?php echo $this->getJsUrl('mageb2b/sublogin/jquery-ui.min.js'); ?>"></script>
+		<link rel="stylesheet" href="<?php echo $this->getJsUrl('mageb2b/sublogin/jquery-ui.css'); ?>">
+        <script type="text/javascript">
+		jQuery.noConflict();
+			jQuery( "#<?php echo $_element->getHtmlId()?>" ).autocomplete({
+				  source: "<?php echo $this->getUrl('adminhtml/sublogin_index/customerautosuggest')?>",
+				  minLength: 2,
+				  select: function( event, ui ) {
+						//log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+					   $('<?php echo $_element->getHtmlId()?>_hidden').value = ui.item.id ;
+						// load stores and addresses by customer
+						customerinfourl = '<?php echo $this->getUrl('adminhtml/sublogin_index/customerinfo')?>';
+						customerinfourl += "customer_id/"+$("entity_id_hidden").value;
+						new Ajax.Request(customerinfourl, {
+							onSuccess: function(transport) {
+								var json = transport.responseText.evalJSON();
+								console.log(json);
+								
+								$("store_id").innerHTML = "";
+								if(json.storeOptions){
+									$("store_id").innerHTML = json.storeOptions;
+								}
+								
+								$("address_ids").innerHTML = "";
+								if(json.customerAddresses){
+									$("address_ids").innerHTML = json.customerAddresses;
+								}
+								
+							}, method: "get"
+						});
+				  }
+				})
+               /*  new Autocomplete('<?php echo $_element->getHtmlId()?>', <?php echo Mage::helper('sublogin')->json_encode($this->getAutocompleteData())?>, {
+                    width: 500,
+                    onSelect: function(autoval, autodata) {
+                        $('<?php echo $_element->getHtmlId()?>_hidden').value = autodata;
+						
+						// load stores and addresses by customer
+						customerinfourl = '<?php echo $this->getUrl('adminhtml/sublogin_index/customerinfo')?>';
+						customerinfourl += "customer_id/"+$("entity_id_hidden").value;
+						new Ajax.Request(customerinfourl, {
+							onSuccess: function(transport) {
+								var json = transport.responseText.evalJSON();
+								console.log(json);
+								
+								$("store_id").innerHTML = "";
+								if(json.storeOptions){
+									$("store_id").innerHTML = json.storeOptions;
+								}
+								
+								$("address_ids").innerHTML = "";
+								if(json.customerAddresses){
+									$("address_ids").innerHTML = json.customerAddresses;
+								}
+								
+							}, method: "get"
+						});
+                    }
+                }); */
+        </script>
+</td></tr>

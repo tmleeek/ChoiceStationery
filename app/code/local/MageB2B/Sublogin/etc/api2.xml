@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<config>
+    <api2>
+        <resource_groups>
+            <mageb2b translate="title" module="api2">
+                <title>MageB2B</title>
+                <sort_order>300</sort_order>
+                <!--<children>
+                    <sublogin translate="title" module="api2">
+                        <title>Sublogin</title>
+                        <sort_order>50</sort_order>
+                    </sublogin>
+                </children>-->
+            </mageb2b>
+        </resource_groups>
+        <resources>
+            <sublogin translate="title" module="api2">
+                <group>mageb2b</group>
+                <model>sublogin/api2_sublogin</model>
+                <title>Sublogin</title>
+                <sort_order>100</sort_order>
+                <privileges>
+                    <admin>
+                        <create>1</create>
+                        <retrieve>1</retrieve>
+                        <update>1</update>
+                        <delete>1</delete>
+                    </admin>
+                    <guest>
+                        <create>1</create>
+                        <retrieve>1</retrieve>
+                        <update>1</update>
+                        <delete>1</delete>
+                    </guest>
+                    <customer>
+                        <create>1</create>
+                        <update>1</update>
+                        <retrieve>1</retrieve>
+                        <delete>1</delete>
+                    </customer>
+                </privileges>
+                <attributes>
+                    <id>Entity ID of Sublogin</id>
+                    <entity_id>Entity Customer ID</entity_id>
+                    <customer_id>Customer ID</customer_id>
+                    <email>Email</email>
+                    <password>Password</password>
+                    <rp_token>Rp Token</rp_token>
+                    <rp_token_created_at>Rp Token Created At</rp_token_created_at>
+                    <prefix>Prefix</prefix>
+					<firstname>Firstname</firstname>
+                    <lastname>Lastname</lastname>
+                    <active>Active</active>
+                    <expire_date>Expire Date</expire_date>
+                    <send_backendmails>Send Backendmails</send_backendmails>
+                    <is_subscribed>Is subscribed (Newsletter)</is_subscribed>
+                    <create_sublogins>Can create sublogins</create_sublogins>
+                    <store_id>Store ID</store_id>
+                    <acl>Sublogin ACL</acl>
+                    <order_needs_approval>Order needs approval</order_needs_approval>
+                </attributes>
+                <routes>
+                    <route_entity>
+                        <route>/mageb2b/sublogin/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/mageb2b/sublogin</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </sublogin>
+            
+            <sublogin_acl translate="title" module="api2">
+                <group>mageb2b</group>
+                <model>sublogin/api2_subloginAcl</model>
+                <title>Sublogin Acl</title>
+                <sort_order>200</sort_order>
+                <privileges>
+                    <admin>
+                        <create>1</create>
+                        <retrieve>1</retrieve>
+                        <update>1</update>
+                        <delete>1</delete>
+                    </admin>
+                    <guest>
+                        <retrieve>1</retrieve>
+                    </guest>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                </privileges>
+                <attributes>
+                    <acl_id>ID of Sublogin Acl</acl_id>
+                    <name>Name</name>
+                    <identifier>Identifier</identifier>
+                </attributes>
+                <routes>
+                    <route_entity>
+                        <route>/mageb2b/sublogin_acl/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/mageb2b/sublogin_acl</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </sublogin_acl>
+            
+            <sublogin_budget translate="title" module="api2">
+                <group>mageb2b</group>
+                <model>sublogin/api2_subloginBudget</model>
+                <title>Sublogin Budget</title>
+                <sort_order>300</sort_order>
+                <privileges>
+                    <admin>
+                        <create>1</create>
+                        <retrieve>1</retrieve>
+                        <update>1</update>
+                        <delete>1</delete>
+                    </admin>
+                    <guest>
+                        <retrieve>1</retrieve>
+                    </guest>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                </privileges>
+                <attributes>
+                    <budget_id>ID of Sublogin Budget</budget_id>
+                    <sublogin_id>ID of Sublogin</sublogin_id>
+                    <year>Year</year>
+                    <month>Month</month>
+                    <day>Day</day>
+                    <per_order>Per Order</per_order>
+                    <amount>Amount</amount>
+                </attributes>
+                <routes>
+                    <route_entity>
+                        <route>/mageb2b/sublogin_budget/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/mageb2b/sublogin_budget</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </sublogin_budget>
+        </resources>
+    </api2>
+</config>

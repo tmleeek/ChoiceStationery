@@ -1,0 +1,126 @@
+<?php
+/**
+ * Flint Technology Ltd
+ *
+ * This module was developed by Flint Technology Ltd (http://www.flinttechnology.co.uk).
+ * For support or questions, contact us via feefo@flinttechnology.co.uk 
+ * Support website: https://www.flinttechnology.co.uk/support/projects/feefo/
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA bundled with this package in the file LICENSE.txt.
+ * It is also available online at http://www.flinttechnology.co.uk/store/module-license-1.0
+ *
+ * @package     flint_feefo-ce-2.0.5.zip
+ * @registrant  Paul Andrews, Choice Stationery Supplies
+ * @license     FFFEA83A-B2B2-4E66-B4F5-AE27E326AAC3
+ * @eula        Flint Module Single Installation License (http://www.flinttechnology.co.uk/store/module-license-1.0
+ * @copyright   Copyright (c) 2014 Flint Technology Ltd (http://www.flinttechnology.co.uk)
+ */
+?>
+<?php if ($this->isEnabled()): ?>
+    <div class="std feefo_reviews_block <?php echo $this->getCssId();?>" id="<?php echo $this->getCssId();?>">
+    <?php if($this->getReviews()): ?>
+        <h2><?php echo $this->__('Feefo Reviews') ?> <?php echo $this->__(' - Average %s&#37; (%s reviews)',$this->getReviewAverage(),$this->getReviewCount()); ?> <img style="float:right" src="<?php echo $this->getLogoSrc()?>" /></h2>
+        <div>
+            <?php if($feedbacks = $this->getFeedbacks()): ?>
+                <table class="data-table hreview" id="product-feefo-reviews<?php echo $this->getId()?>"> 
+                        <colgroup><col width="10%"><col  width="10%"><col width="50%"><col width="30%"></colgroup>
+                        <thead>
+                            <tr>
+                                <th><?php echo $this->__('Date') ?></th>
+                                <th><?php echo $this->__('Score') ?></th>
+                                <th><?php echo $this->__('Customer Comment') ?></th>
+                                <th><?php echo $this->__('Our Response') ?> </th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                        <?php foreach($feedbacks as $feedback){ ?>
+                            <tr>
+                                <th>
+                                    <?php print((string)$feedback->DATE); ?>
+                                </th>
+                                <td>
+                                    <?php 
+                                        if((string)$feedback->SERVICERATING):
+                                            print( 'Service: <br/>');
+                                            foreach(str_split((string)$feedback->SERVICERATING) as $img){
+                                                if($img === '+' || $img === '-') print('<img src="'.$this->getSkinUrl('images/flint_feefo'.$img.'.gif').'" />');
+                                            }
+                                            print('<br/>');
+                                        endif;
+                                        if((string)$feedback->PRODUCTRATING):
+                                            print( 'Product: <br/>');
+                                            foreach(str_split((string)$feedback->PRODUCTRATING) as $img){
+                                                if($img === '+' || $img === '-') print('<img src="'.$this->getSkinUrl('images/flint_feefo'.$img.'.gif').'" />'); 
+                                            }
+                                            print('<br/>');
+                                        endif;
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    $shorCusCom = (string)$feedback->SHORTCUSTOMERCOMMENT;
+                                    $CusCom = (string)$feedback->CUSTOMERCOMMENT;
+
+                                    ?>
+                                    <font id="shortCus<?php echo (string)$feedback->COUNT;?>"><?php print($shorCusCom); ?></font>
+                                    <?php if($shorCusCom != $CusCom){ ?>
+                                        <a href="<?php echo $this->__('Read More.') ?>" onclick="$('shortCus<?php echo (string)$feedback->COUNT;?>').style.display = 'none';this.style.display = 'none';$('longCus<?php echo (string)$feedback->COUNT;?>').style.display = '';return false;"><?php echo $this->__('Read More.') ?></a>
+                                        <font id="longCus<?php echo (string)$feedback->COUNT;?>" style="display: none"><?php print($CusCom); ?></font>
+                                    <?php } ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    $shorVenCom = (string)$feedback->SHORTVENDORCOMMENT;
+                                    $VenCom = (string)$feedback->VENDORCOMMENT;
+
+                                    ?>
+                                    <font id="short<?php echo (string)$feedback->COUNT;?>"><?php print($shorVenCom); ?></font>
+                                    <?php if($shorVenCom != $VenCom){ ?>
+                                        <a href="<?php echo $this->__('Read More.') ?>" onclick="$('short<?php echo (string)$feedback->COUNT;?>').style.display = 'none';this.style.display = 'none';$('long<?php echo (string)$feedback->COUNT;?>').style.display = '';return false;"><?php echo $this->__('Read More.') ?></a>
+                                        <font id="long<?php echo (string)$feedback->COUNT;?>" style="display: none"><?php print($VenCom); ?></font>
+                                    <?php } ?>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" style="text-align: center;padding: 15px">
+                                    <a href="<?php echo 'http://www.feefo.com/feefo/viewvendor.jsp?logon='.$this->getLogon(); ?>">
+                                        <?php print($this->__('Read more reviews on Feefo')); ?>
+                                    </a>
+                                    <?php
+                                    if( $this->getGoogleStarsActive() ):
+                                        $summary = $this->getSummary();
+                                        if( $this->getTotalProductCount() ): ?>
+                                            <br/><span class="hreview-aggregate" >
+                                                <span class="item"><span class="fn">Feefo reviews</span></span> : 
+                                                Average <span class="rating"><?php echo $this->getReviewAverage(); ?>%</span>
+                                                (<span class="count"><?php echo $this->getTotalProductCount(); ?></span> reviews)
+                                            </span>
+                                        <?php endif; ?>
+          
+                          <?php endif; ?>
+                                </td>
+                            <tr>
+                        </tfoot>
+                </table>
+                <script type="text/javascript">decorateTable('product-feefo-reviews<?php echo $this->getId()?>')</script>
+
+            <?php else: ?>
+                <table class="data-table" id="product-feefo-reviews">  
+                    <tr><th><?php echo  $this->__('This product has no reviews yet.'); ?></th></tr>
+                </table>
+                <script type="text/javascript">decorateTable('product-feefo-reviews')</script>
+            <?php endif ?>
+        </div>
+    <?php else: ?>
+        <h2><?php echo $this->__('Feefo Reviews') ?><img style="float:right" src="<?php echo $this->getStarsSrc()?>" /></h2>
+            <div class="std" id="feefo_reviews_block">
+                <?php echo  $this->__('Connection problem to Feefo server.'); ?>
+            </div>
+    <?php endif; ?>
+    </div>
+<?php endif; ?>

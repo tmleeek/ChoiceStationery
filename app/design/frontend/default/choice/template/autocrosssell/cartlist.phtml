@@ -1,0 +1,42 @@
+<?php if($this->getEnabled() && count($this->getRelatedProductsCollection())): ?>
+  <div class="special-offer-container">
+          <div class="special-offer-outer">
+            <div class="page-title">
+              <p class="title"><?php echo $this->__('You may also like');?></p>
+            </div>
+            <!--end og page-title-->
+            <div class="product-list-box">
+              <div class="row">
+    <?php $_columnCount = 4; ?>
+    <?php $i=0; foreach ($this->getRelatedProductsCollection() as $_product): ?>
+    <div class="col-md-3">
+                                    <div class="product-box">
+
+                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(268) ?>" alt="<?php echo $this->htmlEscape($_product->getName()) ?>"width="129" height="149" /></a>
+
+                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>"><p class="item-name"><?php echo $this->htmlEscape($_product->getName()) ?></p></a>
+
+<p class="price-title">Your price:</p>
+                    <?php echo $this->getPriceHtml($_product, true, '-new') ?>
+<div class="add-btn">
+                        <?php if($_product->isSaleable()): ?>
+                            <a class="add-to-basket" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><?php echo $this->__('ADD TO BASKET') ?></a>
+                            <span class="cart-img"><a class="cart-img" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
+								 <i class="sprite sprite-add-to-basket-img"></i>
+							</a></span>
+                        <?php else: ?>
+                            <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                        <?php endif; ?>
+                    </div>
+</div>
+</div>
+    <?php endforeach; ?>
+                  </div>
+              <!--end of row--> 
+            </div>
+            <!--end of special-offer-boxes--> 
+          </div>
+          <!--end of special-offer-outer--> 
+        </div>
+        <!--end of special-offer-container--> 
+<?php endif ?>

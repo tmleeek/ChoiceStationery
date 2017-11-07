@@ -1,0 +1,48 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @copyright  Copyright (c) 2012 Boost My Shop (http://www.boostmyshop.com)
+ * @author : Nicolas MUGNIER
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @package MDN_MarketPlace
+ * @version 2.1
+ */
+?>
+<?php $_errors = $this->getErrors(); ?>
+
+<?php if(count($_errors) > 0): ?>
+<div class="grid">
+    <table class="data" cellspacing="0" width="100%" >
+        <thead>
+            <tr class="headings">
+                <th class="a-center"><?php echo $this->__('Id') ?></th>
+                <th class="a-center"><?php echo $this->__('Date') ?></th>
+                <th class="a-center"><?php echo $this->__('Error') ?></th>
+                <th class="a-center"><?php echo $this->__('Message') ?></th>
+                <!--<th class="a-center"><?php echo $this->__('Execution time'); ?></th>-->
+            </tr>
+        </thead>
+        <tbody>
+            <?php $i = 0 ?>
+            <?php foreach ($_errors as $error): ?>
+            <?php $class = ($i % 2 == 0) ? 'event pointer' : 'pointer'; ?>
+                <tr class="<?php echo $class; ?>">
+                    <td class="a-center"><?php echo $error->getmp_id(); ?></td>
+                    <td class="a-center"><?php echo $error->getmp_date(); ?></td>
+                    <td><?php echo Mage::Helper('MarketPlace/Errors')->getErrorLabel($error->getmp_is_error(), $this->_mp); ?></td>
+                    <td style="color:red;"><?php echo $error->getmp_message(); ?></td>
+                    <!--<td><?php echo $error->getmp_execution_time(); ?></td>-->
+                </tr>
+            <?php $i++ ?>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+</div>
+<?php endif; ?>

@@ -1,0 +1,38 @@
+<?php
+/**
+ * @category     Inchoo
+ * @package     Inchoo Featured Products
+ * @author        Domagoj Potkoc, Inchoo Team <web@inchoo.net>
+ * @modified    Mladen Lotar <mladen.lotar@surgeworks.com>, Vedran Subotic <vedran.subotic@surgeworks.com>
+ */
+?>
+<?php $image_size = (int) Mage::getStoreConfig("featuredproducts/cmspage/max_image_dimension") ?>
+<?php if (($_products = $this->getProductCollection()) && $_products->getSize()): ?>
+    <div class="page-title category-title">
+        <h1 class="subtitle"><?php echo $this->__($this->getBlockLabel()) ?></h1>
+    </div>
+    <?php $_columnCount = $this->getItemsPerRow(); ?>
+        <?php $i=0; foreach ($_products->getItems() as $_product): ?>
+            <?php if ($i++%$_columnCount==0): ?>
+            <ul class="products-grid row">
+            <?php endif ?>
+                <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?> span3">
+                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(268) ?>" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" /></a>
+                    <div class="product-shop">
+                        <h3 class="product-name product-name-s"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>"><?php echo $this->htmlEscape($_product->getName()) ?></a></h3>
+                        <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                        <?php echo $this->getPriceHtml($_product, true, '-new') ?>
+                        <div class="actions">
+                            <?php if($_product->isSaleable()): ?>
+                                <button type="button" title="<?php echo $this->__('View') ?>" class="button view" onclick="setLocation('<?php echo $_product->getProductUrl() ?>')"><span><span><?php echo $this->__('View') ?></span></span></button>
+                            <?php else: ?>
+                                <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </li>
+            <?php if ($i%$_columnCount==0 || $i==count($_products)): ?>
+            </ul>
+            <?php endif ?>
+        <?php endforeach; ?>
+<?php endif; ?>

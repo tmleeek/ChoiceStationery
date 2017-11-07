@@ -1,0 +1,75 @@
+<?php $is_homepage = Mage::getBlockSingleton('page/html_header')->getIsHomePage();?>
+<header class="header">
+            <div class="header-outer">
+                <div class="header-top">
+                   <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="header-top-left">
+                                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('welcome-text')->toHtml();?>
+                                </div><!--end of header-top-left-->
+                            </div><!--end of col-md-3-->
+                            
+                            <div class="col-md-8">
+                                <div class="header-top-right">
+                                    <?php echo $this->getChildHtml('topLinks') ?>                             
+                                </div><!--end of heaader-top-right-->
+                            </div><!--end of col-md-9-->
+                        </div><!--end of rfow-->
+                     </div><!--end of container-->                        
+                   </div><!--end of header-top-->
+                    <div class="header-bottom">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="header-bottom-left">
+                    <?php if ($this->getIsHomePage()):?>
+                    <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" width="204" height="60" /></a>
+                    <?php else:?>
+                        <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" width="204" height="60" /></a>
+                    <?php endif?>
+                                    </div><!--end of header-bottom-left-->
+                                </div><!--end of col-md-3-->
+                                <div class="col-md-5">
+                                    <div class="header-bottom-right clearfix">
+                                        <div class="header-bottom-top clearfix">
+                                            <div class="search-box col-md-12">
+                                                <?php echo $this->getChildHtml('topSearch') ?>
+                                            </div><!--end of search-->
+                                        </div><!--end of header-bottom-top-->
+                                    </div><!--end of header-bottom-right-->
+                                </div><!--end of col-md-5-->
+                                <div class="col-lg-2 col-xs-6 col-sm-6 col-md-2" style="padding:0;">
+                                	<div class="login-account-container">
+                                    	<?php if (Mage::getSingleton('customer/session')->isLoggedIn()):
+												$href = $this->getUrl('customer/account/logout');
+												$label = $this->__('Log Out');
+												else:
+												$href = $this->getUrl('customer/account/login');
+												$label = $this->__('Log In');
+												endif
+												?>
+                                            <a href="<?php echo $href?>"><?php echo $label?></a>/
+                                            <a href="<?php echo $this->getBaseUrl()?>customer/account"><?php echo $this->__("My Account")?></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-xs-6 col-sm-6 col-md-2">
+                                	<div class="basket-container">
+                                    	<?php echo $this->getChildHtml('topcart'); ?>
+                                    </div>
+                                </div>
+                            </div><!--end of row-->
+                         </div><!--end of container-->
+                    </div><!--end of header-bottom-->
+              </div><!--end of header-outer-->
+          </header><!--end of header-->
+<div class="menu-container">
+        <?php echo $this->getChildHtml('topMenu'); ?>
+</div>
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('header-text')->toHtml();?>
+<!-- Filter under the menu-->
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_content')->toHtml();?>
+<!-- for home page only show the banner and filter block-->
+<?php if ($is_homepage):?>
+	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home-banner')->toHtml();?>
+<?php endif;?>

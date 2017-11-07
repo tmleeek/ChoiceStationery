@@ -1,0 +1,73 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Cart cross sell items template
+ *
+ * @see Mage_Checkout_Block_Cart_Crosssell
+ */
+?>
+<?php if($this->getItemCount()): ?>
+  <div class="special-offer-container">
+          <div class="special-offer-outer">
+            <div class="page-title">
+              <p class="title"><?php echo $this->__('Upsell Product');
+            </div>
+            <!--end og page-title-->
+            <div class="product-list-box">
+              <div class="row">
+    <?php $_columnCount = 4; ?>
+    <?php $i=0; foreach ($this->getItems() as $_product): ?>
+    <div class="col-md-3">
+                                    <div class="product-box">
+                                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(268) ?>" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" /></a>
+                                        <a href="<?php echo $_product->getProductUrl() ?>"><p class="item-name"><?php echo $this->htmlEscape($_product->getName()) ?></p></a>
+                                        <p class="price-title">Your price:</p>
+                <?php echo $this->getPriceHtml($_product, true, '-new') ?><?php if($_product->isSaleable()): ?>
+                <div class="add-btn">
+                <?php if($_product->isSaleable()): ?>
+<button type="button" title="<?php echo $this->__('Add') ?>" class="button view" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add') ?></span></span></button>
+<span class="cart-img"><img src="<?php echo $this->getSkinUrl('images/add-to-basket-img.png')?>" alt="add-to-basket"></span>
+<?php else:?>
+    <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+<?php endif;?>                             
+</div>   
+</div><!--end of offer-box-->
+                                    
+                                </div>
+                <!--end of col-md-3-->
+    <?php endforeach; ?>
+
+              </div>
+              <!--end of row--> 
+            </div>
+            <!--end of special-offer-boxes--> 
+          </div>
+          <!--end of special-offer-outer--> 
+        </div>
+        <!--end of special-offer-container--> 
+<?php endif; ?>

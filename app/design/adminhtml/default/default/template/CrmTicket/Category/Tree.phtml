@@ -1,0 +1,187 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @copyright  Copyright (c) 2012 Boost My Shop (http://www.boostmyshop.com)
+ * @author  Guillaume Sarrazin
+ * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @package MDN_CrmTicket
+ */
+?>
+<div class="content-header">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td><h3><?php echo $this->__('Categories')?></h3></td>
+        </tr>
+    </table>
+</div>
+
+<p><?php echo $this->getNewRootButton(); ?> &nbsp; <?php echo $this->getNewSubButton(); ?></p>
+
+<div >
+    <table cellspacing="10" style="width: 100%" >
+        <tr>
+            <td style="width: 20%"><div id="tree-cat"></div></td>
+            <td style="width: 80%"><div id="tree-action-result"></div></td>
+        </tr>
+    </table>
+</div>
+
+
+
+<script type="text/javascript">
+    
+    var TreePanels = function() {
+                var Tree = Ext.tree;
+
+                return {
+                    init : function(){
+
+                        var tree = new Ext.tree.TreePanel('tree-cat', {
+                            animate:true,
+                            loader:false,
+                            enableDD:false,
+                            containerScroll: true,
+                            rootVisible:false                            
+                        });
+
+                        
+
+                        // set the root node
+                        this.root = new Ext.tree.TreeNode({
+                            text: 'ROOT',
+                            allowDrag:false,
+                            allowDrop:false,
+                            id:'1'
+                        });
+
+                       
+                        
+                        tree.setRootNode(this.root);
+                        buildCategoryTree(this.root, <?php echo $this->getJsonRecursive() ?>);
+                        tree.render();                        
+                        this.root.expand(false, false);
+                        tree.expandAll();
+
+                        this.ge = new Ext.tree.TreeEditor(tree, {
+                            allowBlank:false,
+                            blankText:'<?php echo Mage::helper('CrmTicket')->__('A category name is required') ?>',
+                            selectOnFocus:true,                            
+                            cls:'folder'
+                        });
+
+
+                    }
+                };
+            }();
+
+            function buildCategoryTree(parent, config){
+                if (!config) return null;
+                if (parent && config && config.length){
+                    
+                    for (var i = 0; i < config.length; i++) {
+                        var node = new Ext.tree.TreeNode(config[i]);
+                        var _node = Object.clone(config[i]);
+                        parent.appendChild(node);
+
+                        var regexMp = new RegExp('^cat_', 'gi');                        
+                        if(regexMp.test(node.id)){                         
+                            node.addListener('click', editSet.editCat);
+                        }                        
+                        if (_node.children) {
+                            this.buildCategoryTree(node, _node.children);
+                        }                        
+                    }
+                }                
+                return;                
+            }
+            
+            var editSet = function() {
+
+                //keep in memory last selected node
+                var selectedNode;
+
+                return {
+                    
+                    listCat : function(){
+                        var elt = document.getElementById('list_cat');
+                        
+                        if(elt.style.display == 'none')
+                            elt.style.display = 'block';
+                        else
+                            elt.style.display = 'none';                        
+                    },
+                    
+                    addRootCat : function(){
+                        new Ajax.Request(
+                            "<?php echo $this->getUrl('CrmTicket/Admin_Category/AddCategory/'); ?>",
+                            {
+                                methode : 'GET',
+                                onSuccess: function(transport){                                    
+                                    document.getElementById('tree-action-result').innerHTML = transport.responseText;
+                                },
+                                onFailure: function(response){
+                                    alert('<?php echo Mage::helper('CrmTicket')->__('Impossible to reach category creation form') ?>');
+                                }
+                            }
+                        );                        
+                    },
+
+                    addSubCat : function(){                        
+                        var catId = 0;
+                        if(selectedNode){
+                            catId = selectedNode.substring(selectedNode.indexOf('_')+1);
+                        }
+                        new Ajax.Request(
+                            "<?php echo $this->getUrl('CrmTicket/Admin_Category/AddCategory/'); ?>category_id/"+catId,
+                            {
+                                methode : 'GET',
+                                onSuccess: function(transport){
+                                    document.getElementById('tree-action-result').innerHTML = transport.responseText;
+                                },
+                                onFailure: function(response){
+                                    alert('<?php echo Mage::helper('CrmTicket')->__('Impossible to reach category creation form') ?>');
+                                }
+                            }
+                        );
+                    },
+                    
+                    editCat : function(node){
+                        var nodeId = node.id;
+                        selectedNode = nodeId;
+                        var catId = nodeId.substring(nodeId.indexOf('_')+1);                        
+                        new Ajax.Request(
+                            "<?php echo $this->getUrl('CrmTicket/Admin_Category/EditCategory'); ?>category_id/"+catId,
+                            {
+                                methode : 'GET',
+                                onSuccess: function(transport, json){
+                                    document.getElementById('tree-action-result').innerHTML = transport.responseText;
+                                },
+                                onFailure: function(response){
+                                    alert('<?php echo Mage::helper('CrmTicket')->__('Impossible to reach category edition form') ?>');
+                                }
+                            }
+                        );
+                    }              
+                }
+            }();
+
+            function initVars() {
+                editSet.req = {};
+                editSet.req.attributes = false;
+                editSet.req.groups = new Array();
+                editSet.req.not_attributes = false;
+                editSet.req.attribute_set_name = false;
+                editSet.req.removeGroups = new Array();
+            }
+            
+            initVars();
+            Ext.EventManager.onDocumentReady(TreePanels.init, TreePanels, true);
+    
+</script>    

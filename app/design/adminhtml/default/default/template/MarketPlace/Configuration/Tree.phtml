@@ -1,0 +1,229 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @copyright  Copyright (c) 2012 Boost My Shop (http://www.boostmyshop.com)
+ * @author : Nicolas MUGNIER
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @package MDN_MarketPlace
+ * @version 2.1
+ */
+?>
+
+<p><?php echo $this->getNewButton(); ?></p>
+<div style="display:none;" id="list_mp">
+    <?php $marketplaces = Mage::Helper('MarketPlace')->getMarketplacesName(); ?>
+    <?php if(count($marketplaces) > 0): ?>
+    <ul style="margin-left:50px;list-style-type:square;">
+        <?php foreach($marketplaces as $name): ?>
+        <li><a href="#" onclick="editSet.addAccount('<?php echo strtolower($name); ?>');"><?php echo $name; ?></a></li>
+        <?php endforeach; ?>
+    </ul>
+    <?php else: ?>
+    <span style="color:red;"><?php echo $this->__('No marketplace available'); ?></span>
+    <?php endif; ?>
+</div>
+<div class="content-header">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td><h3><?php echo $this->__('Accounts')?></h3></td>
+            <td class="a-right">
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="tree-account"></div>
+
+<script type="text/javascript">
+    
+    var TreePanels = function() {
+                var Tree = Ext.tree;
+
+                return {
+                    init : function(){
+
+                        var tree = new Ext.tree.TreePanel('tree-account', {
+                            animate:false,
+                            loader: false,
+                            enableDD:false,
+                            containerScroll: true,
+                            rootVisible: false
+                        });
+
+                        // set the root node
+                        this.root = new Ext.tree.TreeNode({
+                            text: 'ROOT',
+                            allowDrag:false,
+                            allowDrop:false,
+                            id:'1'
+                        });
+
+                        tree.setRootNode(this.root);
+                        buildCategoryTree(this.root, <?php echo $this->getAccountTreeJson() ?>);
+                        // render the tree
+                        tree.render();
+                        this.root.expand(false, false);
+                        tree.expandAll();
+
+                        this.ge = new Ext.tree.TreeEditor(tree, {
+                            allowBlank:false,
+                            blankText:'<?php echo Mage::helper('catalog')->__('A name is required') ?>',
+                            selectOnFocus:true,
+                            cls:'folder'
+                        });
+                        
+                    }
+
+                };
+            }();
+
+            function buildCategoryTree(parent, config){
+                if (!config) return null;
+                if (parent && config && config.length){
+                    //alert('ok');
+                    for (var i = 0; i < config.length; i++) {
+                        var node = new Ext.tree.TreeNode(config[i]);
+                        var _node = Object.clone(config[i]);
+                        parent.appendChild(node);
+
+                        var regexMp = new RegExp('^mp_', 'gi');
+                        var regexCountry = new RegExp('^country_' ,'gi');
+                        
+                        if(regexMp.test(node.id)){
+                            node.addListener('click', editSet.editMp);
+                        }else if(regexCountry.test(node.id)){
+                            node.addListener('click', editSet.editCountry);
+                        }else{
+                            node.addListener('click', editSet.editAccount);
+                        }
+                        
+                        if (_node.children) {
+                            this.buildCategoryTree(node, _node.children);
+                        }                        
+                    }
+                }
+                
+                return;                               
+                
+            }
+            
+            var editSet = function() {
+                return {
+                    
+                    listMp : function(){
+                        
+                        var elt = document.getElementById('list_mp');
+                        
+                        if(elt.style.display == 'none')
+                            elt.style.display = 'block';
+                        else
+                            elt.style.display = 'none';
+                        
+                    },
+                    
+                    addAccount : function(mp){
+                        
+                        new Ajax.Request(
+                            "<?php echo $this->getUrl('MarketPlace/Configuration/getEditAccountTemplate'); ?>mp/"+mp,
+                            {
+                                methode : 'GET',
+                                onSuccess: function(transport){
+                                    
+                                    document.getElementById('tree-action-result').innerHTML = transport.responseText;
+
+                                },
+                                onFailure: function(response){
+                                    alert('error');
+                                }
+                            }
+                        );
+                            
+                        /*new Ajax.Updater(
+                            {
+                                success : document.getElementById('tree-action-result')
+                            },
+                            "<?php echo $this->getUrl('MarketPlace/Configuration/getEditAccountTemplate'); ?>",
+                            {
+                                parameters : { 'mp' : mp },
+                                method : 'GET',
+                                evalScripts : true
+                            }
+                        );
+                        
+                        test();*/
+                        
+                    },
+                    
+                    editAccount : function(node){                    
+                    
+
+                            new Ajax.Request(
+                                "<?php echo $this->getUrl('MarketPlace/Configuration/getEditAccountTemplate'); ?>account/"+node.id,
+                                {
+                                    methode : 'GET',
+                                    onSuccess: function(transport, json){
+                                        document.getElementById('tree-action-result').innerHTML = transport.responseText;
+                                    },
+                                    onFailure: function(response){
+                                        alert('error');
+                                    }
+                                }
+                            );
+
+                    },
+                    
+                    editCountry : function(node){
+
+                        new Ajax.Request(
+                            "<?php echo $this->getUrl('MarketPlace/Configuration/getEditCountryTemplate'); ?>country/"+node.id,
+                            {
+                                methode : 'GET',
+                                onSuccess : function(transport, json){
+                                    document.getElementById('tree-action-result').innerHTML = transport.responseText;
+                                },
+                                onfailure : function(response){
+                                    alert('error');
+                                }
+                            }
+                        );
+                        
+                    },
+                    
+                    editMp : function(node){
+                    
+                        new Ajax.Request(
+                            "<?php echo $this->getUrl('MarketPlace/Configuration/getEditMainTemplate'); ?>mp/"+node.id,
+                            {
+                                method : 'GET',
+                                onSuccess : function(transport, json){
+                                    document.getElementById('tree-action-result').innerHTML = transport.responseText;
+                                },
+                                onFailure : function(response){
+                                    alert('error');
+                                }
+                            }
+                        );
+                    
+                    }                 
+                }
+            }();
+
+            function initVars() {
+                editSet.req = {};
+                editSet.req.attributes = false;
+                editSet.req.groups = new Array();
+                editSet.req.not_attributes = false;
+                editSet.req.attribute_set_name = false;
+                editSet.req.removeGroups = new Array();
+            }
+
+            initVars();
+            Ext.EventManager.onDocumentReady(TreePanels.init, TreePanels, true);
+    
+</script>    

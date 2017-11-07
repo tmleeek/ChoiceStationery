@@ -1,0 +1,28 @@
+<?php
+
+switch ($lookup) {
+    case 'profile':
+        $token = "[datatablesnippet(lookup=\"Product Id\" IN %%recipient:Magento/Customer Details.$field%% AND \"Store Id\" = %%recipient:Magento/Customer Details.Store Id%%,offset=%d,limit=1):Magento/Products/Layout]";
+        break;
+    case 'basket':
+        $token = "[datatablesnippet(lookup=\"Product Id\" IN %%Basket(incomplete):Custom.related_products%% AND \"Store Id\" = %%Basket(incomplete):Custom.store_id%%,offset=%d,limit=1):Magento/Products/Layout]";
+        break;
+    case 'popular':
+        $token = "[datatablesnippet(lookup=\"Store Id\" = %%recipient:Magento/Customer Details.Store Id%%,offset=%d,limit=1):Magento/Products/PopularLayout]";
+        break;
+}
+
+?>
+<table cellpadding="5" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;border:0px none transparent;">
+    <tr>
+        <td align="left" valign="top" width="33%">
+            <?php printf($token, 0); echo "\n"; ?>
+        </td>
+        <td align="left" valign="top" width="33%">
+            <?php printf($token, 1); echo "\n"; ?>
+        </td>
+        <td align="left" valign="top" width="33%">
+            <?php printf($token, 2); echo "\n"; ?>
+        </td>
+    </tr>
+</table>

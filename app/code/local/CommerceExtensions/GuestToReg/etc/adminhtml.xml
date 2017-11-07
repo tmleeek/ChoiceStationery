@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <customer>
+            <children>
+                <guesttoreg_adminform translate="title" module="GuestToReg">
+                    <title>Guests To Registered Customers</title>
+                    <action>GuestToReg/adminhtml_GuestToRegForm</action>
+                </guesttoreg_adminform>
+            </children>
+        </customer>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <customer>
+                        <children>
+                            <guesttoreg_adminform>
+                                <title>Guests To Registered Customers</title>
+                            </guesttoreg_adminform>
+                        </children>
+                    </customer>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <guesttoreg>
+                                        <title>Guests To Registered Customers Settings</title>
+                                    </guesttoreg>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

@@ -1,0 +1,13 @@
+<?php
+	$pronavStatus = Mage::getStoreConfig('pronav/pronavconfig/pronav_status');
+	$themeSelected = Mage::getStoreConfig('pronav/pronavstyle/pronav_themes');
+	$themeCustom = Mage::getStoreConfig('pronav/pronavstyle/pronav_customcss');
+	
+	if ($pronavStatus) {
+		if ($themeCustom) {
+			echo '<link rel="stylesheet" type="text/css" href="' . $this->getSkinUrl('pronav/css/') . $themeCustom .'" media="all" />';
+		} else {
+			echo '<link rel="stylesheet" type="text/css" href="' . $this->getSkinUrl('pronav/css/') . 'pronav.theme-' . $themeSelected .'.css" media="all" />';
+		}
+	}
+?>

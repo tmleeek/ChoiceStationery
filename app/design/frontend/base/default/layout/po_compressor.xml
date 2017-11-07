@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout>
+    <!--default>
+        <reference name="head">
+            <block type="core/template" name="po_compressor.serve.scaled.image" template="po_compressor/serve_scaled_image.phtml"/>
+        </reference>
+    </default-->
+</layout>

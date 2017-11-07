@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<ewcartreminder_adminhtml_reminder_edit>
+		<update handle="editor"/>
+    </ewcartreminder_adminhtml_reminder_edit>
+    <ewcartreminder_adminhtml_history_edit>
+		<update handle="editor"/>
+    </ewcartreminder_adminhtml_history_edit>
+</layout>

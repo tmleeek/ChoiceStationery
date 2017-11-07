@@ -1,0 +1,29 @@
+
+<div class="content-header">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td><h3><?php echo $this->__('Duplicate Quote')?></h3></td>
+        </tr>
+    </table>
+</div>
+
+<form id="edit_form" name="edit_form" method="post" action="<?php echo $this->getUrl('*/*/ApplyDuplicate')?>">
+<input id="form_key" name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+<input type="hidden" name="quote_id" value="<?php echo $this->getQuote()->getId(); ?>">
+<div class="entry-edit">
+<fieldset id="my-fieldset">
+            <table cellspacing="0"class="form-list">
+                <tr>
+                    <td class="label" width="20%">Id </td>
+                    <td class="input-ele" width="80%"><?php echo  $this->getQuote()->getincrement_id(); ?></td>
+                </tr>
+                <tr>
+                    <td class="label" width="20%">Caption </td>
+                    <td class="input-ele" width="80%"><?php echo  $this->getQuote()->getcaption(); ?></td>
+                </tr>
+            </table>
+</fieldset>
+</div>
+</form>
+
+<?php echo $this->getChildHtml('quotationduplicatecustomer') ?>

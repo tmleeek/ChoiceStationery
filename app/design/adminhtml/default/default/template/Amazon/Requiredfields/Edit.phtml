@@ -1,0 +1,59 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @copyright  Copyright (c) 2013 Boost My Shop (http://www.boostmyshop.com)
+ * @author : Nicolas MUGNIER
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @package MDN_Amazon
+ * @version 2
+ */
+?>
+<script type="text/javascript">
+
+    function restriction(action, id){
+
+        switch(action){
+
+            case 'show':
+                document.getElementById(id).style.display = 'block';
+                document.getElementById('restrictionAction_'+id).style.display = 'none';
+
+                break;
+            case 'hide':
+                document.getElementById(id).style.display = 'none';
+                document.getElementById('restrictionAction_'+id).style.display = 'block';
+                break;
+
+        }
+
+    }
+
+</script>
+
+<?php echo $this->getChildHtml('amazon_requiredfields_tabs'); ?>
+<div id="amazon_requiredfields_tab_content"></div>
+
+<script type="text/javascript">
+
+function showSets(id){
+
+    document.getElementById(id).style.display = 'inline';
+    
+}
+
+function createAttributes(set, category, subcategory){
+    
+    if(confirm('<?php echo $this->__('Are you sure ?'); ?>')){    
+        setLocation('<?php echo $this->getUrl('Amazon/Attributes/Create', array()); ?>set/'+set+'/category/'+category+'/subcat/'+subcategory+'/tab/'+subcategory);
+    }
+    
+}
+
+</script>

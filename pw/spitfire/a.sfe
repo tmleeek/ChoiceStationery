@@ -1,0 +1,147 @@
+<?php
+function safe_q($value) {
+ if(get_magic_quotes_gpc()) { $value=stripslashes($value); }
+ if(function_exists("mysql_real_escape_string")) { $value=mysql_real_escape_string($value); }
+ else { $value=addslashes($value); }
+ return $value;
+}
+
+function count_results($form_id) {
+ $sql	="SELECT COUNT(*) as `total` FROM `response_results` WHERE `form_id` = '".$form_id."'";
+ $res	=mysql_query($sql);
+ $data	=mysql_fetch_assoc($res);
+ if($data>=1) {
+  return $data['total'];
+ }
+ else {
+  return 0;
+ }
+}
+
+$sql_link	=mysql_connect('localhost', 'root', 'W3ss3x1978');
+mysql_select_db('team_area',$sql_link);
+
+if(isset($_REQUEST['submit']) && $_REQUEST['submit']=="Create Form") {
+ $_REQUEST['csv_name']=str_replace(".csv","",$_REQUEST['csv_name']);
+ if(isset($_REQUEST['active'])) { $active=1; }
+ else { $active=0; }
+ $sql		="INSERT INTO `response_forms` (`name`, `active`, `return_url`, `email`, `csv_name`) VALUES ('".safe_q($_REQUEST['name'])."', '".$active."', '".safe_q($_REQUEST['return_url'])."', '".safe_q($_REQUEST['email'])."', '".safe_q($_REQUEST['csv_name'])."')";
+ mysql_query($sql);
+ $created	=1;
+ $listforms	=1;
+}
+elseif(isset($_REQUEST['submit']) && $_REQUEST['submit']=="Update Form" && isset($_REQUEST['form_id'])) {
+ $_REQUEST['csv_name']=str_replace(".csv","",$_REQUEST['csv_name']);
+ if(isset($_REQUEST['active'])) { $active=1; }
+ else { $active=0; }
+ $sql		="UPDATE `response_forms` SET `name` = '".safe_q($_REQUEST['name'])."', `active` = '".$active."', `return_url` = '".safe_q($_REQUEST['return_url'])."', `email` = '".safe_q($_REQUEST['email'])."', `csv_name` = '".safe_q($_REQUEST['csv_name'])."' WHERE `form_id` = '".safe_q($_REQUEST['form_id'])."' LIMIT 1";
+ mysql_query($sql);
+ $updated	=1;
+ $listforms	=1;
+}
+?>
+?>
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+        <title>CSS - Spitfire CRM (Response Forms)</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">        
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway:400,600,500,300,700" />        
+		<link rel='stylesheet' href="http://192.168.1.18/spitfire/css/datetime_dateonly.css" />
+    </head>
+    <body bgcolor="#333333">
+	<?php
+	if(!isset($_REQUEST['action']) || ($_REQUEST['action']=="list")) {
+	 $listforms=1;
+	}
+	elseif(isset($_REQUEST['action']) && $_REQUEST['action']=="create") {
+	 ?>
+<form method="post" action="response_forms.php">
+ <table width="50%" align="center" border="1">
+  <tr><td width="50%"><font color="#CF0"><strong>Form Name:</strong></font></td><td width="50%"><input type="text" name="name" class="form-control" /></td></tr>
+  <tr><td width="50%"><font color="#CF0"><strong>Active:</strong></font></td><td width="50%"><input type="checkbox" name="active" class="form-control" /></td></tr>
+  <tr><td width="50%"><font color="#CF0"><strong>Return URL:</strong></font></td><td width="50%"><input type="text" name="return_url" class="form-control" /></td></tr>
+  <tr><td width="50%"><font color="#CF0"><strong>Email (leave blank to not email responses):</strong></font></td><td width="50%"><input type="text" name="email" class="form-control" /></td></tr>
+  <tr><td width="50%"><font color="#CF0"><strong>CSV Filename:</strong></font></td><td width="50%"><input type="text" name="csv_name" class="form-control" /></td></tr>
+  <tr><td colspan="2" align="center"><input name="submit" type="submit" class="btn btn-primary" value="Create Form" /></td></tr>
+ </table>
+</form>
+ <?php
+    }
+	elseif(isset($_REQUEST['action']) && $_REQUEST['action']=="edit") {
+	 $sql	="SELECT * FROM `response_forms` WHERE `form_id` = '".safe_q($_REQUEST['form_id'])."' LIMIT 1";
+	 $res	=mysql_query($sql);
+	 $data	=mysql_fetch_assoc($res);
+	 ?>
+	 <form method="post" action="response_forms.php">
+	 <input type="hidden" name="form_id" value="<?=$data['form_id'];?>" />
+ <table width="50%" align="center" border="1">
+  <tr><td width="50%"><font color="#CF0"><strong>Form Name:</strong></font></td><td width="50%"><input type="text" name="name" class="form-control" value="<?=$data['name'];?>" /></td></tr>
+  <tr><td width="50%"><font color="#CF0"><strong>Active:</strong></font></td><td width="50%"><input type="checkbox" name="active" class="form-control"<?php if($data['active']=="1") {?> checked="checked"<?php } ?> /></td></tr>
+  <tr><td width="50%"><font color="#CF0"><strong>Return URL:</strong></font></td><td width="50%"><input type="text" name="return_url" class="form-control" value="<?=$data['return_url'];?>" /></td></tr>
+  <tr><td width="50%"><font color="#CF0"><strong>Email (leave blank to not email responses):</strong></font></td><td width="50%"><input type="text" name="email" class="form-control" value="<?=$data['email'];?>" /></td></tr>
+  <tr><td width="50%"><font color="#CF0"><strong>CSV Filename:</strong></font></td><td width="50%"><input type="text" name="csv_name" class="form-control" value="<?=$data['csv_name'];?>" /></td></tr>
+  <tr><td width="50%"><font color="#CF0"><strong>Last Export:</strong></font></td><td width="50%"><font color="#6CF"><?=$data['last_export'];?></font></td></tr>
+  <tr><td colspan="2" align="center"><input name="submit" type="submit" class="btn btn-primary" value="Update Form" /></td></tr>
+ </table>
+</form>
+	 <?php
+	}
+	if(isset($listforms)) {
+	 if(isset($created)) {
+	  ?>
+	  <p align="center"><font color="#6CF"><strong>Form <?=$_REQUEST['name'];?> created successfully.</strong></font></p>
+	  <?php
+	 }
+	 elseif(isset($updated)) {
+	  ?>
+	  <p align="center"><font color="#6CF"><strong>Form <?=$_REQUEST['name'];?> updated successfully.</strong></font></p>
+	  <?php
+	 }
+	 ?>
+	 <table width="100%" align="center" border="1">
+	  <tr><td width="20%"><font color="#CF0"><strong>Name (click to edit)</strong></font></td><td width="5%"><font color="#CF0"><strong>Active</strong></font></td><td width="20%"><font color="#CF0"><strong>Last Export</strong></font></td><td width="35%"><font color="#CF0"><strong>CSV File (click to view)</strong></font></td><td width="20%"><font color="#CF0"><strong>Results</strong></font></td></tr>
+	  <?php
+	  $sql	="SELECT * FROM `response_forms`";
+	  $res	=mysql_query($sql);
+	  $x	=0;
+	  while($data=mysql_fetch_assoc($res)) {
+	   $x++;
+	   if($data['last_export']=="0000-00-00 00:00:00") {
+	    $last_export="Never";
+	   }
+	   else {
+	    $last_export=$data['last_export'];
+	   }
+	   ?>
+	   <tr><td><font color="#6CF"><a href="?action=edit&amp;form_id=<?=$data['form_id'];?>"><?=$data['name'];?></a></font></td><td><font color="#6CF"><?php if($data['active']=="1") {?>Yes<?php } else { ?>No<?php } ?></font></td><td><font color="#6CF"><?=$last_export;?></font></td><td><font color="#6CF"><a href="/pw/response/<?=$data['csv_name'];?>.csv"><?=$data['csv_name'];?></a></font></td><td><font color="#6CF"><?=count_results($data['form_id']);?></font></td></tr>
+	   <?php
+	  }
+	  if($x=="0") {
+	   ?>
+	   <tr><td colspan="5" align="center"><strong><font color="#6CF">You have no forms created. Why not <a href="?action=create">Create One</a>?</font></strong></td></tr>
+	   <?php
+	  }
+	  else {
+	   ?>
+	   <tr><td colspan="5" align="center"><strong><font color="#6CF">To create another form, please <a href="?action=create">Click Here</a>.</font></strong></td></tr>
+	   <?php
+	  }
+	  ?>
+	 </table>
+	 <?php
+	}
+ ?>
+
+
+    </body>
+</html>
+<?php
+mysql_close($sql_link);
+?>

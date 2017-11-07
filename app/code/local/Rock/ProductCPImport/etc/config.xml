@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Rock_ProductCPImport>
+      <version>0.1.0</version>
+    </Rock_ProductCPImport>
+  </modules>
+  <global>
+    <blocks>
+      <productcpimport>
+      <class>Rock_ProductCPImport_Block</class>
+      </productcpimport>
+    </blocks>
+    <helpers>
+      <productcpimport>
+        <class>Rock_ProductCPImport_Helper</class>
+      </productcpimport>
+    </helpers>
+	<models>
+	  <productcpimport>
+		<class>Rock_ProductCPImport_Model</class>
+		<resourceModel>productcpimport_mysql4</resourceModel>
+	  </productcpimport>
+	</models>
+  </global>
+  <admin>
+    <routers>
+      <productcpimport>
+        <use>admin</use>
+      <args>
+        <module>Rock_ProductCPImport</module>
+        <frontName>admin_productcpimport</frontName>
+      </args>
+      </productcpimport>
+    </routers>
+    </admin>
+    <!-- <adminhtml>
+    <menu>
+      <productcpimport module="productcpimport">
+      <title>ProductCPImport</title>
+      <sort_order>100</sort_order>
+      <children>
+        <productcpimportbackend module="productcpimport">
+        <title>Backend Page Title</title>
+        <sort_order>0</sort_order>
+        <action>admin_productcpimport/adminhtml_productcpimportbackend</action>
+        </productcpimportbackend>
+      </children>
+      </productcpimport>
+    </menu>
+    <acl>
+      <resources>
+      <all>
+        <title>Allow Everything</title>
+      </all>
+      <admin>
+        <children>
+        <productcpimport translate="title" module="productcpimport">
+          <title>ProductCPImport</title>
+          <sort_order>1000</sort_order>
+          <children>
+        <productcpimportbackend translate="title">
+        <title>Backend Page Title</title>
+        </productcpimportbackend>
+          </children>
+        </productcpimport>
+        </children>
+      </admin>
+      </resources>
+    </acl>
+    <layout>
+      <updates>
+      <productcpimport>
+        <file>productcpimport.xml</file>
+      </productcpimport>
+      </updates>
+    </layout>
+  </adminhtml> -->
+    <crontab>
+        <jobs>            
+          <productcpimport_productimport>
+            <schedule>
+              <cron_expr>*/1 * * * *</cron_expr>
+            </schedule>
+            <run>
+              <model>productcpimport/cron::productImport</model>
+            </run>
+          </productcpimport_productimport>
+        </jobs>
+    </crontab>
+</config> 

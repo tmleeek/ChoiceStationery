@@ -1,0 +1,6 @@
+<?php $data = $this->getData(); ?>
+<br/>
+The IP <b><?php echo $data['ip']; ?></b> has been blacklisted after <?php echo $data['nb_attempts']; ?> attempts.<br/>
+<?php if ($data['until'] != "") : ?>
+It will be blacklisted until the <?php echo $data['until']; ?>.
+<?php endif; ?>

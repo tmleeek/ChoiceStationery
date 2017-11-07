@@ -1,0 +1,61 @@
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+
+<div class="page-title">
+    <h1><?php echo $this->__('My Quotations') ?></h1>
+</div>
+
+<?php if($this->getQuotations()->getSize()): ?>
+<table cellspacing="0" class="data-table" id="my-quotations-table">
+    <thead>
+        <tr>
+            <th><?php echo $this->__('Quotation #') ?></th>
+            <th><?php echo $this->__('Date') ?></th>
+            <th><?php echo $this->__('Caption') ?></th>
+            <th><?php echo $this->__('Status') ?></th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php $_odd = ''; ?>
+        <?php foreach ($this->getQuotations() as $_quotation): ?>
+        	<?php $_quotation->checkExpirationDateAndApply(); ?>
+            <tr>
+                <td><?php echo $_quotation->getincrement_id() ?></td>
+                <td><?php echo $this->formatDate($_quotation->getcreated_time()) ?></td>
+                <td><?php echo $this->htmlEscape($_quotation->getcaption()); ?></td>
+                <td><?php echo $this->__($_quotation->getstatus()); ?></td>
+                <td class="a-center">
+                    <?php if ($_quotation->isViewableByCustomer()): ?>
+                            <a href="<?php echo $this->getViewUrl($_quotation) ?>"><?php echo $this->__('View Quotation') ?></a>
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<script type="text/javascript">decorateTable('my-quotations-table')</script>
+
+<?php else: ?>
+    <p><?php echo $this->__('You have no quotation available.') ?></p>
+<?php endif ?>
+
+<?php if (Mage::getStoreConfig('quotation/quotation_request/allow_text') && Mage::helper('quotation')->currentCustomerCanRequestQuote()): ?>
+
+<p>&nbsp;</p>
+
+<div class="page-title">
+    <h1><?php echo $this->__('Request for a new quotation') ?></h1>
+</div>
+
+<?php echo $this->__('To request for a new quotation, please fill the field below being as accurate as possible to describe your needs'); ?>
+<p>&nbsp;</p>
+<form id="form_request" name="form_request" method="POST" action="<?php echo $this->getNewRequestPostUrl(); ?>">
+<center>
+<textarea cols="110" rows="10" id="description" name="description"></textarea>
+<p>&nbsp;</p>
+<br><button type="submit" title="Save" class="button"><span><span><?php echo $this->__('Submit') ?></span></span></button> 
+</center>
+</form>
+
+<?php endif; ?>

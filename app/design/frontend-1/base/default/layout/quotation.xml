@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+   <!-- Add my quotes tab in customer account-->
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="quotation">
+                <name>quotations</name>
+                <path>Quotation/Quote/List</path>
+                <label>My Quotations</label>
+            </action>
+        </reference>
+    </customer_account>
+
+    <!-- customer quotes list -->
+    <quotation_quote_list>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+        <update handle="customer_account"/>
+        <reference name="content">
+            <block type="Quotation/Frontend_Grid" name="quotationslist" as="quotationslist" template="Quotation/List.phtml"/>
+        </reference>
+    </quotation_quote_list>
+    
+    <!-- customer quotes view -->
+    <quotation_quote_view>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+        <update handle="customer_account"/>
+        <reference name="content">
+            <block type="Quotation/Frontend_View" name="quotationsview" as="quotationsview" template="Quotation/View.phtml"/>
+        </reference>
+    </quotation_quote_view>
+        
+    <!-- add request quote button in cart -->
+    <checkout_cart_index>
+        <reference name="checkout.cart.methods">
+            <block type="Quotation/Frontend_Cart" name="checkoutquote" template="Quotation/Cart.phtml">
+            </block>
+        </reference>
+    </checkout_cart_index>
+    
+    <!-- quote request form from cart items -->
+    <quotation_quote_requestfromcart>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="Quotation/Frontend_RequestFromCart" name="quotationrequest" as="quotationrequest" template="Quotation/RequestFromCart.phtml"/>
+        </reference>
+    </quotation_quote_requestfromcart>
+
+    <!-- quote request form for 1 product -->
+    <quotation_quote_individualrequest>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="Quotation/Frontend_IndividualRequest" name="quotationindividualrequest" as="quotationindividualrequest" template="Quotation/IndividualRequest.phtml"/>
+        </reference>
+    </quotation_quote_individualrequest>
+    
+    <quotation_quote_anonymousquoterequest>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="Quotation/Frontend_AnonymousQuoteRequest" name="quotationanonymousrequest" as="quotationanonymousrequest" template="Quotation/AnonymousQuoteRequest.phtml"/>
+        </reference>
+    </quotation_quote_anonymousquoterequest>
+    
+    <quotation_quote_submitanonymousrequest>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="submitanonymousrequest" as="submitanonymousrequest" template="Quotation/SubmitAnonymousQuoteRequest.phtml"/>
+        </reference>
+    </quotation_quote_submitanonymousrequest>
+
+    <!-- Add request quote button in product view -->
+    <catalog_product_view>
+        <reference name="head">
+            <action method="addJs">
+                <script>mdn/QuotationFront.js</script>
+            </action>
+        </reference>
+        <reference name="product.info.extrahint">
+            <block type="Quotation/Frontend_Product" name="product.info.requestquote" template="Quotation/request_quote.phtml"/>
+        </reference>
+    </catalog_product_view>
+
+</layout>

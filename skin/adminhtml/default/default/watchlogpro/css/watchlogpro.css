@@ -1,0 +1,22 @@
+span.listed {
+    border-radius: 10px;
+    display: block;
+    font-weight: bold;
+    /*padding: 1px;*/
+    width: 100px;
+    font-size:11px;
+}
+span.listed a {
+    text-decoration: none;
+}
+
+span.blacklisted {
+    background:black;
+    color:white;
+    border:1px solid black;
+}
+span.whitelisted {
+    background:white;
+    color:black;
+    border:1px solid lightgray;
+}

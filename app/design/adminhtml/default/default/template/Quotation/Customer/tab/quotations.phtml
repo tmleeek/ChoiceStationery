@@ -1,0 +1,31 @@
+<?php
+if($this->getData('AjaxGrid') != true) : 
+?>
+<span class="a-right">
+	<button type="button" class="scalable" onclick="setLocation('<?php echo $this->getUrl('Quotation/Admin/new/').'customer_id/'.$this->getCurrentCustomerId() ?>')" style=""><span><?php echo $this->__('Create New Quotation'); ?></span></button>
+</span>
+<?php endif ?>
+<?php echo $this->getGridParentHtml() ?>
+<?php if($this->canDisplayContainer()): ?>
+<script type="text/javascript">
+//<!--
+wishlistControl = {
+	removeItem: function (itemId) {
+		if(!confirm('<?php echo Mage::helper('customer')->__('Are you sure that you want to remove this item?') ?>')) {
+			return false;
+		}
+
+		var url = <?php echo $this->getJsObjectName() ?>.url;
+
+		new Ajax.Updater(
+                <?php echo $this->getJsObjectName() ?>.containerId,
+                url+'?ajax=true&delete='+itemId,
+                {onComplete:<?php echo $this->getJsObjectName() ?>.initGrid.bind(<?php echo $this->getJsObjectName() ?>), evalScripts:true}
+            );
+
+        return false;
+	}
+}
+//-->
+</script>
+<?php endif ?>

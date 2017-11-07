@@ -1,0 +1,3 @@
+<?php /* added automatically by conflict fixing tool */ if (Mage::getConfig()->getNode('modules/CommerceExtensions_Categoriesimportexport/active')) {
+                class CommerceExtensions_Productimportexport_Block_Adminhtml_System_Convert_Gui_Grid_Amasty_Pure extends CommerceExtensions_Categoriesimportexport_Block_Adminhtml_System_Convert_Gui_Grid {}
+            } else { class CommerceExtensions_Productimportexport_Block_Adminhtml_System_Convert_Gui_Grid_Amasty_Pure extends Mage_Adminhtml_Block_System_Convert_Gui_Grid {} } ?>

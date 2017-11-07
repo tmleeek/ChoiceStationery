@@ -1,0 +1,238 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <LucidPath_SalesRepPro>
+      <version>1.5.2</version>
+    </LucidPath_SalesRepPro>
+  </modules>
+
+  <global>
+    <models>
+      <salesrep>
+        <class>LucidPath_SalesRepPro_Model</class>
+        <resourceModel>salesrep_mysql4</resourceModel>
+      </salesrep>
+
+      <salesrep_mysql4>
+        <class>LucidPath_SalesRepPro_Model_Mysql4</class>
+        <entities>
+          <salesrep>
+            <table>salesrep</table>
+          </salesrep>
+        </entities>
+      </salesrep_mysql4>
+
+      <checkout>
+        <rewrite>
+          <type_onepage>LucidPath_SalesRepPro_Model_Type_Onepage</type_onepage>
+        </rewrite>
+      </checkout>
+    </models>
+
+    <resources>
+      <salesreppro_setup>
+        <setup>
+          <module>LucidPath_SalesRepPro</module>
+          <class>Mage_Sales_Model_Mysql4_Setup</class>
+        </setup>
+        <connection>
+           <use>core_setup</use>
+        </connection>
+      </salesreppro_setup>
+      <salesrep_write>
+        <connection>
+          <use>core_write</use>
+        </connection>
+      </salesrep_write>
+      <salesrep_read>
+        <connection>
+          <use>core_read</use>
+        </connection>
+      </salesrep_read>
+    </resources>
+
+    <helpers>
+      <salesrep>
+        <class>LucidPath_SalesRepPro_Helper</class>
+      </salesrep>
+    </helpers>
+
+    <blocks>
+      <checkout>
+        <rewrite>
+          <onepage>LucidPath_SalesRepPro_Block_Onepage</onepage>
+        </rewrite>
+      </checkout>
+
+      <salesrep>
+        <class>LucidPath_SalesRepPro_Block</class>
+      </salesrep>
+
+      <salesreponepage>
+        <class>LucidPath_SalesRepPro_Block_Onepage</class>
+      </salesreponepage>
+    </blocks>
+
+    <rewrite>
+      <lucidpath_salesrep_onepage>
+        <from><![CDATA[#^/checkout/onepage/#]]></from>
+        <to>/salesrep/onepage/</to>
+      </lucidpath_salesrep_onepage>
+    </rewrite>
+
+    <events>
+      <checkout_submit_all_after>
+        <observers>
+          <hooksystem_admin_order_success>
+            <type>singleton</type>
+            <class>salesrep/observer</class>
+            <method>hookToOrderSaveEvent</method>
+          </hooksystem_admin_order_success>
+        </observers>
+      </checkout_submit_all_after>
+
+      <order_cancel_after>
+        <observers>
+          <admin_order_cancel_hook>
+            <type>singleton</type>
+            <class>salesrep/observer</class>
+            <method>hookToAdminOrderCancel</method>
+          </admin_order_cancel_hook>
+        </observers>
+      </order_cancel_after>
+
+      <admin_system_config_changed_section_salesrep>
+        <observers>
+          <hooksystem_config_saved>
+            <class>salesrep/observer</class>
+            <method>saveSystemConfig</method>
+          </hooksystem_config_saved>
+        </observers>
+      </admin_system_config_changed_section_salesrep>
+    </events>
+
+    <template>
+      <email>
+        <salesrep_email_reports_email_template module="salesrep">
+          <label>Salesrep Commission Report</label>
+          <file>salesrep_commission_report.html</file>
+          <type>html</type>
+        </salesrep_email_reports_email_template>
+      </email>
+    </template>
+  </global>
+
+  <adminhtml>
+    <events>
+      <core_collection_abstract_load_before>
+        <observers>
+          <salesrep>
+            <class>salesrep/adminhtml_observer</class>
+            <method>onEavLoadBefore</method>
+          </salesrep>
+        </observers>
+      </core_collection_abstract_load_before>
+    </events>
+  </adminhtml>
+
+  <frontend>
+    <routers>
+      <salesreppro>
+        <use>standard</use>
+        <args>
+          <module>LucidPath_SalesRepPro</module>
+          <frontName>salesrep</frontName>
+        </args>
+      </salesreppro>
+    </routers>
+    <layout>
+      <updates>
+        <salesrep>
+          <file>salesrep.xml</file>
+        </salesrep>
+      </updates>
+    </layout>
+  </frontend>
+
+  <crontab>
+    <jobs>
+      <salesrep_reports_job>
+        <schedule>
+          <config_path>salesrep/email_reports/cron_schedule</config_path>
+        </schedule>
+        <run>
+          <model>salesrep/observer::dispatch</model>
+        </run>
+      </salesrep_reports_job>
+    </jobs>
+  </crontab>
+
+  <frontend>
+    <routers>
+      <lucidpath_salesrep>
+        <use>standard</use>
+        <args>
+          <module>LucidPath_SalesRep</module>
+          <frontName>lucidpath_salesrep</frontName>
+        </args>
+      </lucidpath_salesrep>
+    </routers>
+    <layout>
+      <updates>
+        <salesrep>
+          <file>salesrep.xml</file>
+      </salesrep>
+      </updates>
+    </layout>
+  </frontend>
+
+  <!-- Default config values -->
+  <default>
+    <salesrep>
+      <module_status>
+        <enabled>1</enabled>
+      </module_status>
+      <setup>
+        <default_status>Unpaid</default_status>
+        <default_commission_rate>10%</default_commission_rate>
+        <pay_commissions_based_on>1</pay_commissions_based_on>
+      </setup>
+      <email_reports>
+        <email_send>0</email_send>
+        <email_template>salesrep_email_reports_email_template</email_template>
+        <send_reports_to>1</send_reports_to>
+        <schedule_hour>*</schedule_hour>
+        <schedule_minute>1</schedule_minute>
+        <schedule_frequency>1</schedule_frequency>
+      </email_reports>
+      <step_setup>
+        <step_enabled>1</step_enabled>
+        <step_label>Please select the Sales Representative who assisted you today, or who typically assists you.</step_label>
+        <step_error_msg>Please use the dropdown menu to select a representative who helped you. If you were not assisted, you may select "No Sales Representative"</step_error_msg>
+        <step_header>Sales Representative</step_header>
+      </step_setup>
+    </salesrep>
+  </default>
+
+  <adminhtml>
+    <layout>
+      <updates>
+        <salesrep>
+          <file>salesrep.xml</file>
+        </salesrep>
+      </updates>
+    </layout>
+  </adminhtml>
+
+  <admin>
+    <routers>
+      <adminhtml>
+        <args>
+          <modules>
+            <salesrep before="Mage_Adminhtml">LucidPath_SalesRepPro_Adminhtml</salesrep>
+          </modules>
+        </args>
+      </adminhtml>
+    </routers>
+  </admin>
+</config>

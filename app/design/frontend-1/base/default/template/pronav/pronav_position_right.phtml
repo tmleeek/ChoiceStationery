@@ -1,0 +1,10 @@
+<?php
+	$pronavStatus = Mage::getStoreConfig('pronav/pronavconfig/pronav_status');
+	$posSelected = Mage::getStoreConfig('pronav/pronavstyle/pronav_position');
+	
+	if ($pronavStatus) {
+		if ($posSelected == "right") {
+			echo $this->getLayout()->getBlock('catalog.topnav.right')->setTemplate('pronav/navigation_top.phtml')->toHtml();
+		}
+	}
+?>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:typens="urn:{{var wsdl.name}}" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/"
+    name="{{var wsdl.name}}" targetNamespace="urn:{{var wsdl.name}}">
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Magento">
+            <import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/" />
+            <complexType name="customerPricesEntity">
+                <all>
+                    <element name="customer_id" type="xsd:int" minOccurs="0" />
+                    <element name="product_id" type="xsd:int" minOccurs="0" />
+                    <element name="store_id" type="xsd:int" minOccurs="0" />
+                    <element name="qty" type="xsd:int" minOccurs="0" />
+                    <element name="price" type="xsd:string" minOccurs="0" />
+                    <element name="special_price" type="xsd:string" minOccurs="0" />
+                    <element name="customer_email" type="xsd:string" minOccurs="0" />
+                    <element name="discount" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="customerPricesEntityArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:customerPricesEntity[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+        </schema>
+    </types>
+    <message name="customerPricesCustomerRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="customerId" type="xsd:int" />
+        <part name="websiteId" type="xsd:int" />
+    </message>
+    <message name="customerPricesCustomerResponse">
+        <part name="result" type="typens:customerPricesEntityArray" />
+    </message>
+    <message name="customerPricesProductRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="productId" type="xsd:int" />
+        <part name="websiteId" type="xsd:int" />
+    </message>
+    <message name="customerPricesProductResponse">
+        <part name="result" type="typens:customerPricesEntityArray" />
+    </message>
+    <message name="customerPricesCreateRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="customerId" type="xsd:int" />
+        <part name="productId" type="xsd:int" />
+        <part name="price" type="xsd:string" />
+        <part name="specialPrice" type="xsd:string" />
+        <part name="qty" type="xsd:int" />
+        <part name="websiteId" type="xsd:int" />
+    </message>
+    <message name="customerPricesCreateResponse">
+        <part name="result" type="typens:customerPricesEntityArray" />
+    </message>
+    <message name="customerPricesDeleteRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="customerId" type="xsd:int" />
+        <part name="productId" type="xsd:int" />
+        <part name="qty" type="xsd:int" />
+        <part name="websiteId" type="xsd:int" />
+    </message>
+    <message name="customerPricesDeleteResponse">
+        <part name="result" type="xsd:int" />
+    </message>
+    <message name="customerPricesUpdateRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="customerId" type="xsd:int" />
+        <part name="productId" type="xsd:int" />
+        <part name="price" type="xsd:string" />
+        <part name="specialPrice" type="xsd:string" />
+        <part name="qty" type="xsd:int" />
+        <part name="websiteId" type="xsd:int" />
+    </message>
+    <message name="customerPricesUpdateResponse">
+        <part name="result" type="typens:customerPricesEntityArray" />
+    </message>
+    <message name="customerPricesDiscountRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="customerId" type="xsd:int" />
+        <part name="discount" type="xsd:string" />
+        <part name="websiteId" type="xsd:int" />
+    </message>
+    <message name="customerPricesDiscountResponse">
+        <part name="result" type="typens:customerPricesEntityArray" />
+    </message>
+    <portType name="{{var wsdl.handler}}PortType">
+        <operation name="customerPricesCustomer">
+            <documentation>Retrieve customer prices</documentation>
+            <input message="typens:customerPricesCustomerRequest" />
+            <output message="typens:customerPricesCustomerResponse" />
+        </operation>
+        <operation name="customerPricesProduct">
+            <documentation>Retrieve product prices</documentation>
+            <input message="typens:customerPricesProductRequest" />
+            <output message="typens:customerPricesProductResponse" />
+        </operation>
+        <operation name="customerPricesCreate">
+            <documentation>Create prices</documentation>
+            <input message="typens:customerPricesCreateRequest" />
+            <output message="typens:customerPricesCreateResponse" />
+        </operation>
+        <operation name="customerPricesDelete">
+            <documentation>Delete product prices</documentation>
+            <input message="typens:customerPricesDeleteRequest" />
+            <output message="typens:customerPricesDeleteResponse" />
+        </operation>
+        <operation name="customerPricesUpdate">
+            <documentation>Update product prices</documentation>
+            <input message="typens:customerPricesUpdateRequest" />
+            <output message="typens:customerPricesUpdateResponse" />
+        </operation>
+        <operation name="customerPricesDiscount">
+            <documentation>Update product prices</documentation>
+            <input message="typens:customerPricesDiscountRequest" />
+            <output message="typens:customerPricesDiscountResponse" />
+        </operation>
+    </portType>
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="customerPricesCustomer">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="customerPricesProduct">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="customerPricesCreate">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="customerPricesDelete">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="customerPricesUpdate">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="customerPricesDiscount">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+    </binding>
+</definitions>

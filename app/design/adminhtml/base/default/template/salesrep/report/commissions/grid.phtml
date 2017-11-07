@@ -1,0 +1,457 @@
+<?php
+$report_type       = $this->getFilter('report_type');
+$order_statuses    = $this->getFilter('order_statuses');
+$commission_status = $this->getFilter('commission_status');
+$order_admins      = $this->getFilter('order_admins');
+
+# convert from local time to db-time
+$from_date         = Mage::getModel('core/date')->gmtDate(null, strtotime($this->getFilter('start_date') .' 00:00:00'));
+$to_date           = Mage::getModel('core/date')->gmtDate(null, strtotime($this->getFilter('end_date') .' 23:59:59'));
+
+$collection = Mage::getModel('sales/order')->getCollection();
+$collection->getSelect()->joinLeft(array('salesrep' => $collection->getTable("salesrep/salesrep")), 'salesrep.order_id=entity_id');
+
+if (isset($order_statuses) && is_array($order_statuses)) {
+  $collection->addAttributeToFilter('status', array('in' => explode(",", $order_statuses[0])));
+}
+
+if (isset($order_admins) && is_array($order_admins)) {
+  $collection->addAttributeToFilter('salesrep.admin_id', array('in' => $order_admins));
+}
+
+if (isset($commission_status) && $commission_status != "") {
+  $collection->addAttributeToFilter('salesrep.commission_status', array('eq' => $commission_status));
+}
+
+$collection->addAttributeToFilter('created_at', array('from' => $from_date, 'to' => $to_date));
+
+$data = array();
+
+foreach ($collection as $row) {
+  $admin_name = ($row->getAdminName() == "") ? "No Sales Rep." : $row->getAdminName();
+
+  if (!array_key_exists($admin_name, $data)) {
+    $data[$admin_name] = array();
+  }
+
+  // Total earned for user
+  if (!isset($data[$admin_name]['paid_total'])) {
+    $data[$admin_name]['paid_total'] = 0;
+  }
+
+  if (!isset($data[$admin_name]['unpaid_total'])) {
+    $data[$admin_name]['unpaid_total'] = 0;
+  }
+
+  if (strtolower($row->getCommissionStatus()) == "paid") {
+    $data[$admin_name]['paid_total'] += round($row->getCommissionEarned(), 2);
+  } else if (strtolower($row->getCommissionStatus()) == "unpaid") {
+    $data[$admin_name]['unpaid_total'] += round($row->getCommissionEarned(), 2);
+  }
+
+
+  if (!isset($data[$admin_name]['orders'])) {
+    $data[$admin_name]['orders'] = array();
+  }
+
+  $data[$admin_name]['orders'][] = array(
+                      'value'              => $row->getCommissionEarned(),
+                      'status'             => $row->getCommissionStatus(),
+                      'created_at'         => Mage::getModel('core/date')->date(null, strtotime($row->getData('created_at'))),
+                      'order_id'           => $row->getId(),
+                      'order_increment_id' => $row->getIncrementId(),
+                      'order_status'       => $row->getStatus(),
+                      );
+
+  $data[$admin_name]['admin_id'] = $row->getAdminId();
+}
+
+if (isset($data['No Sales Rep.'])) {
+  $_tmp = $data['No Sales Rep.'];
+  unset($data['No Sales Rep.']);
+
+  ksort($data);
+
+  $data['No Sales Rep.'] = $_tmp;
+  unset($_tmp);
+} else {
+  ksort($data);
+}
+
+if (count($data) > 0) {
+?>
+<style>
+.dataTableHeadingRow {
+  background-color: #5F767F;
+}
+
+.dataTableHeadingContent {
+  font-family: Verdana,Arial,sans-serif;
+  font-size: 10px;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+}
+
+.dataTableRow {
+  background-color: #DADFE0;
+}
+
+.dataTableRowSelected {
+  background-color: rgb(222, 228, 232);
+}
+
+.dataTableRowOver {
+  background-color: #fcf5dd;
+  cursor: pointer;
+}
+
+.dataTableContent {
+  font-family: Verdana,Arial,sans-serif;
+  font-size: 11px;
+  color: rgb(0, 0, 0);
+}
+
+.dataTableContentRed {
+  font-family: Verdana,Arial,sans-serif;
+  font-size: 11px;
+  color: rgb(204, 0, 0);
+}
+
+.dataTableContentRedAlert {
+  font-family: Verdana,Arial,sans-serif;
+  font-size: 11px;
+  color: rgb(255, 0, 0);
+  font-weight: bold;
+}
+</style>
+
+<div style="width: 100%; font-size: 11px; overflow-x: auto;">
+  <form action="" method="POST" onsubmit="return false;" id="salesrep_form">
+    <table border="0" width="<?php echo 170 + count($data)*250; ?>" cellspacing="2" cellpadding="2">
+    <tr class="dataTableHeadingRow">
+      <td class="dataTableHeadingContent" align="center" width="170" style="background-color: white;">&nbsp;</td>
+      <?php
+      foreach (array_keys($data) as $admin_name) {
+      ?>
+      <td class="dataTableHeadingContent" align="center" width="250" style="font-size: 12px;">
+        <table width="95%" border="0">
+        <tr>
+          <?php
+          if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/salesrep/change_salesrep_commission_status')) {
+            if ("No Sales Rep." != $admin_name) {
+            ?>
+            <td style="width:20px;">
+                <input style="vertical-align: text-bottom;" type="checkbox" name="selector_<?php echo $data[$admin_name]['admin_id']; ?>" id="selector_<?php echo $data[$admin_name]['admin_id']; ?>" onchange="select_orders(this, <?php echo $data[$admin_name]['admin_id']; ?>); return false;" title="Select/deselect all">
+            </td>
+          <?php
+            }
+          }
+          ?>
+          <td style="text-align: center;">
+            <?php echo $admin_name;?>
+          </td>
+        </tr>
+        </table>
+      </td>
+      <?php
+      }
+      ?>
+      <td style="background-color: white;">&nbsp;</td>
+    </tr>
+
+    <?php
+    while (1) {
+      if (isset($_report_end_date)) {
+        if ($report_type == "week" || $report_type == "month" || $report_type == "year") {
+          $_report_start_date = mktime(0, 0, 0, date("m", $_report_end_date), date("d", $_report_end_date) + 1, date("Y", $_report_end_date));
+        } else {
+          $_report_start_date = $_report_end_date;
+
+          $_report_start_date = mktime(0, 0, 0, date("m", $_report_end_date), date("d", $_report_end_date) + 1, date("Y", $_report_end_date));
+        }
+      } else {
+        $_report_start_date = strtotime(Mage::getModel('core/date')->date(null, strtotime($from_date)));
+      }
+
+      if ($_report_start_date > strtotime(Mage::getModel('core/date')->date(null, strtotime($to_date)))) {
+        break;
+      }
+
+      // calculate end date
+      switch ($report_type) {
+        case 'year':
+          $_report_end_date = mktime(23, 59, 59, 12, 31, date("Y", $_report_start_date));
+          break;
+        case 'month':
+          $_report_end_date = mktime(23, 59, 59, date("m", $_report_start_date) + 1, 0, date("Y", $_report_start_date));
+          break;
+        case 'week':
+          $_report_end_date = mktime(23, 59, 59, date("m", $_report_start_date), date("d", $_report_start_date) + 6, date("Y", $_report_start_date));
+          break;
+        case 'day':
+          $_report_end_date = mktime(23, 59, 59, date("m", $_report_start_date), date("d", $_report_start_date), date("Y", $_report_start_date));
+          break;
+      }
+
+      // make date label
+      if ( $report_type == 'day' ) {
+        $_report_date_label = date('m/d/Y', $_report_start_date);
+      } else {
+        $_report_date_label = date('m/d/Y', $_report_start_date) .' - '. date('m/d/Y', $_report_end_date);
+      }
+      ?>
+      <tr class="dataTableRow">
+        <td class="dataTableContent" align="center"><?php echo $_report_date_label; ?></td>
+        <?php
+        $currency_symbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol();
+
+        $subtotals = array();
+
+        foreach ($data as $admin_name => $admin_data) {
+        ?>
+        <td class="dataTableContent" align="center" valign="top">
+          <table width="95%" border="0">
+          <?php
+          $_has_orders = false;
+
+          foreach ($admin_data['orders'] as $_order) {
+            if (strtotime($_order['created_at']) > $_report_start_date && strtotime($_order['created_at']) < $_report_end_date) {
+              echo '<tr>';
+
+              if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/salesrep/change_salesrep_commission_status') && "No Sales Rep." != $admin_name) {
+                echo '<td style="width:13px;"><input type="checkbox" name="order_ids_'. $admin_data['admin_id'] .'" value="'. $_order['order_id'] .'"></td>';
+              }
+
+              if ("No Sales Rep." != $admin_name) {
+                if ($_order['status'] != "") {
+                  $_salesrep_icon = $this->getSkinUrl('images/salesrep/'. strtolower($_order['status']) .'.png');
+                } else {
+                  $_order['status'] = "Unpaid";
+                  $_salesrep_icon = $this->getSkinUrl('images/salesrep/unpaid.png');
+                }
+                echo '<td style="width: 16px;"><img style="margin-top: 2px;" src="'. $_salesrep_icon .'" alt="'. $_order['status'] .' icon" title="'. $_order['status'] .'" /></td>';
+              }
+
+              if ("No Sales Rep." != $admin_name) {
+                echo '<td align="left">';
+              } else {
+                echo '<td align="center">';
+              }
+
+              echo '<a style="vertical-align: top;" target="_blank" href="'. Mage::helper('adminhtml')->getUrl('*/sales_order/view', array('order_id' => $_order['order_id'])) .'">'. $_order['order_increment_id'] .'</a>';
+              echo '</td>';
+
+              if ("No Sales Rep." != $admin_name) {
+                echo '<td align="right">';
+                echo Mage::helper('core')->currency($_order['value'], true, false);
+                echo '</td>';
+                echo '</tr>';
+              }
+
+
+              // Calc subtotal earned for period
+              if ("canceled" != strtolower($_order['order_status'])) {
+                if (isset($subtotals[$admin_name])) {
+                  $subtotals[$admin_name]['subtotal'] += round($_order['value'], 2);
+                  $subtotals[$admin_name]['orders'] += 1;
+                } else {
+                  $subtotals[$admin_name] = array('subtotal' => round($_order['value'], 2), 'orders' => 1);
+                }
+              } else {
+                if (isset($subtotals[$admin_name])) {
+                  $subtotals[$admin_name]['subtotal'] += round(0, 2);
+                  $subtotals[$admin_name]['orders'] += 1;
+                } else {
+                  $subtotals[$admin_name] = array('subtotal' => round(0, 2), 'orders' => 1);
+                }
+              }
+              $_has_orders = true;
+            }
+          }
+
+          if (!$_has_orders) {
+            $subtotals[$admin_name] = array('subtotal' => 0, 'orders' => 0);
+
+            echo '<tr><td colspan="2" align="center">-</td></tr>';
+          }
+          ?>
+          </table>
+          <?php
+        }
+        ?>
+        </td>
+        <td style="background-color: white;">&nbsp;</td>
+      </tr>
+      <tr class="dataTableRow dataTableRowOver">
+        <td class="dataTableContent">&nbsp;</td>
+        <?php
+        foreach (array_keys($data) as $admin_name) {
+        ?>
+        <td class="dataTableContent" align="center" valign="top">
+          <?php
+          if ("No Sales Rep." != $admin_name) {
+          ?>
+            <table style="width: 95%;" border="0">
+            <tr>
+              <?php
+              if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/salesrep/change_salesrep_commission_status')) {
+              ?>
+                <td style="width: 13px;"></td>
+              <?php
+              }
+              ?>
+              <td style="width: 16px;"></td>
+              <td align="left"><b>Orders: </b><?php echo $subtotals[$admin_name]['orders']; ?></td>
+              <td align="right">
+                <b>Subtotal:</b> <?php echo $subtotals[$admin_name]['subtotal'] == '' ? Mage::helper('core')->currency(0, true, false) : Mage::helper('core')->currency($subtotals[$admin_name]['subtotal'], true, false) ?>
+              </td>
+            </tr>
+            </table>
+          <?php
+          }
+          ?>
+        </td>
+        <?php
+        }
+        ?>
+        <td style="background-color: white;">&nbsp;</td>
+      </tr>
+      <?php
+    }
+    ?>
+
+
+    <?php
+      if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/salesrep/change_salesrep_commission_status')) {
+    ?>
+    <tr>
+      <td align="center" width="160">&nbsp;</td>
+      <?php
+      foreach (array_keys($data) as $admin_name) {
+      ?>
+      <td align="center" valign="top" style="background-color:#F0F1F1;">
+        <?php
+        if ("No Sales Rep." != $admin_name) {
+        ?>
+          <table style="width: 98%;" border="0">
+          <tr>
+            <td style="text-align: left; vertical-align: bottom; font-size: 12px;">
+              <img style="" src="<?php echo $this->getSkinUrl('images/salesrep/arrow_ltr.png'); ?>" alt="Change selected orders."/>
+              change selected to:
+            </td>
+            <td style="text-align: right; vertical-align: bottom;">
+              <select style="margin-bottom: 2px;" id="status_<?php echo $data[$admin_name]['admin_id']; ?>" name="status_<?php echo $data[$admin_name]['admin_id']; ?>">
+                <?php
+                $statuses = Mage::helper('salesrep')->getStatusList();
+                echo '<option value=""></option>';
+
+                foreach($statuses as $status) {
+                  if ($commission_status != $status['value'] ) {
+                    echo '<option value="'. $status['value'] .'">'. $status['label'] .'</option>';
+                  }
+                }
+                ?>
+              </select>
+            </td>
+          </tr>
+          </table>
+        <?php
+        }
+        ?>
+      </td>
+      <?php
+      }
+      ?>
+    </tr>
+    <?php
+    }
+    ?>
+    <tr>
+      <td>&nbsp;</td>
+      <?php
+      foreach (array_keys($data) as $admin_name) {
+      ?>
+      <td class="dataTableContent" align="center" style="width: 250px; background-color:#F0F1F1;">
+        <table style="width: 90%; margin: 10px; font-size: 15px; font-weight: bold;">
+        <?php
+        if ("No Sales Rep." != $admin_name) {
+        ?>
+        <tr>
+          <td>Paid Total:</td>
+          <td align="right" style="color: green;"><?php echo Mage::helper('core')->currency($data[$admin_name]['paid_total'], true, false);?></td>
+        </tr>
+        <tr>
+          <td>Unpaid Total:</td>
+          <td align="right" style="color: red;"><?php echo Mage::helper('core')->currency($data[$admin_name]['unpaid_total'], true, false);?></td>
+        </tr>
+        <?php
+        }
+        ?>
+        </table>
+      </td>
+      <?php
+      }
+      ?>
+    </tr>
+    </table>
+  </form>
+</div>
+<br /><br />
+<i>We strongly recommend paying commissions based on the period in which you accept returns. This prevents you from paying commission on an order that is later cancelled. For example, if you accept returns for 30 days, generate this report at the end of a 30 day period. Make sure to diligently mark any canceled or returned orders as such.</i>
+<?php
+} else {
+?>
+<?php
+}
+?>
+
+<?php
+if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/salesrep/change_salesrep_commission_status')) {
+?>
+<script type="text/javascript">
+//<![CDATA[
+function select_orders(el, col) {
+  var el = $(el);
+
+  $$('input[type="checkbox"][name="order_ids_'+ col +'"]').each(function(item){
+    item.checked = el.checked;
+  });
+
+  return false;
+}
+
+function change_commission_status() {
+  var status = this.value;
+  var id     = this.readAttribute('id').split("_")[1];
+
+  var ids = new Array();
+
+  $$('input[type="checkbox"][name="order_ids_'+ id +'"]').each(function(item){
+    if (item.checked) {
+      ids.push(item.readAttribute('value'));
+    }
+  });
+
+  var request = new Ajax.Request(
+    '<?php echo $this->getUrl('adminhtml/order/changeCommissionStatus/') ?>',
+    {
+      method: 'post',
+      onComplete: function() {},
+      onSuccess: function(data) {
+        window.location.reload();
+      },
+      onFailure: function() {},
+      parameters: {'order_id[]': ids, 'salesrep_commission_status': status}
+    }
+  );
+  return false;
+}
+
+$$('form#salesrep_form select').each(function(item){
+  Event.observe(item, 'change', change_commission_status);
+});
+//]]>
+</script>
+<?php
+}
+?>

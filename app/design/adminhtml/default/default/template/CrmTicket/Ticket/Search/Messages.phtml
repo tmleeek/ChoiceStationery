@@ -1,0 +1,20 @@
+<div class="entry-edit-head">
+    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Messages'); ?></h4>
+</div>
+<div id="ticket_fieldset" class="fieldset ">
+    <?php foreach ($this->getTicket()->getMessages() as $message) : ?>
+        <div class="box message-<?php echo $message->getctm_author(); ?>">                   
+            <p style="margin-bottom: 15px;">
+                <?php $author = $message->getctm_author(); ?>
+                <?php if ($message->getAdminUser()): ?>
+                    <?php $author = $author . ' (' . $message->getAdminUser()->getusername() . ')'; ?>
+                <?php endif; ?>
+                <b><?php echo $this->__('By %s, %s', $author, $message->getctm_updated_at()); ?></b>
+            </p>
+            <div class="box-content">
+                <p><?php echo $message->getctm_content(); ?></p>
+            </div>
+            <br />
+        </div>
+    <?php endforeach; ?>
+</div>

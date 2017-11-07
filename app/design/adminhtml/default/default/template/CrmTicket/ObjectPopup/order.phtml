@@ -1,0 +1,136 @@
+<?php $_order = $this->getObject(); ?>
+<?php $_customer = Mage::getModel('customer/customer')->load($_order->getCustomerId()); ?>
+<h1><?php echo $this->getOrderLink($this->__('Order #').$_order->getincrement_id(), $_order->getId()); ?></h1>
+
+<table border="0" width="100%">
+    
+    <tr>
+        <td >
+            <!-- Customer information -->
+            <div class="entry-edit">
+                <div class="entry-edit-head">
+                    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Customer'); ?></h4>
+                </div>
+                <div class="fieldset">
+                    <?php echo str_replace("\n", "<br/>", trim($_order->getBillingAddress()->format(true))); ?>
+                </div>
+            </div>
+        </td>
+        <td >
+            <!-- Order main information -->
+            <div class="entry-edit">
+                <div class="entry-edit-head">
+                    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Order information'); ?></h4>
+                </div>
+                <div class="fieldset">
+                    <p><?php echo $this->__('Order placed on %s', $_order->getCreatedAt()); ?></p>
+                    <p><?php echo $this->__('Status : %s', $_order->getstatus()); ?></p>
+                    <p><?php echo $this->__('Payment method : %s', $_order->getPayment()->getMethodInstance()->gettitle()); ?></p>
+                    <p><?php echo $this->__('Shipping method : %s', $_order->getShippingDescription()); ?></p>
+                    <p><?php echo $this->__('Order total : %s', $_order->formatPrice($_order->getGrandTotal())); ?></p>
+                    <p><?php echo $this->__('Shipping : %s', $_order->formatPrice($_order->getShippingAmount() + $_order->getshipping_tax_amount())); ?></p>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td >
+            <!-- Invoices -->
+            <div class="entry-edit">
+                <div class="entry-edit-head">
+                    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Invoices'); ?></h4>
+                </div>
+                <div class="fieldset">                    
+                    <?php foreach($_order->getInvoiceCollection() as $invoice): ?>
+                        <p>- <?php echo $this->getInvoicePDF($this->__('Invoice #%s (%s)', $invoice->getincrement_id(), $invoice->getcreated_at()), $invoice->getId()); ?></p>
+                    <?php endforeach; ?>                    
+                </div>
+            </div>
+        </td>        
+        <td >
+            <!-- Credit memo -->
+            <div class="entry-edit">
+                <div class="entry-edit-head">
+                    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Credit memo'); ?></h4>
+                </div>
+                <div class="fieldset">
+                    <?php foreach($_order->getCreditMemosCollection() as $creditmemo): ?>
+                        <p>- <?php echo $this->getCreditMemoPDF($this->__('Credit memo #%s (%s)', $creditmemo->getincrement_id(), $creditmemo->getcreated_at()), $creditmemo->getId()); ?></p>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+      <td >
+            <!-- Shipments -->
+            <div class="entry-edit">
+                <div class="entry-edit-head">
+                    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Shipments'); ?></h4>
+                </div>
+                <div class="fieldset">                    
+                    <?php foreach($_order->getShipmentsCollection() as $shipment): ?>
+                        <p>- <?php echo $this->getShipmentPDF($this->__('Shipment #%s (%s)', $shipment->getincrement_id(), $shipment->getcreated_at()), $shipment->getId()); ?></p>
+                        <?php foreach($shipment->getTracksCollection() as $tracking): ?>
+                            <p> - <?php echo $this->__('Tracking #%s', $tracking->getnumber()); ?></p>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>                    
+                </div>
+            </div>
+        </td>
+        <td style="width: 450px">
+            <!-- Comments -->
+            <div class="entry-edit">
+                <div class="entry-edit-head">
+                    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Comments'); ?></h4>
+                </div>
+                <div class="fieldset">
+                    <?php foreach($this->getFullHistory($_order) as $comments): ?>
+                          <p>- <?php echo $comments['created_at'].' : <b>'.$comments['title'].'</b> <i>'.$comments['comment'].'</i>';
+                          if($comments['notified']){
+                            echo ' (Notified)';
+                          }
+                          ?>
+                          </p>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <!-- Products -->
+            <div class="entry-edit">
+                <div class="entry-edit-head">
+                    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Products'); ?></h4>
+                </div>
+                <div class="fieldset">
+                    <table border="0" width="100%">
+                        <tr>
+                            <th><?php echo $this->__('Product'); ?></th>
+                            <th class="a-center"><?php echo $this->__('Qty ordered'); ?></th>
+                            <th class="a-center"><?php echo $this->__('Qty to ship'); ?></th>
+                            <th><?php echo $this->__('Price'); ?></th>
+                            <th class="a-center"><?php echo $this->__('Status'); ?></th>
+                        </tr>
+                    <?php foreach($_order->getAllItems() as $item): ?>
+                        <tr>
+                            <td><?php echo $item->getName(); ?></td>
+                            <td class="a-center"><?php echo (int)$item->getqty_ordered(); ?></td>
+                            <td class="a-center"><?php echo (int)($item->getqty_ordered() - $item->getqty_shipped()); ?></td>
+                            <td><?php echo $_order->formatPrice($item->getrow_total() + $item->gettax_amount()); ?></td>
+                            <td class="a-center"><?php echo $item->getStatus(); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+    
+</table>
+
+<!-- Invoice & shipment & trackings -->
+
+
+</div>

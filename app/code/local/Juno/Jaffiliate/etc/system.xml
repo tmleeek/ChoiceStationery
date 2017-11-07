@@ -1,0 +1,734 @@
+<?xml version="1.0"?>
+<!-- 
+ /**
+  *
+  *
+  **/
+-->
+<config>
+    <sections>
+        <jaffiliate translate="label" module="jaffiliate">
+            <label>Affiliate Program Config</label>
+            <tab>catalog</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>6000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>                    
+            <groups>
+            	<general translate="label">
+                    <label>General Settings (Version: 2.5.9)</label>
+                    <comment>
+            			<![CDATA[
+            				<p style="padding: 0 0 5px 0;">Thanks for using the Affiliate Tracking & Feed Integration module by <a href="http://www.junomedia.co.uk/" target="_juno" style="text-decoration: none;">Juno Media</a>. If you require help please email <a href="mailto:support@junomedia.co.uk" style="text-decoration: none;">support@junomedia.co.uk</a> please note that not all settings will be applicable to your .</p>
+            				<p style="padding: 0 0 10px 0;">The wiki for this module is located at: <a href="http://wiki.junowebdesign.com/magento-modules/affiliate-tracking-feeds-for-magento" target="_juno" style="text-decoration: none;">Juno Media</a></p>
+            			]]>
+            		</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+						<key>
+					        <label>License Key</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>0</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </key>
+					    <tracking>
+					        <label>Activate Tracking Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+					        <sort_order>10</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </tracking>
+					    <feed>
+					        <label>Activate Product Feed</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+					        <sort_order>20</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </feed>
+					    <footer>
+					        <label>Activate Footer Tracking Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+					        <sort_order>22</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </footer>
+					    <tax>
+					        <label>Commission Including Tax</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+					        <sort_order>50</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </tax>
+					    <test>
+					        <label>Test Mode (if supported)</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+					        <sort_order>25</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </test>
+					    <delivery_period>
+					        <label>Default Delivery Period</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>60</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					        <comment><![CDATA[Your standard devliery time for the product feed, e.g. 1-3 Days]]></comment>               
+					    </delivery_period>
+					    <delivery_cost>
+					        <label>Default Delivery Cost</label>
+					        <frontend_type>text</frontend_type>
+					        <sort_order>70</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>     
+					        <comment><![CDATA[Your standard devliery cost for the product feed, e.g. 4.95 (no symbols)]]></comment>               
+					    </delivery_cost>
+					    <language>
+					        <label>Default Language</label>
+					        <frontend_type>text</frontend_type>
+					        <sort_order>80</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					        <comment><![CDATA[Can vary depending on program but normally en_GB, fr_FR etc]]></comment>
+					    </language>
+					    <currency>
+					        <label>Default Currency</label>
+					        <frontend_type>text</frontend_type>
+					        <sort_order>90</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					        <comment><![CDATA[Can vary depending on program but normally GBP, USD etc]]></comment>
+					    </currency>
+					    <event_id>
+					        <label>Event/Group ID(s) or Commission Groups</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>40</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					        <comment>
+						    <![CDATA[Seperate multiple id's with a comma e.g. "1234,9876,3467". The first or only id in the list will be treated as the default.]]>
+	            			</comment>
+					    </event_id>
+					</fields>
+                </general>
+                <deduping translate="label">
+                    <label>De-duping Setings</label>
+                    <comment>
+            			<![CDATA[
+            				<p style="padding: 0 0 10px 0;">De-duping is a method of stopping multiple commissions being paid on orders. If in doubt, please check the wiki.</p>
+            			]]>
+            		</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>11</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+					    <enabled>
+					        <label>Enable De-duping Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+					        <sort_order>5</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                      
+					    </enabled>
+					    <key>
+					        <label>$_GET Key</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>10</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					        <comment>
+							    <![CDATA[The $_GET key passed in the referring URL, e.g. source.]]>
+	            			</comment>
+					    </key>
+					    <val>
+					        <label>$_GET Default Value</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>30</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>     
+					        <comment>
+							    <![CDATA[The $_GET variable passed in the referring URL, e.g. awin.]]>
+	            			</comment>               
+					    </val>
+					    <length>
+					        <label>Cookie Length</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>30</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>     
+					        <comment>
+							    <![CDATA[The time length of the local cookie in seconds e.g. 30 days = 2592000.]]>
+	            			</comment>               
+					    </length>
+					</fields>
+                </deduping> 
+                <affiliatewindow translate="label">
+                    <label>Affiliate Window Program Specific</label>
+                    <comment>
+            			<![CDATA[
+            				<p style="padding: 0 0 10px 0;">This section is ONLY APPLICABLE if using the Affiliate Window Program integration.</p>
+            			]]>
+            		</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+					    <program_id>
+					        <label>Program ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>10</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </program_id>
+					    <manufacturer>
+					        <label>Manufacturer</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>15</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>    
+					        <comment>
+						    <![CDATA[Used to power the Brand tag if no brand is available on the product.]]>
+	            			</comment>                
+					    </manufacturer>
+					    <category>
+					        <label>Category</label>
+					        <frontend_type>select</frontend_type>
+                            <source_model>jaffiliate/source_awinCategory</source_model>
+					        <sort_order>20</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					        <comment><![CDATA[As per: <a href="http://wiki.affiliatewindow.com/index.php/ShopWindow_Category_Tree" target="_new">http://wiki.affiliatewindow.com/index.php/ShopWindow_Category_Tree</a>]]></comment>
+					    </category>
+					    <dedupingvalue>
+					        <label>De-duping Value</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>25</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					        <comment><![CDATA[This setting can be used to check incoming traffic for a refferal soucrce, if you have de-duping turned on please set this to the value that your expect to see on refferal links from this affiliate program, e.g. ?source=awin]]></comment>
+					    </dedupingvalue>
+					</fields>
+                </affiliatewindow>
+                 <affiliatefuture translate="label">
+                    <label>Affiliate Future Program Specific</label>
+                    <comment>
+            			<![CDATA[
+            				<p style="padding: 0 0 10px 0;">This section is ONLY APPLICABLE if using the Affiliate Future Program integration.</p>
+            			]]>
+            		</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+					    <program_id>
+					        <label>Program ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>10</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </program_id>
+<!--
+						<dedupingvalue>
+					        <label>De-duping Value</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>40</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					        <comment><![CDATA[This setting can be used to check incoming traffic for a refferal soucrce, if you have de-duping turned on please set this to the value that your expect to see on refferal links from this affiliate program, e.g. ?source=affiliatefuture you should enter 'affiliatefuture' in the box above.]]></comment>
+					    </dedupingvalue>
+-->
+					</fields>
+                </affiliatefuture>
+                <affilinet translate="label">
+                    <label>Affilinet Program Specific</label>
+                    <comment>
+            			<![CDATA[
+            				<p style="padding: 0 0 10px 0;">This section is ONLY APPLICABLE if using the Affilinet Program integration.</p>
+            			]]>
+            		</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+					    <program_id>
+					        <label>Program ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>10</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </program_id>
+					</fields>
+<!--
+						<dedupingvalue>
+					        <label>De-duping Value</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>40</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					        <comment><![CDATA[This setting can be used to check incoming traffic for a refferal soucrce, if you have de-duping turned on please set this to the value that your expect to see on refferal links from this affiliate program, e.g. ?source=affilinet you should enter 'affilinet' in the box above.]]></comment>
+					    </dedupingvalue>
+-->
+                </affilinet> 
+                <commissionjunction translate="label">
+                    <label>Commission Junction Program Specific</label>
+                    <comment>
+            			<![CDATA[
+            				<p style="padding: 0 0 10px 0;">This section is ONLY APPLICABLE if using the Commission Junction Program integration.</p>
+            			]]>
+            		</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+					    <tracking>
+					        <label>Tracking Type</label>
+					        <frontend_type>select</frontend_type>
+                            <source_model>jaffiliate/source_cmtracking</source_model>
+					        <sort_order>5</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </tracking>
+					    <cid>
+					        <label>Enterprise ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>10</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </cid>
+					    <type>
+					        <label>Action ID </label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>12</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </type>
+					    <subid>
+					        <label>SUB ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>15</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </subid>
+					    <container_tag>
+					        <label>Container Tag ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>20</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </container_tag>
+<!--
+						<dedupingvalue>
+					        <label>De-duping Value</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>40</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					        <comment><![CDATA[This setting can be used to check incoming traffic for a refferal soucrce, if you have de-duping turned on please set this to the value that your expect to see on refferal links from this affiliate program, e.g. ?source=cj you should enter 'cj' in the box above.]]></comment>
+					    </dedupingvalue>
+-->
+					</fields>
+                </commissionjunction> 
+                <linkshare translate="label">
+                    <label>Linkshare Specific</label>
+                    <comment>
+            			<![CDATA[
+            				<p style="padding: 0 0 10px 0;">This section is ONLY APPLICABLE if using the Linkshare integration.</p>
+            			]]>
+            		</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>110</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+					    <program_id>
+					        <label>Program ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>30</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </program_id>
+					    <ftp_user>
+					        <label>FTP Username</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>30</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </ftp_user>
+					    <ftp_password>
+					        <label>FTP Password</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>30</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </ftp_password>
+					    <ftp_address>
+					        <label>FTP Address</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>30</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>       
+					        <comment>
+	            			<![CDATA[
+	            				<p style="padding: 0 0 10px 0;">e.g. mftp.linksynergy.com</p>
+	            			]]>
+            				</comment>             
+					    </ftp_address>
+<!--
+						<dedupingvalue>
+					        <label>De-duping Value</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>40</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					        <comment><![CDATA[This setting can be used to check incoming traffic for a refferal soucrce, if you have de-duping turned on please set this to the value that your expect to see on refferal links from this affiliate program, e.g. ?source=linkshare you should enter 'linkshare' in the box above.]]></comment>
+					    </dedupingvalue>
+-->
+					</fields>
+                </linkshare> 
+                <tradedoubler translate="label">
+                    <label>TradeDoubler Specific</label>
+                    <comment>
+            			<![CDATA[
+            				<p style="padding: 0 0 10px 0;">This section is ONLY APPLICABLE if using the TradeDoubler integration.</p>
+            			]]>
+            		</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>110</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+					    <organization>
+					        <label>Organization ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>10</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </organization>
+					    <checksum>
+					        <label>Checksum Code</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>20</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </checksum>
+					    <type>
+					        <label>Event Type</label>
+					        <frontend_type>select</frontend_type>
+                            <source_model>jaffiliate/source_saletype</source_model>
+					        <sort_order>30</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					    </type>
+					    <connection>
+					        <label>Connection Type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>jaffiliate/source_connection</source_model>
+					        <sort_order>40</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </connection>
+					    
+					    <landing_ctid>
+					        <label>Landing Page Container ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>50</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </landing_ctid>
+					    <category_ctid>
+					        <label>Product List Container ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>50</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </category_ctid>
+					    <product_ctid>
+					        <label>Product Page Container ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>50</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </product_ctid>
+					    <basket_ctid>
+					        <label>Basket Container ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>50</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </basket_ctid>
+					    <confirmation_ctid>
+					        <label>Confirmation Container ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>50</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </confirmation_ctid>
+<!--
+						<dedupingvalue>
+					        <label>De-duping Value</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>40</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					        <comment><![CDATA[This setting can be used to check incoming traffic for a refferal soucrce, if you have de-duping turned on please set this to the value that your expect to see on refferal links from this affiliate program, e.g. ?source=tradedoubler you should enter 'tradedoubler' in the box above.]]></comment>
+					    </dedupingvalue>
+-->
+					</fields>
+                </tradedoubler> 
+                <paidonresults translate="label">
+                    <label>Paid on Results Program Specific</label>
+                    <comment>
+            			<![CDATA[
+            				<p style="padding: 0 0 10px 0;">This section is ONLY APPLICABLE if using the Paid on Results Program integration.</p>
+            			]]>
+            		</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+						<program_id>
+					        <label>Merchant ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>30</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </program_id>
+<!--
+						<dedupingvalue>
+					        <label>De-duping Value</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>40</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					        <comment><![CDATA[This setting can be used to check incoming traffic for a refferal soucrce, if you have de-duping turned on please set this to the value that your expect to see on refferal links from this affiliate program, e.g. ?source=por you should enter 'por' in the box above.]]></comment>
+					    </dedupingvalue>
+-->
+					</fields>
+                </paidonresults>  
+                <webgains translate="label">
+                    <label>Webgains Program Specific</label>
+                    <comment>
+            			<![CDATA[
+            				<p style="padding: 0 0 10px 0;">This section is ONLY APPLICABLE if using the Webgains Program integration.</p>
+            			]]>
+            		</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+						<program_id>
+					        <label>Webgains Program ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>30</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </program_id>
+					    <pin>
+					        <label>Checksum PIN</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>45</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					        <comment>
+						    <![CDATA[Only enter if Webgains have provided you with a PIN.]]>
+	            			</comment>
+					    </pin>
+					    <location>
+					        <label>Webgains System</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>jaffiliate/source_system</source_model>
+					        <sort_order>25</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </location>
+<!--
+						<dedupingvalue>
+					        <label>De-duping Value</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>40</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					        <comment><![CDATA[This setting can be used to check incoming traffic for a refferal soucrce, if you have de-duping turned on please set this to the value that your expect to see on refferal links from this affiliate program, e.g. ?source=webgains you should enter 'webgains' in the box above.]]></comment>
+					    </dedupingvalue>
+-->
+					</fields>
+                 </webgains>  
+                 <tradetracker translate="label">
+                    <label>Trade Tracker Program Specific</label>
+                    <comment>
+            			<![CDATA[
+            				<p style="padding: 0 0 10px 0;">This section is ONLY APPLICABLE if using the Trade Tracker Program integration.</p>
+            			]]>
+            		</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>115</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+					    <cid>
+					        <label>CID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>10</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </cid>
+					    <pid>
+					        <label>PID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>20</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </pid>
+<!--
+						<dedupingvalue>
+					        <label>De-duping Value</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>15</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					        <comment><![CDATA[This setting can be used to check incoming traffic for a refferal soucrce, if you have de-duping turned on please set this to the value that your expect to see on refferal links from this affiliate program, e.g. ?source=tradetracker you should enter 'tradetracker' in the box above.]]></comment>
+					    </dedupingvalue>
+-->
+					</fields>
+                </tradetracker> 
+                 <zanox translate="label">
+                    <label>Zanox Program Specific</label>
+                    <comment>
+            			<![CDATA[
+            				<p style="padding: 0 0 10px 0;">This section is ONLY APPLICABLE if using the Zanox Program integration.</p>
+            			]]>
+            		</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>110</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+					    <program_id>
+					        <label>Program ID</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>10</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </program_id>
+						<dedupingvalue>
+					        <label>De-duping Value</label>
+                            <frontend_type>text</frontend_type>
+					        <sort_order>15</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>
+					        <comment><![CDATA[This setting can be used to check incoming traffic for a refferal soucrce, if you have de-duping turned on please set this to the value that your expect to see on refferal links from this affiliate program, e.g. ?source=zanox you should enter 'zanox' in the box above.]]></comment>
+					    </dedupingvalue>
+					</fields>
+                </zanox>  
+                <!--<feed translate="label">
+                    <label>CSV Feed Mapping</label>
+                    <comment>
+            			<![CDATA[
+            				<p style="padding: 0 0 10px 0;">Please use the fields below to map the correct attributes in your magento installation for the product feed to use. This list should
+            							be comma seperated and in the format: field_name=attribute_code. For Example: product_name=name,price=price</p>
+            				<p style="padding: 0 0 10px 0;">For more examples and guides please see the Affiliate page wiki @ http://wiki.junowebdesign.com/magento-modules/affiliate-tracking-feeds-for-magento</p>
+            			]]>
+            		</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+					    <mapping>
+					        <label>CSV Mapping</label>
+                            <frontend_type>textarea</frontend_type>
+					        <sort_order>10</sort_order>
+					        <show_in_default>1</show_in_default>
+					        <show_in_website>1</show_in_website>
+					        <show_in_store>1</show_in_store>                    
+					    </mapping>
+					</fields>
+                </feed>-->        
+            </groups>
+        </jaffiliate>
+    </sections>     
+</config>

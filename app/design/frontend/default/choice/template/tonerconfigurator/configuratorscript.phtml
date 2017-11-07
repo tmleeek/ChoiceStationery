@@ -1,0 +1,123 @@
+<script src="<?php echo $this->getSkinUrl('js/tonerconfigurator/spin.js', array('_use_rewrite' => true)); ?>" type="text/javascript"></script>
+<script>
+window.maxtonerlevel = <?php echo $this->getMaxLevel() ?>;
+function changeCategory(level, val, configurator){
+if(!val.hasAttribute('value'))return;
+var reloadurl = '<?php echo $this->getUrl('tonerconfigurator/ajax/loadDropdown',array('_forced_secure' => $this->getRequest()->isSecure())) ?>';
+if(val.value.indexOf('/') != -1){
+    window.location.href = val.value;
+	loadMask(true, configurator);
+	return;
+}
+loadMask(true, configurator);
+var inputs = configurator.getElementsByTagName('select');
+for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = true;
+}
+var newLevel = level+1;
+reloadurl += 'catid/'+val.value;
+if(newLevel == maxtonerlevel){
+	reloadurl += '/lastlevel/1';
+}
+new Ajax.Request(reloadurl, {
+method: 'get',
+parameters: '',
+onComplete: function(transport){
+	var newCategories = transport.responseJSON;
+	if(!newCategories || !newCategories.success){
+        console.log("Received an invalid or non-success response from the Tonerconfigurator AJAX request");
+        return;
+    }
+	for(var i = level; i < maxtonerlevel; i++){
+		var a = configurator.getElementsByTagName('select')[i];
+		for(var j = a.options.length - 1; j >= 0; j--){ //Remove backwards otherwise the indexes shift too fast/too slow depending on how you look at it
+			a.remove(j);
+		}
+		var o = document.createElement('option');
+		o.text = a.getAttribute('data-tonertitle'); //Implicitly sets label as well
+		o.selected = true;
+		a.add(o, null); //Null param is for pre-HTML5 and pre-gecko7 support
+	}
+	var modifiedSelect = configurator.getElementsByTagName('select')[level];
+	for(var i = 0; i < newCategories.subcategories.length; i++){
+		var data = ((newCategories.subcategories[i].id == null) ? newCategories.subcategories[i].URL : newCategories.subcategories[i].id);
+		var o = document.createElement('option');
+		o.text = newCategories.subcategories[i].name;
+		o.value = data;
+		modifiedSelect.add(o, null);
+	}
+	var inputs = configurator.getElementsByTagName('select');
+	for (var i = 0; i < newLevel; i++) {
+		inputs[i].disabled = false;
+	}
+	<?php if($this->getData('button_based')==1): ?>
+	var toner_b = configurator.getElementsByClassName('toner-button-submit')[0];
+	if((newLevel != window.maxtonerlevel) && (toner_b.disabled == false)){
+		toner_b.disabled = true;
+	} else if(newLevel == window.maxtonerlevel){
+		toner_b.disabled = true;
+	}
+	<?php endif; ?>
+	loadMask(false, configurator);
+},
+onTimeout: function() { console.log('Tonerconfigurator AJAX Timeout'); },
+onFailure: function() { console.log('Tonerconfigurator AJAX Failure') }
+ });
+ }
+<?php if($this->getData('button_based')==1): ?>
+function changeLastLevel(option, configurator){
+	var toner_b = configurator.getElementsByClassName('toner-button-submit')[0];
+	if(option == "" && !(toner_b.disabled)){
+		toner_b.disabled = true;
+	} else if(option != "" && toner_b.disabled){
+		toner_b.disabled = false;
+	}
+}
+<?php endif; ?>
+
+function loadMask(show, configurator){
+	var a = configurator.getElementsByClassName('loadingmask')[0];
+	if(show){
+		a.style.display = 'block';
+		a.style.visibility = 'visible';
+	} else {
+		a.style.display = 'none';
+		a.style.visibility = 'hidden';
+	}
+}
+
+Event.observe(window,"load", function(){
+	var opts = {
+		lines: 17, // The number of lines to draw
+		length: 5, // The length of each line
+		width: 2, // The line thickness
+		radius: 7, // The radius of the inner circle
+		corners: 1, // Corner roundness (0..1)
+		rotate: 0, // The rotation offset
+		direction: 1, // 1: clockwise, -1: counterclockwise
+		color: '#000', // #rgb or #rrggbb
+		speed: 1.2, // Rounds per second
+		trail: 66, // Afterglow percentage
+		shadow: false, // Whether to render a shadow
+		hwaccel: true, // Whether to use hardware acceleration
+		className: 'aspinner', // The CSS class to assign to the spinner
+		zIndex: 2e9, // The z-index (defaults to 2000000000)
+		top: 'auto', // Top position relative to parent in px
+		left: 'auto' // Left position relative to parent in px
+	};
+	var spinners = document.getElementsByClassName('spinner');
+	for(var i = 0; i < spinners.length; i++){
+		var spinner = new Spinner(opts).spin(spinners[i]);
+	}
+	var configurators = document.getElementsByClassName('toner-configurator');
+	for(var i = 0; i < configurators.length; i++){
+		var selects = configurators[i].getElementsByTagName('select');
+		for(var j = 0; j < selects.length; j++){
+			selects[j].setAttribute("data-tonertitle", selects[j].options[0].text);
+		}
+        var opt = document.createElement('option');
+        opt.setAttribute('value', <?php echo $this->getRootCat(); ?>);
+		changeCategory(0, opt, configurators[i]);
+	}
+});
+</script>

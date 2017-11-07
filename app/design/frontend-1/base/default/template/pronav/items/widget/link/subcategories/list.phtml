@@ -1,0 +1,65 @@
+<?php
+$subcategories = $this->getSubcategories();
+$counter = 1;
+
+//Get Cat Images
+$catImages = $this->getData('category_images');
+
+//Get Cat Thumbnails
+$catThumbs = $this->getData('thumbnail_images');
+
+//Get Selected Cat
+$selectedCat = $this->getData('selected_cat'); 
+
+//Get Num of Levels
+$levelSelect = $this->getData('levels');
+
+//Get Main Category Level
+$MainCategoryLevel = $this->getLevel();
+
+//Get Num of columns
+$numColumns = $this->getData('columns');
+
+//Main cat Level + Num of Levels
+$higestLevel = $levelSelect+$MainCategoryLevel;
+?>
+<li class="pronav-unsorted">
+	<ul <?php if($numColumns > 1): ?>class="columns-<?php echo($numColumns);?> columns-split"<?php endif; ?>>
+	<?php foreach ($subcategories as $sid): ?>
+	<?php $_category = Mage::getModel('catalog/category')->load($sid); ?>
+		<?php if ($_category): ?>
+			
+			<?php 
+			$isActive = $_category->getIsActive();
+			$curl = $_category->getUrl();
+			$cname = $_category->getName();
+			$categoryLevel = $_category->getLevel();
+			$_imgUrl = $_category->getImageUrl();
+			$_thumbUrl = $_category->getThumbnail();
+			?>
+			
+				<?php if(($selectedCat == "No")&&($counter == "1")):?>
+				<?php else: ?>
+				
+					<?php if(($categoryLevel >= $MainCategoryLevel)&&($categoryLevel <= $higestLevel)&&($_category->getIncludeInMenu() == "1")): ?>
+						<li class="pronav-cat-li-sub<?php echo $sid . '-' . $counter ?> level-<?php echo $categoryLevel ?>">
+							<a class="pronav-cat-a-sub<?php echo $sid . '-' . $counter ?>" href="<?php echo $curl ?>">
+								<?php if($_imgUrl && $catImages == 'Yes'):?>
+									<img src="<?php echo $_imgUrl ?>" width="100%" height="138" class="pronav-cat-image" />
+								<?php endif; ?>
+								<?php if($_thumbUrl && $catThumbs == 'Yes'):?>
+									<img src="<?php echo Mage::getBaseUrl('media').'catalog/category/' . $_thumbUrl ?>" width="100%" height="auto" class="pronav-thumb-image" />
+								<?php endif; ?>
+								<?php echo $cname ?>
+							</a>
+						</li>
+					<?php endif; ?>
+				
+				<?php endif; ?>		
+			
+		<?php endif; ?>
+	<?php $counter++;?>
+	<?php endforeach;?>
+	<?php $categoryLevel = 0; ?>
+	</ul>
+</li>

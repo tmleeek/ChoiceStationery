@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Amasty_List>
+            <version>1.2.3</version>
+        </Amasty_List>
+    </modules>
+    <global>
+        <models>
+            <amlist>
+                <class>Amasty_List_Model</class>
+                <resourceModel>amlist_mysql4</resourceModel>
+            </amlist>
+            <amlist_mysql4>
+                <class>Amasty_List_Model_Mysql4</class>
+                <entities>
+                    <list>
+                        <table>am_list</table>
+                    </list>
+                    <item>
+                        <table>am_list_item</table>
+                    </item>
+                </entities>
+            </amlist_mysql4>
+        </models>
+        
+        <resources>
+            <amlist_setup>
+                <setup>
+                    <module>Amasty_List</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </amlist_setup>
+            
+            <amlist_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </amlist_write>
+            
+            <amlist_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </amlist_read>
+        </resources>
+
+        <blocks>
+            <amlist>
+                <class>Amasty_List_Block</class>
+            </amlist>
+
+             <adminhtml>
+                <rewrite>
+                    <customer_edit_tabs>Amasty_List_Block_Adminhtml_Customer_Edit_Tabs</customer_edit_tabs> 
+                </rewrite>
+             </adminhtml>
+        </blocks>
+         
+        <helpers>
+            <amlist>
+                <class>Amasty_List_Helper</class>
+            </amlist>
+        </helpers>
+
+        <events>
+            <checkout_cart_add_product_complete>
+                <observers>
+                    <amlist>
+                        <type>singleton</type>
+                        <class>amlist/observer</class>
+                        <method>processCartAddProductComplete</method>
+                    </amlist>
+                </observers>
+            </checkout_cart_add_product_complete>
+
+        </events>
+    </global>
+    
+     <frontend>
+        <routers>
+            <amlist>
+                <use>standard</use>
+                <args>
+                    <module>Amasty_List</module>
+                    <frontName>amlist</frontName>
+                </args>
+            </amlist>
+        </routers>
+        <translate>
+            <modules>
+                <Amasty_List>
+                    <files>
+                        <default>Amasty_List.csv</default>
+                    </files>
+                </Amasty_List>
+            </modules>
+        </translate>
+        <layout>
+              <updates>
+                  <amlist module="Amasty_List">
+                      <file>amlist.xml</file>
+                  </amlist>
+              </updates>
+        </layout>
+    </frontend>   
+    
+     <admin>
+        <routers>
+			<amlist>
+				<use>admin</use>
+				<args>
+					<module>Amasty_List</module>
+					<frontName>amlist</frontName>
+				</args>
+			</amlist>
+        </routers>
+    </admin> 
+
+   <adminhtml>
+         <layout>
+              <updates>
+                  <amlist module="Amasty_List">
+                      <file>amlist.xml</file>
+                  </amlist>
+              </updates>
+        </layout>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <amlist translate="title" module="amlist">
+                                            <title>Favorites Section</title>
+                                        </amlist>
+                                    </children>
+                                </config>
+                            </children>
+                        </system> 
+                     </children>
+                </admin> 
+			</resources>
+		</acl>
+        <translate>
+            <modules>
+                <Amasty_List>
+                    <files>
+                        <default>Amasty_List.csv</default>
+                    </files>
+                </Amasty_List>
+            </modules>
+        </translate>
+    </adminhtml> 
+    
+    <default>
+        <amlist>
+           <general>
+                <active>1</active>
+            </general>
+        </amlist>
+    </default>
+    
+</config>

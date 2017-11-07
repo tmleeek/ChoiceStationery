@@ -1,0 +1,52 @@
+body,
+html{
+	/*
+	margin:0;
+	padding:0;
+	*/
+	height: 100%;
+    margin: 0 0 1px;
+    padding: 0;
+}
+body {
+	min-width:720px; /* Prevent content from becoming unreachable in Gecko */
+}
+/* position:absolute for all browsers - the whole page scrolls */
+div#vaheaderwrap {
+	position:absolute;
+	width:100%;
+	z-index:5000;
+
+}
+/* position:fixed for modern browsers - header and footer do not scroll */
+body>div#vaheaderwrap {
+	position:fixed;
+	z-index:5000;
+	}
+div#vaheader {
+	width:100%;
+	margin:0 auto;
+}
+
+/* no positioning for IE5/Win - the whole page scrolls */
+div#vafooterwrap {
+	width:100%;
+	position:absolute;
+	margin:0;
+	padding:0;
+	border:0;
+	z-index:5000;
+}
+body>div#vafooterwrap {
+	position:fixed;
+	margin:0px;
+	padding:0px;
+	border:0px;
+	z-index:5000;
+}
+div#vafooter {
+	width:100%;
+	margin:0px;
+	padding:0px;
+	border:0px;
+}

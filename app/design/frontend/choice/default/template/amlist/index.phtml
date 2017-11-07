@@ -1,0 +1,49 @@
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php $_lists = $this->getLists(); ?>
+<div class="page-head"> 
+    <h3><?php echo $this->__('My Favorites') ?></h3>
+</div>
+<?php if(sizeof($_lists->getItems()) > 0 ): ?>
+    <table cellspacing="0" class="data-table" id="my-lists-table">
+    <col width="1%" />
+    <col width="1%" />
+    <col width="70%"/>
+    <col />
+        <thead>
+            <tr>
+                <th><?php echo $this->__('ID') ?></th>
+                <th><?php echo $this->__('Default') ?></th>
+                <th><?php echo $this->__('Folder') ?></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php $_odd = ''; ?>
+            <?php foreach ($_lists as $row): ?>
+                <tr class="<?php echo ($_odd = ($_odd ? 'odd' : '')) ?>">
+                    <td><?php echo $row->getId() ?>&nbsp;</td>
+                    <td><input type="radio" name="is_default" <?php if ($row->getIsDefault()) echo "checked" ?> onclick="setLocation('<?php echo $this->getUrl('*/*/default', array('id'=>$row->getId()))?>')"/></td>
+                    <td><a href="<?php echo $this->getUrl('*/*/edit', array('id'=>$row->getId()))?>"><?php echo $this->htmlEscape($row->getTitle()) ?></a></td>
+                    <td class="last a-center">
+                    <a href="<?php echo $this->getUrl('*/*/edit', array('id'=>$row->getId()))?>"><?php echo $this->__('Edit') ?></a>
+                    <span class="separator">|</span>
+                    <a href="<?php echo $this->getUrl('*/*/cart', array('list_id'=>$row->getId()))?>"><?php echo $this->__('Add to Cart') ?></a>
+                    <span class="separator">|</span>
+                    <a class="link-remove" href="<?php echo $this->getUrl('*/*/remove', array('id'=>$row->getId()))?>"  onclick="return confirm('<?php echo $this->__('Are you sure?') ?>')" ><?php echo $this->__('Remove') ?></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<script type="text/javascript">decorateTable('my-lists-table')</script>
+<?php else: ?>
+    <p><?php echo $this->__('Fill in your favorites products to be able to purchase all of them with one click!'); ?></p>
+<?php endif; ?>
+<div class="buttons-set">
+	<form id="importFavoriteProductsForm" action="<?php echo $this->getUrl('*/*/importCsv', array('_secure'=> (bool) Mage::app()->getStore()->isCurrentlySecure())) ?>" method="post" enctype="multipart/form-data">
+		<button class="button" type="button"><span><span><?php echo $this->__('Import CSV') ?></span></span></button>
+		<input type="file" name="file" onChange="document.getElementById('importFavoriteProductsForm').submit()"><br>
+	</form>
+    <button onclick="setLocation('<?php echo $this->getUrl('*/*/edit') ?>')" class="button" type="button"><span><span><?php echo $this->__('Create New Folder') ?></span></span></button>
+</div>    
+

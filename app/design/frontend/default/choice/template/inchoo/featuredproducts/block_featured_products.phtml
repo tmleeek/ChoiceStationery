@@ -1,0 +1,52 @@
+<?php
+/**
+ * @category     Inchoo
+ * @package     Inchoo Featured Products
+ * @author        Domagoj Potkoc, Inchoo Team <web@inchoo.net>
+ * @modified    Mladen Lotar <mladen.lotar@surgeworks.com>, Vedran Subotic <vedran.subotic@surgeworks.com>
+ */
+$categoryid = 37;
+$category = new Mage_Catalog_Model_Category();
+$category->load($categoryid);
+$_products = $category->getProductCollection();
+$_products->addAttributeToSelect('*');
+$_products->getSelect()->order('RAND()');
+$_products->getSelect()->limit(12);
+?>
+
+<?php if ($_products->getSize()): ?>
+<div class="special-offer-container">
+                <div class="container">
+                    <div class="special-offer-outer">
+                        <div class="page-title">
+                            <p class="title"><?php echo $this->__($this->getBlockLabel()) ?></p>
+                        </div><!--end og page-title-->
+                        <div class="product-list-box">
+                            <div class="row">
+                                <?php $i=0; foreach ($_products->getItems() as $_product): ?>
+                                <div class="col-md-3">
+                                    <div class="product-box">
+										<div class="amlabel-div"> 
+										<?php echo Mage::helper('amlabel')->getLabels($_product) ?>
+										</div>
+                                        <a href="<?php echo $_product->getProductUrl() ?>"><img class="lazy" src="<?php echo $this->getSkinUrl('images/mgt_lazy_image_loader/loader.gif'); ?>" data-src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(200) ?>" width="32" height="32" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" /></a>
+                                        <a href="<?php echo $_product->getProductUrl() ?>"><p class="item-name"><?php echo $this->htmlEscape($_product->getName()) ?></p></a>
+										<?php $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)?>
+                                        <p class="price-title">Your price:<span class="availability"><?php if($stock->getIsInStock()):?><i class="fa fa-check"></i><?php echo $this->__('In Stock')?><?php else:?><?php echo $this->__('out of stock')?><?php endif?></span></p>
+
+				        <?php echo $this->getPriceHtml($_product, true, '-new') ?>
+<?php if($_product->isSaleable()): ?>
+                                     <div class="add-btn">
+<a class="add-to-basket" onclick="setLocation('<?php echo Mage::helper('checkout/cart')->getAddUrl($_product) ?>')"><?php echo $this->__('ADD TO BASKET') ?></a>
+<span class="cart-img"><a class="cart-img" onclick="setLocation('<?php echo Mage::helper('checkout/cart')->getAddUrl($_product) ?>')"><i class="sprite sprite-add-to-basket-img"></i></a></span></div>                                
+<?php endif;?>
+</div><!--end of offer-box-->
+                                    
+                                </div><!--end of col-md-3-->
+                                <?php endforeach; ?>
+                            </div><!--end of row-->
+                        </div><!--end of special-offer-boxes-->
+                    </div><!--end of special-offer-outer-->
+                </div><!--end of container-->
+            </div><!--end of special-offer-container-->
+            <?php endif; ?>

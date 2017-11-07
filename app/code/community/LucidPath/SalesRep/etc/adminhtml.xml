@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<config>
+	<!-- The <acl> section is for access control. Here we define the pieces where access can be controlled within a role. -->
+	<!-- Add menu item: Reports -> Sales -> Sales Representative -->
+	<menu>
+		<report>
+			<children>
+				<salesrep translate="title" module="salesrep">
+					<title>Sales Representative</title>
+					<sort_order>100000</sort_order>
+
+					<children>
+						<commissions translate="title" module="salesrep">
+							<title>Commissions</title>
+							<sort_order>5</sort_order>
+							<!-- action: Lucid -> SalesRep -> controllers -> Adminhtml -> Report -> SalesrepController.php -> commissionsAction -->
+							<action>adminhtml/report_salesrep/commissions</action>
+						</commissions>
+						<gross_sales translate="title" module="salesrep">
+							<title>Gross Sales by Rep</title>
+							<sort_order>10</sort_order>
+							<!-- action: Lucid -> SalesRep -> controllers -> Adminhtml -> Report -> SalesrepController.php -> grossAction -->
+							<action>adminhtml/report_salesrep/gross</action>
+						</gross_sales>
+					</children>
+				</salesrep>
+			</children>
+		</report>
+	</menu>
+
+	<!--
+		Allow view Sales Representative reports
+	-->
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<report>
+						<children>
+							<salesrep>
+								<title>Sales Representative</title>
+								<sort_order>100000</sort_order>
+								<children>
+									<!-- Permissions: Reports -> Sales Representative -> Commissions -->
+									<commissions translate="title" module="salesrep">
+										<title>Commissions</title>
+										<sort_order>5</sort_order>
+									</commissions>
+									<!-- Permissions: Reports -> Sales Representative -> Gross Sales by Rep -->
+									<gross_sales translate="title" module="salesrep">
+										<title>Gross Sales by Rep</title>
+										<sort_order>10</sort_order>
+									</gross_sales>
+								</children>
+							</salesrep>
+						</children>
+					</report>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+
+	<!--
+		Allow change Sales Representative on order view page
+		Permissions: Sales -> Orders -> Actions -> Change Sales Representative
+	-->
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<sales>
+						<children>
+							<order>
+								<children>
+									<actions>
+										<children>
+											<salesrep>
+												<title>Sales Representative</title>
+												<sort_order>100000</sort_order>
+												<children>
+													<change_salesrep_name translate="title">
+														<title>Change Sales Representative</title>
+														<sort_order>5</sort_order>
+													</change_salesrep_name>
+													<change_salesrep_commission_status translate="title">
+														<title>Change Payment Status</title>
+														<sort_order>10</sort_order>
+													</change_salesrep_commission_status>
+												</children>
+											</salesrep>
+										</children>
+									</actions>
+								</children>
+							</order>
+						</children>
+					</sales>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+	<!--
+		Allow edit Sales Representative configuration
+		Permissions: System -> Configuration -> Sales Representative Pro
+	-->
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<salesrep>
+										<title>Sales Representative Pro</title>
+										<sort_order>100000</sort_order>
+									</salesrep>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

@@ -1,0 +1,135 @@
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php $sublogin = $this->_getSublogin(); ?>
+<div class="page-title">
+    <h1>
+        <?php echo $sublogin->getId() ? $this->__('Edit sublogin %s %s', $sublogin->getFirstname(), $sublogin->getLastname()) : $this->__('Create a new sublogin'); ?>
+    </h1>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<form action="<?php echo $this->getUrl('sublogin/frontend/edit', array('id' => $sublogin->getData('id'))); ?>" method="post" id="form-validate">
+	
+	<div class="fieldset">
+        <h2 class="legend"><?php echo $this->__('Sublogin') ?></h2>
+		<?php
+		$skipableElements = array('store_id', 'days_to_expire');
+		$customer = Mage::getSingleton('customer/session')->getCustomer();
+		
+		$calendarHtml = '';
+		$formFields = Mage::helper('sublogin/data')->getGridFields($customer, $calendarHtml, 'frontend');
+		?>
+		
+		<ul class="form-list">
+			<?php $liCounts = 0; foreach ($formFields as $formField)
+			{
+				if (in_array($formField['name'], $skipableElements))
+				{
+					continue;
+				} 
+				
+				$li_classes = "";
+				if ($formField['name'] == 'address_ids') {
+					$liCounts--;
+					$li_classes .= ' wide ';
+				} else {
+					$li_classes .= ' field ';
+				}
+				
+				
+				$label_classes = "";
+				$field_classes = isset($formField['cssclass']) ? $formField['cssclass'] : '';
+				
+				if (!isset($formField['required'])) {
+					$formField['required'] = 0;
+				}
+				
+				if ($formField['required'] == 1) 
+				{	
+					$label_classes .= " required ";
+					$field_classes .= " required-entry ";
+				}
+				$style = ''; //$formField['style'];
+				?>
+				
+				<li class="<?php echo $li_classes?>">
+					<label for="<?php echo $formField['name'] ?>" class="<?php echo $label_classes?>"><?php echo ($formField['required'] == 1)?'<em>*</em>':''?><?php echo $this->__($formField['label']) ?></label>
+					<div class="input-box">
+					
+					<?php
+						if ($formField['type'] == 'select' || $formField['type'] == 'multiselect')
+						{ 
+							$selectedOptions = $sublogin->getData($formField['name']); 
+							$selectedOptions = explode(',', $selectedOptions);
+							?>
+							<select 
+								<?php echo ($formField['type'] == 'multiselect')?"multiple=multiple":""; ?> 
+								id="<?php echo $formField['name'] ?>" 
+								name="<?php echo ($formField['type'] == 'multiselect')? $formField['name'].'[]':$formField['name'] ?>">
+							<?php foreach ($formField['options'] as $optionValue => $optionLabel) {
+								$selected = '';
+								if (in_array($optionValue, $selectedOptions))
+									$selected = 'selected';								
+								
+								echo '<option '.$selected.' value="'.$optionValue.'">'.$optionLabel.'</option>';
+							} ?>
+							</select> <?php
+						}
+						else if($formField['type'] == 'html')
+						{
+							if ($formField['name'] == 'expire_date')
+							{ ?>
+								<input style="<?php echo $style ?>" type="text" name="<?php echo $formField['name'] ?>" id="<?php echo $formField['name'] ?>" value="<?php echo $sublogin->getData($formField['name']); ?>" title="<?php echo $this->__($formField['label']) ?>" class="<?php echo $field_classes ?>" />
+								<img title="<?php echo $this->__('Select date')?>" id="<?php echo $formField['name'] ?>_trig" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN)."adminhtml/default/default/images/grid-cal.gif" ?>" class="v-middle"> 
+								
+								<script type="text/javascript">
+								//<![CDATA[
+								 Calendar.setup({
+										inputField : '<?php echo $formField['name'] ?>',
+										ifFormat : '%Y-%m-%e', //'%m/%e/%y',
+										button : '<?php echo $formField['name'] ?>_trig',
+										align : 'Bl',
+										singleClick : true
+									});
+								//]]>
+								</script>
+								
+								<?php
+							}
+						}
+						else if($formField['type'] == 'checkbox')
+						{?>
+							<input style="<?php echo $style ?>" type="checkbox" name="<?php echo $formField['name'] ?>" id="<?php echo $formField['name'] ?>" <?php echo ($sublogin->getData($formField['name']))?"checked":""; ?> value="1" title="<?php echo $this->__($formField['label']) ?>" class="<?php echo $field_classes ?>" /> <?php
+						}
+						else // text
+						{ 
+							if ($formField['name'] == 'password')
+							{
+								$sublogin->setData($formField['name'], '******');
+							}
+							
+							?>
+							<input style="<?php echo $style ?>" type="text" name="<?php echo $formField['name'] ?>" id="<?php echo $formField['name'] ?>" value="<?php echo $sublogin->getData($formField['name']); ?>" title="<?php echo $this->__($formField['label']) ?>" class="input-text <?php echo $field_classes ?>" /> <?php
+						}
+					?>
+					
+					</div>
+					<?php 
+					$liCounts++;
+					if ($liCounts %2 == 0)
+						echo '<div class="clearfix">&nbsp;</div>';
+					?>
+				</li> <?php
+			} ?>
+		</ul>
+
+		<div class="buttons-set">
+			<p class="required"><?php echo $this->__('* Required Fields') ?></p>
+			<p class="back-link"><a href="<?php echo $this->getUrl('sublogin/frontend') ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+			<button type="submit" title="<?php echo $this->__('Save') ?>" class="button"><span><span><?php echo $this->__('Save') ?></span></span></button>
+		</div>
+    </div>
+	<?php echo $this->getBlockHtml('formkey') ?>
+</form>
+<script type="text/javascript">
+    //<![CDATA[
+    var subloginEditForm = new VarienForm('form-validate', true);
+</script>

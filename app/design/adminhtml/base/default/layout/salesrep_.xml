@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<layout>
+  <adminhtml_report_salesrep_gross>
+    <update handle="salesrep"/>
+    <reference name="content">
+      <block type="salesrep/adminhtml_report_gross" template="salesrep/report/gross/grid/container.phtml" name="salesrep.report.gross.grid.container">
+        <block type="salesrep/adminhtml_report_filter_form_gross" name="grid.filter.form.gross" />
+      </block>
+    </reference>
+  </adminhtml_report_salesrep_gross>
+
+  <adminhtml_report_salesrep_commissions>
+    <update handle="salesrep"/>
+    <reference name="content">
+      <block type="salesrep/adminhtml_report_commissions" template="salesrep/report/commissions/grid/container.phtml" name="salesrep.report.commissions.grid.container">
+        <block type="salesrep/adminhtml_report_filter_form_commissions" name="grid.filter.form.commissions">
+          <action method="addReportTypeOption" translate="value">
+            <key>created_at_order</key>
+            <value>Order Created Date</value>
+          </action>
+          <action method="addReportTypeOption" translate="value">
+            <key>updated_at_order</key>
+            <value>Order Updated Date</value>
+          </action>
+        </block>
+      </block>
+    </reference>
+  </adminhtml_report_salesrep_commissions>
+
+  <adminhtml_sales_order_view>
+    <reference name="order_info">
+        <action method="setTemplate">
+            <template>salesrep/sales/order/view/info.phtml</template>
+        </action>
+    </reference>
+  </adminhtml_sales_order_view>
+
+  <adminhtml_sales_order_create_index>
+    <reference name="data">
+      <action method="setTemplate">
+        <template>salesrep/sales/order/create/data.phtml</template>
+      </action>
+    </reference>
+  </adminhtml_sales_order_create_index>
+
+  <adminhtml_sales_order_create_load_block_data>
+    <reference name="data">
+      <action method="setTemplate">
+        <template>salesrep/sales/order/create/data.phtml</template>
+      </action>
+    </reference>
+  </adminhtml_sales_order_create_load_block_data>
+
+
+  <adminhtml_permissions_user_edit>
+      <reference name="adminhtml.permissions.user.edit.tabs">
+          <block type="salesrep/adminhtml_permissions_user_edit_tab_commission" name="adminhtml.permissions.user.edit.tab.commission"/>
+          <action method="addTabAfter">
+              <id>salesrep_commission_section</id>
+              <block>adminhtml.permissions.user.edit.tab.commission</block>
+              <after>roles_section</after>
+          </action>
+      </reference>
+  </adminhtml_permissions_user_edit>
+
+  <adminhtml_customer_edit>
+    <reference name="customer_edit_tabs">
+      <action method="addTab">
+        <name>customer_edit_tab_admin</name>
+        <block>salesrep/adminhtml_customer_edit_tab_admins</block>
+      </action>
+    </reference>
+  </adminhtml_customer_edit>
+
+</layout>

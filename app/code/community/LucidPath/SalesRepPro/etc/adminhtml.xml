@@ -1,0 +1,307 @@
+<?xml version="1.0"?>
+<config>
+  <!-- The <acl> section is for access control. Here we define the pieces where access can be controlled within a role. -->
+  <!-- Add menu item: Reports -> Sales -> Sales Representative -->
+  <menu>
+    <report>
+      <children>
+        <salesrep translate="title" module="salesrep">
+          <title>Sales Representative Pro</title>
+          <sort_order>100000</sort_order>
+
+          <children>
+            <commissions translate="title" module="salesrep">
+              <title>Commissions</title>
+              <sort_order>5</sort_order>
+              <!-- action: Lucid -> SalesRep -> controllers -> Adminhtml -> Report -> SalesrepController.php -> commissionsAction -->
+              <action>adminhtml/report_salesrep/commissions</action>
+            </commissions>
+            <gross_sales translate="title" module="salesrep">
+              <title>Gross Sales by Rep</title>
+              <sort_order>10</sort_order>
+              <!-- action: Lucid -> SalesRep -> controllers -> Adminhtml -> Report -> SalesrepController.php -> grossAction -->
+              <action>adminhtml/report_salesrep/gross</action>
+            </gross_sales>
+          </children>
+        </salesrep>
+      </children>
+    </report>
+  </menu>
+
+  <!--
+    Allow view Sales Representative reports
+  -->
+  <acl>
+    <resources>
+      <admin>
+        <children>
+          <report>
+            <children>
+              <salesrep>
+                <title>Sales Representative Pro</title>
+                <sort_order>100000</sort_order>
+                <children>
+                  <!-- Permissions: Reports -> Sales Representative -> Commissions -->
+                  <commissions translate="title" module="salesrep">
+                    <title>Commissions</title>
+                    <sort_order>5</sort_order>
+                  </commissions>
+                  <!-- Permissions: Reports -> Sales Representative -> Gross Sales by Rep -->
+                  <gross_sales translate="title" module="salesrep">
+                    <title>Gross Sales by Rep</title>
+                    <sort_order>10</sort_order>
+                  </gross_sales>
+                </children>
+              </salesrep>
+            </children>
+          </report>
+        </children>
+      </admin>
+    </resources>
+  </acl>
+
+  <acl>
+    <resources>
+      <admin>
+        <children>
+          <salesrep>
+            <title>Sales Representative Pro</title>
+            <sort_order>100000</sort_order>
+            <children>
+              <order_grid>
+                <title>Order Grid</title>
+                <sort_order>5</sort_order>
+                <children>
+                  <view_rep_name translate="title">
+                    <title>View Rep Name</title>
+                    <sort_order>5</sort_order>
+                    <children>
+                      <all_orders translate="title">
+                        <title>All Orders</title>
+                        <sort_order>5</sort_order>
+                      </all_orders>
+                      <own_orders_only translate="title">
+                        <title>Own Orders Only</title>
+                        <sort_order>15</sort_order>
+                      </own_orders_only>
+                    </children>
+                  </view_rep_name>
+                  <view_rep_commission_amount translate="title">
+                    <title>View Commission Amount</title>
+                    <sort_order>10</sort_order>
+                    <children>
+                      <all_orders translate="title">
+                        <title>All Orders</title>
+                        <sort_order>5</sort_order>
+                      </all_orders>
+                      <own_orders_only translate="title">
+                        <title>Own Orders Only</title>
+                        <sort_order>15</sort_order>
+                      </own_orders_only>
+                    </children>
+                  </view_rep_commission_amount>
+                  <view_rep_commission_status translate="title">
+                    <title>View Commission Payment Status</title>
+                    <sort_order>15</sort_order>
+                    <children>
+                      <all_orders translate="title">
+                        <title>All Orders</title>
+                        <sort_order>5</sort_order>
+                      </all_orders>
+                      <own_orders_only translate="title">
+                        <title>Own Orders Only</title>
+                        <sort_order>15</sort_order>
+                      </own_orders_only>
+                    </children>
+                  </view_rep_commission_status>
+                </children>
+              </order_grid>
+
+              <order_detail_page>
+                <title>Order Detail Page</title>
+                <sort_order>10</sort_order>
+                <children>
+                  <change_rep translate="title">
+                    <title>Change Representative</title>
+                    <sort_order>10</sort_order>
+                  </change_rep>
+                  <change_rep_commission_status translate="title">
+                    <title>Change Representative Commission Status</title>
+                    <sort_order>15</sort_order>
+                  </change_rep_commission_status>
+                  <view_rep_name translate="title">
+                    <title>View Rep Name</title>
+                    <sort_order>30</sort_order>
+                    <children>
+                      <all_orders translate="title">
+                        <title>All Orders</title>
+                        <sort_order>5</sort_order>
+                      </all_orders>
+                      <own_orders_only translate="title">
+                        <title>Own Orders Only</title>
+                        <sort_order>15</sort_order>
+                      </own_orders_only>
+                    </children>
+                  </view_rep_name>
+
+                  <view_rep_commission_amount translate="title">
+                    <title><![CDATA[View Rep Commission Amount]]></title>
+                    <sort_order>35</sort_order>
+                    <children>
+                      <all_orders translate="title">
+                        <title>All Orders</title>
+                        <sort_order>5</sort_order>
+                      </all_orders>
+                      <own_orders_only translate="title">
+                        <title>Own Orders Only</title>
+                        <sort_order>15</sort_order>
+                      </own_orders_only>
+                    </children>
+                  </view_rep_commission_amount>
+                  <view_rep_commission_status translate="title">
+                    <title>View Rep Commission Payment Status</title>
+                    <sort_order>40</sort_order>
+                    <children>
+                      <all_orders translate="title">
+                        <title>All Orders</title>
+                        <sort_order>5</sort_order>
+                      </all_orders>
+                      <own_orders_only translate="title">
+                        <title>Own Orders Only</title>
+                        <sort_order>15</sort_order>
+                      </own_orders_only>
+                    </children>
+                  </view_rep_commission_status>
+                </children>
+              </order_detail_page>
+
+              <reports>
+                <title><![CDATA[Sales & Commission Reports]]></title>
+                <sort_order>25</sort_order>
+                <children>
+                  <view_order_list_and_rep_name translate="title">
+                    <title><![CDATA[View Order List & Representative Name]]></title>
+                    <sort_order>5</sort_order>
+                    <children>
+                      <all_orders translate="title">
+                        <title>All Orders</title>
+                        <sort_order>5</sort_order>
+                      </all_orders>
+                      <own_orders_only translate="title">
+                        <title>Own Orders Only</title>
+                        <sort_order>15</sort_order>
+                      </own_orders_only>
+                    </children>
+                  </view_order_list_and_rep_name>
+                  <view_commission_amount translate="title">
+                    <title>View Commission Amount</title>
+                    <sort_order>10</sort_order>
+                    <children>
+                      <all_orders translate="title">
+                        <title>All Orders</title>
+                        <sort_order>5</sort_order>
+                      </all_orders>
+                      <own_orders_only translate="title">
+                        <title>Own Orders Only</title>
+                        <sort_order>15</sort_order>
+                      </own_orders_only>
+                    </children>
+                  </view_commission_amount>
+                  <view_commission_payment_status translate="title">
+                    <title>View Commission Payment Status</title>
+                    <sort_order>15</sort_order>
+                    <children>
+                      <all_orders translate="title">
+                        <title>All Orders</title>
+                        <sort_order>5</sort_order>
+                      </all_orders>
+                      <own_orders_only translate="title">
+                        <title>Own Orders Only</title>
+                        <sort_order>15</sort_order>
+                      </own_orders_only>
+                    </children>
+                  </view_commission_payment_status>
+                </children>
+              </reports>
+
+
+
+              <emailed_commission_reports>
+                <title><![CDATA[Emailed Commission Reports]]></title>
+                <sort_order>30</sort_order>
+                <children>
+                  <include_order_list_and_rep_name translate="title">
+                    <title><![CDATA[Include Order List & Representative Name]]></title>
+                    <sort_order>5</sort_order>
+                    <children>
+                      <all_orders translate="title">
+                        <title>All Orders</title>
+                        <sort_order>5</sort_order>
+                      </all_orders>
+                      <own_orders_only translate="title">
+                        <title>Own Orders Only</title>
+                        <sort_order>15</sort_order>
+                      </own_orders_only>
+                    </children>
+                  </include_order_list_and_rep_name>
+
+                  <include_commission_amount translate="title">
+                    <title>Include Commission Amount</title>
+                    <sort_order>10</sort_order>
+                    <children>
+                      <all_orders translate="title">
+                        <title>All Orders</title>
+                        <sort_order>5</sort_order>
+                      </all_orders>
+                      <own_orders_only translate="title">
+                        <title>Own Orders Only</title>
+                        <sort_order>15</sort_order>
+                      </own_orders_only>
+                    </children>
+                  </include_commission_amount>
+
+                  <include_commission_payment_status translate="title">
+                    <title>Include Commission Payment Status</title>
+                    <sort_order>15</sort_order>
+                    <children>
+                      <all_orders translate="title">
+                        <title>All Orders</title>
+                        <sort_order>5</sort_order>
+                      </all_orders>
+                      <own_orders_only translate="title">
+                        <title>Own Orders Only</title>
+                        <sort_order>15</sort_order>
+                      </own_orders_only>
+                    </children>
+                  </include_commission_payment_status>
+                </children>
+              </emailed_commission_reports>
+
+            </children>
+          </salesrep>
+        </children>
+      </admin>
+    </resources>
+  </acl>
+
+  <acl>
+    <resources>
+      <admin>
+        <children>
+          <system>
+            <children>
+              <config>
+                <children>
+                  <salesrep>
+                    <title>Sales Representative Pro</title>
+                    <sort_order>100000</sort_order>
+                  </salesrep>
+                </children>
+              </config>
+            </children>
+          </system>
+        </children>
+      </admin>
+    </resources>
+  </acl>
+</config>

@@ -1,0 +1,12 @@
+html {
+    overflow:hidden;
+	}
+body {
+    height:100%;
+    overflow:auto;
+	}
+#footerwrap {
+	bottom:-1px;
+	}
+
+body>div#middlewrap { margin-top: 0px; }

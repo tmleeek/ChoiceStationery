@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <BingDigital_Extends>
+            <active>true</active>
+            <codePool>local</codePool>
+        </BingDigital_Extends>
+    </modules>
+</config>

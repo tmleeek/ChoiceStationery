@@ -1,0 +1,13 @@
+
+<?php
+
+$product = Mage::registry('current_product');
+    
+    // load an other block "AskQuestionForm"
+    $url = $this->getUrl('CrmTicket/Front_Ticket/NewTicket', array('product_id' => $product->getId()));
+    $productName = str_replace("'"," ",$product->getName());
+    $productName = str_replace('"'," ",$product->getName());
+    $onclick = "'".$url."','".$productName."'";
+?>
+
+&nbsp;<button type="button" title="<?php echo $this->__('Ask a question'); ?>" class="button" onclick="setLocation(<?php echo $onclick; ?>);"><span><span><?php echo $this->__('Ask a question'); ?></span></span></button>

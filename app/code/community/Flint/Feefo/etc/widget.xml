@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Flint Technology Ltd
+ *
+ * This module was developed by Flint Technology Ltd (http://www.flinttechnology.co.uk).
+ * For support or questions, contact us via feefo@flinttechnology.co.uk 
+ * Support website: https://www.flinttechnology.co.uk/support/projects/feefo/
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA bundled with this package in the file LICENSE.txt.
+ * It is also available online at http://www.flinttechnology.co.uk/store/module-license-1.0
+ *
+ * @package     flint_feefo-ce-2.0.13.zip
+ * @registrant  Paul Andrews, Choice Stationery Supplies
+ * @license     FFFEA83A-B2B2-4E66-B4F5-AE27E326AAC3
+ * @eula        Flint Module Single Installation License (http://www.flinttechnology.co.uk/store/module-license-1.0
+ * @copyright   Copyright (c) 2014 Flint Technology Ltd (http://www.flinttechnology.co.uk)
+ */
+-->
+<widgets>
+    <flint_feefo_form type="flint_feefo/logo_widget" module="flint_feefo">
+        <name>Flint Feefo Logo</name>
+        <description type="desc">Flint Feefo Logo</description>
+        <parameters>
+            <cssid translate="label">
+                <label>CSS ID</label>
+                <type>text</type>
+                <visible>1</visible>
+                <description>(optional) Sets a CSS ID on the widget so you can apply your own styling.</description>
+            </cssid>
+            <logoTemplate translate="label">
+                <label>Logo template</label>
+                <type>text</type>
+                <sort_order>50</sort_order>
+                <visible>1</visible>
+                <description><![CDATA[Name of template file used to generate logos <a href="http://feefo.com/feefo/selectlogotemplate.jsp" target="_blank">http://feefo.com/feefo/selectlogotemplate.jsp</a>]]></description>
+            </logoTemplate>
+            <sku translate="label">
+                <label>Sku</label>
+                <type>text</type>
+                <sort_order>55</sort_order>
+                <visible>1</visible>
+                <description>Specify a sku code for the widget explicitly. When Detect Sku Automatically = Yes, this will only be used if no automatic sku found.</description>
+            </sku>
+            <detect_sku translate="label">
+                <label>Detect Sku Automatically</label>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <sort_order>53</sort_order>
+                <visible>1</visible>
+                <description>(optional) It will try to detect relevant sku and apply Product filter, this apply only inside Product related blocks.</description>
+            </detect_sku>
+            <sku_wildcard translate="label">
+                <label>Sku, use wildcard ("SKU*")</label>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <sort_order>54</sort_order>
+                <visible>1</visible>
+                <depends><detect_sku><value>1</value></detect_sku></depends>
+                <description>Add wildcard ("*") to end of the SKU (It can by useful for grouped and bundle products)</description>
+            </sku_wildcard>
+            <category translate="label">
+                <label>Business Category</label>
+                <type>text</type>
+                <sort_order>57</sort_order>
+                <visible>1</visible>
+                <description>Specify a Business Category code for the widget explicitly. When Detect Business Category Automatically = Yes, this will only be used if no automatic Business Category found.</description>
+            </category>
+            <detect_category translate="label">
+                <label>Detect Business Category Automatically</label>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <sort_order>56</sort_order>
+                <visible>1</visible>
+                <description>(optional) It will try to detect relevant Business Category and apply Product filter, this apply only inside Catebory related blocks.</description>
+            </detect_category>
+            <mode translate="label">
+                <label>Review Types to Include</label>
+                <type>select</type>
+                <source_model>flint_feefo/source_mode</source_model>
+                <sort_order>60</sort_order>
+                <visible>1</visible>
+                <description>Determine which comments will be shown in reviews.</description>
+            </mode>
+            <order translate="label">
+                <label>Date Order</label>
+                <type>select</type>
+                <source_model>flint_feefo/source_order</source_model>
+                <sort_order>80</sort_order>
+                <visible>1</visible>
+                <description>Determines date order that reviews are presented.</description>
+            </order>
+            <since translate="label">
+                <label>Since</label>
+                <type>select</type>
+                <source_model>flint_feefo/source_since</source_model>
+                <sort_order>90</sort_order>
+                <visible>1</visible>
+                <description>Amount of history to include is logo queries.</description>
+            </since>
+            <limit translate="label">
+                <label>Limit</label>
+                <type>text</type>
+                <sort_order>100</sort_order>
+                <visible>1</visible>
+                <description>Number of review results to return. Default value = 50.</description>
+            </limit>
+            <additional translate="label">
+                <label>Additional parameters (optional)</label>
+                <type>text</type>
+                <sort_order>110</sort_order>
+                <visible>1</visible>
+                <description><![CDATA[Sometimes specified by Feefo for additional information. Example: &amp;param=value&amp;param2=value2]]></description>
+            </additional>
+        </parameters>
+    </flint_feefo_form>
+    <flint_feefo_reviews type="flint_feefo/reviews_widget" module="flint_feefo">
+        <name>Flint Feefo Rewiews</name>
+        <description type="desc">Flint Feefo Rewiews</description>
+        <parameters>
+            <cssid translate="label">
+                <label>CSS ID</label>
+                <type>text</type>
+                <visible>1</visible>
+                <description>(optional) Sets a CSS ID on the widget so you can apply your own styling.</description>
+            </cssid>
+            <sku translate="label">
+                <label>Sku</label>
+                <type>text</type>
+                <sort_order>55</sort_order>
+                <visible>1</visible>
+                <description>Specify a sku code for the widget explicitly. When Detect Sku Automatically = Yes, this will only be used if no automatic sku found.</description>
+            </sku>
+            <detect_sku translate="label">
+                <label>Detect Sku Automatically</label>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <sort_order>53</sort_order>
+                <visible>1</visible>
+                <description>Attempt to extract the current relevant sku code from the rendering environment.</description>
+            </detect_sku>
+            <sku_wildcard translate="label">
+                <label>Sku, use wildcard ("SKU*")</label>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <sort_order>54</sort_order>
+                <visible>1</visible>
+                <depends><detect_sku><value>1</value></detect_sku></depends>
+                <description>Add wildcard ("*") to end of the SKU (It can by useful for grouped and bundle products)</description>
+            </sku_wildcard>
+            <category translate="label">
+                <label>Business Category</label>
+                <type>text</type>
+                <sort_order>57</sort_order>
+                <visible>1</visible>
+                <description>Specify a Business Category code for the widget explicitly. When Detect Business Category Automatically = Yes, this will only be used if no automatic Business Category found.</description>
+            </category>
+            <detect_category translate="label">
+                <label>Detect Business Category Automatically</label>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <sort_order>56</sort_order>
+                <visible>1</visible>
+                <description>(optional) It will try to detect relevant Business Category and apply Product filter, this apply only inside Catebory related blocks.</description>
+            </detect_category>
+            <mode translate="label">
+                <label>Review Types to Include</label>
+                <type>select</type>
+                <source_model>flint_feefo/source_mode</source_model>
+                <sort_order>60</sort_order>
+                <visible>1</visible>
+                <description>Determine which comments will be shown in reviews.</description>
+            </mode>
+            <order translate="label">
+                <label>Date Order</label>
+                <type>select</type>
+                <source_model>flint_feefo/source_order</source_model>
+                <sort_order>80</sort_order>
+                <visible>1</visible>
+                <description>Determines date order that reviews are presented.</description>
+            </order>
+            <since translate="label">
+                <label>Since</label>
+                <type>select</type>
+                <source_model>flint_feefo/source_since</source_model>
+                <sort_order>90</sort_order>
+                <visible>1</visible>
+                <description>Amount of history to include is logo queries.</description>
+            </since>
+            <limit translate="label">
+                <label>Limit</label>
+                <type>text</type>
+                <sort_order>100</sort_order>
+                <visible>1</visible>
+                <description>Number of review results to return. Default value = 50.</description>
+            </limit>
+            <additional translate="label">
+                <label>Additional parameters (optional)</label>
+                <type>text</type>
+                <sort_order>110</sort_order>
+                <visible>1</visible>
+                <description><![CDATA[Sometimes specified by Feefo for additional information. Example: &amp;param=value&amp;param2=value2]]></description>
+            </additional>
+        </parameters>
+    </flint_feefo_reviews>
+</widgets>
+

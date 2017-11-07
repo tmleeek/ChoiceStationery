@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addCss">
+                <name>brandammo_all/css/ba-admin.css</name>
+            </action>
+        </reference>
+    </default>
+    <adminhtml_pronav_pronav_index>
+        <reference name="content">
+            <block type="pronav/adminhtml_pronav" name="pronav" />
+        </reference>
+    </adminhtml_pronav_pronav_index>
+</layout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <containers>
+        <top_links>
+            <block>page/template_links</block>
+            <name>top.links</name>
+            <container>Mirasvit_Fpc_Model_Container_Base</container>
+            <depends>store,customer,cart,wishlist</depends>
+            <in_register>current_category,current_product,product</in_register>
+            <in_session>true</in_session>
+            <in_app>false</in_app>
+        </top_links>
+    </containers>
+</config>

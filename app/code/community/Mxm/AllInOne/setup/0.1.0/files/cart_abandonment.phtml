@@ -1,0 +1,195 @@
+<?php
+$storeLookup = "[datatable(lookup=%%Basket(incomplete):Custom.store_id%%):Magento/Stores.%s]";
+?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<!-- fw issued 8th word aug 644 september 792 reloc ui cc6 hi converted ad gimas blockquote fid blockquote https ad rtf statement converted 5f 792 hi emoticons reloc cursive cc6 gimas bill shtml nbsp september ui password arial bottom miles convenience -->
+</head>
+<body style="font-size:12px;font-family:Arial, Helvetica, sans-serif;color:#000000;background-color:#FFFFFF;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;">
+    <tr>
+         <td align="center">
+            <table width="600" border="0" cellspacing="0" cellpadding="0" align="center" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;border:0px none transparent;background-color:inherit;">
+                <tr>
+                     <td>
+                        <table cellpadding="5" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;border:0px none transparent;">
+                            <tr>
+                                <td align="left" valign="top">
+                                     <table cellpadding="5" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;border:0px none transparent;background-color:#434343;">
+                                        <tr>
+                                            <td align="left" valign="top">
+                                                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;">
+                                                    <tr>
+                                                        <td valign="top">
+                                                            <div style="text-align: center;">
+                                                                <font color="#ffffff">
+                                                                    <span style="font-size: 11px;">
+                                                                        <!-- TemplateBeginEditable name="header" -->
+                                                                        <table cellpadding="5" cellspacing="0" width="650">
+                                                                                <tr>
+                                                                                    <td align="left">
+                                                                                        <font face="Verdana, Arial, Helvetica, sans-serif" color="#999999" style="font-size: 10px">
+                                                                                        [merge:SubjectLine]<br />
+                                                                                        </font>
+                                                                                    </td>
+                                                                                    <td align="right" width="200" valign="bottom">
+                                                                                        <font face="Verdana, Arial, Helvetica, sans-serif" color="#999999" style="font-size: 10px">
+                                                                                            <a href="[weblink]" style="color: #999999">View this email in a browser</a>
+                                                                                        </font>
+                                                                                    </td>
+                                                                                </tr>
+                                                                        </table>
+                                                                        <!-- TemplateEndEditable -->
+                                                                       </span>
+                                                                 </font>
+                                                             </div>
+                                                         </td>
+                                                     </tr>
+                                                 </table>
+                                             </td>
+                                         </tr>
+                                     </table>
+                                     <table cellpadding="0" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;">
+                                         <tr>
+                                            <td valign="top" style="font-size:12px;">&nbsp;</td>
+                                        </tr>
+                                    </table>
+                                    <table cellpadding="5" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;border:0px none transparent;">
+                                        <tr>
+                                            <td align="left" valign="top">
+                                                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;border:0px none transparent;">
+                                                    <tr>
+                                                        <td align="left" valign="top">
+                                                            <!-- TemplateBeginEditable name="headerimage" -->
+                                                            <div align="left">
+                                                                <a href="<?php printf($storeLookup, 'Base URL'); ?>" target="_blank">
+                                                                    <img src="<?php printf($storeLookup, 'Media URL'); ?><?php printf($storeLookup, 'Logo Path'); ?>" border="0" style="display:block;" width="220" />
+                                                                </a>
+                                                            </div>
+                                                            <!-- TemplateEndEditable -->
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table cellpadding="5" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;border:0px none transparent;">
+                                        <tr>
+                                            <td align="left" valign="top">
+                                                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;">
+                                                    <tr>
+                                                        <td valign="top">
+                                                            <div style="text-align: left;">
+                                                                <!-- TemplateBeginEditable name="intro" -->
+                                                                <font style="font-size: 16px;">
+                                                                <br>
+                                                                <b>Did you forget something?</b>
+                                                                <br>
+                                                                </font>
+                                                                You seem to have left some items in your shopping cart after your last visit.<br>Just to let you know, we'll keep them safe until you want to come and pick them up.
+                                                                <br><br>
+                                                                <!-- TemplateEndEditable -->
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    [BasketItems(incomplete):Magento/Basket/Item]
+
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;">
+                                        <tr>
+                                            <td valign="top" style="font-size:12px;">&nbsp;</td>
+                                        </tr>
+                                    </table>
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;">
+                                        <tr>
+                                            <td valign="top" style="font-size:12px;">&nbsp;</td>
+                                        </tr>
+                                    </table>
+                                    <table cellpadding="5" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;border:0px none transparent;">
+                                        <tr>
+                                            <td align="left" valign="top">
+                                                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;">
+                                                    <tr>
+                                                        <td valign="top">
+                                                            <div style="text-align: left;">
+                                                                <!-- TemplateBeginEditable name="otherproducts" -->
+                                                                <font style="font-size: 16px;">
+                                                                <b>Other products that might interest you...</b>
+                                                                </font>
+                                                                <!-- TemplateEndEditable -->
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    [snippet:Magento/Basket/Related Products]
+
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;">
+                                        <tr>
+                                            <td valign="top" style="font-size:12px;">&nbsp;</td>
+                                        </tr>
+                                    </table>
+                                <table cellpadding="5" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;border:0px none transparent;background-color:#CCCCCC;">
+                                    <tr>
+                                        <td align="left" valign="top">
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="color:#000000;font-family:Arial, Helvetica, sans-serif;font-size:12px;">
+                                                <tr>
+                                                    <td valign="top">
+                                                        <div style="text-align: left;">
+                                                            <!-- TemplateBeginEditable name="footer" -->
+                                                            <table cellpadding="0" cellspacing="15" width="100%">
+                                                                <tr>
+                                                                    <td colspan="3" align="left" valign="top">
+                                                                        <font face="arial" color="#999999" style="font-size: 11px">
+                                                                            This email was sent to
+                                                                            <a href="mailto:[recipient:EmailAddress]" style="color:#999999;">[recipient:EmailAddress]</a>
+                                                                        </font>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="376" align="left" valign="top">
+                                                                        <font face="arial" color="#999999" style="font-size: 11px">
+                                                                            <?php printf($storeLookup, 'Address'); ?>
+                                                                            <br /><br />
+                                                                            &copy; <?php printf($storeLookup, 'Name'); ?> [date(Y)].
+                                                                        </font>
+                                                                    </td>
+                                                                    <td width="10" style="border-right: 1px solid #999999">&nbsp;</td>
+                                                                    <td width="200" align="left" valign="top">
+                                                                        <font face="arial" color="#999999" style="font-size: 11px">
+                                                                            Call us: <?php printf($storeLookup, 'Telephone'); ?>
+                                                                            <br /><br />
+                                                                            Email us: <a href="mailto:<?php printf($storeLookup, 'Contact Email'); ?>" style="color: #999999; text-decoration: underline"><?php printf($storeLookup, 'Contact Email'); ?></a>
+                                                                            <br /><br />
+                                                                            <a href="<?php printf($storeLookup, 'Base URL'); ?>" style="color: #999999; text-decoration: underline">Visit us online</a>
+                                                                        </font>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            <!-- TemplateEndEditable -->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                 </tr>
+             </table>
+         </td>
+     </tr>
+ </table>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Flint Technology Ltd
+ *
+ * This module was developed by Flint Technology Ltd (http://www.flinttechnology.co.uk).
+ * For support or questions, contact us via feefo@flinttechnology.co.uk 
+ * Support website: https://www.flinttechnology.co.uk/support/projects/feefo/
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA bundled with this package in the file LICENSE.txt.
+ * It is also available online at http://www.flinttechnology.co.uk/store/module-license-1.0
+ *
+ * @package     flint_feefo-ce-2.0.5.zip
+ * @registrant  Paul Andrews, Choice Stationery Supplies
+ * @license     FFFEA83A-B2B2-4E66-B4F5-AE27E326AAC3
+ * @eula        Flint Module Single Installation License (http://www.flinttechnology.co.uk/store/module-license-1.0
+ * @copyright   Copyright (c) 2014 Flint Technology Ltd (http://www.flinttechnology.co.uk)
+ */
+-->
+<layout version="0.1.0">
+    
+    <default>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><name>css/flint_feefo.css</name><params/></action>
+        </reference>
+        <reference name="right"> 
+            <block type="flint_feefo/logo_service_base" after="cart_sidebar" name="feefo_logo_service_right" template="flint_feefo/logo.phtml" />
+        </reference>
+        <reference name="left"> 
+            <block type="flint_feefo/logo_service_base" after="cart_sidebar" name="feefo_logo_service_left" template="flint_feefo/logo.phtml" />
+        </reference>
+    </default>
+
+    <catalog_category_default>
+        <reference name="product_list">
+            <block type="flint_feefo/logo_product_category_list" name="feefo_category_product_logo" template="flint_feefo/logo.phtml" />
+        </reference>
+        <reference name="right"> 
+            <block type="flint_feefo/logo_product_category_business" after="cart_sidebar" name="feefo_logo_product_business_right" template="flint_feefo/logo.phtml" />
+        </reference>
+        <reference name="left"> 
+            <block type="flint_feefo/logo_product_category_business" after="cart_sidebar" name="feefo_logo_product_business_left" template="flint_feefo/logo.phtml" />
+        </reference>
+    </catalog_category_default>
+    
+    <catalog_category_layered>
+        <reference name="product_list">
+            <block type="flint_feefo/logo_product_category_list" name="feefo_category_product_logo" template="flint_feefo/logo.phtml" />
+        </reference>
+        <!--reference name="category.products">
+            <block type="flint_feefo/logo_product" after="cart_sidebar" name="feefo_logo_alerturls" template="flint_feefo/logo.phtml" />
+        </reference-->
+        <reference name="right"> 
+            <block type="flint_feefo/logo_product_category_business" after="cart_sidebar" name="feefo_logo_product_business_right" template="flint_feefo/logo.phtml" />
+        </reference>
+        <reference name="left"> 
+            <block type="flint_feefo/logo_product_category_business" after="cart_sidebar" name="feefo_logo_product_business_left" template="flint_feefo/logo.phtml" />
+        </reference>
+    </catalog_category_layered>
+    
+    <catalog_product_view>
+        <reference name="right"> 
+            <block type="flint_feefo/logo_product_page" after="cart_sidebar" name="feefo_logo_product_right" template="flint_feefo/logo.phtml" />
+        </reference>
+        <reference name="left"> 
+            <block type="flint_feefo/logo_product_page" name="feefo_logo_product_left" template="flint_feefo/logo.phtml" />
+        </reference>
+        <reference name="product.info.extrahint">
+            <block type="flint_feefo/logo_product_page" name="feefo_logo_extrahint" template="flint_feefo/logo.phtml" />
+        </reference>
+        <reference name="alert.urls">
+            <block type="flint_feefo/logo_product_page" name="feefo_logo_alerturls" template="flint_feefo/logo.phtml" />
+        </reference>
+        <reference name="product.info.addtocart">
+            <block type="flint_feefo/logo_product_page" name="feefo_logo_addtocart" template="flint_feefo/logo.phtml" />
+        </reference>
+        <reference name="product.info">
+            <block type="flint_feefo/reviews_product_page" after="product.attributes" name="feefo_reviews" template="flint_feefo/reviews.phtml">
+                <action method="addToParentGroup"><group>detailed_info</group></action>
+                <!--action method="setTitle" translate="value"><value>Feefo Reviews</value></action-->
+            </block>
+        </reference>
+    </catalog_product_view>
+    
+    <PRODUCT_TYPE_grouped>
+        <remove name="feefo_logo_product_right"/>
+        <remove name="feefo_logo_product_left"/>
+        <remove name="feefo_logo_extrahint"/>
+        <remove name="feefo_logo_alerturls"/>
+        <remove name="feefo_logo_addtocart"/>
+        <remove name="feefo_reviews"/>
+        <!--reference name="product_type_data">
+            <block type="flint_feefo/logo_product_list" name="feefo_category_product_logo" template="flint_feefo/logo.phtml" />
+        </reference-->
+    </PRODUCT_TYPE_grouped>
+    
+    <flint_feefo_popup_index translate="label">
+        <label>Feefo reviews</label>
+        <reference name="head">
+    	    <action method="setTitle" translate="title"><title>Feefo reviews</title></action>
+	</reference>
+        <reference name="root">
+            <action method="setTemplate"><template>page/empty.phtml</template></action>
+            <action method="setIsHandle"><applied>1</applied></action>
+        </reference>
+        <reference name="content"> 
+            <block type="flint_feefo/reviews_popup" name="feefo_reviews_popup" template="flint_feefo/reviews.phtml"/>
+        </reference>
+    </flint_feefo_popup_index>
+
+    <checkout_cart_index>
+        <reference name="checkout.cart.methods">
+            <block type="flint_feefo/logo_service_basket" name="feefo_basket_service_total" template="flint_feefo/logo.phtml" />
+        </reference>
+        <reference name="checkout.cart.top_methods">
+            <block type="flint_feefo/logo_service_basket" before="+" name="feefo_basket_service_proceed" template="flint_feefo/logo.phtml" />
+        </reference>
+        <reference name="checkout.cart.form.before">
+            <block type="flint_feefo/logo_service_basket" name="feefo_basket_service_abovelist" template="flint_feefo/logo.phtml" />
+        </reference>
+        <!--reference name="additional.product.info">
+            <block type="flint_feefo/logo_product_basket_item" name="feefo_basket_product_logo" template="flint_feefo/logo.phtml" />
+        </reference-->
+    </checkout_cart_index>
+    
+    <checkout_onepage_index>
+        <reference name="right">
+            <block type="flint_feefo/logo_service_base" name="feefo_onepage_right_top" before="+" template="flint_feefo/logo.phtml" />
+        </reference>
+    </checkout_onepage_index>
+    
+    <checkout_onepage_review>
+         <reference name="checkout.onepage.review.info.items.after">
+            <block type="flint_feefo/logo_service_checkout_order_review" name="feefo_onepage_review_after" template="flint_feefo/logo.phtml" />
+        </reference>
+    </checkout_onepage_review>
+    
+    <checkout_onepage_progress>
+        <reference name="root">
+            <block type="flint_feefo/logo_service_base" name="feefo_onepage_review_after" template="flint_feefo/logo.phtml" />
+        </reference>
+    </checkout_onepage_progress>
+</layout>
+

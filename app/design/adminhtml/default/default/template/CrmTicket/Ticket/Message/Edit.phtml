@@ -1,0 +1,60 @@
+<div class="content-header">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td><h3><?php echo $this->__('Edit a message'); ?></h3></td>
+            <td align="right">
+                <button onclick="document.location.href='<?php echo $this->getBackUrl() ?>'" class="scalable back" type="button"><span><?php echo $this->__('Back') ?></span></button>
+                <button onclick="editForm.submit();" class="scalable save" type="button"><span><?php echo $this->__('Save') ?></span></button>
+                <button onclick="if (confirm('<?php echo $this->__('Are you sure to delete this message ?'); ?>')) {document.location.href='<?php echo $this->getDeleteUrl($this->getTicket()->getct_id()) ?>'}" class="scalable delete" type="button"><span><?php echo $this->__('Delete') ?></span></button>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="entry-edit">
+    <?php /* ------------------------------------ TICKET FORM ------------------------------------  */ ?>
+    <form id="edit_form" method="POST" name="edit_form" action="<?php echo $this->getUrl('*/*/SaveMessage') ?>">
+        <div>
+            <input type="hidden" id="message_id" name="message_id" value="<?php echo $this->getRequest()->getParam('message_id'); ?>"/>
+            <input type="hidden" id="ticket_id" name="ticket_id" value="<?php echo $this->getRequest()->getParam('ticket_id'); ?>"/>
+            <input type="hidden" id="form_key" name="form_key"  value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+        </div>
+      
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Message edition'); ?></h4>
+        </div>
+
+       <div id="message_fieldset" class="fieldset ">
+                <div class="hor-scroll">
+                    <table class="form-list" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p class="value">
+                                      <?php echo Mage::helper('CrmTicket/Editor')->getWysiwygHtml('ctm_content', $this->getMessage()->getctm_content()); ?>
+                                    </p>
+                                </td>
+                                <td>
+                                  <?php if (Mage::getStoreConfig('crmticket/ticket_data/show_public')): ?>
+                                    <p class="label"><?php echo $this->__('Is public'); ?> <span class="required">*</span></p>
+                                    <p class="value">
+                                        <select class="required-entry select" style="width:275px;" name="ctm_is_public" id="ctm_is_public" >
+                                            <option <?php if ($this->getMessage()->getctm_is_public() == "0") echo "selected" ?> value="0"><?php echo $this->__('No'); ?></option>
+                                            <option <?php if ($this->getMessage()->getctm_is_public() == "1") echo "selected" ?> value="1"><?php echo $this->__('Yes'); ?></option>
+                                        </select>
+                                    </p>
+                                    <br />
+                                  <?php endif; ?>  
+                                    <span class="label"><?php echo $this->__('Author'); ?>:</span>
+                                    <span class="value">
+                                        <?php echo $this->getMessage()->getctm_author(); ?>
+                                    </span>
+                                </td>
+                            </tr> 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+</form>
+<script type="text/javascript">
+    editForm = new varienForm('edit_form', '');
+</script>

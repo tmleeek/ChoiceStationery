@@ -1,0 +1,47 @@
+<?php
+/**
+ * OneStepCheckout
+ * 
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to One Step Checkout AS software license.
+ *
+ * License is available through the world-wide-web at this URL:
+ * https://www.onestepcheckout.com/LICENSE.txt
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to mail@onestepcheckout.com so we can send you a copy immediately.
+ *
+ * @category   Idev
+ * @package    Idev_OneStepCheckout
+ * @copyright  Copyright (c) 2009 OneStepCheckout  (https://www.onestepcheckout.com/)
+ * @license    https://www.onestepcheckout.com/LICENSE.txt
+ */
+?>
+<?php if(Mage::getStoreConfig('onestepcheckout/googleplaces/enabled')):?>
+<?php
+$apiKey = (Mage::getStoreConfig('onestepcheckout/googleplaces/api_key')) ? '?key='.Mage::getStoreConfig('onestepcheckout/googleplaces/api_key').'&' : '?' ;
+?>
+<script src="//maps.googleapis.com/maps/api/js<?php echo $apiKey; ?>v=3.exp&libraries=places&language=<?php echo Mage::getStoreConfig('general/locale/code', Mage::app()->getStore()->getId());?>"></script>
+<script src="<?php echo $this->getSkinUrl('onestepcheckout/js/oscgp.js', array('_secure'=>true)) ?>"></script>
+<script>
+new oscAutocomplete(
+        'billing',
+        {
+            'enableajaxsavebilling' : '<?php echo Mage::getStoreConfig('onestepcheckout/ajax_update/enable_ajax_save_billing');?>',
+            'sburl' : '<?php echo $this->getUrl('onestepcheckout/ajax/save_billing', array('_secure'=>true)); ?>',
+            'smuorl' : '<?php echo $this->getUrl('onestepcheckout/ajax/set_methods_separate', array('_secure'=>true)); ?>',
+            'updatepayment': '<?php echo ((Mage::getStoreConfig('onestepcheckout/ajax_update/enable_update_payment_on_shipping')) ? 'true' : 'false'); ?>'
+        }
+);
+new oscAutocomplete(
+        'shipping',
+        {
+            'enableajaxsavebilling' : '<?php echo Mage::getStoreConfig('onestepcheckout/ajax_update/enable_ajax_save_billing');?>',
+            'sburl' : '<?php echo $this->getUrl('onestepcheckout/ajax/save_billing', array('_secure'=>true)); ?>',
+            'smuorl' : '<?php echo $this->getUrl('onestepcheckout/ajax/set_methods_separate', array('_secure'=>true)); ?>',
+            'updatepayment': '<?php echo ((Mage::getStoreConfig('onestepcheckout/ajax_update/enable_update_payment_on_shipping')) ? 'true' : 'false'); ?>'
+        }
+);
+</script>
+<?php endif;?>

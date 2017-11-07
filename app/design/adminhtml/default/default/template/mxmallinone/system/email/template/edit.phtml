@@ -1,0 +1,178 @@
+<?php if (Mage::helper('mxmallinone/transactional')->wysiwygEnabled()): ?>
+<script type="text/javascript">
+var originalSaveFn = templateControl.save;
+Object.extend(templateControl, {
+    wysiwygHidden: !!<?php echo (int)Mage::getSingleton('cms/wysiwyg_config')->isHidden(); ?>,
+
+    save: function() {
+        if (typeof tinyMCE !== 'undefined' && tinyMCE.getInstanceById('template_text')) {
+            tinyMCE.triggerSave();
+        }
+        originalSaveFn.call(this);
+    },
+
+    load: function() {
+        var form = new varienForm('email_template_load_form');
+
+        if (!form.validator.validate()) {
+            return;
+        }
+
+        this.variables = null;
+
+        new Ajax.Request($('email_template_load_form').action, {
+            parameters: Form.serialize($('email_template_load_form'), true),
+            area: $('email_template_load_form'),
+            onComplete: function (transport) {
+                if (transport.responseText.isJSON()) {
+                    var fields = $H(transport.responseText.evalJSON());
+                    fields.each(function(pair) {
+                        if ($(pair.key)) {
+                            $(pair.key).value = pair.value.strip();
+                        }
+
+                        if (pair.key == 'template_type') {
+                            if (pair.value == 1) {
+                                this.typeChange = true;
+                                $('convert_button').hide();
+                                $('convert_button_back').hide();
+                                $('field_template_styles').hide();
+                                this.toggleWysiwyg(false);
+                            } else {
+                                this.typeChange = false;
+                                $('convert_button_back').hide();
+                                $('convert_button').show();
+                                $('field_template_styles').show();
+                                this.toggleWysiwyg(true);
+                            }
+                        }
+                        if (pair.key == 'orig_template_used_default_for') {
+                             if(pair.value.length){
+                                 $('used_default_for').show();
+                                 this.renderPaths(pair.value, 'used_default_for');
+                             }
+                             else{
+                                 $('used_default_for').hide();
+                             }
+                        }
+                    }.bind(this));
+                    if (fields.get('template_type') === 2) {
+                        this.setContent(fields.get('template_text').strip());
+                        this.updateStyles();
+                    }
+                }
+            }.bind(this)
+        });
+    },
+
+    preview: function() {
+        if (this.typeChange) {
+            $('preview_type').value = 1;
+        } else {
+            $('preview_type').value = 2;
+        }
+
+        if (typeof tinyMCE !== 'undefined' && tinyMCE.getInstanceById('template_text')) {
+            tinyMCE.triggerSave();
+        }
+        $('preview_text').value = this.getContent();
+
+        if ($('template_styles') != undefined) {
+            $('preview_styles').value = $('template_styles').value;
+        }
+
+        templatePreviewForm.submit();
+        return false;
+    },
+
+    stripTags: function () {
+        if(!window.confirm("<?php echo $this->__('Are you sure that you want to strip tags?') ?>")) {
+            return false;
+        }
+        this.unconvertedText = this.getContent();
+        var convertedText = this.unconvertedText.stripScripts().replace(
+            new RegExp('<style[^>]*>[\\S\\s]*?</style>', 'img'), ''
+        ).stripTags().strip();
+        this.toggleWysiwyg(false);
+        $('convert_button').hide();
+        $('template_text').value = convertedText
+        $('convert_button_back').show();
+        $('field_template_styles').hide();
+        this.typeChange = true;
+        return false;
+    },
+    unStripTags: function () {
+        this.toggleWysiwyg(true);
+        $('convert_button').show();
+        $('convert_button_back').hide();
+        this.setContent(this.unconvertedText);
+        $('field_template_styles').show();
+        this.typeChange = false;
+        return false;
+    },
+
+    toggleWysiwyg: function(value) {
+        value = !!value;
+        if (typeof wysiwygtemplate_text === 'undefined') {
+            return;
+        }
+        if (value) {
+            if (!this.wysiwygHidden) {
+                wysiwygtemplate_text.turnOn();
+            }
+            $(wysiwygtemplate_text.getToggleButton()).show();
+        } else {
+            wysiwygtemplate_text.turnOff();
+            $(wysiwygtemplate_text.getToggleButton()).hide();
+        }
+    },
+
+    getContent: function() {
+        var ed;
+        if (typeof tinyMCE !== 'undefined' && (ed = tinyMCE.getInstanceById('template_text'))) {
+            return ed.getContent();
+        } else {
+            return $('template_text').value;
+        }
+    },
+
+    setContent: function(value) {
+        var ed;
+        if (typeof tinyMCE !== 'undefined' && (ed = tinyMCE.getInstanceById('template_text'))) {
+            ed.setContent(value);
+        } else {
+            $('template_text').value = value;
+        }
+    },
+
+    updateStyles: function() {
+        if ($('template_styles') != undefined &&
+            typeof tinyMCE !== 'undefined' && tinyMCE.getInstanceById('template_text')
+        ) {
+            this.injectTemplateStyles($('template_styles').value);
+        }
+    },
+
+    injectTemplateStyles: function(styles) {
+        var doc = tinyMCE.getInstanceById('template_text').getDoc(),
+            styleId = 'template_text_styles',
+            head = doc.getElementsByTagName('head')[0],
+            nodes = Prototype.Selector.select('#'+styleId, head),
+            node;
+        if (nodes.length && nodes[0]) {
+            Element.remove(nodes[0]);
+        }
+        node = doc.createElement('style');
+        node.id = styleId;
+        node.appendChild(doc.createTextNode(styles));
+        head.appendChild(node);
+    }
+});
+
+Object.extend(MagentovariablePlugin, {
+    openChooser: templateControl.openVariableChooser.bind(templateControl)
+});
+
+Event.observe('template_styles', 'change', templateControl.updateStyles.bind(templateControl));
+</script>
+<?php endif; ?>

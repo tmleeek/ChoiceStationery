@@ -1,0 +1,316 @@
+<?php
+$report_type       = $this->getFilter('report_type');
+$order_statuses    = $this->getFilter('order_statuses');
+$commission_status = $this->getFilter('commission_status');
+$order_admins      = $this->getFilter('order_admins');
+
+# convert from local time to db-time
+$from_date         = Mage::getModel('core/date')->gmtDate(null, strtotime($this->getFilter('start_date') .' 00:00:00'));
+$to_date           = Mage::getModel('core/date')->gmtDate(null, strtotime($this->getFilter('end_date') .' 23:59:59'));
+
+$collection = Mage::getModel('sales/order')->getCollection();
+$collection->getSelect()->joinLeft(array('salesrep' => $collection->getTable("salesrep/salesrep")), 'salesrep.order_id=entity_id');
+
+if (isset($order_statuses) && is_array($order_statuses)) {
+  $collection->addAttributeToFilter('status', array('in' => explode(",", $order_statuses[0])));
+}
+
+if (isset($order_admins) && is_array($order_admins)) {
+  $collection->addAttributeToFilter('salesrep.admin_id', array('in' => $order_admins));
+}
+
+if (isset($commission_status) && $commission_status != "") {
+  $collection->addAttributeToFilter('salesrep.commission_status', array('eq' => $commission_status));
+}
+
+$collection->addAttributeToFilter('created_at', array('from' => $from_date, 'to' => $to_date));
+
+$data = array();
+
+foreach ($collection as $row) {
+  $admin_name = ($row->getAdminName() == "") ? "No Sales Rep." : $row->getAdminName();
+
+  if (!array_key_exists($admin_name, $data)) {
+    $data[$admin_name] = array();
+  }
+
+  if (!isset($data[$admin_name]['orders'])) {
+    $data[$admin_name]['orders'] = array();
+  }
+
+  $total_cost = $total_price = 0;
+
+  $items = $row->getAllItems();
+
+  foreach ($items as $item) {
+    $product = Mage::getModel('catalog/product')->load($item->getProductId());
+
+    $qty   = $item->getQtyOrdered();
+
+    $cost  = $product->getCost();
+    $price = $product->getPrice();
+
+    $total_cost  += $qty * $cost;
+    $total_price += $qty * $price;
+  }
+
+  $margin = round(($row->getBaseSubtotal() - $total_cost)/$row->getBaseSubtotal()*100);
+
+  $data[$admin_name]['orders'][] = array(
+    'sub_total'              => round($row->getBaseSubtotal(), 2),
+    'grand_total'              => round($row->getBaseGrandTotal(), 2),
+    # convert from db-time to local time
+    'created_at'         => Mage::getModel('core/date')->date(null, strtotime($row->getData('created_at'))),
+    'order_id'           => $row->getId(),
+    'order_status'       => strtolower($row->getStatus()),
+    'order_increment_id' => $row->getIncrementId(),
+    'total_cost'         => $total_cost,
+    'total_price'        => $total_price,
+    'margin'             => $margin
+  );
+}
+
+if (isset($data['No Sales Rep.'])) {
+  $_tmp = $data['No Sales Rep.'];
+  unset($data['No Sales Rep.']);
+
+  ksort($data);
+
+  $data['No Sales Rep.'] = $_tmp;
+  unset($_tmp);
+} else {
+  ksort($data);
+}
+
+if (count($data) > 0) {
+?>
+<style>
+.dataTableHeadingRow {
+  background-color: #5F767F;
+}
+
+.dataTableHeadingContent {
+  font-family: Verdana,Arial,sans-serif;
+  font-size: 10px;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+}
+
+.dataTableRow {
+  background-color: #DADFE0;
+}
+
+.dataTableRowSelected {
+  background-color: rgb(222, 228, 232);
+}
+
+.dataTableRowOver {
+  background-color: #fcf5dd;
+  cursor: pointer;
+}
+
+.dataTableContent { font-family: Verdana,Arial,sans-serif;
+font-size: 10px;
+color: rgb(0, 0, 0);
+}
+
+.dataTableContentRed { font-family: Verdana,Arial,sans-serif;
+font-size: 10px;
+color: rgb(204, 0, 0);
+}
+
+.dataTableContentRedAlert { font-family: Verdana,Arial,sans-serif;
+font-size: 10px;
+color: rgb(255, 0, 0);
+font-weight: bold;
+}
+</style>
+
+<div style="width: 100%; font-size: 11px; overflow-x: auto;">
+  <form action="" method="POST" onsubmit="alert('ok');" id="salesrep_form">
+    <table border="0" width="<?php echo 170 + count($data)*250; ?>" cellspacing="2" cellpadding="2">
+    <tr class="dataTableHeadingRow">
+      <td class="dataTableHeadingContent" align="center" width="170" style="background-color: white;">&nbsp;</td>
+      <?php
+      foreach (array_keys($data) as $admin_name) {
+      ?>
+      <td class="dataTableHeadingContent" align="center" width="250" style="font-size: 12px;">
+        <table width="95%" border="0">
+        <tr>
+          <td style="text-align: center;">
+            <?php echo $admin_name;?>
+          </td>
+        </tr>
+        </table>
+      </td>
+      <?php
+      }
+      ?>
+      <td style="background-color: white;">&nbsp;</td>
+    </tr>
+
+    <?php
+    while (1) {
+      if (isset($_report_end_date)) {
+        if ($report_type == "week" || $report_type == "month" || $report_type == "year") {
+          $_report_start_date = mktime(0, 0, 0, date("m", $_report_end_date), date("d", $_report_end_date) + 1, date("Y", $_report_end_date));
+        } else {
+          // $_report_start_date = $_report_end_date;
+
+          $_report_start_date = mktime(0, 0, 0, date("m", $_report_end_date), date("d", $_report_end_date) + 1, date("Y", $_report_end_date));
+        }
+      } else {
+        $_report_start_date = strtotime(Mage::getModel('core/date')->date(null, strtotime($from_date)));
+      }
+
+      if ($_report_start_date > strtotime(Mage::getModel('core/date')->date(null, strtotime($to_date)))) {
+        break;
+      }
+
+      // calculate end date
+      switch ($report_type) {
+        case 'year':
+          $_report_end_date = mktime(23, 59, 59, 12, 31, date("Y", $_report_start_date));
+          break;
+        case 'month':
+          $_report_end_date = mktime(23, 59, 59, date("m", $_report_start_date) + 1, 0, date("Y", $_report_start_date));
+          break;
+        case 'week':
+          $_report_end_date = mktime(23, 59, 59, date("m", $_report_start_date), date("d", $_report_start_date) + 6, date("Y", $_report_start_date));
+          break;
+        case 'day':
+          $_report_end_date = mktime(23, 59, 59, date("m", $_report_start_date), date("d", $_report_start_date), date("Y", $_report_start_date));
+          break;
+      }
+
+      // make date label
+      if ( $report_type == 'day' ) {
+        $_report_date_label = date('m/d/Y', $_report_start_date);
+      } else {
+        $_report_date_label = date('m/d/Y', $_report_start_date) .' - '. date('m/d/Y', $_report_end_date);
+      }
+      ?>
+      <tr class="dataTableRow">
+        <td class="dataTableContent" align="center"><?php echo $_report_date_label; ?></td>
+        <?php
+        $currency_symbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol();
+
+        $subtotals = array();
+
+        foreach ($data as $admin_name => $admin_data) {
+        ?>
+        <td class="dataTableContent" align="center" valign="top">
+          <table width="95%" border="0">
+          <?php
+          $_has_orders = false;
+
+          foreach ($admin_data['orders'] as $_order) {
+            if (strtotime($_order['created_at']) > $_report_start_date && strtotime($_order['created_at']) < $_report_end_date) {
+              echo '<tr>';
+
+              echo '<td align="left">';
+              echo '<a style="vertical-align: top;" target="_blank" href="'. Mage::helper('adminhtml')->getUrl('*/sales_order/view', array('order_id' => $_order['order_id'])) .'">'. $_order['order_increment_id'] .'</a>';
+              echo '</td>';
+
+              echo '<td>'. $_order['margin'] .'%</td>';
+
+              echo '<td align="right">';
+              echo Mage::helper('core')->currency(abs($_order['sub_total']), true, false);
+              echo '</td>';
+              echo '</tr>';
+
+              // Calc subtotal earned for period
+              if (isset($subtotals[$admin_name])) {
+                $subtotals[$admin_name]['subtotal'] += round($_order['sub_total'], 2);
+                $subtotals[$admin_name]['orders'] += 1;
+
+                $subtotals[$admin_name]['cost'] += round($_order['total_cost'], 2);
+                $subtotals[$admin_name]['price'] += round($_order['total_price'], 2);
+              } else {
+                $subtotals[$admin_name] = array('subtotal' => round($_order['sub_total'], 2),
+                                                'orders' => 1,
+                                                'cost' => round($_order['total_cost'], 2),
+                                                'price' => round($_order['total_price'], 2));
+              }
+
+              $_has_orders = true;
+            }
+          }
+
+          if (!$_has_orders) {
+            $subtotals[$admin_name] = array('subtotal' => 0, 'orders' => 0, 'cost' => 0);
+
+            echo '<tr><td colspan="2" align="center">-</td></tr>';
+          }
+          ?>
+          </table>
+          <?php
+        }
+        ?>
+        </td>
+        <td style="background-color: white;">&nbsp;</td>
+      </tr>
+      <tr class="dataTableRow dataTableRowOver">
+        <td class="dataTableContent">&nbsp;</td>
+        <?php
+        foreach (array_keys($data) as $admin_name) {
+        ?>
+        <td class="dataTableContent" align="center" valign="top">
+          <table style="width: 95%;" border="0">
+          <tr>
+            <td align="left"><b>Orders: </b><?php echo $subtotals[$admin_name]['orders']; ?></td>
+            <td align="right">
+              <b>Subtotal:</b> <?php echo $subtotals[$admin_name]['subtotal'] == '' ? Mage::helper('core')->currency(0, true, false) : Mage::helper('core')->currency($subtotals[$admin_name]['subtotal'], true, false) ?>
+            </td>
+          </tr>
+
+
+          <tr>
+            <td align="right" colspan="3">
+              Cost: <?php echo Mage::helper('core')->currency($subtotals[$admin_name]['cost'], true, false); ?>
+              Margin: <?php echo Mage::helper('core')->currency($subtotals[$admin_name]['subtotal'] - $subtotals[$admin_name]['cost'], true, false); ?>
+
+              <?php echo round(($subtotals[$admin_name]['subtotal'] - $subtotals[$admin_name]['cost'])/$subtotals[$admin_name]['subtotal']*100); ?>%
+            </td>
+          </tr>
+
+
+          </table>
+        </td>
+        <?php
+        }
+        ?>
+        <td style="background-color: white;">&nbsp;</td>
+      </tr>
+      <?php
+    }
+    ?>
+
+    <tr>
+      <td>&nbsp;</td>
+      <?php
+      foreach ($data as $admin_name => $admin_data) {
+        $total = 0;
+        foreach ($admin_data['orders'] as $_order) {
+          $total += $_order['grand_total'];
+        }
+      ?>
+        <td class="dataTableContent" align="center" style="width: 250px; background-color:#F0F1F1;">
+          <span style="color: green; display: block; font-size: 15px; font-weight: bold; margin: 10px;">Grand Total: <?php echo Mage::helper('core')->currency($total, true, false);?></span>
+        </td>
+      <?php
+      }
+      ?>
+    </tr>
+    </table>
+  </form>
+</div>
+
+<br />
+
+<br /><br />
+<i>Cancelled orders are still counted towards the total. If you wish to omit them, do so in the "Include Order Status" menu above. You can also use this menu to determine how many orders are cancelled total.</i><br />
+<i>Please make sure it works this way (unlike commissions report) which does strikethrough for cancelled orders and doesn't add them to the total.</i>
+<?php
+}
+?>

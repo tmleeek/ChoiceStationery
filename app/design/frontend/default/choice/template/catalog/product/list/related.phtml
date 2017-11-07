@@ -1,0 +1,60 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php if($this->getItems()->getSize()): ?>
+<div class="special-offer-container specials">
+	<div class="special-offer-outer">
+            <div class="page-title">
+              <p class="title"><?php echo $this->__('Similar Products') ?></p>
+            </div>
+           <div class="product-list-box">
+              <div class="row">
+          <?php $i=0;?>
+		  <?php  foreach($this->getItems() as $_item): ?>
+          		<?php if($i < 8){?>
+           		<div class="col-md-3">
+                     <div class="product-box">
+                           <a href="<?php echo $_item->getProductUrl() ?>"><img src="<?php echo $this->helper('catalog/image')->init($_item, 'small_image')->resize(200) ?>" width="129" height="149" alt="offer-img-1" /></a>
+                           <a href="<?php echo $_item->getProductUrl() ?>"><p class="item-name"><?php echo $this->htmlEscape($_item->getName()) ?></p></a>
+                			  <p class="price-title">Your price:</p>
+                               <?php echo $this->getPriceHtml($_item, true, '-related') ?>
+                         <div class="add-btn popular">
+                             <a class="add-to-basket" onclick="setLocation('<?php echo Mage::helper('checkout/cart')->getAddUrl($_item) ?>')"><?php echo $this->__('ADD TO BASKET') ?></a>
+                             <span class="cart-img"> <i class="sprite sprite-add-to-basket-img"></i></span></div>
+					</div><!--end of product-box-->
+                 </div>
+                <!--end of col-md-3-->
+                <?php $i++;}else{ continue; } ?>
+        <?php endforeach ?>
+     		 </div>
+              <!--end of row--> 
+            </div>
+            <!--end of special-offer-boxes--> 
+          </div>
+          <!--end of special-offer-outer--> 
+        </div>
+        <!--end of special-offer-container--> 
+<?php endif ?>

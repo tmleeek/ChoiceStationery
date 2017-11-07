@@ -1,0 +1,84 @@
+<layout version="0.1.0">
+
+    <customer_account_navigation_sublogin>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="sublogin"><name>sublogin</name><path>sublogin/frontend/index</path><label>My Sublogins</label></action>
+            <action method="addLink" ifconfig="sublogin/budget_settings/can_mainlogin_set_budget" translate="label" module="sublogin"><name>sublogin_budget</name><path>sublogin/budget/index</path><label>My Sublogin Budgets</label></action>
+        </reference>
+    </customer_account_navigation_sublogin>
+
+	<!-- FrontendController Start -->
+    <sublogin_frontend_index translate="label">
+        <label>My Sublogins</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="sublogin/list" name="sublogin_list" template="sublogin/list.phtml"/>
+        </reference>
+    </sublogin_frontend_index>
+
+    <sublogin_frontend_edit translate="label">
+        <label>Edit Sublogins</label>
+        <reference name="head">
+            <action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name><params></params></action>
+			<action method="addItem"><type>js</type><name>calendar/calendar.js</name></action>
+			<action method="addItem"><type>js</type><name>calendar/calendar-setup.js</name></action>
+			<block type="core/html_calendar" name="head.calendar" as="calendar" template="page/js/calendar.phtml"></block>            
+        </reference>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="sublogin/edit" name="sublogin_edit" template="sublogin/edit.phtml"/>
+        </reference>
+    </sublogin_frontend_edit>
+    <!-- FrontendController End -->
+    
+    <!-- BudgetController Start -->
+    <sublogin_budget_index translate="label">
+        <label>Sublogin Budget</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="sublogin/budget_list" name="sublogin_budget_list" template="sublogin/budget/list.phtml"/>
+        </reference>
+    </sublogin_budget_index>
+
+    <sublogin_budget_edit translate="label">
+        <label>Edit Budget</label>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/sublogin.css</stylesheet></action>
+            
+            <action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name><params></params></action>
+			<action method="addItem"><type>js</type><name>calendar/calendar.js</name></action>
+			<action method="addItem"><type>js</type><name>calendar/calendar-setup.js</name></action>
+			<block type="core/html_calendar" name="head.calendar" as="calendar" template="page/js/calendar.phtml"></block>            
+        </reference>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="sublogin/budget_edit" name="sublogin_budget_edit" template="sublogin/budget/edit.phtml"/>
+        </reference>
+    </sublogin_budget_edit>
+    <!-- BudgetController End -->
+    
+    <sales_order_view>
+		<reference name="sales.order.info.buttons">
+			<block type="core/template" name="sales.order.info.buttons.approveorder" template="sublogin/sales/order/info/buttons/approveorder.phtml" />
+        </reference>
+    </sales_order_view>
+    
+    <customer_account_index>
+		<reference name="customer_account_dashboard_top">
+			<action method="setTemplate"><template>sublogin/sales/order/recent.phtml</template></action>
+		</reference>
+    </customer_account_index>
+    
+    <!-- restrict customer checkout -->
+    <checkout_onepage_index>
+		<reference name="content">
+			<block type="sublogin/checkout_onepage_checklimit" name="sublogin_checkout_onepage_checklimit" />
+		</reference>
+    </checkout_onepage_index>
+    
+    <checkout_cart_index>
+		<reference name="content">
+			<block type="sublogin/checkout_cart_message" name="sublogin_checkout_cart_message" />
+		</reference>
+    </checkout_cart_index>
+</layout>

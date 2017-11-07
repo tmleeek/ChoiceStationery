@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <NC_CustomGrid>
+            <version>0.4.0</version>
+        </NC_CustomGrid>
+    </modules>
+    <global>
+        <models>
+            <nc_customgrid>
+                <class>NC_CustomGrid_Model</class>
+            </nc_customgrid>
+        </models>
+    </global>
+    <adminhtml>
+        <events>
+            <core_block_abstract_prepare_layout_before>
+                <observers>
+                    <customgrid_column_append>
+                        <type>model</type>
+                        <class>NC_CustomGrid_Model_Observer</class>
+                        <method>appendCustomColumn</method>
+                    </customgrid_column_append>
+                </observers>
+            </core_block_abstract_prepare_layout_before>
+        </events>
+    </adminhtml>
+</config>

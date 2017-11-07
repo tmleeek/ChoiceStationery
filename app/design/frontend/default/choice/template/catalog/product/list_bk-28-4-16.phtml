@@ -1,0 +1,217 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+?>
+<?php
+    $_productCollection=$this->getLoadedProductCollection();
+    $_helper = $this->helper('catalog/output');
+
+    // CART2QUOTE ADDED
+    Mage::getSingleton('customer/session')->setData('lastUrl', $this->helper('core/url')->getCurrentUrl());
+?>
+
+<script>
+    function ewAddProductToCart(url, pid) {
+        var elem = $('qty_' + pid);
+        var qty = 0;
+        if (elem && elem.value > 0) {
+            qty = elem.value;
+        }
+        if (qty > 0) {
+            if (url.indexOf('?') >= 0) url += '&qty=' + qty;
+            else url += '?qty=' + qty;
+        }
+        setLocation(url);
+    }
+</script>
+<?php if(!$_productCollection->count()): ?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php else: ?>
+    <?php echo $this->getToolbarHtml() ?>
+    <?php // List mode ?>
+    <?php if($this->getMode()!='grid'): ?>
+    <?php $_iterator = 0; ?>
+
+<div class="product-list-div product-grid">
+              <div class="product-list-box">
+                <div class="row">
+
+<?php foreach ($_productCollection as $_product): ?>
+                    <?php $product = Mage::getModel('catalog/product')->load($_product->getId())?>
+                  <div class="col-md-12"> <a href="#">
+                    <div class="product-box">
+                                                  <div class="amlabel-div"> 
+<?php echo Mage::helper('amlabel')->getLabels($_product) ?>
+                      <div class="col-md-2">
+                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img class="lazy" src="<?php echo $this->getSkinUrl('images/mgt_lazy_image_loader/loader.gif'); ?>" data-src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(210); ?>" width="149" height="149" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+                      </div>
+</div>
+                      <div class="col-md-10">
+
+                        <?php if($product->getColor()):?>
+                        <div class="text-on-img-<?php echo strtolower($product->getAttributeText('color'))?>"><?php echo $product->getAttributeText('color')?></div>
+                        <?php endif?>
+
+                        <a href="<?php echo $_product->getProductUrl() ?>"><p class="item-name"><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></p></a>
+                        <p class="item-detail"><a><?php echo substr(strip_tags($_product->getDescription()),0,250)?>... </a><a href="<?php echo $_product->getProductUrl() ?>" class="read-more">more details</a></p>
+
+                         <p class="price-title"><span> <span class="free-delivery"></span>free delivery</span><span> <span class="credit"></span>credit account facilities </span><span><span class="price-promise"></span>price promise</span>
+                         <?php $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)?>
+                          <span class="availability"><?php if($stock->getIsInStock()):?><i class="fa fa-check"></i><?php echo $this->__('In Stock')?><?php else:?><?php echo $this->__('out of stock')?><?php endif?></span>
+                      </p>
+
+                       <div class="price-qty-outer">
+                          <div class="col-md-3">
+                           <?php if (Mage::helper('qquoteadv/not2order')->getShowPrice($_product)) : ?>
+                    	   		 <?php echo $this->getPriceHtml($_product, true) ?>
+                		   <?php endif; ?>
+						  </div>
+						  <div class="col-md-4">
+                            <div class="qty">
+                              <p>quantity :</p>
+                              <input name="qty" type="text" id="qty_<?php echo $_product->getId();?>" class="qty-text" placeholder="0">
+                              <a href="#">
+                              <p class="add-qty" field="<?php echo $_product->getId();?>">+</p>
+                              </a> <a href="#">
+                              <p class="minus-qty" field="<?php echo $_product->getId();?>">-</p>
+                              </a> </div>
+                            <!--end of qty--> </div>
+                          <div class="col-md-5">
+                          <a href="#">
+                            <div class="add-btn">
+                            <?php echo Mage::app()->getLayout()->createBlock('qquoteadv/qquotebtn')
+                                    ->setData('product', $_product)
+                                    ->setTemplate('qquoteadv/catalog/product/c2qBtnList.phtml')
+                                    ->toHtml(); ?> 
+                                </span></div></a>
+                        
+                        </div>
+                        <!--end of price-qty-outer-->
+                      </div>
+                      <!--end of col-md-10--> 
+                    </div>
+                    <!--end of offer-box--> 
+                    </div>
+                  <!--end of col-md-3--> 
+                 </a> 
+             </div>
+<?php endforeach?>
+                </div><!-- row-->
+            </div><!-- list box-->
+        </div><!-- product-list-->
+             <script>
+   jQuery(document).ready(function(){
+    // This button will increment the value
+    jQuery('.add-qty').click(function(e){
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        fieldName = jQuery(this).attr('field');
+        // Get its current value
+        var currentVal = parseInt(jQuery('#qty_'+fieldName).val());
+        // If is not undefined
+        if (!isNaN(currentVal)) {
+            // Increment
+            jQuery('#qty_'+fieldName).val(currentVal + 1);
+        } else {
+//            // Otherwise put a 0 there
+            jQuery('#qty_'+fieldName).val(1);
+        }
+    });
+    // This button will decrement the value till 0
+    jQuery(".minus-qty").click(function(e) {
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        fieldName = jQuery(this).attr('field');
+        // Get its current value
+        var currentVal = parseInt(jQuery('#qty_'+fieldName).val());
+        // If it isn't undefined or its greater than 0
+        if (!isNaN(currentVal) && currentVal > 0) {
+            // Decrement one
+            jQuery('#qty_'+fieldName).val(currentVal - 1);
+        } else {
+            // Otherwise put a 0 there
+            jQuery('#qty_'+fieldName).val(0);
+        }
+    });
+});
+
+    </script>      
+    <?php else: ?>
+    <?php // Grid Mode ?>
+
+    <?php $_collectionSize = $_productCollection->count() ?>
+    <?php $_columnCount = $this->getColumnCount(); ?>
+     <div class="product-list-div">
+              <div class="product-list-box grid-view">
+                <div class="row">
+    <?php $i=0; foreach ($_productCollection as $_product): ?>
+<?php $product = Mage::getModel('catalog/product')->load($_product->getId())?>
+<div class="col-md-4"> <a href="#">
+                    <div class="product-box">
+                        <div class="amlabel-div"> 
+<?php echo Mage::helper('amlabel')->getLabels($_product) ?>
+						<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image grid-img"><img class="lazy" src="<?php echo $this->getSkinUrl('images/mgt_lazy_image_loader/loader.gif'); ?>" data-src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(242); ?>" width="149" height="149" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+                        </div>
+<?php if($product->getColor()):?>
+                        <div class="text-on-img-<?php echo strtolower($product->getAttributeText('color'))?>"><?php echo $product->getAttributeText('color')?></div>
+<?php endif?>
+                     <a href="<?php echo $_product->getProductUrl() ?>"> <p class="item-name">
+                          <?php if(strlen($_helper->productAttribute($_product, $_product->getName(), 'name'))>100) { echo substr($_helper->productAttribute($_product, $_product->getName(), 'name'),0,100)."..."; } else { echo $_helper->productAttribute($_product, $_product->getName(), 'name'); } ?>
+                      </p></a>
+                      <p class="price-title">Your price: 
+                          <?php $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)?>
+                          <span class="availability"><?php if($stock->getIsInStock()):?><i class="fa fa-check"></i><?php echo $this->__('In Stock')?><?php else:?><?php echo $this->__('out of stock')?><?php endif?></span></p>
+                      <?php //Cart2Quote edit ?>
+                <?php if (Mage::helper('qquoteadv/not2order')->getShowPrice($_product)) : ?>
+                    <?php echo $this->getPriceHtml($_product, true) ?>
+                <?php endif; ?>
+                      <?php if($_product->isSaleable()): ?>
+                                     <div class="add-btn">
+<a href="#" class="add-to-basket" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><?php echo $this->__('ADD TO BASKET') ?></a>
+<span class="cart-img"><a class="cart-img" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><img src="<?php echo $this->getSkinUrl('images/add-to-basket-img.png')?>" alt="add-to-basket"></a></span></div>                                
+        </div><!--end of offer-box-->
+<?php endif;?>
+                    </div>
+                    <!--end of offer-box--> 
+                    </a> 
+        <?php endforeach ?>
+    </div>
+                  </div>
+    </div>
+        <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
+    <?php endif; ?>
+    <div class="toolbar-bottom">
+        <?php echo $this->getToolbarHtml() ?>
+    </div>
+<?php endif; ?>

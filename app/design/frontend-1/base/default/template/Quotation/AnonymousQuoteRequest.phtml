@@ -1,0 +1,94 @@
+<div class="page-head">
+    <h3><?php echo $this->__('Request a quote') ?></h3>
+</div>
+
+<form action="<?php echo $this->getSubmitUrl() ?>" method="post" id="form-validate">
+
+<fieldset>
+    <div class="fieldset">
+    	<h2 class="legend"><?php echo $this->__('Account Information'); ?></h2> 
+        <?php echo $this->getBlockHtml('formkey')?>
+        <ul class="form-list">
+			<li><?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject(Mage::getModel('customer/customer'))->toHtml() ?></li>			
+            <li>
+                <div class="field">
+	                <label for="email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
+	                <div class="input-box">
+	                    <input type="text" name="email" id="email" value="" title="<?php echo $this->__('Email Address') ?>" class="input-text required-entry validate-email" />
+	                </div>
+	            </div>
+	            <div class="field">
+                    <label for="company"><?php echo $this->__('Company') ?></label>
+                    <div class="input-box">
+                        <input type="text" id="company" name="company" value="" title="<?php echo $this->__('Company') ?>" class="input-text" />
+                    </div>
+                </div>
+            </li>
+            <li class="wide">
+                <label for="street1" class="required"><em>*</em><?php echo $this->__('Address') ?></label>
+                <div class="input-box">
+                    <input type="text" title="<?php echo $this->__('Street Address') ?>" name="street1" id="street1" value="" class="input-text required-entry" />
+                </div>
+            </li>
+	        <?php for ($_i=2, $_n=$this->helper('customer/address')->getStreetLines(); $_i<=$_n; $_i++): ?>
+	                <li class="wide">
+	                    <div class="input-box">
+	                        <input type="text" title="<?php echo $this->__('Street Address '.$_i) ?>" name="street<?php echo $_i?>" id="street<?php echo $_i?>" value="" class="input-text" />
+	                    </div>
+	                </li>
+	        <?php endfor ?>
+            <li class="fields">
+                <div class="field">
+                    <label for="city" class="required"><em>*</em><?php echo $this->__('City') ?></label>
+                    <div class="input-box">
+                        <input type="text" title="<?php echo $this->__('City') ?>" name="city" value="" class="input-text required-entry" id="city" />
+                    </div>
+                </div>
+            </li>
+                <li class="fields">
+                    <div class="field">
+                        <label for="postcode" class="required"><em>*</em><?php echo $this->__('Zip/Postal Code') ?></label>
+                        <div class="input-box">
+                            <input type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" name="postcode" id="postcode" value="" class="input-text validate-zip-international required-entry" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="country_id" class="required"><em>*</em><?php echo $this->__('Country') ?></label>
+                        <div class="input-box">
+                            <?php echo $this->getCountryHtmlSelect('billing') ?>
+                        </div>
+                    </div>
+                </li>
+                <li lang="fields">
+                    <div class="field">
+                        <label for="telephone" class="required"><em>*</em><?php echo $this->__('Telephone') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="telephone" value="" title="<?php echo $this->__('Telephone') ?>" class="input-text required-entry" id="telephone" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="fax"><?php echo $this->__('Fax') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="fax" value="" title="<?php echo $this->__('Fax') ?>" class="input-text" id="fax" />
+                        </div>
+                    </div>
+                </li>
+            
+        </ul>
+	</div>
+	
+    <div class="fieldset">
+    	<h2 class="legend"><?php echo $this->__('Your request'); ?></h2> 
+        <textarea rows="10" cols="120" name="comments" id="comments" class="required-entry"></textarea>
+    </div>
+
+    <button type="button" onclick="dataForm.submit();" title="Save Address" class="button"><span><span><?php echo $this->__('Submit'); ?></span></span></button> 
+	
+</fieldset>
+
+
+</form>
+
+<script type="text/javascript"> 
+    var dataForm = new VarienForm('form-validate', true);
+</script>    

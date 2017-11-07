@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+    <tabs>
+        <designslider translate="label" module="dsregaddress">
+            <label>DESIGN:SLIDER EXTENSIONS</label>
+            <sort_order>999</sort_order>
+        </designslider>
+    </tabs>
+
+    <sections>
+        <regaddress translate="label" module="dsregaddress">
+            <label>Registration Address</label>
+            <tab>designslider</tab>
+            <sort_order>18</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+ 
+            <groups>
+                <defaultconfiguration translate="label" module="dsregaddress">
+                    <label>Default Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <expanded/> 
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+ 
+                    <fields>
+                        <extendedregistration translate="label">
+                            <label>Extend Registration:</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>dsregaddress/system_config_source_extendedregistration_values</source_model>
+                        </extendedregistration>
+                    </fields>
+                </defaultconfiguration>
+            </groups>
+
+        </regaddress>
+    </sections>
+    
+</config>

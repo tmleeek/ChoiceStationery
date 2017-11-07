@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <watchlog_adminhtml_basic_index>
+      <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>watchlogpro/css/watchlogpro.css</name>
+            </action>
+      </reference>
+  </watchlog_adminhtml_basic_index>
+  <watchlog_adminhtml_advanced_index>
+      <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>watchlogpro/css/watchlogpro.css</name>
+            </action>
+      </reference>
+  </watchlog_adminhtml_advanced_index>
+</layout>

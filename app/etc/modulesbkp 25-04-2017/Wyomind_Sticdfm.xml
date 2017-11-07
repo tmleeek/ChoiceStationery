@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Wyomind_Sitcdfm>
+            <active>false</active>
+            <codePool>community</codePool>
+             <depends>
+                 <Wyomind_Datafeedmanager/>
+             </depends>
+        </Wyomind_Sitcdfm>
+    </modules>
+</config> 

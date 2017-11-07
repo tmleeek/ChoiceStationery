@@ -1,0 +1,4 @@
+
+<?php $inflector = Mage::helper('pronav/inflector') ?>
+<li class="<?php echo 'pronav_category_image_' . $inflector->underscore($this->htmlEscape($this->getAnchorText())) ?>"><span class="widget pronav-widget-category-image-link"><a <?php echo $this->getLinkAttributes() ?>><img src="<?php echo $this->getImageLink() ?>" border="0" alt="<?php echo $this->htmlEscape($this->getAnchorText())?>" /></a></span></li>
+

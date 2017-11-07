@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ *
+ */
+-->
+<config>
+    <modules>
+        <Juno_Jaffiliate>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Juno_Jaffiliate>
+    </modules>
+</config>

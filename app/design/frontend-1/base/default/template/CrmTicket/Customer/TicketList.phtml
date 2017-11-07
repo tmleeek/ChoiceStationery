@@ -1,0 +1,80 @@
+<script>
+    var pageUrl = '<?php echo $this->getUrl('*/*/*', array('page' => '##')) ?>';
+</script>
+
+<div class="page-title">
+    <h1><?php echo $this->__('My tickets') ?></h1>
+</div>
+
+<table border="0" width="100%">
+    <tr>
+        <td>
+            <?php if($this->getTickets()->getSize()): ?>
+
+                <p>
+                    <?php echo $this->__('%s tickets', $this->getTicketCount()); ?>
+                     - 
+                     <?php echo $this->__('Page'); ?> : 
+                     <select id="page" name="page" onchange="crmTicketChangePage(this);">
+                         <?php for($i=1;$i<=$this->getPageCount();$i++): ?>
+                            <option value="<?php echo $i; ?>" <?php echo ($i == $this->getCurrentPage() ? ' selected ' : ''); ?>><?php echo $i; ?></option>
+                         <?php endfor; ?>
+                     </select>
+                </p>         
+            <?php endif; ?>
+        </td>
+        <td class="a-right">
+            <?php if (Mage::getStoreConfig('crmticket/front/allow_ticket_request') == 1): ?>
+                <button onclick="setLocation('<?php echo $this->getNewTicketUrl(); ?>')" class="button"><span><span><?php echo $this->__('Open a new ticket'); ?><span class="icon"></span></span></span></button>                    
+            <?php endif; ?>
+        </td>
+    </tr>
+</table>    
+
+<?php if($this->getTickets()->getSize()): ?>
+
+<div class="block-grey">
+    <div class="topleft"></div>
+    <div class="topmiddle"></div>
+    <div class="topright"></div>
+    <div class="middleleft"></div>
+    <div class="middleright"></div>
+    <div class="bottomleft"></div>
+    <div class="bottommiddle"></div>
+    <div class="bottomright"></div>
+    <table cellspacing="0" class="data-table" id="my-quotations-table">
+        <thead>
+            <tr>
+                <th class="a-center"><?php echo $this->__('Last update') ?></th>
+                <th class="a-center"><?php echo $this->__('Ticket #') ?></th>
+                <th><?php echo $this->__('Label') ?></th>
+                <th class="a-center"><?php echo $this->__('Status') ?></th>
+                <?php if (Mage::helper('CrmTicket')->allowCustomerObjectSelection()): ?>
+                <th class="a-center"><?php echo $this->__('Object') ?></th>
+                <?php endif; ?>
+                <th class="a-center"><?php echo $this->__('View') ?></th>
+            </tr>
+        </thead>
+        <tbody>            
+            <?php foreach ($this->getTickets() as $_ticket): ?>
+                <tr>
+                    <td class="a-center"><?php echo Mage::helper('core')->formatDate($_ticket->getct_updated_at(), 'medium'); ?></td>
+                    <td class="a-center"><?php echo $_ticket->getId(); ?></td>
+                    <td><?php echo $_ticket->getct_subject(); ?></td>
+                    <td class="a-center"><?php echo $this->__($_ticket->getct_status()); ?></td>
+                    <?php if (Mage::helper('CrmTicket')->allowCustomerObjectSelection()): ?>
+                    <td class="a-center"><?php echo $this->getObjectPublicName($_ticket->getct_object_id()); ?></td>
+                    <?php endif; ?>
+                    <td class="a-center"><a href="<?php echo $this->getUrlTicket($_ticket); ?>"><?php echo $this->__('View'); ?></a></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<!--To mark <li> and <tr> elements as odd/even/first/last automatically -->
+<script type="text/javascript">decorateTable('my-quotations-table')</script>
+
+<?php else: ?>
+    <p><?php echo $this->__('You have no tickets.') ?></p>
+<?php endif ?>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Zero1_BuyXGetTheCheapestFree
+ *
+ * @category    Zero1
+ * @package     Zero1_BuyXGetTheCheapestFree
+ * @copyright   Copyright (c) 2012 Zero1 Ltd. (http://www.zero1.co.uk)
+ */
+-->
+<config>
+    <modules>
+        <Zero1_BuyXGetTheCheapestFree>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Zero1_BuyXGetTheCheapestFree>
+    </modules>
+</config>

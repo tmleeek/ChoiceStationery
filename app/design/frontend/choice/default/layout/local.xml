@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    
+    <default>
+	<!--page.xml-->
+	<reference name="head">
+	    <action method="addItem"><type>skin_js</type><name>js/jquery-1.11.2.min.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/bootstrap.min.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/html5.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/jquery.elevateZoom-3.0.8.min.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/jquery.selectbox-0.2.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/jquery.selectbox-0.2.min.js</name><params/></action>
+<action method="addItem"><type>skin_js</type><name>js/owl.carousel.js</name><params/></action>
+
+	    <action method="addItem"><type>skin_css</type><name>css/bootstrap.min.css</name><params/></action>
+	<action method="addItem"><type>skin_css</type><name>css/font-awesome.min.css</name><params/></action>
+<action method="addItem"><type>skin_css</type><name>css/jquery.selectbox.css</name><params/></action>
+<action method="addItem"><type>skin_css</type><name>css/owl.carousel.css</name><params/></action>
+<action method="addItem"><type>skin_css</type><name>css/style.css</name><params/></action>
+
+	</reference>
+    </default>
+</layout>

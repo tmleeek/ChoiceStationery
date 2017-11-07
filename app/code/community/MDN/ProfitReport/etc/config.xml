@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MDN_ProfitReport>
+            <version>1.2</version>
+        </MDN_ProfitReport>
+    </modules>
+    <global>
+        <helpers>
+            <ProfitReport>
+                <class>MDN_ProfitReport_Helper</class>
+            </ProfitReport>
+        </helpers>
+        <blocks>
+            <ProfitReport>
+                <class>MDN_ProfitReport_Block</class>
+            </ProfitReport>
+        </blocks>
+
+        <models>
+   	   		            
+            <ProfitReport>
+                <class>MDN_ProfitReport_Model</class>
+                <resourceModel>ProfitReport_mysql4</resourceModel>
+            </ProfitReport>
+            
+            <ProfitReport_mysql4>
+                <class>MDN_ProfitReport_Model_Mysql4</class>
+                <entities>
+                    <CurrencyRateHistory>
+                        <table>currency_rates_history</table>
+                    </CurrencyRateHistory>
+                    <OrderInvoiceView>
+                        <table>view_order_invoice</table>
+                    </OrderInvoiceView>
+                </entities>
+            </ProfitReport_mysql4>
+            
+        </models>
+        <resources>
+            <ProfitReport_setup>
+                <setup>
+                    <module>MDN_ProfitReport</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </ProfitReport_setup>
+            <ProfitReport_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </ProfitReport_write>
+            <ProfitReport_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </ProfitReport_read>
+        </resources>
+    </global>
+    <adminhtml>
+	  
+        <layout>
+            <updates>
+                <ProfitReport>
+                    <file>ProfitReport.xml</file>
+                </ProfitReport>
+            </updates>
+        </layout>
+        <menu>
+            <report>
+                <children>
+                    <profitreport translate="title" module="ProfitReport">
+                        <title>Profit Report</title>
+                        <action>ProfitReport/Admin/Index</action>
+                    </profitreport>
+                </children>
+            </report>
+        </menu>
+        <translate>
+            <modules>
+                <MDN_ProfitReport>
+                    <files>
+                        <default>MDN_ProfitReport.csv</default>
+                    </files>
+                </MDN_ProfitReport>
+            </modules>
+        </translate>
+
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <profitreport module="ProfitReport">
+                                            <title>Profit Report</title>
+                                        </profitreport>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                        <report>
+                            <children>
+                                <profitreport module="ProfitReport">
+                                    <title>Profit Report</title>
+                                </profitreport>
+                            </children>
+                        </report>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+    <frontend>
+
+        <secure_url>
+            <profitreport_admin_report>/ProfitReport/Admin/Report</profitreport_admin_report>
+        </secure_url>
+    </frontend>
+
+    <admin>
+        <routers>
+            <ProfitReport>
+                <use>admin</use>
+                <args>
+                    <module>MDN_ProfitReport</module>
+                    <frontName>ProfitReport</frontName>
+                </args>
+            </ProfitReport>
+        </routers>
+    </admin>
+    
+</config> 

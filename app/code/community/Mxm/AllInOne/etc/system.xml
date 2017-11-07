@@ -1,0 +1,393 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <mxm_tab module="mxmallinone" translate="label">
+            <label>{wl_name}</label>
+            <sort_order>100</sort_order>
+        </mxm_tab>
+    </tabs>
+    <sections>
+        <mxm_allinone_setup module="mxmallinone" translate="label">
+            <label>Setup</label>
+            <tab>mxm_tab</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <connect module="mxmallinone" translate="label comment">
+                    <label>Connect</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <expanded>1</expanded>
+                    <comment><![CDATA[<p><strong>Important:</strong> In order to insert the &apos;Service API Code&apos;, please select a website to associate to your account.</p>
+<p>If you do not receive the &apos;Service API Code&apos; in your signup email then you can find it in the {wl_name} interface.</p>
+<p>Open the Admin dashboard (customer administrator permissions required) and go to the Services tab for your customer space.</p>]]></comment>
+                    <fields>
+                        <api_code module="mxmallinone" translate="label, comment">
+                            <label>{wl_name} Service API Code</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_api</frontend_model>
+                            <backend_model>mxmallinone/system_config_backend_api</backend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[To find this code as a customer administrator, open the Admin dashboard and go to the Services tab for your customer space.]]></comment>
+                        </api_code>
+                        <setup_progress module="mxmallinone" translate="label">
+                            <label>Setup Progress</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_setupprogress</frontend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </setup_progress>
+                    </fields>
+                </connect>
+            </groups>
+        </mxm_allinone_setup>
+        <mxm_allinone_roi module="mxmallinone" translate="label">
+            <label>Return on Investment</label>
+            <tab>mxm_tab</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>50</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <roi module="mxmallinone" translate="label comment">
+                    <label>ROI</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <comment><![CDATA[<p>Enabling this option will add a line of tracking code to all pages within your Magento store allowing {wl_name} to record purchases made as a result of arriving at the store from your emails.</p>]]></comment>
+                    <fields>
+                        <enabled module="mxmallinone" translate="label">
+                            <label>Enable/Disable</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_enablefeature</frontend_model>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <feature>Return on Investment</feature>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                    </fields>
+                </roi>
+            </groups>
+        </mxm_allinone_roi>
+        <mxm_allinone_sca module="mxmallinone" translate="label">
+            <label>Shopping Cart Abandonment</label>
+            <tab>mxm_tab</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>30</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <sca module="mxmallinone" translate="label comment">
+                    <label>Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <comment><![CDATA[<p>To automatically start sending out the default shopping cart abandonment email from this store simply Enable this feature and leave the default Basket Type set.</p>
+<p>Altering any of the default settings you will need to access your {wl_name} Customer Space.</p>]]></comment>
+                    <fields>
+                        <enabled module="mxmallinone" translate="label">
+                            <label>Enable/Disable</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_enablefeature</frontend_model>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <feature>Behavioural</feature>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <basket_type_id module="mxmallinone" translate="label">
+                            <label>Basket Type</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_baskettype</frontend_model>
+                            <backend_model>mxmallinone/system_config_backend_baskettype</backend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enabled>1</enabled></depends>
+                            <comment><![CDATA[<ul style="list-style:disc; margin-left:25px; margin-right:25px;">
+    <li>Standard SCA Email Design, branded with your store logo. Content of the email shows details of the products abandoned as well as a selection of related products.</li>
+    <li>Emails sent after 20 minutes from the point of abandonment</li>
+    <li>Delay of 1 day set, so no further SCA emails are sent in same day (even if basket is abandoned multiple times)</li>
+</ul>]]></comment>
+                        </basket_type_id>
+                    </fields>
+                </sca>
+            </groups>
+        </mxm_allinone_sca>
+        <mxm_allinone_transactional module="mxmallinone" translate="label">
+            <label>Transactional Email</label>
+            <tab>mxm_tab</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>40</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <transactional module="mxmallinone" translate="label comment">
+                    <label>Transactional</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <comment><![CDATA[<p>Enabling this option will re-route emails sent from your Magento store via your {wl_name} account.</p>
+<p>This offers you better deliverability results and allows {wl_name} to gather basic send, delivered, opened and clicked data.</p>]]></comment>
+                    <fields>
+                        <enabled module="mxmallinone" translate="label">
+                            <label>Enable/Disable</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_enablefeature</frontend_model>
+                            <backend_model>mxmallinone/system_config_backend_transactional_enabledisable</backend_model>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <feature>Transactional</feature>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <auth_type module="mxmallinone" translate="label">
+                            <label>Authentication</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mxmallinone/system_config_source_transactional_authtype</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </auth_type>
+                        <ssl_type module="mxmallinone" translate="label">
+                            <label>Security</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mxmallinone/system_config_source_transactional_ssltype</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ssl_type>
+                    </fields>
+                </transactional>
+                <wysiwyg module="mxmallinone" translate="label">
+                    <label>WYSIWYG Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <expanded>1</expanded>
+                    <comment><![CDATA[Enables the WYSIWYG editor for transactional e-mails. Note that you must also have the editor enabled in Content Management -> WYSIWYG Options]]></comment>
+                    <fields>
+                        <enabled module="mxmallinone" translate="label">
+                            <label>Enable WYSIWYG Editor</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                    </fields>
+                </wysiwyg>
+            </groups>
+        </mxm_allinone_transactional>
+        <mxm_allinone_subscriber module="mxmallinone" translate="label">
+            <label>Subscribers</label>
+            <tab>mxm_tab</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>60</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <subscriber module="mxmallinone" translate="label">
+                    <label>Additional Fields</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <comment><![CDATA[<p>These are additional fields in order to capture additional information in the Magento standard subscribers signup form.</p>
+                    <p>Select from Optional or Required depending on whether you want to force your subscribers to fill in the fields before submitting the form.</p>]]></comment>
+                    <fields>
+                        <title module="mxmallinone" translate="label">
+                            <label>Title</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mxmallinone/system_config_source_additionalfield</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <firstname module="mxmallinone" translate="label">
+                            <label>First name</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mxmallinone/system_config_source_additionalfield</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </firstname>
+                        <lastname module="mxmallinone" translate="label">
+                            <label>Last name</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mxmallinone/system_config_source_additionalfield</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </lastname>
+                    </fields>
+                </subscriber>
+            </groups>
+        </mxm_allinone_subscriber>
+        <mxm_allinone_sync module="mxmallinone" translate="label">
+            <label>Data Sync</label>
+            <tab>mxm_tab</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>20</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+            <groups>
+                <general module="mxmallinone" translate="label comment">
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <expanded>1</expanded>
+                    <comment><![CDATA[<p>To use related product and customer data within your emails this option must be Enabled. {wl_name} will then keep an up-to-date record of the data outlined below.</p>]]></comment>
+                    <fields>
+                        <enabled module="mxmallinone" translate="label">
+                            <label>Enable/Disable</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_enablefeature</frontend_model>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                    </fields>
+                </general>
+                <forcesync module="mxmallinone" translate="label">
+                    <label>Force Sync</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <comment><![CDATA[<p>All data is synced regularly but if for any reason you want to manually force a sync of any one particular type use the &apos;Force Sync&apos; buttons.</p>]]></comment>
+                    <fields>
+                        <all module="mxmallinone" translate="label">
+                            <label>Sync All</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_button</frontend_model>
+                            <action_url>mxmallinone/sync/all</action_url>
+                            <button_label>Force Sync</button_label>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </all>
+                        <product module="mxmallinone" translate="label">
+                            <label>Products</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_syncbutton</frontend_model>
+                            <sync_type>product</sync_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </product>
+                        <subscriber module="mxmallinone" translate="label">
+                            <label>Subscribers</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_syncbutton</frontend_model>
+                            <sync_type>subscriber</sync_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </subscriber>
+                        <promotion module="mxmallinone" translate="label">
+                            <label>Promotions</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_syncbutton</frontend_model>
+                            <sync_type>promotion</sync_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </promotion>
+                        <store module="mxmallinone" translate="label">
+                            <label>Stores</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_syncbutton</frontend_model>
+                            <sync_type>store</sync_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </store>
+                        <category module="mxmallinone" translate="label">
+                            <label>Categories</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_syncbutton</frontend_model>
+                            <sync_type>category</sync_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </category>
+                        <categoryproduct module="mxmallinone" translate="label">
+                            <label>Category Products</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_syncbutton</frontend_model>
+                            <sync_type>categoryproduct</sync_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </categoryproduct>
+                        <productsales module="mxmallinone" translate="label">
+                            <label>Product Sales</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>mxmallinone/system_config_form_field_syncbutton</frontend_model>
+                            <sync_type>productsales</sync_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </productsales>
+                    </fields>
+                </forcesync>
+            </groups>
+        </mxm_allinone_sync>
+    </sections>
+</config>

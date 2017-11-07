@@ -1,0 +1,107 @@
+<?php $quote = $this->getQuote(); ?>
+
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+<style type="text/css">
+
+    .quote_part{margin-top:10px;margin-bottom:10px;text-align:justify;}
+    .quote_part ul{margin-left:30px;list-style-type:square;}
+
+</style>
+
+<div class="page-title">
+    <h1><?php echo $this->__('Quote #%s - %s', $quote->getincrement_id(), $quote->getCaption()); ?></h1>
+</div>
+
+<div class="col2-set generic-box">
+	<div style="float: left">
+		<b><?php echo $this->__('Valid until : %s', $this->formatDate($quote->getValidEndTime(),'long')); ?></b>
+                
+	</div>
+	<div style="float: right">
+		<?php if ($quote->isValid()): ?>
+			<p align="right">
+                            <button type="button" onclick="document.location.href = '<?php echo $this->getCommitUrl() ?>'" title="Save" class="button"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>  &nbsp;
+                            <?php if ($this->hasAttachment()): ?>
+                                <button type="button" onclick="document.location.href = '<?php echo $this->getViewAttachmentUrl() ?>'" title="Save" class="button"><span><span><?php echo $this->__('Download %s', $quote->getadditional_pdf()); ?></span></span></button>  &nbsp;
+
+                            <?php endif; ?>
+                            <button type="button" onclick="document.location.href = '<?php echo $this->getPrintUrl() ?>'" title="Save" class="button"><span><span><?php echo $this->__('Download PDF') ?></span></span></button>
+			</p>
+		<?php else: ?>
+			<p><span style="color: red;"><?php echo $this->__('quotation expired'); ?></span></p>
+		<?php endif ?>
+	</div>
+</div>
+
+<table cellspacing="0" class="data-table" id="my-quotations-table">
+    <thead>
+        <tr>
+            <th><?php echo $this->__('Reference') ?></th>
+            <th><?php echo $this->__('Name') ?></th>
+            <th><?php echo $this->__('Qty') ?></th>
+            <th><?php echo $this->__('Discount') ?></th>
+            <th><?php echo $this->__('Unit Price (excl tax)') ?></th>
+            <th><?php echo $this->__('Total (excl tax)') ?></th>
+            <th><?php echo $this->__('Total (incl tax)') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php $_odd = ''; ?>
+        <?php if ($quote->getshow_detail_price() == 0): ?>
+        <tr>
+        	<td><?php echo $quote->GetLinkedProduct()->getSku(); ?></td>
+        	<td><b><?php echo $quote->GetLinkedProduct()->getName().'</b>'.$this->getSubItemsDescription(); ?></b></td>
+        	<td>1</td>
+        	<td>&nbsp;</td>
+    		<td class="a-right"><?php echo $quote->GetConfigFormatedPriceWithoutTaxes() ?> </td>
+    		<td class="a-right"><?php echo $quote->GetConfigFormatedPriceWithoutTaxes() ?></td>
+    		<td class="a-right"><?php echo $quote->GetConfigFormatedPriceWithTaxes() ?></td>
+        </tr>
+        <?php endif ?>
+        <?php foreach ($quote->getItems() as $item): ?>
+        	<?php if (($item->getexclude() == 1) || ($quote->getshow_detail_price() == 1)): ?>
+	            <tr>
+	                <td><?php echo $item->getsku() ?></td>
+	                <td><?php echo $item->getcaption() ?><br><?php echo $item->getOptionsValuesAsText(true) ?></td>
+	                <td><?php echo $item->getqty() ?></td>
+	                <td><?php echo ($item->getdiscount_purcent() > 0 ? $item->getdiscount_purcent().'%' :  ''); ?></td>
+	                <td class="a-right"><?php echo $quote->FormatPrice($item->GetUnitPriceWithoutTaxes($quote)); ?> </td>
+	                <td class="a-right"><?php echo $quote->FormatPrice($item->GetTotalPriceWithoutTaxes($quote)); ?></td>
+	                <td class="a-right"><?php echo $quote->FormatPrice($item->GetTotalPriceWithTaxes($quote)); ?></td>
+	            </tr>
+	        <?php endif ?>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<script type="text/javascript">decorateTable('my-quotations-table')</script>
+
+<p>&nbsp;</p>
+
+<!-- totals -->
+<div align="right">
+<table border="0">
+	<tr>
+		<td width="150" align="right"><h2><?php echo $this->__('Sub total'); ?></h2></td>
+		<td width="30">&nbsp;</td>
+		<td align="right"><h2><?php echo $quote->FormatPrice($quote->GetFinalPriceWithoutTaxes()); ?></h2></td>
+	</tr>
+	<tr>
+		<td align="right"><h2><?php echo $this->__('Tax'); ?></h2></td>
+		<td>&nbsp;</td>
+		<td align="right"><h2><?php echo $quote->FormatPrice($quote->GetTaxAmount()); ?></h2></td>
+	</tr>
+	<tr>
+		<td align="right"><h2><?php echo $this->__('Grand Total'); ?></h2></td>
+		<td>&nbsp;</td>
+		<td align="right"><h2><?php echo $quote->FormatPrice($quote->GetFinalPriceWithTaxes()); ?></h2></td>
+	</tr>
+        <?php if($quote->getreduction() != ''): ?>
+        <tr>
+            <td align="right"><h2><?php echo $this->__('Discount'); ?></h2></td>
+            <td>&nbsp;</td>
+            <td align="right"><h2><?php echo $quote->FormatDiscount($quote->getreduction()); ?></h2></td>
+        </tr>
+        <?php endif ?>
+</table>
+</div>

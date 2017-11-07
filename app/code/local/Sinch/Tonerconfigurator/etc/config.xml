@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Sinch_Tonerconfigurator>
+            <version>1.2.4</version>
+        </Sinch_Tonerconfigurator>
+    </modules>
+
+    <frontend>
+        <routers>
+            <tonerconfigurator>
+                <use>standard</use>
+                <args>
+                    <module>Sinch_Tonerconfigurator</module>
+                    <frontName>tonerconfigurator</frontName>
+                </args>
+            </tonerconfigurator>
+        </routers>
+    </frontend>
+
+    <global>
+        <blocks>
+            <tonerconfigurator>
+                <class>Sinch_Tonerconfigurator_Block</class>
+            </tonerconfigurator>
+        </blocks>
+        <helpers>
+            <tonerconfigurator>
+                <class>Sinch_Tonerconfigurator_Helper</class>
+            </tonerconfigurator>
+            <catalog>
+                <rewrite>
+                    <category>Sinch_Tonerconfigurator_Helper_Category</category>
+                </rewrite>
+            </catalog>
+        </helpers>
+        <models>
+            <tonerconfigurator>
+                 <class>Sinch_Tonerconfigurator_Model</class>
+                 <resourceModel>tonerconfigurator_mysql4</resourceModel>
+             </tonerconfigurator>
+            <tonerconfigurator_mysql4>
+                 <class>Sinch_Tonerconfigurator_Model_Mysql4</class>
+            </tonerconfigurator_mysql4>
+        </models>
+        <resources>
+            <tonerconfigurator_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </tonerconfigurator_write>
+           <tonerconfigurator_read>
+              <connection>
+                 <use>core_read</use>
+              </connection>
+           </tonerconfigurator_read>
+        </resources>
+    </global>
+    <default>
+		<tonerconfigurator>
+			<options>
+				<root_id>4</root_id>
+				<titles>
+					<title1>Printer Make</title1>
+					<title2>Printer Family</title2>
+					<title3>Printer Model</title3>
+				</titles>
+				<category_depth>2</category_depth>
+			</options>
+		</tonerconfigurator>
+    </default>
+</config>

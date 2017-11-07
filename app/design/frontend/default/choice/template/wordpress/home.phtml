@@ -1,0 +1,42 @@
+<?php
+/**
+ * @category    Fishpig
+ * @package     Fishpig_Wordpress
+ * @license     http://fishpig.co.uk/license.txt
+ * @author      Ben Tideswell <help@fishpig.co.uk>
+ */
+?>
+<?php 
+$blogCollection = Mage::getModel('wordpress/post')->getCollection()
+->setOrder('ID', 'DESC')
+->addIsPublishedFilter()
+->addFieldToFilter("post_title",array(neq=>''))
+->setCurPage(1) // 2nd page
+     ->setPageSize(4); 
+	 
+	// echo $blogCollection;
+?>
+<div class="blog-container">
+                <div class="container">
+                    <div class="blog-outer">
+                        <div class="page-title">
+                            <p class="title"><?php echo $this->__('Blog')?></p>
+                        </div><!--end og page-title-->
+                        <div class="row">
+                        	<?php foreach($blogCollection as $post):?>
+                            <div class="col-md-3">
+                                <div class="blog-box">
+                                	<?php if ($featuredImage = $post->getFeaturedImage()): ?>
+                                    <img class="lazy" src="<?php echo $this->getSkinUrl('images/mgt_lazy_image_loader/loader.gif'); ?>" data-src="<?php echo $featuredImage->getAvailableImage() ?>" alt="<?php echo $this->escapeHtml($post->getPostTitle()) ?>" width="250" height="150">
+                                <?php endif;?>
+                                    <p class="blog-title"><?php echo $this->escapeHtml($post->getPostTitle()) ?></p>
+
+                                    <p class="blog-desc"><?php echo substr(strip_tags($post->getPostContent()),0,100).'....'?></p>
+                                   <a href="<?php echo $post->getPermalink() ?>"><p class="read-more">Read more...</p></a>
+                                </div><!--end of blog-box-->
+                            </div><!--end of col-md-3-->
+                        <?php endforeach;?>
+                        </div><!--end of row-->
+                    </div><!--end of blog-outer-->
+                </div><!--end of container-->
+            </div><!--end of blog-container-->

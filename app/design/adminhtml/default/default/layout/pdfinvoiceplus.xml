@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magestore
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magestore.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.magestore.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Magestore
+ * @package     Magestore_Pdfinvoiceplus
+ * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
+ * @license     http://www.magestore.com/license-agreement.html
+ */
+-->
+<layout version="0.1.0">
+    <pdfinvoiceplusadmin_adminhtml_pdfinvoiceplus_index>
+        <reference name="content">
+            <block type="pdfinvoiceplus/adminhtml_pdfinvoiceplus" name="pdfinvoiceplus" />
+        </reference>
+    </pdfinvoiceplusadmin_adminhtml_pdfinvoiceplus_index>
+    
+    <pdfinvoiceplusadmin_adminhtml_pdfinvoiceplus_edit>
+        <reference name="head">
+             <action method="addJs">
+                <script>pdfinvoiceplus/jscolor/jscolor.js</script>
+            </action>
+             <action method="addJs">
+                <script>pdfinvoiceplus/tooltip.js</script>
+            </action>
+            <action method="addJs">
+                <script>pdfinvoiceplus/tinybox.js</script>
+            </action>
+            <action method="addCss">
+                <stylesheet>css/magestore/pdfinvoiceplus.css</stylesheet>
+            </action>
+        </reference>
+    </pdfinvoiceplusadmin_adminhtml_pdfinvoiceplus_edit>
+</layout>

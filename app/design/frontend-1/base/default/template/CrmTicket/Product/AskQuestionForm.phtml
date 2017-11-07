@@ -1,0 +1,266 @@
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>tiny_mce/tiny_mce.js"></script>
+
+<div id="window_askquestion" name="window_askquestion">
+    
+<div class="page-title">
+    <h1><?php echo $this->__('Contact us'); ?></h1>
+</div>
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('contact_top')->toHtml() ?>
+    <br />
+    <form id="product_question" method="POST" name="product_question" action="<?php echo $this->getSubmitUrl(); ?>" enctype="multipart/form-data">
+
+        <div class="block-grey">
+            <div class="topleft"></div>
+            <div class="topmiddle"></div>
+            <div class="topright"></div>
+            <div class="middleleft"></div>
+            <div class="middleright"></div>
+            <div class="bottomleft"></div>
+            <div class="bottommiddle"></div>
+            <div class="bottomright"></div>
+
+            <fieldset class="group-select">
+
+
+                <table id="ask-a-question">
+                    <tbody>
+
+                     <tr class="first odd">
+                        <td>
+                          <legend>Category </legend>
+                            <?php echo $this->__('Category'); ?> : <span class="required" style="color: #D40707 !important;">*</span><br />                            
+                            
+                              <select id="contact-select1" onchange="refreshSelect(2,this)" >
+                                <option value=""><?php echo $this->__('How can we help you ?'); ?></option>
+                                  <?php
+                                  $block = $this->getLayout()->createBlock('CrmTicket/Admin_Category_Select');
+                                  $cats = json_decode($block->getMainCategoriesAsJson());
+
+                                  foreach ($cats as $cat) {
+                                      $catId = $cat->{'id'};
+                                      $catName = $cat->{'name'};
+                                      echo '<option value="' . $catId . '">' . $catName . '</option>';
+                                  }
+                                  ?>
+                              </select>
+                           <br/>
+                            <div id="div-contact2" style="display: none;">
+                              <select name="ticket[ct_category_id]" id="contact-select2" onchange="refreshSelect(3,this)">
+                              </select>
+                            </div>
+
+                          </td>
+                    </tr>
+                </table>
+
+                <div id="div-contact3" style="display: none;">
+                <table id="ask-a-question">
+                    <tbody>
+                     
+                    <?php if (mage::helper('CrmTicket/Customer')->customerIsConnected()) : ?>
+                            <tr>
+                                <td>
+                        <legend>Email</legend>
+                        <input type="hidden" id="ct_customer_id" name="ticket[ct_customer_id]" value="<?php echo mage::helper('CrmTicket/Customer')->getCustomerId(); ?>"></input>
+                        </td>
+                        </tr>
+                    <?php else: ?>
+                        <tr>
+                            <td>
+                        <legend>First name</legend>
+                        <?php echo $this->__('First name'); ?> : <span class="required" style="color: #D40707 !important;">*</span><br />
+                        <input class="input-text required-entry" type="text" id="firts_name_customer" name="customer[first_name_customer]"></input>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td>
+                        <legend>Last name</legend>
+                        <?php echo $this->__('Last name'); ?> : <span class="required" style="color: #D40707 !important;">*</span><br />
+                        <input class="input-text required-entry" type="text" id="last_name_customer" name="customer[last_name_customer]"></input>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td>
+                        <legend>E-mail</legend>
+                        <?php echo $this->__('E-mail'); ?> : <span class="required" style="color: #D40707 !important;">*</span><br />
+                        <input class="input-text required-entry" type="text" id="customer_email" name="customer[customer_email]"></input>
+                        </td>
+                        </tr>
+                    <?php endif; ?>
+                    <tr>
+                        <td>
+                    <legend>subject</legend>
+                    <?php echo $this->__('Subject'); ?> : <br />
+                    <input class="input-text required-entry" type="text" id="ct_subject" name="ticket[ct_subject]" style="width: 550px;"></input>
+                    </td>
+                    </tr>
+                <?php if (Mage::helper('CrmTicket')->allowProductSelection()): ?>
+                    <tr class="last even">
+                        <td>
+                    <legend>product </legend>
+                    <?php echo $this->__('Product'); ?> : <br />
+                    <select class="select" id="ct_product_id" name="ticket[ct_product_id]">
+                        <option></option>
+                        <?php foreach ($this->getProducts() as $pro): ?>
+                            <option <?php echo ($this->getProduct()->getId() == $pro->getId() ? ' selected ' : ''); ?> value="<?php echo $pro->getId(); ?>"><?php echo $pro->getName(); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    </td>
+                    </tr>
+                <?php endif; ?>
+                    <?php if (mage::helper('CrmTicket/Customer')->customerIsConnected()) : ?>
+                        <?php if (Mage::helper('CrmTicket')->allowCustomerObjectSelection()): ?>
+                            <tr class="last even">
+                                <td>
+                            <legend>It is about </legend>
+                            <?php echo $this->__('It is about'); ?> : <br />
+                            <select class="select" name="ticket[ct_object_id]" id="ct_object_id">
+                                <option value="">-</option>
+                                <?php foreach ($this->getCustomerObjects() as $group => $items) : ?>
+                                    <optgroup label="<?php echo $group; ?>">
+                                        <?php foreach($items as $k => $v): ?>
+                                            <option value="<?php echo $k; ?>"><?php echo $v; ?></option>                                        
+                                        <?php endforeach; ?>
+                                    </optgroup>
+                                <?php endforeach; ?>    
+                            </select>
+
+                            </td>
+                            </tr>
+                        <?php endif; ?>                        
+                    <?php endif; ?>
+                    <!--<tr class="first odd">
+                        <td>
+                          <legend>Category </legend>
+                            <?php /*echo $this->__('Category');*/ ?> : <span class="required" style="color: #D40707 !important;">*</span><br />
+                            <?php
+                                /*$block = $this->getLayout()->createBlock('CrmTicket/Admin_Category_Select');
+                                echo $block->getHtmlMenu($this->getCategory()->getId(), 'ticket[ct_category_id]', 'required-entry select', 0, null, true);*/
+                            ?>
+                          </td>
+                    </tr>-->
+                    <?php if (mage::helper('CrmTicket/Customer')->customerIsConnected()) : ?>
+
+                    <?php if (Mage::getStoreConfig('crmticket/ticket_data/show_priority')): ?>
+                    <tr class="first odd">
+                      <td>
+                        <legend><?php echo $this->__('Priority'); ?></legend>
+                        <?php echo $this->__('Priority'); ?> : <span class="required" style="color: #D40707 !important;">*</span><br />
+                        <select class="required-entry select" id="ct_priority" name="ticket[ct_priority]">
+                            <option></option>
+                            <?php foreach ($this->getPriorities() as $priority): ?>
+                                <option value="<?php echo $priority->getId(); ?>"><?php echo $priority->getctp_name(); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                      </td>
+                    </tr>
+                    <?php endif; ?>
+                    
+                   
+                    <tr>
+                        <?php endif; ?>
+                        <td>
+                    <legend>Content</legend>
+                    <?php echo $this->__('Message'); ?> : <span class="required" style="color: #D40707 !important;">*</span><br />
+                    <textarea name="ctm_content" title="" id="ctm_content" class="textarea " style="width:600px;height:460px" rows="2" cols="15" ></textarea>
+                    <input type="hidden" name="ctm_source_type" id="ctm_source_type" value="<?php echo MDN_CrmTicket_Model_Message::TYPE_FORM; ?>">
+                       
+
+                    </td>
+                    </tr>
+                    <tr>
+                     <td>
+                      <?php if (Mage::getStoreConfig('crmticket/attachements/allow_attachement_on_message')): ?>
+                         <p><b><?php echo $this->__('Attachments'); ?>  :</b></p>
+                         <?php
+                         $helper = Mage::helper('CrmTicket/Attachment');
+                         $max = $helper->getPublicMaxAttachementAllowed();
+                         $key = $helper->getPublicMessageAttachementKey();
+                         for ($i = 1; $i <= $max; $i++): ?>
+                         <input type="file" name="<?php echo $key.$i; ?>" id="<?php echo $key.$i; ?>"><br/>
+                         <?php endfor; ?>
+                       <?php endif; ?>
+                      </td>
+                    </tr>
+ 
+                    </tbody>
+                </table>
+                <div class="button-set">
+                    <br/>
+                    <p class="required"><?php echo $this->__('* Required Fields'); ?></p>
+                    <button onclick="editForm.submit();" class="button"><span><span><?php echo $this->__('Submit'); ?><span class="icon"></span></span></span></button>
+                </div>
+                </div>
+            </fieldset>
+        </div>
+
+        
+
+
+
+    </form>
+    <script type="text/javascript">
+        editForm = new VarienForm('product_question', '');
+
+        subCats = new Array();
+<?php
+$block = $this->getLayout()->createBlock('CrmTicket/Admin_Category_Select');
+$cats = json_decode($block->getMainCategoriesAsJson());
+
+foreach ($cats as $cat) :
+    $catId = $cat->{'id'};
+    $catName = $cat->{'name'};
+    ?>
+tmps = new Array();
+    <?php
+    foreach ($cats->{$catId}->{'childs'} as $subcat) :
+        $subcatId = $subcat->{'id'};
+        $subcatName = $subcat->{'name'};
+        ?>
+                    tmp = new Array();
+                    tmp['id'] = <?php echo $subcatId; ?>;
+                    tmp['name'] = "<?php echo $subcatName; ?>";
+                    tmps[tmps.length] = tmp;
+    <?php endforeach; ?>
+            subCats[<?php echo $catId; ?>] = tmps;
+<?php endforeach; ?>
+
+    function refreshSelect(level, object)
+    {
+        var selectedIndex = (object.options[object.selectedIndex].value == '' ? 0 : object.options[object.selectedIndex].value);
+
+        var divSubCat = document.getElementById('div-contact2');
+        var listSubCat = document.getElementById('contact-select2');
+        var formCustomer = document.getElementById('div-contact3');
+
+        if(selectedIndex==0)
+        {
+            if(level==2)
+            {
+                divSubCat.style.display = 'none';
+            }
+            formCustomer.style.display = 'none';
+        }
+        else if(level==2)
+        {
+            var html = "<option value=''><?php echo $this->__('Please select a category'); ?></option>";
+            for (var i=0; i< subCats[selectedIndex].length; i++) {
+                html += "<option value=\"";
+                html += subCats[selectedIndex][i]['id'] + "\">";
+                html += subCats[selectedIndex][i]['name'] + "</option>";
+            }
+
+            listSubCat.value='';
+            listSubCat.innerHTML = html;
+            divSubCat.style.display = 'block';
+        }
+        else {
+          document.getElementById('div-contact'+level).style.display = 'block';
+        }
+    }
+
+    </script>
+    <br />
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('contact_bottom')->toHtml() ?>
+</div>

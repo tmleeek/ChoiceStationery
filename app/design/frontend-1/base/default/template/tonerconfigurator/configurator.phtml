@@ -1,0 +1,15 @@
+<link href="<?php echo $this->getSkinUrl('css/tonerconfigurator/' . $this->getData('styling') . '.css', array('_use_rewrite' => true)); ?>" rel="stylesheet">
+<?php require_once('configuratorscript.phtml'); ?>
+<div class="toner-configurator">
+    <div class="block-title">
+        <strong><span><?php echo $this->getData('title') ?></span></strong>
+    </div>
+	<div class="loadingmask" style="display: none;">
+		<div class="loader"><div class="spinner"></div><br /><span><?php echo $this->getData('loading_text'); ?></span></div>
+	</div>
+    <div class="block-content">
+        <div class="configurator-dropdowns-div">
+        <?php require('configuratordropdowns.phtml'); ?>
+        </div>
+    </div>
+</div>

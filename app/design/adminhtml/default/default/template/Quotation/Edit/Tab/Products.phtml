@@ -1,0 +1,61 @@
+<table cellspacing="0" class="grid-header" width="100%">
+    <tr>
+        <td><h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Quotation Items'); ?></h4></td>
+    </tr>
+</table>
+
+<?php echo $this->getChildHtml('quotationitems') ?>
+
+<p>&nbsp;</p>
+
+<table cellspacing="0" class="grid-header" width="100%">
+    <tr>
+        <td><h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Add Products'); ?></h4></td>
+        <td class="a-right">
+            <button class="scalable add" type="button" onclick="showAddProductDiv('tab_add_product');"><span><?php echo $this->__('Add From Products List') ?></span></button>
+            <button class="scalable add" type="button" onclick="showAddProductDiv('tab_add_fake');"><span><?php echo $this->__('Add Fake Product') ?></span></button>
+        </td>
+    </tr>
+</table>
+
+<div class="entry-edit" id="tab_add_fake" style="display:none;">
+    <fieldset id="my-fieldset">
+        <table border="0" width="100%">
+            <tr>
+                <td colspan="2"><b><?php echo $this->__('Add fake product'); ?></b></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->__('Name'); ?></td>
+                <td><input type="text" id="fake_name" name="fake_name"></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->__('Qty'); ?></td>
+                <td><input type="text" id="fake_qty" name="fake_qty"></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->__('Price'); ?></td>
+                <td><input type="text" id="fake_price" name="fake_price"></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->__('Weight'); ?></td>
+                <td><input type="text" id="fake_weight" name="fake_weight"></td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+
+<div class="entry-edit" id="tab_add_product">
+    <fieldset id="my-fieldset">
+        <i><?php echo $this->__('Fill product quantity in textbox and click on save button to add products to quote'); ?></i>
+        <input type="hidden" name="add_product_log" id="add_product_log" />
+        <?php echo $this->getChildHtml('quotation_add_products') ?>
+        <script>persistantProductSelection = new persistantGridControl(ProductSelectionJsObject, 'add_product_log', 'add_qty_', '');</script>
+    </fieldset>
+</div>
+
+<script type="text/javascript">
+    ToggleQuoteWeightFieldVisibility();
+    ToggleQuotePriceFieldVisibility();
+    //InitAllFinalPrice();
+
+</script>

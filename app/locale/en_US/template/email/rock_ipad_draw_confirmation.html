@@ -1,0 +1,31 @@
+<!--@subject Newsletter subscription confirmation @-->
+<!--@vars
+{"store url=\"\"":"Store Url",
+"var logo_url":"Email Logo Image Url",
+"var logo_alt":"Email Logo Image Alt",
+@-->
+<!--@styles
+@-->
+
+{{template config_path="design/email/header"}}
+{{inlinecss file="email-inline.css"}}
+
+<div>
+    <p>Dear {{var username}}</p>
+    <p>Congratulations you're in the draw!</p>
+    <p>
+        Why not &quot;like&quot; our Facebook page <a href="http://www.facebook.com/choicestationery">
+        www.facebook.com/choicestationery</a> where you will find out who wins plus hear first on our next giveaway and special offers.
+    </p>
+    <p>
+        For all your inkjets and toners with up to 90% off the high street price visit <a href="http://www.choicestationery.com">www.choicestationery.com</a> or call us on 01823 250060.
+    </p>
+    <p>
+        Earn &pound;5 for every friend who orders you recommend at Choice Stationery Supplies - visit
+        <a href="http://www.choicestationery.com/friend">www.choicestationery.com/friend</a> for more details.
+    </p>
+    <p>Thanks again for entering and good luck!.</p>
+    <!-- <div>{{var storename}} ({{var store_url}})</div> -->
+</div>
+
+{{template config_path="design/email/footer"}}

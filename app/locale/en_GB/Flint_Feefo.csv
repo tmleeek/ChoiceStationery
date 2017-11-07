@@ -1,0 +1,48 @@
+"Feefo Reviews","Feefo Reviews"
+"Date","Date"
+"Score","Score"
+"Customer Comment","Customer Comment"
+"Our Response","Our Response"
+"Read More.","Read More."
+"Read more reviews on Feefo","Read more reviews on Feefo"
+"This product has no reviews yet.","This product has no reviews yet."
+"Connection problem to Feefo server.","Connection problem to Feefo server."
+
+"Logon","Logon"
+"Customer identifier (usually domain name)","Customer identifier (usually domain name)"
+"Key","Key"
+"Optional security key for extracting order information (provided by Feefo).","Optional security key for extracting order information (provided by Feefo)."
+"IP Firewall","IP Firewall"
+"Comma separated list of IP's permitted to retrieve order xml (when empty, the firewall is disengaged and all IP addresses are permitted).","Comma separated list of IP's permitted to retrieve order xml (when empty, the firewall is disengaged and all IP addresses are permitted)."
+"Logo template","Logo template"
+"Name of template file used to generate logos <a href="http://feefo.com/feefo/selectlogotemplate.jsp" target="_blank">http://feefo.com/feefo/selectlogotemplate.jsp</a>","Name of template file used to generate logos <a href="http://feefo.com/feefo/selectlogotemplate.jsp" target="_blank">http://feefo.com/feefo/selectlogotemplate.jsp</a>"
+"XML Query Date is when status achieves","XML Query Date is when status achieves"
+"The earliest date that an order reaches one of the selected status determines when the order is presented to Feefo.","The earliest date that an order reaches one of the selected status determines when the order is presented to Feefo."
+"Denotes the number of days from Order date that feedback date occurs.","Denotes the number of days from Order date that feedback date occurs."
+"Determines how long a review query is cached on the server.","Determines how long a review query is cached on the server."
+
+"Active","Active"
+"Determines whether logos are rendered on homepage page.","Determines whether logos are rendered on homepage page."
+"Logo template","Logo template"
+"Review Types to Include","Review Types to Include"
+"Determine which comments will be shown in reviews.","Determine which comments will be shown in reviews."
+"Order","Order"
+"Determines date order that reviews are presented.","Determines date order that reviews are presented."
+"Since","Since"
+"Amount of history to include is logo queries.","Amount of history to include is logo queries."
+"Limit","Limit"
+"Number of review results to return. Default value = 50.","Number of review results to return. Default value = 50."
+"Additional parameters (optional)","Additional parameters (optional)"
+"example: &param=value&param2=value2","example: &param=value&param2=value2"
+
+"Determines whether logos are rendered on category pages.","Determines whether logos are rendered on category pages."
+
+"Determines whether logos are rendered on productpage page.","Determines whether logos are rendered on productpage page."
+
+"Determines whether logos are rendered on product pages.","Determines whether logos are rendered on product pages."
+"Google Stars","Google Stars"
+"Generate html for Google stars.","Generate html for Google stars."
+" - Average %s&#37; (%s reviews)"," - Average %s&#37; (%s reviews)"
+
+
+

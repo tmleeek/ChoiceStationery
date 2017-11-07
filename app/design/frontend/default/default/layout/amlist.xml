@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+
+    <default>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/amlist.css</stylesheet></action>
+        </reference>
+    </default>
+
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action ifconfig="amlist/general/active" method="addLink" translate="label" module="amlist" ><name>amlist</name><path>amlist/list</path><label>My Favorites</label></action>
+        </reference>
+    </customer_account>
+
+
+    <amlist_list_index>
+        <update handle="customer_account"/>
+        <reference name="content">
+            <block type="amlist/index" name="amlist.index" template="amlist/index.phtml"/>
+        </reference>
+    </amlist_list_index>
+
+
+    <amlist_list_edit>
+        <update handle="customer_account"/>
+        <reference name="content">
+            <block type="amlist/edit" name="amlist.edit" template="amlist/edit.phtml" />
+            <block type="amlist/items" name="amlist.items" template="amlist/items.phtml" />
+        </reference>
+    </amlist_list_edit>
+    
+    <catalog_product_view>
+        <reference name="product.info.addto">
+            <action method="setTemplate"><template>amlist/rewrite/catalog_product_view_addto.phtml</template></action>
+        </reference>
+    </catalog_product_view>
+
+</layout>

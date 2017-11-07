@@ -1,0 +1,65 @@
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<div class="page-title">
+    <h1><?php echo $this->__('Sublogin Budgets') ?></h1>
+</div>
+<?php if ($this->getCollection()->getSize() > 0): ?>
+<?php echo $this->getToolbarHtml() ?>
+    <table class="data-table" id="my-orders-table">
+        <col />
+        <col width="1" />
+        <col width="1" />
+        <col width="1" />
+        <col width="1" />
+     <thead>
+            <tr>
+                    <th><span class="nobr"><?php echo $this->__('ID') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->__('Mail') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->__('Year') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->__('Month') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->__('Day') ?></span></th>
+					<th><span class="nobr"><?php echo $this->__('Yearly') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->__('Monthly') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->__('Daily') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->__('Per Order') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->__('Amount') ?></span></th>
+                    <?php if (!Mage::helper('sublogin')->getCurrentSublogin()): ?>
+                        <th><span class="nobr"><?php echo $this->__('Actions'); ?></span></th>
+                    <?php endif; ?>
+            </tr>
+     </thead>
+        <tbody>
+            <?php foreach ($this->getCollection() as $i => $_sublogin): ?>
+            <tr class="<?php echo $i%2?'even':'odd'?>">
+                    <td><span class="nobr"><?php echo $_sublogin->getData('budget_id') ?></span></td>
+                    <td><span class="nobr"><?php echo $_sublogin->getData('email') ?></span></td>
+                    <td><span class="nobr"><?php echo $_sublogin->getData('year') ?></span></td>
+                    <td><span class="nobr"><?php echo $_sublogin->getData('month') ?></span></td>
+                    <td><span class="nobr"><?php echo $_sublogin->getData('day') ?></span></td>
+					<td><span class="nobr"><?php echo $_sublogin->getData('yearly') ?></span></td>
+                    <td><span class="nobr"><?php echo $_sublogin->getData('monthly') ?></span></td>
+                    <td><span class="nobr"><?php echo $_sublogin->getData('daily') ?></span></td>
+                    <td><span class="nobr"><?php echo $_sublogin->getData('per_order') ?></span></td>
+                    <td><span class="nobr"><?php echo $_sublogin->getData('amount') ?></span></td>
+                    <?php if (!Mage::helper('sublogin')->getCurrentSublogin()): ?>
+                        <td><span class="nobr"></span>
+                        <a href="<?php echo $this->getUrl('sublogin/budget/edit/', array('id' => $_sublogin->getData('budget_id'))); ?>"><img src="<?php echo $this->getSkinUrl('images/sublogin/edit.png'); ?>" alt="edit" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="<?php echo $this->getUrl('sublogin/budget/delete/', array('id' => $_sublogin->getData('budget_id'))); ?>"><img src="<?php echo $this->getSkinUrl('images/sublogin/delete.png'); ?>" alt="delete" /></a>
+                        </td>
+                    <?php endif;?>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p><?php echo Mage::helper('sublogin')->__('No sublogin budgets created for your account yet. Just click on create new sublogin budget to create a new one.'); ?></p>
+<?php endif; ?>
+<?php echo $this->getToolbarHtml() ?>
+<div class="buttons-set">
+    <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+    <?php if ($this->noticeOnMaxSublogin()): ?>
+        <p style="color:red;"><?php echo Mage::helper('sublogin')->__('You have reached the maximum sublogins you are able to create.'); ?></p>
+    <?php endif; ?>
+    <?php if ($this->accessNewSubloginButton()): ?>
+        <button type="button" onclick="window.location='<?php echo $this->getUrl('sublogin/budget/create/') ?>';" title="<?php echo $this->__('Create new sublogin') ?>" class="button"><span><span><?php echo $this->__('Create new sublogin budget') ?></span></span></button>
+    <?php endif; ?>
+</div>

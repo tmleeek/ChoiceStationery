@@ -1,0 +1,233 @@
+<?php
+$_start_date = $this->getData('start_date');
+$_end_date = $this->getData('end_date');
+$_report = $this->getData('report');
+
+$report_type = "day";
+
+if ($_report) {
+?>
+<div style="font-size: 11px; overflow-x: auto;">
+<table border="0" cellspacing="0" cellpadding="2">
+<tr>
+	<td valign="top">
+		<table border="0" cellspacing="2" cellpadding="2">
+		<tr class="dataTableHeadingRow" style="background-color: #5F767F;">
+			<td align="center" width="160" style="background-color: white; font-family: Verdana,Arial,sans-serif; font-size: 10px; color: rgb(255, 255, 255); font-weight: bold;">&nbsp;</td>
+			<?php
+			foreach (array_keys($_report) as $admin_name) {
+			?>
+			<td align="center" style="	font-family: Verdana,Arial,sans-serif; color: rgb(255, 255, 255); font-weight: bold; font-size: 12px; width: 250px;">
+				<table width="95%" border="0">
+				<tr>
+					<td style="text-align: center;">
+						<?php echo $admin_name;?>
+					</td>
+				</tr>
+				</table>
+			</td>
+			<?php
+			}
+			?>
+		</tr>
+
+		<?php
+		while (1) {
+			if (isset($_report_end_date)) {
+				if ($report_type == "week" || $report_type == "month" || $report_type == "year") {
+					$_report_start_date = mktime(0, 0, 0, date("m", $_report_end_date), date("d", $_report_end_date) + 1, date("Y", $_report_end_date));
+				} else {
+					$_report_start_date = $_report_end_date;
+				}
+			} else {
+				$_report_start_date = $_start_date;
+			}
+
+			// calculate end date
+			switch ($report_type) {
+				case 'year':
+					$_report_end_date = mktime(23, 59, 59, 12, 31, date("Y", $_report_start_date));
+					break;
+				case 'month':
+					$_report_end_date = mktime(23, 59, 59, date("m", $_report_start_date) + 1, 0, date("Y", $_report_start_date));
+					break;
+				case 'week':
+					$_report_end_date = mktime(23, 59, 59, date("m", $_report_start_date), date("d", $_report_start_date) + 6, date("Y", $_report_start_date));
+					break;
+				case 'day':
+					$_report_end_date = mktime(23, 59, 59, date("m", $_report_start_date), date("d", $_report_start_date) + 1, date("Y", $_report_start_date));
+					break;
+			}
+
+			// make date label
+			if ( $report_type == 'day' ) {
+				$_report_date_label = date('m/d/Y', $_report_start_date);
+			} else {
+				$_report_date_label = date('m/d/Y', $_report_start_date) .' - '. date('m/d/Y', $_report_end_date);
+			}
+			?>
+			<tr style="background-color: #DADFE0;">
+				<td style="font-family: Verdana,Arial,sans-serif; font-size: 11px; color: rgb(0, 0, 0);" align="center" width="160"><?php echo $_report_date_label; ?></td>
+				<?php
+				$currency_symbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol();
+
+				$subtotals = array();
+
+				foreach ($_report as $admin_name => $admin_data) {
+				?>
+				<td style="font-family: Verdana,Arial,sans-serif; font-size: 11px; color: rgb(0, 0, 0);" align="center" valign="top" style="width: 250px;">
+					<table width="95%" border="0">
+					<?php
+					$_has_orders = false;
+
+					foreach ($admin_data['orders'] as $_order) {
+						if ($_order['created_at'] > $_report_start_date && $_order['created_at'] < $_report_end_date) {
+							echo '<tr>';
+
+							if ("No Sales Rep." != $admin_name) {
+								if ($_order['status'] != "") {
+									$_salesrep_icon = $this->getSkinUrl('images/salesrep/'. strtolower($_order['status']) .'.png');
+								} else {
+									$_salesrep_icon = $this->getSkinUrl('images/salesrep/unpaid.png');
+								}
+								echo '<td style="width: 16px;"><img style="margin-top: 2px;" src="'. $_salesrep_icon .'" alt="'. $_order['status'] .' icon" title="'. $_order['status'] .'" /></td>';
+							}
+
+							if ("No Sales Rep." != $admin_name) {
+								echo '<td align="left">';
+							} else {
+								echo '<td align="center">';
+							}
+
+							echo '<a style="vertical-align: top;" target="_blank" href="'. Mage::helper('adminhtml')->getUrl('*/sales_order/view', array('order_id' => $_order['order_id'])) .'">'. $_order['order_increment_id'] .'</a>';
+							echo '</td>';
+
+              echo '<td>'. $_order['margin'] .'%</td>';
+
+							if ("No Sales Rep." != $admin_name) {
+								echo '<td align="right">';
+								if ($_order['sub_total'] < 0) {
+									echo "(". Mage::helper('core')->currency(abs($_order['sub_total']), true, false) .")";
+								} else {
+									echo Mage::helper('core')->currency($_order['sub_total'], true, false);
+								}
+								echo '</td>';
+								echo '</tr>';
+							}
+
+
+							// Calc subtotal earned for period
+							if (isset($subtotals[$admin_name])) {
+								$subtotals[$admin_name]['subtotal'] += round($_order['sub_total'], 2);
+								$subtotals[$admin_name]['orders']       += 1;
+
+                $subtotals[$admin_name]['cost'] += round($_order['total_cost'], 2);
+                $subtotals[$admin_name]['price'] += round($_order['total_price'], 2);
+
+							} else {
+								$subtotals[$admin_name] = array('subtotal' => round($_order['sub_total'], 2),
+								                                'orders' => 1,
+                                                'cost' => round($_order['total_cost'], 2),
+                                                'price' => round($_order['total_price'], 2));
+
+							}
+
+							$_has_orders = true;
+						}
+					}
+
+					if (!$_has_orders) {
+						$subtotals[$admin_name] = array('subtotal' => 0, 'orders' => 0);
+
+						echo '<tr><td colspan="2" align="center">-</td></tr>';
+					}
+					?>
+					</table>
+					<?php
+				}
+				?>
+				</td>
+			</tr>
+			<tr style="background-color: #fcf5dd; cursor: pointer;">
+				<td style="font-family: Verdana,Arial,sans-serif; font-size: 11px; color: rgb(0, 0, 0);">&nbsp;</td>
+				<?php
+				foreach (array_keys($_report) as $admin_name) {
+				?>
+				<td style="font-family: Verdana,Arial,sans-serif; font-size: 11px; color: rgb(0, 0, 0);" align="center" valign="top">
+					<?php
+					if ("No Sales Rep." != $admin_name) {
+					?>
+						<table style="width: 95%;" border="0">
+						<tr>
+							<td style="width: 16px;"></td>
+							<td align="left"><b>Orders: </b><?php echo $subtotals[$admin_name]['orders']; ?></td>
+							<td align="right">
+								<b>Subtotal:</b> <?php echo $subtotals[$admin_name]['subtotal'] == '' ? Mage::helper('core')->currency(0, true, false) : Mage::helper('core')->currency($subtotals[$admin_name]['subtotal'], true, false) ?>
+							</td>
+						</tr>
+
+            <tr>
+              <td style="width: 16px;"></td>
+              <td align="right" colspan="3">
+	              Cost: <?php echo Mage::helper('core')->currency($subtotals[$admin_name]['cost'], true, false); ?>
+	              Margin: <?php echo Mage::helper('core')->currency($subtotals[$admin_name]['subtotal'] - $subtotals[$admin_name]['cost'], true, false); ?>
+
+	              <?php echo round(($subtotals[$admin_name]['subtotal'] - $subtotals[$admin_name]['cost'])/$subtotals[$admin_name]['subtotal']*100); ?>%
+              </td>
+            </tr>
+
+						</table>
+					<?php
+					}
+					?>
+				</td>
+				<?php
+				}
+				?>
+			</tr>
+			<?php
+			if ($_report_end_date > $_end_date) break;
+		}
+		?>
+
+		<tr>
+			<td width="160">&nbsp;</td>
+			<?php
+			foreach (array_keys($_report) as $admin_name) {
+			?>
+
+			<td style="width: 250px; background-color:#F0F1F1; font-family: Verdana,Arial,sans-serif; font-size: 11px; color: rgb(0, 0, 0); text-align: center;">
+				<table style="width: 90%; margin: 10px; font-size: 15px; font-weight: bold;">
+				<?php
+				if ("No Sales Rep." != $admin_name) {
+				?>
+				<tr>
+					<td>Paid Total:</td>
+					<td style="color: green; font-size: 15px; font-weight: bold; margin: 10px; text-align: right;"><?php echo Mage::helper('core')->currency($_report[$admin_name]['paid_total'], true, false);?></td>
+				</tr>
+				<tr>
+					<td>Unpaid Total:</td>
+					<td style="color: red; font-size: 15px; font-weight: bold; margin: 10px; text-align: right;"><?php echo Mage::helper('core')->currency($_report[$admin_name]['unpaid_total'], true, false);?></td>
+				</tr>
+				<?php
+				}
+				?>
+				</table>
+			</td>
+			<?php
+			}
+			?>
+		</tr>
+		</table>
+
+	</td>
+</tr>
+</table>
+</div>
+<?php
+} else {
+?>
+No report available.
+<?php
+}
+?>

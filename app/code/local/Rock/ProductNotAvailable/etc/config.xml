@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Rock_ProductNotAvailable>
+      <version>0.1.0</version>
+    </Rock_ProductNotAvailable>
+  </modules>
+  <frontend>
+    <routers>
+      <rockproducts>
+        <use>standard</use>
+          <args>
+            <module>Rock_ProductNotAvailable</module>
+            <frontName>rockproducts</frontName>
+          </args>
+      </rockproducts>
+    </routers>
+		<layout>
+		  <updates>
+			<productnotavailable>
+			  <file>productnotavailable.xml</file>
+			</productnotavailable>
+		  </updates>
+		</layout>
+  </frontend>
+  <global>
+    <helpers>
+      <productnotavailable>
+        <class>Rock_ProductNotAvailable_Helper</class>
+      </productnotavailable>
+    </helpers>
+	<blocks>
+	  <productnotavailable>
+		<class>Rock_ProductNotAvailable_Block</class>
+	  </productnotavailable>
+	</blocks>
+	<models>
+	  <productnotavailable>
+		<class>Rock_ProductNotAvailable_Model</class>
+		<resourceModel>productnotavailable_mysql4</resourceModel>
+	  </productnotavailable>
+	  <productnotavailable_mysql4>
+		<class>Rock_ProductNotAvailable_Model_Mysql4</class>
+		<entities>		  
+			  <productnotavailable>
+				<table>rock_productnotavailable</table>
+			  </productnotavailable>
+		</entities>
+	  </productnotavailable_mysql4>
+	</models>
+	<resources>
+	  <productnotavailable_setup>
+		<setup>
+		  <module>Rock_ProductNotAvailable</module>
+		</setup>
+		<connection>
+		  <use>core_setup</use>
+		</connection>
+	  </productnotavailable_setup>
+	  <productnotavailable_write>
+		<connection>
+		  <use>core_write</use>
+		</connection>
+	  </productnotavailable_write>
+	  <productnotavailable_read>
+		<connection>
+		  <use>core_read</use>
+		</connection>
+	  </productnotavailable_read>
+	</resources>
+  </global>
+  <admin>
+	<routers>
+	  <productnotavailable>
+	    <use>admin</use>
+		<args>
+		  <module>Rock_ProductNotAvailable</module>
+		  <frontName>admin_productnotavailable</frontName>
+		</args>
+	  </productnotavailable>
+	</routers>
+  </admin>
+  <adminhtml>
+	<menu>
+	  <productnotavailable module="productnotavailable">
+		<title>ProductNotAvailable</title>
+		<sort_order>100</sort_order>
+		<children>
+		  <!-- <productnotavailablebackend module="productnotavailable">
+			<title>Backend Page Title</title>
+			<sort_order>0</sort_order>
+			<action>admin_productnotavailable/adminhtml_productnotavailablebackend</action>
+		  </productnotavailablebackend> -->
+		  <productnotavailable module="productnotavailable">
+		    <title>Manage Productnotavailable</title>
+			<sort_order>0</sort_order>
+			<action>admin_productnotavailable/adminhtml_productnotavailable</action>
+		  </productnotavailable>
+		</children>
+	  </productnotavailable>
+	</menu>
+	<acl>
+	  <resources>
+		<all>
+		  <title>Allow Everything</title>
+		</all>
+		<admin>
+		  <children>
+			<productnotavailable translate="title" module="productnotavailable">
+			  <title>ProductNotAvailable</title>
+			  <sort_order>1000</sort_order>
+			  <children>
+		  <productnotavailablebackend translate="title">
+			<title>Backend Page Title</title>
+		  </productnotavailablebackend>
+		  <productnotavailable translate="title">
+			<title>Manage Productnotavailable</title>
+			<sort_order>0</sort_order>
+		  </productnotavailable>
+			  </children>
+			</productnotavailable>
+		  </children>
+		</admin>
+	  </resources>
+	</acl>
+	<layout>
+	  <updates>
+		<productnotavailable>
+		  <file>productnotavailable.xml</file>
+		</productnotavailable>
+	  </updates>
+	</layout>
+  </adminhtml>
+</config> 

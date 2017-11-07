@@ -1,0 +1,367 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <mageb2btab translate="label" module="sublogin">
+            <label>MageB2B</label>
+            <sort_order>200</sort_order>
+        </mageb2btab>
+    </tabs>
+    <sections>
+        <sublogin translate="label" module="sublogin">
+            <label>Sublogin</label>
+            <tab>mageb2btab</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>General settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <restrict_order_view translate="label">
+                            <label>Restrict order view for sublogins</label>
+                            <comment>If activated, a sublogin can only see his own orders in customer area.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </restrict_order_view>
+
+                        <restrict_customer_list_sublogins translate="label">
+                            <label>Restriction My Sublogin area</label>
+                            <comment>If activated, a sublogin can not see the customer area my sublogins</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </restrict_customer_list_sublogins>
+                        
+                        <enable_mainaccount_login translate="label">
+                            <label>Enable mainaccount login</label>
+                            <comment>If activated, a mainaccount can directly login to a sublogin without having their password.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enable_mainaccount_login>
+                        
+                        <use_shared_cart translate="label">
+                            <label>Use shared card</label>
+                            <comment>If activated your cart is shared with all accounts, incl. subaccounts</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </use_shared_cart>
+                        
+                        <expire_interval translate="label">
+                            <label>Expire interval</label>
+                            <comment>If an account will be reactivated, type in here how long (in days) the accounts will be active again. Specify 0 if you don't want to deactivate account. But 0 will work only when expire_date is not specified while creating/updating sublogin. Otherwise specified date will be considered as expired date.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </expire_interval>
+
+                        <edit_in_grid translate="label">
+                            <label>Edit sublogin inside grid</label>
+                            <comment>If you have over 100 sublogins per customer you should disable this option else not everything might be saved (too much data).</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </edit_in_grid>
+                        
+                        <order_approval translate="label">
+                            <label>Order Approval Required</label>
+                            <comment>If set to yes then sublogin orders needs to be approved by its main account otherwise orders will be approved automatically.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </order_approval>
+                        
+                        <order_approval_cart_notice>
+							<label>Order Approval Cart Page Notice</label>
+                            <comment>Leave blank if don't want to show notice.</comment>
+                            <frontend_type>textarea</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </order_approval_cart_notice>
+                        
+                        <cc_order_mainlogin translate="label">
+                            <label>Send order email also to main account</label>
+                            <comment>If activated, the order email made by a sublogin will be also sent to the main account holder.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </cc_order_mainlogin>
+                        
+                        <delete_notapproved_order>
+							<label>Delete not approved orders</label>
+                            <comment>If activated, main login can delete not approved orders of their sublogin.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </delete_notapproved_order>
+                        
+                        <save_sublogin_address>
+							<label>Save sublogin address</label>
+                            <comment>If set to no then sublogin address will not be saved in mainlogin's address book. If set to yes then default Magento process will be done.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </save_sublogin_address>
+						
+						<save_customer_email_in_order translate="label">
+                            <label>Save customer email in order table</label>
+                            <comment>Instead of inserting the sublogin email in sales order table, you can select yes to use the customer email address from main account to be saved.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </save_customer_email_in_order>
+                    </fields>
+                </general>
+                
+                <form_fields>
+					<label>Form fields</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <frontend translate="label">
+                            <label>Frontend</label>
+                            <comment>Selected fields will be displayed in sublogin create form at frontend</comment>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>sublogin/source_formfields</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </frontend>
+                        
+                        <admin translate="label">
+                            <label>Admin</label>
+                            <comment>Selected fields will be displayed in sublogin create form at admin</comment>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>sublogin/source_formfields</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </admin>
+					</fields>
+                </form_fields>
+                
+                <form_fields_default_values>
+					<label>Default values for form fields</label>
+					<frontend_type>text</frontend_type>
+					<frontend_model>sublogin/admin_system_config_form_fieldset_formFields</frontend_model>
+					<sort_order>1150</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+				 </form_fields_default_values>
+                
+                <budget_settings>
+					<label>Budget settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1200</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <can_mainlogin_set_budget translate="label">
+                            <label>Should mainaccount to be able to set budgets for their sublogins in frontend?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </can_mainlogin_set_budget>
+					</fields>
+                </budget_settings>
+                
+                <email translate="label">
+                    <label>Email settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1300</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <send_from_email translate="label">
+                            <label>Send form (email)</label>
+                            <comment>Type in the email address which the email should come from.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </send_from_email>
+
+                        <send_from_name translate="label">
+                            <label>Send from (name)</label>
+                            <comment>Type in the name (e.g. of your company) which the email should come from.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </send_from_name>
+
+                        <new translate="label">
+                            <label>Email template new sublogin</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </new>
+
+                        <reset_password translate="label">
+                            <label>Email template new password</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </reset_password>
+
+                        <expire_refresh translate="label">
+                            <label>Email template expired account refreshing</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </expire_refresh>
+                        
+                        <mainlogin_orderalert translate="label">
+                            <label>Email template Main login order alert</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </mainlogin_orderalert>
+                        
+                        <order_require_approval translate="label">
+                            <label>Email template Order Require Approval</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_require_approval>
+                        
+                        <order_declined translate="label">
+                            <label>Email template Order Declined</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_declined>
+
+                        <send_bcc translate="label">
+                            <label>BCC Receiver for emails</label>
+                            <comment>If you need more than one bcc receiver, just split them with ";"</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </send_bcc>
+
+                        <customer_optional_email_templates translate="label">
+                            <label>Customer optional email templates</label>
+                            <comment>Select for which email templates the optional customer email address is valid.</comment>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>sublogin/source_emailtemplates</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </customer_optional_email_templates>
+
+                        <sublogin_optional_email_templates translate="label">
+                            <label>Sublogin optional email templates</label>
+                            <comment>Select for which email templates the optional sublogin email address is valid.</comment>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>sublogin/source_emailtemplates</source_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sublogin_optional_email_templates>
+
+                    </fields>
+                </email>
+
+                <projects translate="label">
+                    <label>Project settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>3000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <!--<project322_active translate="label">
+                            <label>Project 322 Activate</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </project322_active>-->
+                    </fields>
+                </projects>
+            </groups>
+        </sublogin>
+    </sections>
+</config>

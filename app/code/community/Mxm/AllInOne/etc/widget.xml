@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+<widgets>
+    <mxmallinone_upsell_products
+        type="mxmallinone/product_widget_upsell" translate="name description" module="mxmallinone">
+        <name>{wl_name} Upsell Products</name>
+        <description>List of Products that are upsell for the current order</description>
+        <is_email_compatible>1</is_email_compatible>
+        <is_transactional_compatible>1</is_transactional_compatible>
+        <parameters>
+            <title translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <type>text</type>
+                <label>Title</label>
+                <value>You may also be interested in...</value>
+            </title>
+            <products translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <value>3</value>
+                <label>Number of Products to Display</label>
+                <type>select</type>
+                <values>
+                    <one translate="label">
+                        <value>1</value>
+                        <label>1</label>
+                    </one>
+                    <two translate="label">
+                        <value>2</value>
+                        <label>2</label>
+                    </two>
+                    <three translate="label">
+                        <value>3</value>
+                        <label>3</label>
+                    </three>
+                    <four translate="label">
+                        <value>4</value>
+                        <label>4</label>
+                    </four>
+                </values>
+            </products>
+            <columns translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <value>3</value>
+                <label>Number of Columns to Display</label>
+                <type>select</type>
+                <values>
+                    <one translate="label">
+                        <value>1</value>
+                        <label>1</label>
+                    </one>
+                    <two translate="label">
+                        <value>2</value>
+                        <label>2</label>
+                    </two>
+                    <three translate="label">
+                        <value>3</value>
+                        <label>3</label>
+                    </three>
+                    <four translate="label">
+                        <value>4</value>
+                        <label>4</label>
+                    </four>
+                </values>
+            </columns>
+            <order>
+                <required>1</required>
+                <visible>0</visible>
+                <type>text</type>
+                <value>$order</value>
+            </order>
+            <subscriber>
+                <required>1</required>
+                <visible>0</visible>
+                <type>text</type>
+                <value>$subscriber</value>
+            </subscriber>
+        </parameters>
+    </mxmallinone_upsell_products>
+    <mxmallinone_crosssell_products
+        type="mxmallinone/product_widget_crosssell" translate="name description" module="mxmallinone">
+        <name>{wl_name} Cross Sell Products</name>
+        <description>List of Products that are cross sell for the current order</description>
+        <is_email_compatible>1</is_email_compatible>
+        <is_transactional_compatible>1</is_transactional_compatible>
+        <parameters>
+            <title translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <type>text</type>
+                <label>Title</label>
+                <value>You may also be interested in...</value>
+            </title>
+            <products translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <value>3</value>
+                <label>Number of Products to Display</label>
+                <type>select</type>
+                <values>
+                    <one translate="label">
+                        <value>1</value>
+                        <label>1</label>
+                    </one>
+                    <two translate="label">
+                        <value>2</value>
+                        <label>2</label>
+                    </two>
+                    <three translate="label">
+                        <value>3</value>
+                        <label>3</label>
+                    </three>
+                    <four translate="label">
+                        <value>4</value>
+                        <label>4</label>
+                    </four>
+                </values>
+            </products>
+            <columns translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <value>3</value>
+                <label>Number of Columns to Display</label>
+                <type>select</type>
+                <values>
+                    <one translate="label">
+                        <value>1</value>
+                        <label>1</label>
+                    </one>
+                    <two translate="label">
+                        <value>2</value>
+                        <label>2</label>
+                    </two>
+                    <three translate="label">
+                        <value>3</value>
+                        <label>3</label>
+                    </three>
+                    <four translate="label">
+                        <value>4</value>
+                        <label>4</label>
+                    </four>
+                </values>
+            </columns>
+            <order>
+                <required>1</required>
+                <visible>0</visible>
+                <type>text</type>
+                <value>$order</value>
+            </order>
+            <subscriber>
+                <required>1</required>
+                <visible>0</visible>
+                <type>text</type>
+                <value>$subscriber</value>
+            </subscriber>
+        </parameters>
+    </mxmallinone_crosssell_products>
+    <mxmallinone_related_products
+        type="mxmallinone/product_widget_related" translate="name description" module="mxmallinone">
+        <name>{wl_name} Related Products</name>
+        <description>List of Products that are related for the current order</description>
+        <is_email_compatible>1</is_email_compatible>
+        <is_transactional_compatible>1</is_transactional_compatible>
+        <parameters>
+            <title translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <type>text</type>
+                <label>Title</label>
+                <value>You may also be interested in...</value>
+            </title>
+            <products translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <value>3</value>
+                <label>Number of Products to Display</label>
+                <type>select</type>
+                <values>
+                    <one translate="label">
+                        <value>1</value>
+                        <label>1</label>
+                    </one>
+                    <two translate="label">
+                        <value>2</value>
+                        <label>2</label>
+                    </two>
+                    <three translate="label">
+                        <value>3</value>
+                        <label>3</label>
+                    </three>
+                    <four translate="label">
+                        <value>4</value>
+                        <label>4</label>
+                    </four>
+                </values>
+            </products>
+            <columns translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <value>3</value>
+                <label>Number of Columns to Display</label>
+                <type>select</type>
+                <values>
+                    <one translate="label">
+                        <value>1</value>
+                        <label>1</label>
+                    </one>
+                    <two translate="label">
+                        <value>2</value>
+                        <label>2</label>
+                    </two>
+                    <three translate="label">
+                        <value>3</value>
+                        <label>3</label>
+                    </three>
+                    <four translate="label">
+                        <value>4</value>
+                        <label>4</label>
+                    </four>
+                </values>
+            </columns>
+            <order>
+                <required>1</required>
+                <visible>0</visible>
+                <type>text</type>
+                <value>$order</value>
+            </order>
+            <subscriber>
+                <required>1</required>
+                <visible>0</visible>
+                <type>text</type>
+                <value>$subscriber</value>
+            </subscriber>
+        </parameters>
+    </mxmallinone_related_products>
+</widgets>

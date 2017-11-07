@@ -1,0 +1,494 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MDN_CrmTicket>
+            <version>1.2</version>
+        </MDN_CrmTicket>
+    </modules>
+
+    <global>
+        <blocks>
+            <CrmTicket>
+                <class>MDN_CrmTicket_Block</class>
+            </CrmTicket>
+        </blocks>
+        <helpers>
+            <CrmTicket>
+                <class>MDN_CrmTicket_Helper</class>
+            </CrmTicket>
+        </helpers>
+        <models>
+            <CrmTicket>
+                <class>MDN_CrmTicket_Model</class>
+                <resourceModel>CrmTicket_mysql4</resourceModel>
+            </CrmTicket>
+            
+            <CrmTicket_mysql4>
+                <class>MDN_CrmTicket_Model_Mysql4</class>
+                <entities>
+                    <Ticket>
+                        <table>crm_ticket</table>
+                    </Ticket> 
+                    <Category>
+                        <table>crm_ticket_category</table>
+                    </Category>
+                    <Message>
+                        <table>crm_ticket_message</table>
+                    </Message>
+                    <Attachment>
+                        <table>crm_ticket_attachment</table>
+                    </Attachment>   
+                    <Ticket_Priority>
+                        <table>crm_ticket_priority</table>
+                    </Ticket_Priority> 
+                    <Ticket_Status>
+                        <table>crm_ticket_status</table>
+                    </Ticket_Status> 
+                    <RouterRules>
+                        <table>crm_router_rules</table>
+                    </RouterRules> 
+                    <Email>
+                        <table>crm_ticket_mail</table>
+                    </Email>
+                    <DefaultReply>
+                        <table>crm_default_reply</table>
+                    </DefaultReply>
+                    <EmailAccount>
+                        <table>crm_email_account</table>
+                    </EmailAccount>
+                    <EmailSpam>
+                        <table>crm_email_spam_rules</table>
+                    </EmailSpam>
+                    <EmailAccountRouterRules>
+                        <table>crm_email_account_router_rule</table>
+                    </EmailAccountRouterRules>
+                    <EmailRouterRules>
+                        <table>crm_email_router_rule</table>
+                    </EmailRouterRules>
+                </entities>
+            </CrmTicket_mysql4>
+        </models>
+        
+        <resources>
+            <CrmTicket_setup>
+                <setup>
+                    <module>MDN_CrmTicket</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </CrmTicket_setup>
+            <CrmTicket_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </CrmTicket_write>
+            <CrmTicket_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </CrmTicket_read>
+        </resources>
+                      
+        <!-- Email templates -->
+        <template>
+            <email>
+                <crmticket_notification_template translate="label" module="CrmTicket">
+                    <label>{{var ct_subject}} {{var hashtag}}</label>
+                    <file>CrmTicket/NotifyTicket.html</file>
+                    <type>html</type>
+                </crmticket_notification_template>
+                <crmticket_front_template translate="label" module="CrmTicket">
+                    <label>New customer email</label>
+                    <file>CrmTicket/NewCustomer.html</file>
+                    <type>html</type>
+                </crmticket_front_template>
+            </email>
+        </template>
+        
+    </global>
+
+    <adminhtml>
+        
+           <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <crmticket module="CrmTicket">
+                                            <title>CRM</title>
+                                        </crmticket>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                        <crmticket module="CrmTicket">
+                            <title>CRM</title>
+                            <children>
+                                <all_tickets module="CrmTicket">
+                                    <title>All</title>
+                                </all_tickets>
+                                <my_tickets module="CrmTicket">
+                                    <title>My tickets</title>
+                                </my_tickets>
+                                <search_create module="CrmTicket">
+                                    <title>Search &amp; Create Ticket</title>
+                                </search_create>
+								<crm_tools module="CrmTicket">
+                                    <title>Tools</title>
+									<children>
+										<tickets translate="title" module="CrmTicket">
+                                            <title>Tickets configuration</title>
+                                            <children>
+                                                <categorytree translate="title" module="CrmTicket">
+                                                    <title>Category</title>
+                                                </categorytree>
+                                                <priority translate="title" module="CrmTicket">
+                                                    <title>Priority</title>
+                                                </priority>
+                                                <!--<status translate="title" module="CrmTicket">
+                                                    <title>Status</title>
+                                                </status>-->
+                                                <default_reply translate="title" module="CrmTicket">
+                                                    <title>Default reply</title>
+                                                </default_reply>
+                                            </children>
+                                        </tickets>
+
+                                       <emails_import translate="title" module="CrmTicket">
+                                            <title>Emails management</title>
+                                            <sort_order>50</sort_order>
+                                            <children>
+                                             <email_account translate="title" module="CrmTicket">
+                                                    <title>Email accounts</title>
+                                              </email_account>
+                                              <imported_tickets translate="title" module="CrmTicket">
+                                                    <title>Mailbox</title>
+                                              </imported_tickets>
+                                              <email_router_rules translate="title" module="CrmTicket">
+                                                    <title>Email to ticket management</title>
+                                              </email_router_rules>
+                                           </children>
+                                        </emails_import>
+
+                                        <form_rules translate="title" module="CrmTicket">
+                                            <title>Form management</title>
+                                            <sort_order>100</sort_order>
+                                            <children>
+                                            <router_rules translate="title" module="CrmTicket">
+                                                <title>Manager assignment</title>
+                                            </router_rules>
+                                            <email_account_router_rules translate="title" module="CrmTicket">
+                                                <title>Email account assignment</title>
+                                            </email_account_router_rules>
+                                          </children>
+                                        </form_rules>
+
+                                        <summary_dash translate="title" module="CrmTicket">
+                                            <title>Summary</title>
+                                            <sort_order>200</sort_order>
+                                            <children>
+                                                <bycategory translate="title" module="CrmTicket">
+                                                    <title>By category</title>
+                                                </bycategory>
+                                                <byuser translate="title" module="CrmTicket">
+                                                    <title>By user</title>
+                                                </byuser>
+                                            </children>
+                                        </summary_dash>
+									</children>
+                                </crm_tools>
+                            </children>
+                        </crmticket>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+      
+        
+        <menu>
+            <crmticket translate="title" module="CrmTicket">
+                <title>CRM</title>
+                <sort_order>999</sort_order>
+                <children>
+                  
+                    <search_create translate="title" module="CrmTicket">
+                        <title>Search &amp; create ticket</title>
+                        <action>CrmTicket/Admin_Ticket/SearchCreate</action>
+                        <sort_order>1</sort_order>
+                    </search_create>
+                    <all_tickets translate="title" module="CrmTicket">
+                        <title>All tickets</title>
+                        <action>CrmTicket/Admin_Ticket/Grid</action>
+                        <sort_order>2</sort_order>
+                    </all_tickets>
+                    <my_tickets translate="title" module="CrmTicket">
+                        <title>My tickets</title>
+                        <action>CrmTicket/Admin_Ticket/My</action>
+                        <sort_order>3</sort_order>
+                    </my_tickets>
+
+                    <crm_tools translate="title" module="CrmTicket">
+                        <title>Tools</title>
+                        <sort_order>4</sort_order>
+                        <children>
+
+                            <tickets translate="title" module="CrmTicket">
+                                <title>Tickets configuration</title>
+                                <sort_order>5</sort_order>
+                                <children>
+                                    <categorytree translate="title" module="CrmTicket">
+                                        <title>Category</title>
+                                        <action>CrmTicket/Admin_Category/Tree</action>
+                                        <sort_order>10</sort_order>
+                                    </categorytree>
+                                    <priority translate="title" module="CrmTicket">
+                                        <title>Priority</title>
+                                        <action>CrmTicket/Admin_Priority/Grid</action>
+                                        <sort_order>11</sort_order>
+                                    </priority>
+                                    <!--<status translate="title" module="CrmTicket">
+                                        <title>Status</title>
+                                        <action>CrmTicket/Admin_Status/Grid</action>
+                                        <sort_order>12</sort_order>
+                                    </status>-->
+                                    <default_reply translate="title" module="CrmTicket">
+                                        <title>Default reply</title>
+                                        <action>CrmTicket/Admin_DefaultReply/Grid</action>
+                                        <sort_order>13</sort_order>
+                                    </default_reply>                                   
+                                </children>
+                            </tickets>
+
+                           <emails_import translate="title" module="CrmTicket">
+                                <title>Emails management</title>
+                                <sort_order>50</sort_order>
+                                <children>
+                                 <email_account translate="title" module="CrmTicket">
+                                        <title>Email accounts</title>
+                                        <action>CrmTicket/Admin_EmailAccount/Grid</action>
+                                        <sort_order>1</sort_order>
+                                  </email_account>
+                                  <imported_tickets translate="title" module="CrmTicket">
+                                        <title>Mailbox</title>
+                                        <action>CrmTicket/Admin_Email/Grid</action>
+                                        <sort_order>2</sort_order>
+                                  </imported_tickets>
+                                  <email_router_rules translate="title" module="CrmTicket">
+                                        <title>Email to ticket management</title>
+                                        <action>CrmTicket/Admin_EmailRouterRules/Grid</action>
+                                        <sort_order>3</sort_order>
+                                  </email_router_rules>                                
+                               </children>
+                            </emails_import>
+
+                            <form_rules translate="title" module="CrmTicket">
+                                <title>Form management</title>
+                                <sort_order>100</sort_order>
+                                <children>
+                                <router_rules translate="title" module="CrmTicket">
+                                    <title>Manager assignment</title>
+                                    <action>CrmTicket/Admin_RouterRules/Grid</action>
+                                    <sort_order>1</sort_order>
+                                </router_rules>
+                                <email_account_router_rules translate="title" module="CrmTicket">
+                                    <title>Email account assignment</title>
+                                    <action>CrmTicket/Admin_EmailAccount/Router</action>
+                                    <sort_order>2</sort_order>
+                                </email_account_router_rules>
+                              </children>
+                            </form_rules>
+
+                            <summary_dash translate="title" module="CrmTicket">
+                                <title>Summary</title>
+                                <sort_order>200</sort_order>
+                                <children>
+                                    <bycategory translate="title" module="CrmTicket">
+                                        <title>By category</title>
+                                        <action>CrmTicket/Admin_Summary/Category</action>
+                                        <sort_order>1</sort_order>
+                                    </bycategory>
+                                    <byuser translate="title" module="CrmTicket">
+                                        <title>By user</title>
+                                        <action>CrmTicket/Admin_Summary/User</action>
+                                        <sort_order>2</sort_order>
+                                    </byuser>                                   
+                                </children>
+                            </summary_dash>
+                            
+                        </children>
+                    </crm_tools>
+                </children>
+            </crmticket>
+        </menu>
+        
+        <layout>
+            <updates>
+                <CrmTicket>
+                    <file>Ticket.xml</file>
+                </CrmTicket>
+            </updates>
+        </layout>
+
+        <translate>
+            <modules>
+                <MDN_CrmTicket>
+                    <files>
+                        <default>MDN_CrmTicket.csv</default>
+                    </files>
+                </MDN_CrmTicket>
+            </modules>
+        </translate>
+        
+    </adminhtml>
+    
+    <frontend>
+        <routers>
+            <CrmTicket>
+                <use>standard</use>
+                <args>
+                    <module>MDN_CrmTicket</module>
+                    <frontName>CrmTicket</frontName>
+                </args>
+            </CrmTicket>
+        </routers>
+        
+        <layout>
+            <updates>
+                <CrmTicket>
+                    <file>Ticket.xml</file>
+                </CrmTicket>
+            </updates>
+        </layout>
+        
+        <translate>
+            <modules>
+                <MDN_CrmTicket>
+                    <files>
+                        <default>MDN_CrmTicket.csv</default>
+                    </files>
+                </MDN_CrmTicket>
+            </modules>
+        </translate>
+        
+    </frontend>
+    
+    <admin>
+        <routers>
+            <CrmTicket>
+                <use>admin</use>
+                <args>
+                    <module>MDN_CrmTicket</module>
+                    <frontName>CrmTicket</frontName>
+                </args>
+            </CrmTicket>
+        </routers>
+    </admin>
+    
+    <crmticket>
+        <customer>
+            <objects>
+                <order>
+                    <class>CrmTicket/Customer_Object_Order</class>
+                </order>
+                <!--<invoice>
+                    <class>CrmTicket/Customer_Object_Invoice</class>
+                </invoice>
+                <creditmemo>
+                    <class>CrmTicket/Customer_Object_Creditmemo</class>
+                </creditmemo>-->
+            </objects>
+        </customer>
+        <quickaction>
+           <assign>
+              <class>CrmTicket/QuickAction_SendInvoice</class>
+           </assign>
+        </quickaction>
+    </crmticket>
+    
+    <default>
+        <crmticket>
+            <ticket_data>
+                <show_priority>1</show_priority>
+                <show_cost>0</show_cost>
+                <show_public>0</show_public>
+                <show_invoicing_status>1</show_invoicing_status>
+                <show_sticky>0</show_sticky>
+                <show_manager>1</show_manager>
+                <show_subject>1</show_subject>               
+                <change_email_account>1</change_email_account>
+                <edit_subject>1</edit_subject>
+                <change_author>0</change_author>
+                <change_message_type>1</change_message_type>
+                <parse_attachement_on_email_import>1</parse_attachement_on_email_import>
+                <allow_attachement_on_message>0</allow_attachement_on_message>
+                <send_invoice_default_reply>3</send_invoice_default_reply>
+                <allow_private_comment_on_ticket>1</allow_private_comment_on_ticket>
+            </ticket_data>
+            <ticket_grid>                
+                <show_view_count>0</show_view_count>               
+                <show_message_popup>0</show_message_popup>                
+                <display_first_message_preview>1</display_first_message_preview>
+            </ticket_grid>
+            <ticket_tab>
+                <show_previous_ticket>1</show_previous_ticket>
+                <show_search_ticket>0</show_search_ticket>
+                <show_affect_popup>1</show_affect_popup>
+                <show_affect_ticket>1</show_affect_ticket>
+            </ticket_tab>
+            <pop>
+                <max_msg_download>50</max_msg_download>
+                <delete_mail_month>3</delete_mail_month>
+                <delete_email_aftersave>0</delete_email_aftersave>
+                <default_status_during_import>new</default_status_during_import>
+            </pop>
+            <general>
+                <delay_to_reply>48</delay_to_reply>
+                <ticket_grid_default_status>new,waiting_for_admin</ticket_grid_default_status>
+                <allow_object_selection>1</allow_object_selection>
+            </general>
+            <attachements>
+                <allow_attachement_on_message>1</allow_attachement_on_message>
+                <parse_attachement_on_email_import>1</parse_attachement_on_email_import>
+                <max_attachements_front>3</max_attachements_front>
+                <max_attachements_back>3</max_attachements_back>
+                <attachements_type_allowed_back>png,img,gif,jpg,jpeg,bmp,zip,rar,csv,pdf,doc,docx,txt,odt,txt,sql,log</attachements_type_allowed_back>
+                <attachements_type_allowed_front>png,img,gif,jpg,jpeg,bmp,zip,rar,csv,pdf,doc,docx,txt,odt,txt</attachements_type_allowed_front>
+            </attachements>
+            <front>
+                <allow_ticket_request>1</allow_ticket_request>
+            </front>
+        </crmticket>
+    </default>
+
+    <crontab>
+        <jobs>
+
+			<!-- Checks messages every 15mins on all mailbox enabled -->
+            <get_email_from_activated_account>
+                <schedule>
+                    <cron_expr>*/15 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>CrmTicket/Observer::checkAllActivatedMailAccount</model>
+                </run>
+            </get_email_from_activated_account>
+
+            <!-- clean old email on the 1st day of every month at 3:00am -->
+            <clean_old_emails>
+                <schedule>
+                    <cron_expr>0 3 1 * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>CrmTicket/Observer::cleanOldEmails</model>
+                </run>
+            </clean_old_emails>
+            
+        </jobs>
+    </crontab>
+    
+</config>

@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <report>
+            <children>
+                <mxm module="mxmallinone" translate="title">
+                    <title>{wl_name}</title>
+                    <sort_order>80</sort_order>
+                    <children>
+                        <sca module="mxmallinone" translate="title">
+                            <title>SCA</title>
+                            <sort_order>10</sort_order>
+                            <action>mxmallinone/report/sca</action>
+                            <resource>report/mxm</resource>
+                        </sca>
+                        <trx module="mxmallinone" translate="title">
+                            <title>Transactional</title>
+                            <sort_order>20</sort_order>
+                            <action>mxmallinone/report/trx</action>
+                            <resource>report/mxm</resource>
+                        </trx>
+                    </children>
+                </mxm>
+            </children>
+        </report>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <report>
+                        <children>
+                            <mxm module="mxmallinone" translate="title">
+                                <title><![CDATA[All In One Menu]]></title>
+                                <sort_order>100</sort_order>
+                            </mxm>
+                        </children>
+                    </report>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <!-- Cannot use whitelabel through translate !-->
+                                    <!-- Translate does not always use our module helper -->
+                                    <mxm_allinone_setup module="mxmallinone" translate="title">
+                                        <title><![CDATA[All In One Setup]]></title>
+                                        <sort_order>300</sort_order>
+                                    </mxm_allinone_setup>
+                                    <mxm_allinone_roi module="mxmallinone" translate="title">
+                                        <title><![CDATA[All In One ROI]]></title>
+                                        <sort_order>300</sort_order>
+                                    </mxm_allinone_roi>
+                                    <mxm_allinone_sca module="mxmallinone" translate="title">
+                                        <title><![CDATA[All In One SCA]]></title>
+                                        <sort_order>300</sort_order>
+                                    </mxm_allinone_sca>
+                                    <mxm_allinone_subscriber module="mxmallinone" translate="title">
+                                        <title><![CDATA[All In One Subscribers]]></title>
+                                        <sort_order>300</sort_order>
+                                    </mxm_allinone_subscriber>
+                                    <mxm_allinone_transactional module="mxmallinone" translate="title">
+                                        <title><![CDATA[All In One Transactional]]></title>
+                                        <sort_order>300</sort_order>
+                                    </mxm_allinone_transactional>
+                                    <mxm_allinone_sync module="mxmallinone" translate="title">
+                                        <title><![CDATA[All In One Data Sync]]></title>
+                                        <sort_order>300</sort_order>
+                                    </mxm_allinone_sync>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
+

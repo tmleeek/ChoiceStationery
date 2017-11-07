@@ -1,0 +1,7 @@
+order deny,allow
+deny from all
+allow from 92.27.211.228
+allow from 81.133.157.252
+allow from  110.227.252.12
+allow from  61.12.45.30
+

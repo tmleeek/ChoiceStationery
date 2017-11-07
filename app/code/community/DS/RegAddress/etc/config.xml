@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+    <modules>
+        <DS_RegAddress>
+            <version>1.0.0</version>
+        </DS_RegAddress>
+    </modules>
+
+    <default>
+        <regaddress>
+            <defaultconfiguration>
+                <extendedregistration>optional_address</extendedregistration>
+            </defaultconfiguration>
+        </regaddress>
+    </default>
+
+    <global>
+        <blocks>
+            <dsregaddress>
+                <class>DS_RegAddress_Block</class>
+            </dsregaddress>
+            <customer>
+                <rewrite>
+                    <form_register>DS_RegAddress_Block_Form_Register</form_register>
+                </rewrite>
+            </customer>
+        </blocks>
+        <models>
+            <dsregaddress>
+                <class>DS_RegAddress_Model</class>
+            </dsregaddress>
+        </models>
+        <helpers>
+            <dsregaddress>
+                <class>DS_RegAddress_Helper</class>
+            </dsregaddress>
+        </helpers>
+    </global>
+    
+    <frontend>
+        <layout>
+            <updates>
+                <dsregaddress>
+                    <file>ds_regaddress.xml</file>
+                </dsregaddress>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <DS_RegAddress>
+                    <files>
+                        <default>DS_RegAddress.csv</default>
+                    </files>
+                </DS_RegAddress>
+            </modules>
+        </translate>
+    </frontend>
+
+    <adminhtml>
+        <translate>
+            <modules>
+                <DS_RegAddress>
+                    <files>
+                        <default>DS_RegAddress.csv</default>
+                    </files>
+                </DS_RegAddress>
+            </modules>
+        </translate>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <regaddress>
+                                            <title>DESIGN:SLIDER Registration Address</title>
+                                        </regaddress>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+</config>

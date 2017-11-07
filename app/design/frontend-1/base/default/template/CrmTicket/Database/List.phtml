@@ -1,0 +1,97 @@
+
+<div class="page-head">
+    <table border="0" width="100%">
+        <tr>
+            <td><h3><?php echo $this->__('%s', $this->getProduct()->getName()) ?></h3></td>
+            <td align="right">
+                <?php if (Mage::getStoreConfig('crmticket/front/allow_ticket_request') == 1): ?>
+                    <button onclick="setLocation('<?php echo $this->getNewTicketUrl(); ?>')" class="form-button"><span><span><?php echo $this->__('Open a new ticket'); ?><span class="icon"></span></span></span></button>                    
+                <?php endif; ?>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<form id="frm_search" method="GET" action="<?php echo $this->getUrl('*/*/*'); ?>">
+    <table border="0" width="100%">
+        <tr>
+            <td>
+                <?php echo $this->__('%s tickets', $this->getTicketCount()); ?>
+                <?php if ($this->getPageCount() > 0): ?>
+                    - 
+                    <?php echo $this->__('Page'); ?> : 
+                    <select id="page" name="page" onchange="document.getElementById('frm_search').submit();">
+                        <?php for ($i = 1; $i <= $this->getPageCount(); $i++): ?>
+                            <option value="<?php echo $i; ?>" <?php echo ($i == $this->getCurrentPage() ? ' selected ' : ''); ?>><?php echo $i; ?></option>
+                        <?php endfor; ?>
+                    </select>
+                <?php endif; ?>
+            </td>
+            <td>
+
+                <?php if ($this->getCategories()->getSize() > 0): ?>
+                    <?php echo $this->__('Category'); ?> : 
+                    <select name="category_id" id="category_id" onchange="document.getElementById('frm_search').submit();">
+                        <option value=""></option>
+                        <?php foreach ($this->getCategories() as $category): ?>
+                            <option <?php echo ($category->getId() == $this->getCurrentCategoryId() ? ' selected ' : ''); ?> value="<?php echo $category->getId(); ?>"><?php echo $category->getctc_name(); ?> (<?php echo $category->getctc_ticket_count(); ?>)</option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php endif; ?>
+            </td>
+
+            <td align="right">
+                <?php if ($this->getTickets()->getSize() > 0): ?>
+                    <input type="hidden" name="product_id" value="<?php echo $this->getProduct()->getId(); ?>" >
+                    <input type="text" name="search" value="<?php echo $this->getSearchString(); ?>">
+                    <input type="submit" value="<?php echo $this->__('Search'); ?>">
+                    <input type="button" value="<?php echo $this->__('Reset'); ?>" onclick="document.location.href='<?php echo $this->getUrl('*/*/*', array('product_id' => $this->getProduct()->getId())); ?>'">
+                <?php endif; ?>
+            </td>
+        </tr>
+    </table>
+</form>
+<p>
+</p>
+
+<div class="block-grey">
+    <div class="topleft"></div>
+    <div class="topmiddle"></div>
+    <div class="topright"></div>
+    <div class="middleleft"></div>
+    <div class="middleright"></div>
+    <div class="bottomleft"></div>
+    <div class="bottommiddle"></div>
+    <div class="bottomright"></div>
+    <?php if ($this->getTickets()->getSize() > 0): ?>
+        <table cellspacing="0" class="data-table" id="my-quotations-table">
+            <thead>
+                <tr>                    
+                    <th class="a-center" colspan="2"><?php echo $this->__('Date') ?></th>
+                    <th class="a-center"><?php echo $this->__('Subject') ?></th>
+                    <th class="a-center"><?php echo $this->__('Msg') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $_odd = ''; ?>
+                <?php foreach ($this->getTickets() as $_ticket): ?>
+                <?php $ticketIsSticky = ($_ticket->getct_sticky()==1) ? 1 : 0; ?>
+                    <tr>
+                        <td ><?php if($ticketIsSticky) echo '<img src='.$this->getSkinUrl('images/sticky_pin.png').' id="sticky_pin" />'; ?></td>
+                        <td class="a-center"><?php if($ticketIsSticky) echo '<b>'; echo Mage::helper('core')->formatDate($_ticket->getct_updated_at(), 'medium'); if($ticketIsSticky) echo '</b>'; ?></td>
+                        <td ><a href="<?php echo $this->getTicketUrl($_ticket); ?>"><?php if($ticketIsSticky) echo '<b>'; echo $_ticket->getct_subject(); if($ticketIsSticky) echo '</b>'; ?></a></td>
+                        <td class="a-center"><?php if($ticketIsSticky) echo '<b>'; echo $_ticket->getct_msg_count(); if($ticketIsSticky) echo '</b>'; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <center>
+            <?php echo $this->__('There is no ticket'); ?>
+        </center>
+    <?php endif; ?>
+</div>
+
+<!--To mark <li> and <tr> elements as odd/even/first/last automatically -->
+<script type="text/javascript">decorateTable('my-quotations-table')</script>

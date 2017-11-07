@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <BingDigital_Extends>
+            <version>0.1.0</version>
+        </BingDigital_Extends>
+    </modules>
+    <global>
+        <blocks>
+            <bingdigital_extends>
+                <class>BingDigital_Extends_Block</class>
+            </bingdigital_extends>
+            <adminhtml>
+                <rewrite>
+                    <widget_form>BingDigital_Extends_Block_Adminhtml_Widget_Form</widget_form>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+    </global>
+</config>

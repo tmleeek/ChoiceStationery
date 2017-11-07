@@ -1,0 +1,38 @@
+<div class="page-head">
+    <table border="0" width="100%">
+        <tr>
+            <td><h3><?php echo $this->__('Knowledge database') ?></h3></td>
+        </tr>
+    </table>
+    
+</div>
+
+<div class="block-grey">
+    <div class="topleft"></div>
+    <div class="topmiddle"></div>
+    <div class="topright"></div>
+    <div class="middleleft"></div>
+    <div class="middleright"></div>
+    <div class="bottomleft"></div>
+    <div class="bottommiddle"></div>
+    <div class="bottomright"></div>
+    <table cellspacing="0" class="data-table" id="my-quotations-table">
+        <thead>
+            <tr>
+                <th class="a-center"><?php echo $this->__('Products') ?></th>
+                <th class="a-center"><?php echo $this->__('Count') ?></th>
+            </tr>
+        </thead>
+        <tbody>            
+            <?php foreach ($this->getProducts() as $_product): ?>
+                <tr>
+                    <td ><a href="<?php echo $this->getTicketsUrl($_product); ?>"><?php echo $_product->getAttributeText('ecommerce_solution').' : '.$_product->getName(); ?></a></td>
+                    <td class="a-center"><?php echo $this->getTicketsCount($_product); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<!--To mark <li> and <tr> elements as odd/even/first/last automatically -->
+<script type="text/javascript">decorateTable('my-quotations-table')</script>

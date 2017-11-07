@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout>
+    <catalog_category_default>
+        <reference name="content.category.products.product_list">
+            <action method="addAttribute">manufacturer</action>
+            <action method="addAttribute">cost</action>
+        </reference>
+    </catalog_category_default>
+</layout>

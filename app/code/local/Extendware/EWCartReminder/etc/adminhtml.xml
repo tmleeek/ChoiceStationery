@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<config>
+	<extendware>
+		<quickaccess>
+			<ewcartreminder>
+                <resource>extendware/ewcartreminder</resource>
+				<inherit>menu/newsletter/children/ewcartreminder</inherit>
+				<title/>
+			</ewcartreminder>
+		</quickaccess>
+	</extendware>
+    <menu>
+	    <newsletter>
+	        <children>
+	            <ewcartreminder translate="title" module="ewcartreminder">
+	                <title>Abandoned Cart Reminder</title>
+	                <sort_order>100</sort_order>
+	                <resource>extendware/ewcartreminder</resource>
+	                <children>
+	                    <reminders translate="title" module="ewcartreminder">
+	                        <title>Queue</title>
+	                        <action>extendware_ewcartreminder/adminhtml_reminder</action>
+	                        <resource>extendware/ewcartreminder/reminder</resource>
+	                    </reminders>
+	                    <history translate="title" module="ewcartreminder">
+	                        <title>History</title>
+	                        <action>extendware_ewcartreminder/adminhtml_history</action>
+	                        <resource>extendware/ewcartreminder/history</resource>
+	                    </history>
+	                    <blacklist translate="title" module="ewcartreminder">
+							<title>Blacklist</title>
+							<sort_order>3</sort_order>
+							<action>extendware_ewcartreminder/adminhtml_blacklist</action>
+							<resource>extendware/ewcartreminder/blacklist</resource>
+						</blacklist>
+	                </children>
+	            </ewcartreminder>
+	        </children>
+	    </newsletter>
+	</menu>
+	<acl>
+		<resources>
+            <admin>
+                <children>
+                    <extendware>
+                        <children>
+                        	<ewcartreminder translate="title" module="ewcartreminder">
+                        		<title>Cart Reminder</title>
+                        		<children>
+                        			<reminder translate="title">
+                        				<title>Queue</title>
+			            			</reminder>
+			            			<history translate="title">
+                        				<title>History</title>
+			            			</history>
+                        			<settings translate="title">
+                        				<title>Settings</title>
+                        				<children>
+				                            <main translate="title">
+				                                <title>Main</title>
+				                                <children>
+					                                <ewcartreminder translate="title">
+						                                <title>General</title>
+						                            </ewcartreminder>
+						                            <ewcartreminder_reminder translate="title">
+						                                <title>Reminders</title>
+						                            </ewcartreminder_reminder>
+					                            </children>
+				                            </main>
+			                            </children>
+			            			</settings>
+			            		</children>
+			            	</ewcartreminder>
+                        </children>
+                    </extendware>
+                </children>
+            </admin>
+        </resources>
+	</acl>
+</config>

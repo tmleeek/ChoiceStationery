@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <po_core translate="label" module="po_compressor">
+            <label>POTATOCOMMERCE</label>
+            <class>po_core</class>
+            <sort_order>300</sort_order>
+        </po_core>
+    </tabs>
+    <sections>
+        <po_compressor translate='label' module='po_compressor'>
+            <label>JS/CSS Compressor</label>
+            <tab>po_core</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>General</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>10</sort_order>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enabled</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                        </enabled>
+                        <!--minify_html translate="label">
+                            <label>Enable HTML minification</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                        </minify_html-->
+                        <readme translate="label">
+                            <label>Readme</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>link</frontend_type>
+                            <frontend_model>po_compressor/adminhtml_system_config_form_field_link</frontend_model>
+                            <href>http://potatocommerce.com/compressor.html#readme</href>
+                            <target>_blank</target>
+                            <sort_order>30</sort_order>
+                        </readme>
+                    </fields>
+                </general>
+                <js_settings translate="label">
+                    <label>JavaScript Settings</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>20</sort_order>
+                    <fields>
+                        <merge translate="label">
+                            <label> Merge JavaScript files</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                        </merge>
+                        <compression translate="label">
+                            <label>Enable compression</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <depends><merge>1</merge></depends>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <comment><![CDATA[Compress files using <a href="https://code.google.com/p/minify/" target="__blank">Minify</a> library]]></comment>
+                        </compression>
+                        <gzip translate="label">
+                            <label>Enable GZIP</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <depends><merge>1</merge></depends>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment><![CDATA[This option allows to speed up HTTP-delivery using GZIP-compression. Make sure that <a target="_blank" href="http://httpd.apache.org/docs/2.2/mod/mod_deflate.html">mod_deflate</a> is enabled.]]></comment>
+                            <sort_order>30</sort_order>
+                        </gzip>
+                        <defer translate="label">
+                            <label>Defer parsing of JavaScript</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <depends><merge>1</merge></depends>
+                            <source_model>po_compressor/source_defer</source_model>
+                            <sort_order>40</sort_order>
+                        </defer>
+                    </fields>
+                </js_settings>
+                <css_settings translate="label">
+                    <label>CSS Settings</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>30</sort_order>
+                    <fields>
+                        <merge translate="label">
+                            <label>Merge CSS files</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                        </merge>
+                        <compression translate="label">
+                            <label>Enable compression</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><merge>1</merge></depends>
+                            <sort_order>20</sort_order>
+                            <comment><![CDATA[Compress files using <a href="https://code.google.com/p/minify/" target="__blank">Minify</a> library]]></comment>
+                        </compression>
+                        <gzip translate="label">
+                            <label>Enable GZIP</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment><![CDATA[This option allows to speed up HTTP-delivery using GZIP-compression. Make sure that <a target="_blank" href="http://httpd.apache.org/docs/2.2/mod/mod_deflate.html">mod_deflate</a> is enabled.]]></comment>
+                            <depends><merge>1</merge></depends>
+                            <sort_order>30</sort_order>
+                        </gzip>
+                        <inline translate="label">
+                            <label>Inline small CSS</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                        </inline>
+                    </fields>
+                </css_settings>
+                <advanced translate="label">
+                    <label>Advanced</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <sort_order>40</sort_order>
+                    <fields>
+                        <!--image_resize>
+                            <label>Serve scaled image</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                        </image_resize-->
+                        <image_backup translate="label">
+                            <label>Create images backups</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment><![CDATA[The following folders will be created: "media/media_original_images" and "skin/frontend/skin_original_images"]]></comment>
+                            <sort_order>20</sort_order>
+                        </image_backup>
+                        <image_cron_enabled>
+                            <label>Enable auto optimization via cron</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                        </image_cron_enabled>
+                        <skip_images translate="label">
+                            <label>Do not optimize these images</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                            <comment><![CDATA[If you dont want to optimize some images, you can add them to this exception list, e.g. "skin/frontend/base/default/images/logo.gif" (without quotes). Use new line as separator.]]></comment>
+                            <sort_order>40</sort_order>
+                        </skip_images>
+                        <image_optimization translate="label">
+                            <label>Start Process</label>
+                            <frontend_model>po_compressor/adminhtml_system_config_source_button</frontend_model>
+                            <comment><![CDATA[<a target="_blank" href="http://php.net/manual/en/function.exec.php">exec</a> PHP function is used. Please make sure that exec function is enabled at php.ini. Please save configuration before starting optimization.]]></comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>50</sort_order>
+                        </image_optimization>
+                        <flush translate="label">
+                            <label></label>
+                            <frontend_model>po_compressor/adminhtml_system_config_source_flush</frontend_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </flush>
+                    </fields>
+                </advanced>
+            </groups>
+        </po_compressor>
+    </sections>
+</config>

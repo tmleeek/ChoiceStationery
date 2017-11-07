@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <NC_OrderAdminUser>
+            <version>0.4.0</version>
+        </NC_OrderAdminUser>
+    </modules>
+    <global>
+        <models>
+            <nc_orderadminuser>
+                <class>NC_OrderAdminUser_Model</class>
+            </nc_orderadminuser>
+        </models>
+    </global>
+    <adminhtml>
+        <events>
+            <sales_order_place_after>
+				<observers>
+					<orderenteredby>
+						<type>singleton</type>
+						<class>NC_OrderAdminUser_Model_Observer</class>
+						<method>implementOrderMethod</method>
+					</orderenteredby>
+				</observers>
+			</sales_order_place_after>
+        </events>
+    </adminhtml>
+</config>

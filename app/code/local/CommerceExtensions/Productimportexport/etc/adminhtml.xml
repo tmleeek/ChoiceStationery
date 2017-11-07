@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<config>
+    <menu>
+        <system>
+            <children>
+                <convert>
+                    <children>
+                        <productimportexport translate="title">
+                            <title>CommerceExtensions Product Import/Export</title>
+                            <action>productimportexport/system_convert_gui</action>
+                            <sort_order>90</sort_order>
+                        </productimportexport>
+                    </children>
+                </convert>
+            </children>
+        </system>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <convert>
+                                <children>
+                                    <productimportexport translate="title">
+                                        <title>CommerceExtensions Product Import/Export</title>
+                                    </productimportexport>
+                                </children>
+                            </convert>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

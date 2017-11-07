@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * 
+ *
+ */
+-->
+<layout version="0.1.0">
+
+	<default>
+        <reference name="before_body_end">
+        	<block type="jaffiliate/footer" name="footer_trackingcode" after="-" template="jaffiliate/footer.phtml" />
+        	<block type="jaffiliate/persistant" name="persistant_trackingcode" after="-" template="jaffiliate/persistant.phtml" />
+        </reference>
+    </default>
+
+    <checkout_onepage_success>
+        <reference name="before_body_end">
+            <block type="jaffiliate/success" name="success_trackingcode" before="-" template="jaffiliate/success.phtml" />
+        </reference>
+    </checkout_onepage_success>
+
+</layout>

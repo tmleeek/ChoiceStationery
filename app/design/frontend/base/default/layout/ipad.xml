@@ -1,0 +1,34 @@
+<?xml version="1.0"?>   
+<layout version="0.1.0">
+	<default>
+		<reference name="head">
+	    	<action method="addCss"><stylesheet>css/ipad/ipadstyle.css</stylesheet></action>
+	    </reference>
+	    <!-- <reference name="top.links">
+	      <action method="addLink" ifconfig="configuration/general/enabled" translate="label title">
+	        <label>Ipad Draw</label>
+	        <url>ipad</url>
+	        <title>Ipad Draw</title>
+	        <prepare>true</prepare>
+	        <position>2</position>
+	      </action>
+	    </reference> -->
+	</default>   
+  <!-- <ipaddraw_index_index>   
+    <reference name="root">   
+      <action method="setTemplate"><template>page/1column.phtml</template></action>   
+    </reference>   
+    <reference name="content">
+      	<block type="ipad/index" name="ipad_index" template="ipad/index.phtml"/>
+    </reference>   
+  </ipaddraw_index_index> -->
+  <ipaddraw_index_success>   
+    <reference name="root">   
+      <action method="setTemplate"><template>page/1column.phtml</template></action>   
+    </reference>   
+    <reference name="content">
+      	<block type="ipad/index" name="ipad_index" template="ipad/success.phtml"/>
+    </reference>   
+  </ipaddraw_index_success>
+</layout>   
+	

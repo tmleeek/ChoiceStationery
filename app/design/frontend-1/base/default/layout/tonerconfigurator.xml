@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <!--<tonerconfigurator_index_index>
+            <block type="tonerconfigurator/configurator" name="root">
+                <action method="setConfiguratorTemplate"><template>tonerconfigurator/configurator.phtml</template><type>configurator</type></action>
+            </block>
+    </tonerconfigurator_index_index>-->
+</layout>

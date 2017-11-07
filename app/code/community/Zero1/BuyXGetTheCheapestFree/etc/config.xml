@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Zero1_BuyXGetTheCheapestFree
+ *
+ * @category    Zero1
+ * @package     Zero1_BuyXGetTheCheapestFree
+ * @copyright   Copyright (c) 2012 Zero1 Ltd. (http://www.zero1.co.uk)
+ */
+-->
+<config>
+    <modules>
+        <Zero1_BuyXGetTheCheapestFree>
+            <version>1.0.5</version>
+        </Zero1_BuyXGetTheCheapestFree>
+    </modules>
+
+    <global>
+        <models>
+            <Zero1_BuyXGetTheCheapestFree>
+                <class>Zero1_BuyXGetTheCheapestFree_Model</class>
+            </Zero1_BuyXGetTheCheapestFree>
+        </models>
+
+        <events>
+            <adminhtml_block_salesrule_actions_prepareform>
+                <observers>
+                    <Zero1_BuyXGetTheCheapestFree_Model_Observer>
+                        <type>singleton</type>
+                        <class>Zero1_BuyXGetTheCheapestFree_Model_Observer</class>
+                        <method>adminhtml_block_salesrule_actions_prepareform</method>
+                    </Zero1_BuyXGetTheCheapestFree_Model_Observer>
+                </observers>
+            </adminhtml_block_salesrule_actions_prepareform>
+
+            <salesrule_validator_process>
+                <observers>
+                    <Zero1_BuyXGetTheCheapestFree_Model_Observer>
+                        <type>singleton</type>
+                        <class>Zero1_BuyXGetTheCheapestFree_Model_Observer</class>
+                        <method>salesrule_validator_process</method>
+                    </Zero1_BuyXGetTheCheapestFree_Model_Observer>
+                </observers>
+            </salesrule_validator_process>
+        </events>
+    </global>
+</config>

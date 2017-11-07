@@ -1,0 +1,64 @@
+<?xml version="1.0"?>   
+<layout version="0.1.0">   
+  <!-- <productnotavailable_index_index>   
+    <reference name="root">   
+      <action method="setTemplate"><template>page/1column.phtml</template></action>   
+    </reference>   
+    <reference name="content">   
+      <block type="productnotavailable/index" name="productnotavailable_index" template="productnotavailable/index.phtml"/>   
+    </reference>   
+  </productnotavailable_index_index> -->
+
+  <!-- <default>
+  	<reference name="product_list">
+  		<action method="setTemplate">
+            <template>productnotavailable/catalog/product/list.phtml</template>
+        </action>
+  	</reference>
+  </default> -->
+
+  <catalog_category_default translate="label">
+  	<reference name="product_list">
+  		<action method="setTemplate" ifconfig="rock_productnot_available_configuration/rock_productnot_available_general/enabled">
+            <template>productnotavailable/catalog/product/list.phtml</template>
+        </action>
+  	</reference>
+  </catalog_category_default>
+
+  <catalog_category_layered translate="label">
+  	<reference name="product_list">
+  		<action method="setTemplate" ifconfig="rock_productnot_available_configuration/rock_productnot_available_general/enabled">
+            <template>productnotavailable/catalog/product/list.phtml</template>
+        </action>
+  	</reference>
+  </catalog_category_layered>
+
+  <catalog_product_view translate="label">
+  	<reference name="product.info">
+  		<action method="setTemplate" ifconfig="rock_productnot_available_configuration/rock_productnot_available_general/enabled">
+            <template>productnotavailable/catalog/product/view.phtml</template>
+        </action>
+  	</reference>
+  </catalog_product_view>
+  
+  <!-- For Most Purchaced Product For Customer -->
+  <customer_account>
+    <reference name="customer_account_navigation">
+        <action method="addLink" translate="label" module="review">
+          <name>most_purchased</name>
+          <path>rockproducts/mostbuyproducts</path>
+          <label>Frequently Ordered</label>
+        </action>
+    </reference>
+  </customer_account>
+
+  <rockproducts_mostbuyproducts_index>
+    <update handle="customer_account"/>
+    <reference name="my.account.wrapper">
+      <block type="productnotavailable/mostbuyproducts" name="most_buyproducts" template="productnotavailable/mostbuyproducts.phtml">
+      </block>
+    </reference>
+  </rockproducts_mostbuyproducts_index>
+  <!-- For Most Purchaced Product For Customer -->
+</layout>   
+	

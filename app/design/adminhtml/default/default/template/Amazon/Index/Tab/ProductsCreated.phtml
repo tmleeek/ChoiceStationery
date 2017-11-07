@@ -1,0 +1,31 @@
+<div align="right">
+<button onclick="saveGrid(); return false;" class="scalable save a-right" type="button"><span><?php echo $this->__('Save') ?></span></button><div style="display:none;width:400px;margin:auto auto;height:50px;text-align:center;font-weight:bold;" id="save_process_message"><?php echo $this->__('Saving data, please wait...') ?></div>
+</div>
+<div id="product_grid"><?php echo $this->getChildHtml('products_created_grid'); ?></div>
+<script type="text/javascript">
+
+    function saveGrid(){
+
+        var form = document.getElementById('created_products_grid_massaction-form');
+        form.setAttribute('action', "<?php echo mage::helper('adminhtml')->getUrl('Amazon/Main/Save', array('country_id' => Mage::registry('mp_country')->getId())); ?>");
+        form.setAttribute('id', 'form_data');
+        form.setAttribute('method', 'POST');
+
+        var select = document.getElementById('created_products_grid_massaction-select');
+        select.setAttribute('class', "");
+
+        var table_originale = document.getElementById('created_products_grid_table');
+        var table = table_originale;
+        table.setAttribute('id', 'submitted_fieds');
+        table.setAttribute('style', 'display:none');
+        form.appendChild(table);
+
+        var formData = new varienForm('form_data');
+
+        document.getElementById('save_process_message').style.display = 'block';
+        document.getElementById('product_grid').style.display = 'none';
+
+        formData.submit();
+    }
+
+</script>

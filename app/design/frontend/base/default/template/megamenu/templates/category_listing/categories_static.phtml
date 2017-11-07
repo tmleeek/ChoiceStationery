@@ -1,0 +1,40 @@
+<?php
+    $columnNumber = $this->getColumnNumber();
+    $parrent_categories = $this->getParentCategories();
+    if ($parrent_categories->getSize() < $columnNumber) {
+        $columnNumber = $parrent_categories->getSize();    
+    }elseif($columnNumber>12){
+        $columnNumber = 12;
+    }
+    $data = $this->getAllCategory($columnNumber);
+    $col_index = floor(12/$columnNumber);
+    switch ($columnNumber) {
+        case 5:$col_index = 24;
+                break;
+        case 7:$col_index = 14;
+                break;  
+        case 8:$col_index = 125;
+                break;
+        case 9:$col_index = 111;
+            break; 
+        case 10:$col_index = 100;
+            break; 
+        case 11:$col_index = 909;
+                break; 
+        default:
+            break;
+    }
+    
+?>
+    <?php if (count($this->getCategories())): ?>    
+        <div class="row ms-category">
+            <?php if($this->getItem()->getCategoriesBoxTitle()): ?><strong class="ms-boxtitle form-group col-xs-12"><?php echo $this->getItem()->getCategoriesBoxTitle(); ?></strong><?php endif; ?>
+            <?php foreach ($data as $categories): ?>  
+                <div class="col-category col-xs-<?php echo $col_index ?>">
+                <?php foreach ($categories as $category): ?>         
+                    <a class="form-group <?php echo Mage::helper('megamenu')->setLevel($category->getLevel()); ?>" href="<?php echo $category->getUrl() ?>"><?php echo $category->getName() ?></a>
+                <?php  endforeach; ?>
+                </div>
+            <?php  endforeach; ?>
+        </div>
+    <?php endif; ?>

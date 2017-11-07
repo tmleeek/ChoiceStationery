@@ -1,0 +1,272 @@
+<script type="text/javascript">
+    var productGridUrl = '<?php echo $this->getUrl('Quotation/Admin/productSelectionGrid', array('quote_id' => $this->getQuote()->getquotation_id())); ?>';
+    var deleteUrl = '<?php echo $this->getDeleteUrl(); ?>';
+</script>
+
+<input type="hidden" name="tab_to_display" id="tab_to_display" value="general" />
+<input id="form_key" name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+<input type="hidden" name="product_id" id="product_id" />
+<input type="hidden" name="myform[quotation_id]" value="<?php echo $this->getQuote()->getquotation_id(); ?>" />
+
+<div class="entry-edit">
+
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('General'); ?></h4>
+    </div>
+    <fieldset>
+        <table cellspacing="0"class="form-list">
+            <tr>
+                <td class="label" width="20%"><label for="myform[manager]"><?php echo $this->__('Manager') ?></label></td>
+                <td class="input-ele" width="25%"><?php echo $this->getUsersAsCombo('myform[manager]', $this->getQuote()->getmanager()); ?></td>
+                <td width="50" rowspan="11">&nbsp;</td>
+                <td class="label" width="20%"><?php echo $this->__('Scope') ?></td>
+                <td class="input-ele" width="25%"><?php echo $this->getScopeInformation(); ?></td>
+            </tr>
+            <tr>
+                <td class="label" width="20%"><?php echo $this->__('Customer') ?></td>
+                <td class="input-ele" width="25%"><?php echo $this->GetCustomerInfo(); ?></td>
+                <td class="label" width="20%"><label for="myform[status]"><?php echo $this->__('Status') ?></label></td>
+                <td class="input-ele" width="25%"><?php echo $this->getStatusesAsCombo('myform[status]', $this->getQuote()->getstatus()); ?></td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo $this->__('Created at') ?></td>
+                <td class="input-ele"><?php echo $this->formatDate($this->getQuote()->getcreated_time(), 'medium'); ?></td>
+                <td class="label" width="25%"><?php echo $this->__('Last Notification Date'); ?></td>
+                <td>
+                    <?php if ($this->getQuote()->getnotification_date()): ?>
+                        <?php echo $this->formatDate($this->getQuote()->getnotification_date(), 'medium'); ?>
+                    <?php endif; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->__('Updated at') ?> </td>
+                    <td class="input-ele"><?php echo $this->formatDate($this->getQuote()->getupdate_time(), 'medium'); ?></td>
+                    <td class="label" width="20%"><?php echo $this->__('Commercial status') ?> </td>
+                    <td class="input-ele" width="25%"><?php echo $this->getQuoteStatusAsCombo(); ?></td>
+
+                </tr>
+                <tr>
+                    <td class="label"><label for="myform[caption]"><?php echo $this->__('Caption') ?> <span class="required">*</span></label></td>
+                    <td class="input-ele"><input style="width:400px;" class="input-text required-entry" id="myform[caption]" name="myform[caption]" value="<?php echo $this->getQuote()->getcaption(); ?>" /></td>
+                    <td class="label" width="25%"><?php echo $this->__('Associated Promotion'); ?></td>
+                    <td>
+                    <?php
+                        $promo = $this->getQuote()->GetPromo();
+                        if ($promo == null)
+                            echo $this->__('No promotion associated');
+                        else
+                            echo $promo->getname();
+                    ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label"><label for="myform[valid_end_time]"><?php echo $this->__('Valid until') ?></label></td>
+                    <td class="input-ele">
+                        <input type="text" id="myform[valid_end_time]" name="myform[valid_end_time]" value="<?php echo $this->getQuote()->getvalid_end_time(); ?>" class="input-text required-entry" />
+                        &nbsp; <img src="<?php echo $this->getSkinUrl('images/grid-cal.gif'); ?>" class="v-middle" id="img_calendar" />
+                        <script type="text/javascript">
+                            Calendar.setup({
+                                inputField : 'myform[valid_end_time]',
+                                ifFormat : '%Y-%m-%e',
+                                button : 'img_calendar',
+                                align : 'Bl',
+                                singleClick : true
+                            });
+                        </script>
+                    </td>
+                    <td class="label" width="25%"><?php echo $this->__('Associated product'); ?></td>
+                    <td>
+                    <?php
+                        $product = $this->GetProduct();
+                        if ($product == null)
+                            echo $this->__('Quotation not transformed into product.');
+                        else
+                            echo '<a href="' . $this->geturl('adminhtml/catalog_product/edit', array('id' => $product->getid())) . '">' . $product->getname() . '</a>';
+                    ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2" class="label"><label for="myform[message]"><?php echo $this->__('Comments') ?></label></td>
+                    <td rowspan="2" class="input-ele"><textarea style="width: 400px; height: 90px;" id="myform[message]" name="myform[message]"><?php echo $this->getQuote()->getmessage(); ?></textarea></td>
+                </tr>
+                <tr>
+                    <td class="label" width="25%"><label for="myform[weight]"><?php echo $this->__('Weight') ?></label></td>
+                    <td>
+                        <?php echo $this->__('Calculate from subitems : ') ?><?php echo $this->getYesNoCombo('myform[auto_calculate_weight]', $this->getQuote()->getauto_calculate_weight(), 'ToggleQuoteWeightFieldVisibility();'); ?>
+                        <br><input type="text" id="myform[weight]"  id="myform[weight]" name="myform[weight]" value="<?php echo $this->getQuote()->getweight() ?>" />
+                    </td>
+                </tr>
+                <?php if ($this->getQuote()->getcustomer_msg()): ?>
+                <tr>
+                    <td class="label" width="25%"><?php echo $this->__('Customer request') ?></td>
+                    <td colspan="4" class="input-ele"><?php echo $this->getQuote()->getcustomer_msg(); ?></td>
+                </tr>
+
+                <?php endif; ?>
+            </table>
+        </fieldset>
+    </div>
+
+
+<div style="clear:both"></div>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Totals'); ?></h4>
+    </div>
+    <div class="order-totals">
+        <!--<fieldset id="my-fieldset">-->
+
+        <table border="0" width="100%">
+            <tr>
+                <td width="10%" align="right"><b><?php echo $this->__('Total (excl tax) : '); ?></b></td>
+                <td width="10%" align="left"><b><?php echo $this->getQuote()->GetFinalPriceWithoutTaxes(); ?></b></td>
+                <td width="10%" align="right"><b><?php echo $this->__('Tax : '); ?></b></td>
+                <td width="10%" align="left"><b><?php echo $this->getQuote()->GetTaxAmount(); ?></b></td>
+                <td width="10%" align="right"><b><?php echo $this->__('Total (incl tax) : '); ?></b></td>
+                <td width="10%" align="left"><b><?php echo $this->getQuote()->GetFinalPriceWithTaxes(); ?></b></td>
+                <td width="10%" align="right"><b><?php echo $this->__('Margin : '); ?></b></td>
+                <td width="10%" align="left"><b><?php echo $this->getQuote()->getMargin().' ('.round($this->getQuote()->getMarginPercent(),2).' %)'; ?></b></td>
+            </tr>
+        </table>
+
+        <!--</fieldset>-->
+    </div>
+</div>
+<p>&nbsp;</p>
+<div style="clear:both"></div>
+
+
+    <div class="entry-edit box-right">
+
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Price'); ?></h4>
+        </div>
+        <fieldset>
+            <table>
+                <tr>
+                    <td class="label" width="25%"><?php echo $this->__('Show sub products prices') ?> </td>
+                    <td class="input-ele" width="25%">
+                    <?php echo $this->getYesNoCombo('myform[show_detail_price]', $this->getQuote()->getshow_detail_price()); ?></td>
+                </tr>
+                <tr>
+                    <td class="label" width="25%">
+                    <?php
+                        if (Mage::getStoreConfig('tax/calculation/price_includes_tax') == 1)
+                            echo $this->__('Price (incl tax)');
+                        else
+                            echo $this->__('Price (excl tax)');
+                    ?>
+                    </td>
+                    <td class="input-ele" width="25%">
+                        <?php echo $this->__('Calculate from subitems : ') ?><?php echo $this->getYesNoCombo('myform[auto_calculate_price]', $this->getQuote()->getauto_calculate_price(), 'ToggleQuotePriceFieldVisibility();'); ?>
+                        <br><input type="text" name="myform[price_ht]" id="myform[price_ht]" value="<?php echo $this->getQuote()->getprice_ht() ?>" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label" width="20%"><?php echo $this->__('Discount'); ?></td>
+                    <td class="input-ele" width="25%">
+                        <input type="text" name="myform[reduction]" value="<?php echo $this->getQuote()->getreduction(); ?>" />%
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+
+
+
+    <div class="entry-edit box-left">
+
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Attached file'); ?></h4>
+        </div>
+        <fieldset>
+            <table>
+                <tr>
+                    <td class="label" width="25%">
+                    <?php echo $this->__('PDF name'); ?>
+                    </td>
+                    <td class="input-ele" width="25%">
+                        <input type="text" name="myform[additional_pdf]" id="myform[additional_pdf]" value="<?php echo $this->getQuote()->getadditional_pdf(); ?>"/>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="label" width="25%"><?php echo $this->__('Attachment') ?></td>
+                                <td width="25%">
+                                    <?php if ($this->hasAttachment()): ?>
+                                            (<a href="<?php echo $this->getViewAttachmentUrl(); ?>"><?php echo $this->__('View'); ?></a>, <input type="checkbox" name="delete_attachment" id="delete_attachment" value="1"><?php echo $this->__('Delete'); ?>)
+                                    <?php else: ?>
+                                            <input type="file" name="upload_pdf" id="upload_pdf"/>
+                                    <?php endif; ?>
+                                </td>       
+                            </tr>
+                                </table>
+                            </fieldset>
+                        </div>
+
+                        <div style="clear:both"></div>
+
+                        <div class="entry-edit box-left">
+
+                            <div class="entry-edit-head">
+                                <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Shipping'); ?></h4>
+                            </div>
+                            <fieldset>
+                                <table>
+                                    <tr>
+                                        <td class="label" width="25%"><?php echo $this->__('Free Shipping') ?> </td>
+                                        <td width="25%"><?php echo $this->getYesNoCombo('myform[free_shipping]', $this->getQuote()->getfree_shipping()); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label" width="25%">
+                    <?php
+                                    if (Mage::getStoreConfig('tax/calculation/price_includes_tax') == 1)
+                                        echo $this->__('Shipping Rates (incl tax)');
+                                    else
+                                        echo $this->__('Shipping Rates (excl tax)');
+                    ?>
+                                </td>
+                                <td width="25%">
+                    <?php
+                                    $results = Mage::helper('quotation/ShippingRates')->collectRates($this->getQuote(), $this->getQuote()->GetCustomerAddress());
+                                    $currentMethod = $this->getQuote()->getshipping_method();
+                    ?>
+                                    <p><input type="radio" value="" id="myform[shipping_method]" name="myform[shipping_method]" <?php
+                                    if ($currentMethod == '') {
+                                        echo ' checked ';
+                                    } ?>> <?php echo $this->__('None'); ?>
+                              <?php foreach ($results->getAllRates() as $result): ?>
+                              <p>
+                                  <input type="radio" value="<?php echo $result['carrier'] . '_' . $result['method']; ?>" id="myform[shipping_method]" name="myform[shipping_method]"
+                        <?php
+                                        if ($currentMethod == $result['carrier'] . '_' . $result['method']) {
+                                            echo ' checked ';
+                                        }
+                        ?>>
+                        <?php echo $result['carrier_title'] . '/' . $result['method_title']; ?> : <?php echo number_format($result['price'], 2); ?>
+                                    </p>
+                    <?php endforeach; ?>
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+
+                    </div>
+
+<?php if ($this->getQuote()->getcustomer_request() == 1): ?>
+                                            <div class="entry-edit box-right">
+                                                <div class="entry-edit-head">
+                                                    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Customer Message'); ?></h4>
+                                                </div>
+                                                <fieldset id="my-fieldset">
+                                                    <table cellspacing="0"class="form-list">
+                                                        <tr>
+                                                            <td class="label" width="25%"><b><?php echo $this->__('Message from customer') ?></b></td>
+                                                            <td width="25%"><?php echo $this->getQuote()->getcustomer_msg(); ?></td>
+                                                        </tr>
+                                                    </table>
+                                                </fieldset>
+                                            </div>
+<?php endif; ?>
+
+
+

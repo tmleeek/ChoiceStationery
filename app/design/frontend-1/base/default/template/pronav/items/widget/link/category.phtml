@@ -1,0 +1,2 @@
+<?php $inflector = Mage::helper('pronav/inflector') ?>
+<li class="<?php echo 'pronav_category_' . $inflector->underscore($this->htmlEscape($this->getAnchorText())) ?>"><span class="widget pronav-widget-category-link"><a <?php echo $this->getLinkAttributes() ?>><span><?php echo $this->htmlEscape($this->getAnchorText()) ?></span></a></span></li>

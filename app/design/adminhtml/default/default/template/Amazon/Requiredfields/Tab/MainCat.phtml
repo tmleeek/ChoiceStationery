@@ -1,0 +1,82 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @copyright  Copyright (c) 2013 Boost My Shop (http://www.boostmyshop.com)
+ * @author : Nicolas MUGNIER
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @package MDN_Amazon
+ * @version 2
+ */
+?>
+<div class="content-header">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td><h3><?php echo $this->__('Amazon - ' . $this->getCategory()) ?></h3></td>
+            <td class="a-right">
+                <button type="button" class="scalable back" type="button" onClick="setLocation('<?php echo $this->getBackUrl() ?>')"><span>Back</span></button>
+                <button class="scalable add" onclick="showSets('<?php echo 'attributesSetCombo' . $this->getKey(); ?>');"><span><?php echo $this->__('Create attributes'); ?></span></button>
+                <?php echo $this->getAttributesSetAsCombo(); ?>
+                <button class="scalable save" onclick="main_cat_form.submit();"><span><?php echo $this->__('Save') ?></span></button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<?php $_mainCategoryFields = $this->getFields(); ?>
+<?php $k = $this->getKey(); ?>
+<div class="entry-edit">
+    <div class="grid">
+        <form method="POST" action="<?php echo Mage::helper('adminhtml')->getUrl('Amazon/Requiredfields/save', array('category' => $this->getCategory(), 'tab' => $k)); ?>" name="main_cat_form" id="main_cat_form">
+            <input id="form_key" name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+            <table class="data" cellspacing="0" width="100%" >
+                <thead>
+                    <tr class="headings">
+                        <th style="width:300px;" class="a-center"><?php echo $this->__('Field') ?></th>                        
+                        <th class="a-center"><?php echo $this->__('Attribute') ?></th>
+                        <th class="a-center"><?php echo $this->__('Default value'); ?></th>
+                        <th class="a-center"><?php echo $this->__('Restricted values') ?></th>
+                        <th class="a-center"><?php echo $this->__('Type') ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($_mainCategoryFields as $field) : ?>
+                        <?php if (!preg_match('/producttype/i', $field['parentNode'])) : ?>
+                            <tr>
+                                <td style="width:300px;" ><label for="<?php echo $this->getCategory() . '_' . $field['parentNode'] ?>"><?php echo $field['name'] ?></label></td>
+                                <td style="width:500px;">
+                                    <select id="<?php echo $this->getCategory() . '_' . $field['parentNode'] ?>" name="<?php echo $this->getCategory() . '_' . $field['parentNode'] ?>[attribute]">
+                                        <?php foreach ($this->getAttributeTab() as $attribute): ?>
+                                            <?php $selected = ($attribute['value'] == Mage::getModel('MarketPlace/Requiredfields')->loadValueForPath($this->getCategory() . '_' . $field['parentNode'], 'amazon')) ? 'selected' : ''; ?>
+                                            <option <?php echo $selected ?> value="<?php echo $attribute['value'] ?>"><?php echo $attribute['label'] ?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" name="<?php echo $this->getCategory() . '_' . $field['parentNode']; ?>[value]" value="<?php echo Mage::getModel('MarketPlace/Requiredfields')->loadDefaultForPath($this->getCategory() . '_' . $field['parentNode'], 'amazon'); ?>" id="<?php echo $this->getCategory() . '_' . $field['parentNode']; ?>"/>
+                                </td>
+                                <td style="width:200px;">
+                                    <?php if (array_key_exists('restriction', $field) || (array_key_exists('constraint', $field) && !is_string($field['constraint']))): ?>
+                                        <div id="<?php echo $field['name'] ?>" style="display:none;">
+                                            <p><?php echo $this->getRestrictionList($field) ?></p>
+                                            <a href="" onClick="restriction('hide','<?php echo $field['name'] ?>');return false;">close</a>
+                                        </div>
+                                        <a id="restrictionAction_<?php echo $field['name'] ?>" href="" onClick="restriction('show','<?php echo $field['name'] ?>');return false;"><?php echo $this->__('View') ?></a>
+                                    <?php endif ?>
+                                </td>
+                                <td style="width:200px;">
+                                    <?php echo $this->getType($field) ?>
+                                </td>
+                            </tr>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
+        </form>
+    </div>

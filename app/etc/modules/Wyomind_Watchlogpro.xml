@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Wyomind_Watchlogpro>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Wyomind_Watchlog/>
+            </depends>
+        </Wyomind_Watchlogpro>
+    </modules>
+</config> 

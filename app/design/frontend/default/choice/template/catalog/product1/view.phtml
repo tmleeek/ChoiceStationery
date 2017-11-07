@@ -1,0 +1,194 @@
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<div class="category-outer">
+  <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+            <div class="no-display">
+            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />
+        </div>
+        <div class="product-detail-div">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="product-img-outer">         
+                   <?php echo $this->getChildHtml('media') ?>
+              </div>
+              <!--end of product-img-box--> 
+            </div>
+            <!--end of col-0md-6-->
+            <div class="col-md-6">
+              <div class="product-shop">
+                <p class="product-shop-title"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></p>
+                <!--end of product-shop-title-->
+                <p class="product-code"><?php echo $this->__('Code: ')?><?php echo $_helper->productAttribute($_product, $_product->getSku(), 'sku') ?>
+               
+                </p>
+                <!--end of product-code-->
+                <div class="delivery-option">
+                  
+				  
+				<div><a style="color:#000;" href="http://www.choicestationery.com/delivery/"><span class="free-delivery"></span>free delivery</a></div>
+                <div><a style="color:#000;" href="http://www.choicestationery.com/lowest-priced-ink-cartridges/"><span class="price-promise"></span>price promise</a></div>
+           
+				  
+                </div>
+
+                <p class="product-description"><?php echo $_product->getShortDescription()?></p>
+                <!--end of product-description-->
+                <?php $stock = $_product->getStockItem();
+                if($stock->getIsInStock()):
+                ?>
+<p class="in-stock-text"><i class="fa fa-check"></i><strong><?php echo $this->__('in stock : ')?></strong><?php echo $this->__('Order before 5:00pm for same day dispatch')?>
+</p>
+<i class="tooltips fa fa-info-circle">
+  <span>
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('delivery_tooltip')->toHtml(); ?>
+  </span>
+</i>
+
+<?php else:?>
+<p class="in-stock-text"><i class="fa fa-check"></i><strong><?php echo $this->__('out of Stock')?></strong></p>
+<?php endif;?>
+<!--end of in-stock-text-->
+<?php if($_crossSellProducts = $_product->getCrossSellProducts()): ?>
+<?php $i=1;foreach($_crossSellProducts as $_item):?>
+<?php if($i == count($_crossSellProducts) ):?>
+<?php $item = Mage::getModel('catalog/product')->load($_item->getId());?>
+<div class="col-md-3">
+                  <div class="alternative-product"><a href="<?php echo $item->getProductUrl()?>"><img src="<?php echo $item->getImage()?>" alt="alternative" width="50" height="50" alt="image"/>
+                    <p class="alt-text">Alternative product available </p>
+                    <p class="alt-price">&pound; <?php echo number_format($item->getFinalPrice(),2)?></p>
+                  </div>
+                  <!--end of alternative-product--> 
+                </div>
+                <!--end of col-md-3-->
+<?php endif?>
+<?php $i++?>
+<?php endforeach;?>
+<?php endif;?>
+
+                <div class="col-md-9">
+                  <div class="add-to-box">
+                    <div class="top">
+                      <?php echo $this->getPriceHtml($_product, true, '-new') ?>
+                      <?php if($_product->isSaleable()): ?>
+                      <?php echo $this->getChildHtml('addtocart') ?>
+                      <?php endif;?>
+                      <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+                <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+            <?php endif;?>
+             </form>
+              <script type="text/javascript">
+    //<![CDATA[
+        var productAddToCartForm = new VarienForm('product_addtocart_form');
+        productAddToCartForm.submit = function(button, url) {
+            if (this.validator.validate()) {
+                var form = this.form;
+                var oldUrl = form.action;
+
+                if (url) {
+                   form.action = url;
+                }
+                var e = null;
+                try {
+                    this.form.submit();
+                } catch (e) {
+                }
+                this.form.action = oldUrl;
+                if (e) {
+                    throw e;
+                }
+
+                if (button && button != 'undefined') {
+                    button.disabled = true;
+                }
+            }
+        }.bind(productAddToCartForm);
+
+        productAddToCartForm.submitLight = function(button, url){
+            if(this.validator) {
+                var nv = Validation.methods;
+                delete Validation.methods['required-entry'];
+                delete Validation.methods['validate-one-required'];
+                delete Validation.methods['validate-one-required-by-name'];
+                // Remove custom datetime validators
+                for (var methodName in Validation.methods) {
+                    if (methodName.match(/^validate-datetime-.*/i)) {
+                        delete Validation.methods[methodName];
+                    }
+                }
+
+                if (this.validator.validate()) {
+                    if (url) {
+                        this.form.action = url;
+                    }
+                    this.form.submit();
+                }
+                Object.extend(Validation.methods, nv);
+            }
+        }.bind(productAddToCartForm);
+    //]]>
+    </script>
+                  </div>
+                  <!--end of add-to-box--> 
+                </div>
+                <!--end of col-md-9--> 
+              </div>
+              <!--end of product-shop--> 
+            </div>
+            <!--end of col-md-6--> 
+          </div>
+          <!--end of row--> 
+          <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('offers_popup')->toHtml();?>
+        </div>
+        <!--end of product-detail-div-->
+        
+        <div class="product-description-detail">
+          <p class="product-desc"><?php echo $_product->getDescription()?></p>
+        </div>
+        <!--end of product-description-detail-->
+        
+        <div class="product-review-detail">
+          <div class="row">
+            <div class="col-md-9">
+              <div class="product-tab-panel">
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="active"><a href="#delivery" role="tab" data-toggle="tab"><?php echo $this->__('delivery / returns')?></a></li>
+                  <li><a href="#specification" role="tab" data-toggle="tab"><?php echo $this->__('Specification')?></a></li>
+                  <li><a href="#review" role="tab" data-toggle="tab"><?php echo $this->__('reviews')?></a></li>
+                  
+                </ul>
+                
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div class="tab-pane active" id="delivery">
+                    <p class="delivery-text"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('delivery_returns')->toHtml();?></p>
+                  </div>
+                  <div class="tab-pane" id="specification">
+                    <?php echo $_product->getSpecification()?>
+            
+                  </div>
+                  <div class="tab-pane" id="review">
+                    <p class="review-text"><?php echo $this->getChildHtml('feefo_reviews')?></p>
+                  </div>
+                </div>
+              </div>
+              <!--end of product-tab-panel--> 
+            </div>
+            <!--end of col-md-9-->
+            <div class="col-md-3">
+              <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('pdt-view-block1')->toHtml();?>
+              <!--end of delivery-option-->
+              <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('newsletter-block')->toHtml();?>
+            </div>
+            <!--end of col-md-3--> 
+          </div>
+          <!--end of row--> 
+        </div>
+        <!--end of product-review-detail-->
+       <?php echo $this->getChildHtml('upsell_products') ?>
+      </div>
+      <!--end of category-outer--> 

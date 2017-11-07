@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Wyomind_Sitcsgs>
+            <active>true</active>
+            <codePool>community</codePool>
+             <depends>
+                 <Wyomind_Simplegoogleshopping/>
+             </depends>
+        </Wyomind_Sitcsgs>
+    </modules>
+</config> 

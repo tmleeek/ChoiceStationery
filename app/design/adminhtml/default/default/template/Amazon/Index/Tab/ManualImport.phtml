@@ -1,0 +1,63 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @copyright  Copyright (c) 2013 Boost My Shop (http://www.boostmyshop.com)
+ * @author : Nicolas MUGNIER
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @package MDN_Amazon
+ * @version 2
+ */
+?>
+ <div class="entry-edit box-left">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Import Amazon products'); ?></h4><img title="<?php echo $this->__('Match products from Amazon Inventory report.'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/>
+    </div>
+    <fieldset>
+        <form method="POST" enctype="multipart/form-data" action="<?php echo mage::helper('adminhtml')->getUrl('MarketPlace/Manual/importProducts', array('countryId' => Mage::registry('mp_country')->getId())); ?>">
+            <input id="form_key" name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+            <table border="0" style="margin-left: 30px;">
+                <tr>
+                    <th width="200" align="center"><?php echo $this->__('File') ?> : </th>
+                    <td colspan="2"><input type="file" name="file"></td>
+                </tr>
+                <tr>
+                    <th width="200" align="center"><?php echo $this->__('Action') ?> : </th>
+                    <td colspan="2"><button class="scalable" ><?php echo $this->__('Import') ?></button></td>
+                </tr>
+            </table>
+        </form>
+    </fieldset>
+</div>
+
+<div class="entry-edit box-right">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Import Amazon sales order'); ?></h4><img title="<?php echo $this->__('Import orders from Amazon order report (flat file).'); ?>" style="float:right;" src="<?php echo $this->getSkinUrl('images/Marketplace/help.png'); ?>" alt="<?php echo $this->__('help'); ?>"/>
+    </div>
+    <fieldset>
+        <form method="POST" enctype="multipart/form-data" action="<?php echo mage::helper('adminhtml')->getUrl('MarketPlace/Manual/ImportSales', array('countryId' => Mage::registry('mp_country')->getId())); ?>">
+            <input id="form_key" name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+            <table border="0" style="margin-left: 30px;">
+                <tr>
+                    <th width="200" align="center"><?php echo $this->__('File') ?> : </th>
+                    <td colspan="2"><input type="file" name="file"></td>
+                </tr>
+                <tr>
+                    <th width="200" align="center"><?php echo $this->__('Action') ?> : </th>
+                    <td colspan="2"><button class="scalable" ><?php echo $this->__('Import') ?></button></td>
+                </tr>
+            </table>
+        </form>
+    </fieldset>
+</div>
+
+<div class="clear"></div>
+
+<div id="import_product_infos"></div>
+<div id="import_orders_infos"></div>

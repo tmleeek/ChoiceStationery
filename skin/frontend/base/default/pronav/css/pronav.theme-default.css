@@ -1,0 +1,266 @@
+/*
+ * ProNav v3.5 CSS
+ * Theme: Magento Default
+ * Author: Brandammo
+ */
+
+/*
+ * PRONAV
+ */
+ul#pronav {
+	background:#0A263D;
+}
+
+/*
+ * PRIMARY LINK STYLES
+ */
+
+ul#pronav li.primary-pronav-item.first-pronav-item {}
+ul#pronav li.primary-pronav-item.last-pronav-item {}
+
+ul#pronav li.primary-pronav-item a.primary-pronav-link {
+	color:#A7C6DD;
+	padding:5px 15px;
+	text-decoration:none;
+	font-weight:bold;
+	text-transform: uppercase;
+}
+
+ul#pronav.pn-left li.primary-pronav-item a.primary-pronav-link,
+ul#pronav.pn-right li.primary-pronav-item a.primary-pronav-link {
+	font-size:10px;
+	text-transform: uppercase;
+	padding:5px 10px;
+}
+
+ul#pronav li.primary-pronav-item a.primary-pronav-link:hover,
+ul#pronav li.primary-pronav-item:hover a.primary-pronav-link {
+	color:#fff;
+	background:#D75F07;
+}
+
+ul#pronav.pn-left li.primary-pronav-item a.primary-pronav-link:hover,
+ul#pronav.pn-left li.primary-pronav-item:hover a.primary-pronav-link,
+ul#pronav.pn-right li.primary-pronav-item a.primary-pronav-link:hover,
+ul#pronav.pn-right li.primary-pronav-item:hover a.primary-pronav-link {
+	padding:5px 25px;
+}
+
+
+/*
+ * DROPDOWN STYLES
+ */
+ul#pronav li.primary-pronav-item .sub,
+ul#pronav li.primary-pronav-item .child-sub {
+	background:#f5f5f5;
+	box-shadow:2px 2px 2px rgba(0,0,0,0.2);
+	-moz-box-shadow:2px 2px 2px rgba(0,0,0,0.2);
+	-webkit-box-shadow:2px 2px 2px rgba(0,0,0,0.2);
+}
+
+
+/*
+ * DROPDOWN ROW STYLES
+ */
+ul#pronav li.primary-pronav-item .sub .row {}
+ul#pronav li.primary-pronav-item .sub .row.first-row {}
+ul#pronav li.primary-pronav-item .sub .row.last-row {}
+
+
+/*
+ * DROPDOWN COLUMNS
+ */
+ul#pronav li.primary-pronav-item .sub .row ul {
+	background-image:none;
+	border-right:1px solid #fff;
+	/*min-height:300px;*/
+	text-align: left;
+	padding:0px;
+}
+ul#pronav li.primary-pronav-item .sub .row ul.last-ul {
+	border-right:none;
+}
+
+
+/*
+ * DROPDOWN LIST & LINK STYLES
+ */
+ul#pronav li.primary-pronav-item .sub ul li {}
+ul#pronav li.primary-pronav-item .sub ul li.first-li {}
+ul#pronav li.primary-pronav-item .sub ul li.last-li {}
+
+ul#pronav li.primary-pronav-item .sub ul li.last-li > a {
+	border-bottom:none;
+}
+
+ul#pronav li.primary-pronav-item .sub ul li.pronav-unsorted ul,
+ul#pronav li.primary-pronav-item .sub ul li.pronav-sosorted ul {
+	border: none;
+}
+
+
+ul#pronav li.primary-pronav-item .sub ul li.first-li > a {
+	border-top:0px;
+}
+
+ul#pronav li.primary-pronav-item .sub ul li.level-2 a {
+	font-size: 13px;
+	font-weight: bold;
+	color:#E76200;
+	text-transform:uppercase;
+}
+
+ul#pronav li.primary-pronav-item .sub ul li.level-3 a {
+	font-size: 12px;
+	font-weight: bold;
+	color:#E76200;
+	background:#e9e9e9;
+}
+
+ul#pronav li.primary-pronav-item .sub ul li.level-4 a {
+	font-size: 11px;
+	padding-left: 30px;
+	color:#666;
+}
+
+ul#pronav li.primary-pronav-item .sub ul li.level-5 a {
+	font-size: 10px;
+	padding-left: 50px;
+}
+
+ul#pronav li.primary-pronav-item .sub ul li a {
+	color:#999;
+	font-size:11px;
+	text-decoration:none;
+	border-bottom: 1px solid #DDD;
+	border-top: 1px solid white;
+	padding:5px 25px;
+}
+
+ul#pronav li.primary-pronav-item .sub ul li a:hover {
+	background:#fff;
+}
+
+ul#pronav li.primary-pronav-item .sub ul li.level-2 a:hover {
+	color:#000;
+}
+
+ul#pronav li.primary-pronav-item .sub ul li.level-3 a:hover {
+	color:#000;
+	background:#e9e9e9;
+}
+
+
+/*
+ * SPLIT COLUMNS
+ */
+ul#pronav li.primary-pronav-item .sub ul.columns-split,
+ul#pronav li.primary-pronav-item .sub ul.columns-split li.columns-inside ul,
+ul#pronav li.primary-pronav-item .sub ul.columns-split li.columns-inside.last-li {
+	border:none;
+}
+
+ul#pronav li.primary-pronav-item .sub ul.columns-split li.columns-inside {
+	border-right:1px solid #fff;
+}
+
+ul#pronav li.primary-pronav-item .sub ul.columns-split li.columns-inside ul li a {
+	background:none;
+	border-top:1px solid #fff;
+	border-bottom:1px solid #ddd;
+	padding:5px 25px;
+}
+
+ul#pronav li.primary-pronav-item .sub ul.columns-split li.columns-inside ul li.first-li > a {
+	border-top:none;
+}
+
+ul#pronav li.primary-pronav-item .sub ul.columns-split li.columns-inside ul li.last-li > a {
+	border-bottom:none;	
+}
+
+ul#pronav li.primary-pronav-item .sub ul.columns-split li.columns-inside li a:hover {
+	background:#fff;
+}
+
+/*
+ * CUSTOM PROMOS
+ */
+
+ul.ul-promo {
+	width:300px !important;
+}
+
+.promo-container {
+	width:280px;
+	height:280px;
+	float:left;
+	padding:10px;
+}
+
+.promo-container .promo-large {
+	width:280px;
+	height:158px;
+	background:#ccc;
+}
+
+.promo-container .promo-small {
+	width:135px;
+	height:112px;
+	background:#aaa;
+	margin-top:10px;
+}
+
+.promo-container .promo-small.left-promo {
+	float:left;
+	clear:left;
+}
+
+.promo-container .promo-small.right-promo {
+	float:right;
+	clear:right;
+}
+
+.promo-container a {
+	padding:0px !important;
+}
+
+
+/*
+ * CUSTOM CATEGORY LISTING
+ */
+ul#pronav li.primary-pronav-item#category-products .sub .row ul {width:1020px;}
+ul#pronav li.primary-pronav-item .sub .row ul li .category-products {padding:10px}
+ul#pronav li.primary-pronav-item .sub ul li .category-products .products-grid {background:#eee; border:none; padding:10px; margin:0 0 5px 0}
+ul#pronav li.primary-pronav-item .sub ul li .category-products .products-grid.last {margin:0px;}
+ul#pronav li.primary-pronav-item .sub ul li .category-products .products-grid .item {float:left; width:135px;margin:0 10px 0 0; background:#fff; padding:10px}
+ul#pronav li.primary-pronav-item .sub ul li .category-products .products-grid .item.last {margin:0px;}
+ul#pronav li.primary-pronav-item .sub ul li .category-products .products-grid .item a {padding:0px; margin:0px; border:none}
+ul#pronav li.primary-pronav-item .sub ul li .category-products .products-grid .product-name,
+ul#pronav li.primary-pronav-item .sub ul li .category-products .products-grid .price-box {padding:5px; text-align:center;}
+ul#pronav li.primary-pronav-item .sub ul li .category-products .products-grid .product-name a:hover {background:none; color:#000}
+ul#pronav li.primary-pronav-item .sub ul li .category-products .products-grid .actions {position:static; text-align:center;}
+
+
+/*
+ * CUSTOM ACCOUNT LOGIN
+ */
+ul#pronav li.primary-pronav-item#account-login .sub .row ul {width:855px;}
+ul#pronav li.primary-pronav-item#account-login .sub .row ul li .account-login {padding:20px;}
+ul#pronav li.primary-pronav-item#account-login .sub .row ul li .account-login .buttons-set a {border:none; padding:0px;}
+ul#pronav li.primary-pronav-item#account-login .sub .row ul li .account-login .content {background:#eee; border:none; padding:20px;}
+ul#pronav li.primary-pronav-item#account-login .sub .row ul li .account-login .buttons-set {border:none; padding:10px; background:#fff;}
+
+
+/*
+ * RESPONSIVE PRONAV
+ */
+#pronav-selection-container #pronav-select-toggle {
+	color:#A7C6DD;
+	background: url(../images/pronav-select.png) no-repeat 10px center #0A263D;
+}
+
+#pronav-selection-container #pronav-selection {
+	background:#f5f5f5;
+	border-bottom:5px solid #A7C6DD;
+}

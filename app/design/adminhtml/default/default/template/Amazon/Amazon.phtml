@@ -1,0 +1,49 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @copyright  Copyright (c) 2013 Boost My Shop (http://www.boostmyshop.com)
+ * @author : Nicolas MUGNIER
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @package MDN_Amazon
+ * @version 2
+ */
+?>
+<div class="content-header">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td><h3 class="icon-head head-products"><?php echo $this->__('Amazon') ?></h3></td>
+            <td class="a-right">
+                <button class="scalable add" onclick="setLocation('<?php echo $this->getUrl('MarketPlace/Configuration/index', array('type' => 'account', 'mp' => 'amazon', 'account' => null)); ?>');"><span><?php echo $this->__('Create new account') ?></span></button>
+                <button onclick="document.location.href='<?php echo mage::helper('adminhtml')->getUrl('MarketPlace/Manual/Export', array('country_id' => Mage::registry('mp_country')->getId())); ?>'" class="scalable" type="button"><span><?php echo $this->__('Create export file') ?></span></button>
+                <!--<button onclick="saveGrid(); return false;" class="scalable save" type="button"><span><?php //echo $this->__('Save') ?></span></button>-->
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="dashboard-container" style="border:none;">
+    <p class="switcher">
+        <label for="accounts"><?php echo $this->__('Select account'); ?> : </label><?php echo $this->getCountriesAsCombo(); ?>
+    </p>
+    <?php echo $this->getChildHtml('amazon_index_tabs'); ?>
+    <div id="amazon_index_tab_content"></div>
+</div>
+
+<script type="text/javascript">
+
+    function switchCountry(countryId){
+
+        document.location.href = '<?php echo $this->getUrl('Amazon/Main/index'); ?>'+'country_id/'+countryId;
+
+        return false;
+
+    }
+
+</script>
+

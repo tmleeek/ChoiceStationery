@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<config>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <!-- acl for menu -->
+                    <customer>
+                        <children>
+                            <sublogin translate="title" module="sublogin">
+                                <title>Manage Sublogins</title>
+                                <sort_order>0</sort_order>
+                                <children>
+									<acl>
+										<title>Manage ACL</title>
+										<sort_order>0</sort_order>
+									</acl>
+									<budget>
+										<title>Manage Budget</title>
+										<sort_order>0</sort_order>
+									</budget>
+								</children>
+                            </sublogin>
+                        </children>
+                    </customer>
+                    <!-- acl for configuration -->
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <sublogin translate="title" module="sublogin">
+                                        <title>Sublogin Configuration</title>
+                                        <sort_order>100</sort_order>
+                                    </sublogin>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

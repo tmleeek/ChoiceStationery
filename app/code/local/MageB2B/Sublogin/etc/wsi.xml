@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:typens="urn:{{var wsdl.name}}"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="{{var wsdl.name}}"
+             targetNamespace="urn:{{var wsdl.name}}">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:{{var wsdl.name}}">
+			
+			<!-- Sublogin -->
+            <xsd:complexType name="subloginEntityArray">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" name="complexObjectArray" type="typens:subloginEntity" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="subloginEntity">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int" minOccurs="1" /> <!-- primary key -->
+                    <xsd:element name="entity_id" type="xsd:int" minOccurs="1" /> <!-- magento customer id -->
+                    <!--<xsd:element name="customer_id" type="xsd:int" minOccurs="1" />--> <!-- customer id from MageB2B_CustomerId extension For now there is no support to use this, but may be in future -->
+                    <xsd:element name="email" type="xsd:string" minOccurs="1" />
+                    <xsd:element name="password" type="xsd:string" minOccurs="1" />
+                    <xsd:element name="firstname" type="xsd:string" minOccurs="1" />
+                    <xsd:element name="lastname" type="xsd:string" minOccurs="1" />
+                    <xsd:element name="expire_date" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="active" type="xsd:boolean" minOccurs="1" />
+                    <xsd:element name="send_backendmails" type="xsd:boolean" minOccurs="0" />
+                    <xsd:element name="create_sublogins" type="xsd:boolean" minOccurs="0" />
+                    <xsd:element name="is_subscribed" type="xsd:boolean" minOccurs="0" />
+                    <xsd:element name="store_id" type="xsd:int" minOccurs="1" />
+                    <xsd:element name="address_ids" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="acl" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="order_needs_approval" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>			
+			<xsd:complexType name="subloginEntityToCreate">
+                <xsd:sequence>
+                    <xsd:element name="entity_id" type="xsd:int" minOccurs="1" /> <!-- magento customer id -->
+                    <!--<xsd:element name="customer_id" type="xsd:int" minOccurs="1" />--> <!-- customer id from MageB2B_CustomerId extension For now there is no support to use this, but may be in future -->
+                    <xsd:element name="email" type="xsd:string" minOccurs="1" />
+                    <xsd:element name="password" type="xsd:string" minOccurs="1" />
+                    <xsd:element name="firstname" type="xsd:string" minOccurs="1" />
+                    <xsd:element name="lastname" type="xsd:string" minOccurs="1" />
+                    <xsd:element name="expire_date" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="active" type="xsd:boolean" minOccurs="1" />
+                    <xsd:element name="send_backendmails" type="xsd:boolean" minOccurs="0" />
+                    <xsd:element name="create_sublogins" type="xsd:boolean" minOccurs="0" />
+                    <xsd:element name="is_subscribed" type="xsd:boolean" minOccurs="0" />
+                    <xsd:element name="store_id" type="xsd:int" minOccurs="1" />
+                    <xsd:element name="address_ids" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="acl" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="order_needs_approval" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            
+            <!-- Sublogin Acl -->
+            <xsd:complexType name="subloginAclArray">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" name="complexObjectArray" type="typens:subloginAcl" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="subloginAcl">
+                <xsd:sequence>
+                    <xsd:element name="acl_id" type="xsd:int" minOccurs="1" /> <!-- primary key -->
+                    <xsd:element name="name" type="xsd:string" minOccurs="1" />
+                    <xsd:element name="identifier" type="xsd:string" minOccurs="1" />
+                </xsd:sequence>
+            </xsd:complexType>			
+			<xsd:complexType name="subloginAclToCreate">
+                <xsd:sequence>
+					<xsd:element name="name" type="xsd:string" minOccurs="1" />
+                    <xsd:element name="identifier" type="xsd:string" minOccurs="1" />
+                </xsd:sequence>
+            </xsd:complexType>
+            
+            <!-- Sublogin Budget -->
+            <xsd:complexType name="subloginBudgetArray">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" name="complexObjectArray" type="typens:subloginBudget" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="subloginBudget">
+                <xsd:sequence>
+                    <xsd:element name="budget_id" type="xsd:int" minOccurs="1" /> <!-- primary key -->
+                    <xsd:element name="sublogin_id" type="xsd:int" minOccurs="1" />
+                    <xsd:element name="year" type="xsd:string" minOccurs="1" />
+                    <xsd:element name="month" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="day" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="per_order" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="amount" type="xsd:string" minOccurs="1" />
+                </xsd:sequence>
+            </xsd:complexType>			
+			<xsd:complexType name="subloginBudgetToCreate">
+                <xsd:sequence>
+					<xsd:element name="sublogin_id" type="xsd:int" minOccurs="1" />
+                    <xsd:element name="year" type="xsd:string" minOccurs="1" />
+                    <xsd:element name="month" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="day" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="per_order" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="amount" type="xsd:string" minOccurs="1" />
+                </xsd:sequence>
+            </xsd:complexType>
+			
+			<!-- Sublogin Params -->
+			<xsd:element name="subloginListRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="filters" type="typens:filters" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+			<xsd:element name="subloginListResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:subloginEntityArray" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+
+			<xsd:element name="subloginInfoRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="id" type="xsd:int" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+			<xsd:element name="subloginInfoResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:subloginEntity" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+
+			<xsd:element name="subloginCreateRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="data" type="typens:subloginEntityToCreate" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="subloginCreateResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:int" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+			
+			<xsd:element name="subloginUpdateRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+						<xsd:element minOccurs="1" maxOccurs="1" name="id" type="xsd:int" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="data" type="typens:subloginEntityToCreate" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="subloginUpdateResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+			
+			<xsd:element name="subloginDeleteRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="id" type="xsd:int" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="subloginDeleteResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+            
+            
+            <!-- Sublogin Acl Params -->
+			<xsd:element name="subloginAclListRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="filters" type="typens:filters" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+			<xsd:element name="subloginAclListResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:subloginAclArray" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+
+			<xsd:element name="subloginAclInfoRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="id" type="xsd:int" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+			<xsd:element name="subloginAclInfoResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:subloginAcl" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+
+			<xsd:element name="subloginAclCreateRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="data" type="typens:subloginAclToCreate" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="subloginAclCreateResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:int" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+			
+			<xsd:element name="subloginAclUpdateRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+						<xsd:element minOccurs="1" maxOccurs="1" name="id" type="xsd:int" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="data" type="typens:subloginAclToCreate" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="subloginAclUpdateResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+			
+			<xsd:element name="subloginAclDeleteRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="id" type="xsd:int" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="subloginAclDeleteResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+        
+			<!-- Sublogin Budget Params -->
+			<xsd:element name="subloginBudgetListRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="filters" type="typens:filters" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+			<xsd:element name="subloginBudgetListResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:subloginBudgetArray" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+
+			<xsd:element name="subloginBudgetInfoRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="id" type="xsd:int" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+			<xsd:element name="subloginBudgetInfoResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:subloginBudget" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+
+			<xsd:element name="subloginBudgetCreateRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="data" type="typens:subloginBudgetToCreate" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="subloginBudgetCreateResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:int" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+			
+			<xsd:element name="subloginBudgetUpdateRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+						<xsd:element minOccurs="1" maxOccurs="1" name="id" type="xsd:int" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="data" type="typens:subloginBudgetToCreate" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="subloginBudgetUpdateResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+			
+			<xsd:element name="subloginBudgetDeleteRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="id" type="xsd:int" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="subloginBudgetDeleteResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
+                    </xsd:sequence>
+                 </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+	
+	<!-- Sublogin Requests -->
+	<wsdl:message name="subloginListRequest">
+        <wsdl:part name="parameters" element="typens:subloginListRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginListResponse">
+        <wsdl:part name="parameters" element="typens:subloginListResponseParam" />
+    </wsdl:message>
+	
+	<wsdl:message name="subloginInfoRequest">
+        <wsdl:part name="parameters" element="typens:subloginInfoRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginInfoResponse">
+        <wsdl:part name="parameters" element="typens:subloginInfoResponseParam" />
+    </wsdl:message>
+	
+	<wsdl:message name="subloginCreateRequest">
+        <wsdl:part name="parameters" element="typens:subloginCreateRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginCreateResponse">
+        <wsdl:part name="parameters" element="typens:subloginCreateResponseParam" />
+    </wsdl:message>
+	
+	<wsdl:message name="subloginUpdateRequest">
+        <wsdl:part name="parameters" element="typens:subloginUpdateRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginUpdateResponse">
+        <wsdl:part name="parameters" element="typens:subloginUpdateResponseParam" />
+    </wsdl:message>
+	
+	<wsdl:message name="subloginDeleteRequest">
+        <wsdl:part name="parameters" element="typens:subloginDeleteRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginDeleteResponse">
+        <wsdl:part name="parameters" element="typens:subloginDeleteResponseParam" />
+    </wsdl:message>
+    
+    <!-- Sublogin Acl Requests -->
+	<wsdl:message name="subloginAclListRequest">
+        <wsdl:part name="parameters" element="typens:subloginAclListRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginAclListResponse">
+        <wsdl:part name="parameters" element="typens:subloginAclListResponseParam" />
+    </wsdl:message>
+	
+	<wsdl:message name="subloginAclInfoRequest">
+        <wsdl:part name="parameters" element="typens:subloginAclInfoRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginAclInfoResponse">
+        <wsdl:part name="parameters" element="typens:subloginAclInfoResponseParam" />
+    </wsdl:message>
+	
+	<wsdl:message name="subloginAclCreateRequest">
+        <wsdl:part name="parameters" element="typens:subloginAclCreateRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginAclCreateResponse">
+        <wsdl:part name="parameters" element="typens:subloginAclCreateResponseParam" />
+    </wsdl:message>
+	
+	<wsdl:message name="subloginAclUpdateRequest">
+        <wsdl:part name="parameters" element="typens:subloginAclUpdateRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginAclUpdateResponse">
+        <wsdl:part name="parameters" element="typens:subloginAclUpdateResponseParam" />
+    </wsdl:message>
+	
+	<wsdl:message name="subloginAclDeleteRequest">
+        <wsdl:part name="parameters" element="typens:subloginAclDeleteRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginAclDeleteResponse">
+        <wsdl:part name="parameters" element="typens:subloginAclDeleteResponseParam" />
+    </wsdl:message>
+    
+    <!-- Sublogin Budget Requests -->
+	<wsdl:message name="subloginBudgetListRequest">
+        <wsdl:part name="parameters" element="typens:subloginBudgetListRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginBudgetListResponse">
+        <wsdl:part name="parameters" element="typens:subloginBudgetListResponseParam" />
+    </wsdl:message>
+	
+	<wsdl:message name="subloginBudgetInfoRequest">
+        <wsdl:part name="parameters" element="typens:subloginBudgetInfoRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginBudgetInfoResponse">
+        <wsdl:part name="parameters" element="typens:subloginBudgetInfoResponseParam" />
+    </wsdl:message>
+	
+	<wsdl:message name="subloginBudgetCreateRequest">
+        <wsdl:part name="parameters" element="typens:subloginBudgetCreateRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginBudgetCreateResponse">
+        <wsdl:part name="parameters" element="typens:subloginBudgetCreateResponseParam" />
+    </wsdl:message>
+	
+	<wsdl:message name="subloginBudgetUpdateRequest">
+        <wsdl:part name="parameters" element="typens:subloginBudgetUpdateRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginBudgetUpdateResponse">
+        <wsdl:part name="parameters" element="typens:subloginBudgetUpdateResponseParam" />
+    </wsdl:message>
+	
+	<wsdl:message name="subloginBudgetDeleteRequest">
+        <wsdl:part name="parameters" element="typens:subloginBudgetDeleteRequestParam" />
+    </wsdl:message>
+	<wsdl:message name="subloginBudgetDeleteResponse">
+        <wsdl:part name="parameters" element="typens:subloginBudgetDeleteResponseParam" />
+    </wsdl:message>
+	
+	<wsdl:portType name="{{var wsdl.handler}}PortType">
+		<!-- Sublogin Opertions -->
+        <wsdl:operation name="subloginList">
+            <wsdl:documentation>Retrieve sublogins</wsdl:documentation>
+            <wsdl:input message="typens:subloginListRequest" />
+            <wsdl:output message="typens:subloginListResponse" />
+        </wsdl:operation>
+		
+		<wsdl:operation name="subloginInfo">
+            <wsdl:documentation>Retrieve single sublogin</wsdl:documentation>
+            <wsdl:input message="typens:subloginInfoRequest" />
+            <wsdl:output message="typens:subloginInfoResponse" />
+        </wsdl:operation>
+		
+		<wsdl:operation name="subloginCreate">
+            <wsdl:documentation>Add sublogin</wsdl:documentation>
+            <wsdl:input message="typens:subloginCreateRequest" />
+            <wsdl:output message="typens:subloginCreateResponse" />
+        </wsdl:operation>
+		
+		<wsdl:operation name="subloginUpdate">
+            <wsdl:documentation>Update sublogin</wsdl:documentation>
+            <wsdl:input message="typens:subloginUpdateRequest" />
+            <wsdl:output message="typens:subloginUpdateResponse" />
+        </wsdl:operation>
+		
+		<wsdl:operation name="subloginDelete">
+            <wsdl:documentation>Delete sublogin</wsdl:documentation>
+            <wsdl:input message="typens:subloginDeleteRequest" />
+            <wsdl:output message="typens:subloginDeleteResponse" />
+        </wsdl:operation>
+        
+        <!-- Sublogin Acl Opertions -->
+        <wsdl:operation name="subloginAclList">
+            <wsdl:documentation>Retrieve list of sublogin acl</wsdl:documentation>
+            <wsdl:input message="typens:subloginAclListRequest" />
+            <wsdl:output message="typens:subloginAclListResponse" />
+        </wsdl:operation>
+		
+		<wsdl:operation name="subloginAclInfo">
+            <wsdl:documentation>Retrieve single sublogin acl</wsdl:documentation>
+            <wsdl:input message="typens:subloginAclInfoRequest" />
+            <wsdl:output message="typens:subloginAclInfoResponse" />
+        </wsdl:operation>
+		
+		<wsdl:operation name="subloginAclCreate">
+            <wsdl:documentation>Add sublogin acl</wsdl:documentation>
+            <wsdl:input message="typens:subloginAclCreateRequest" />
+            <wsdl:output message="typens:subloginAclCreateResponse" />
+        </wsdl:operation>
+		
+		<wsdl:operation name="subloginAclUpdate">
+            <wsdl:documentation>Update sublogin acl</wsdl:documentation>
+            <wsdl:input message="typens:subloginAclUpdateRequest" />
+            <wsdl:output message="typens:subloginAclUpdateResponse" />
+        </wsdl:operation>
+		
+		<wsdl:operation name="subloginAclDelete">
+            <wsdl:documentation>Delete sublogin acl</wsdl:documentation>
+            <wsdl:input message="typens:subloginAclDeleteRequest" />
+            <wsdl:output message="typens:subloginAclDeleteResponse" />
+        </wsdl:operation>
+        
+        <!-- Sublogin Budget Opertions -->
+        <wsdl:operation name="subloginBudgetList">
+            <wsdl:documentation>Retrieve list of sublogin budget</wsdl:documentation>
+            <wsdl:input message="typens:subloginBudgetListRequest" />
+            <wsdl:output message="typens:subloginBudgetListResponse" />
+        </wsdl:operation>
+		
+		<wsdl:operation name="subloginBudgetInfo">
+            <wsdl:documentation>Retrieve single sublogin budget</wsdl:documentation>
+            <wsdl:input message="typens:subloginBudgetInfoRequest" />
+            <wsdl:output message="typens:subloginBudgetInfoResponse" />
+        </wsdl:operation>
+		
+		<wsdl:operation name="subloginBudgetCreate">
+            <wsdl:documentation>Add sublogin budget</wsdl:documentation>
+            <wsdl:input message="typens:subloginBudgetCreateRequest" />
+            <wsdl:output message="typens:subloginBudgetCreateResponse" />
+        </wsdl:operation>
+		
+		<wsdl:operation name="subloginBudgetUpdate">
+            <wsdl:documentation>Update sublogin budget</wsdl:documentation>
+            <wsdl:input message="typens:subloginBudgetUpdateRequest" />
+            <wsdl:output message="typens:subloginBudgetUpdateResponse" />
+        </wsdl:operation>
+		
+		<wsdl:operation name="subloginBudgetDelete">
+            <wsdl:documentation>Delete sublogin budget</wsdl:documentation>
+            <wsdl:input message="typens:subloginBudgetDeleteRequest" />
+            <wsdl:output message="typens:subloginBudgetDeleteResponse" />
+        </wsdl:operation>
+	</wsdl:portType>
+	
+	
+	<wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        
+        <!-- Sublogin Operation Binding -->
+        <wsdl:operation name="subloginList">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+		<wsdl:operation name="subloginInfo">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+		<wsdl:operation name="subloginCreate">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+		<wsdl:operation name="subloginUpdate">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+		<wsdl:operation name="subloginDelete">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        
+        <!-- Sublogin Acl Operation Binding -->
+        <wsdl:operation name="subloginAclList">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+		<wsdl:operation name="subloginAclInfo">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+		<wsdl:operation name="subloginAclCreate">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+		<wsdl:operation name="subloginAclUpdate">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+		<wsdl:operation name="subloginAclDelete">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        
+        <!-- Sublogin Budget Operation Binding -->
+        <wsdl:operation name="subloginBudgetList">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+		<wsdl:operation name="subloginBudgetInfo">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+		<wsdl:operation name="subloginBudgetCreate">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+		<wsdl:operation name="subloginBudgetUpdate">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+		<wsdl:operation name="subloginBudgetDelete">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:service name="{{var wsdl.name}}Service">
+        <wsdl:port name="{{var wsdl.handler}}Port" binding="typens:{{var wsdl.handler}}Binding">
+            <soap:address location="{{var wsdl.url}}" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

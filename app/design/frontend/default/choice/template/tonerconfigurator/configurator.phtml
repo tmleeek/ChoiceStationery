@@ -1,0 +1,21 @@
+<!--link href="<?php echo $this->getSkinUrl('css/tonerconfigurator/' . $this->getData('styling') . '.css', array('_use_rewrite' => true)); ?>" rel="stylesheet"-->
+<?php require_once('configuratorscript.phtml'); ?>
+<div class="find-cartridge-container">
+<div class="container">
+        <div class="find-cartridge-outer">
+            <div class="row">
+<div class="toner-configurator">
+<div class="col-md-3">
+                            <p class="search-title"><?php echo $this->__('Find My Printer Cartridges')?></p>
+                            </div><!--end of col-md-3-->
+	<div class="loadingmask">
+		<div class="loader"><div class="spinner"></div></div>
+	</div>
+<div class="col-md-9">
+        <?php require('configuratordropdowns.phtml'); ?>
+    </div>
+</div>
+        </div>
+    </div>
+</div>
+</div>

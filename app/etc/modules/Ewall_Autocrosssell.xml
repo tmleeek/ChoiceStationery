@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Ewall_Autocrosssell>
+			<active>true</active>
+			<codePool>local</codePool>
+		</Ewall_Autocrosssell>
+	</modules>
+</config>

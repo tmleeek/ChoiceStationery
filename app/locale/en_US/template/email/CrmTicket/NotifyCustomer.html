@@ -1,0 +1,38 @@
+<!--@subject {{var ct_subject}} {{var hashtag}} @-->
+<p><FONT COLOR="#FFFFFF">{{var responsetag}}</FONT></p>
+<div style="font:11px/1.35em Verdana, Arial, Helvetica, sans-serif;">
+    <table cellspacing="0" cellpadding="0" border="0" width="98%" style="margin-top:10px; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; margin-bottom:10px;">
+        <tr>
+            <td align="center" valign="top">
+                <!-- [ header starts here] -->
+                <table cellspacing="0" cellpadding="0" border="0" width="650">
+                    <tr>
+                        <td valign="top"><a href="{{store url=""}}"><img src="{{skin url="images/logo_email.gif" _area='frontend'}}" alt="{{var store.getFrontendName()}}"  style="margin-bottom:10px;" border="0"/></a></td>
+                    </tr>
+                </table>
+                <!-- [ middle starts here] -->
+                <table cellspacing="0" cellpadding="0" border="0" width="650">
+                    <tr>
+                        <td valign="top">
+                            <h1>Hello,</h1>
+ 	  
+                            <p>a new response of the ticket "{{var ct_subject}}" has been send, here are the main information :</p>
+                            <p><b>Ticket subject :</b> {{var ct_subject}}</p>
+                            <p><b>Ticket id :</b> {{var ct_ticket_id}}</p>
+                            <p><b>Ticket created at :</b> {{var ctm_created_at}}</p>
+
+                            <p>Please log in your account to get more information</p>
+                            
+                            <br /><b>Previous Tickets:</b><br />
+                            {{var tickets_list}}
+                            <br />
+                            
+                            <p>Regards.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+<p><FONT COLOR="#FFFFFF">{{var hashtag}}</FONT></p>

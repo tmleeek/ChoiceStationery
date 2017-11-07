@@ -1,0 +1,81 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * @see Mage_Page_Block_Template_Links
+ */
+?>
+<?php $_links = $this->getLinks(); ?>
+<?php if(count($_links)>0): ?>
+<?php $i=0;?>
+    <?php foreach($_links as $_link): ?>
+<?php 
+switch($i){
+case 0:
+	$class="account";
+	$anchorClass="account-link";
+        break;
+    case 1:
+        $class="cartridge";
+$anchorClass="cartridge-link";
+        break;
+    case 2:
+        $class="quote";
+$anchorClass="quote-link";
+        break;
+    case 3:
+        $class="checkout";
+$anchorClass="checkout-link";
+        break;
+     case 4:
+        $class="blog";
+$anchorClass="blog-link";
+        break;
+    default:
+        $class='';
+break;
+}?>
+<?php if(strpos($_link->getUrl(),'qquoteadv') !== false){
+continue;
+}?>
+<?php $i++?>
+        <?php if ($_link instanceof Mage_Core_Block_Abstract):?>
+            <a title="<?php echo $this->__('Find My Cartridges') ?>" class="cartridge1-link" href="<?php echo $this->getUrl('find-my-printer-cartridges'); ?>"><span class="cartridge"></span><?php echo $this->__('Find My Cartridges') ?></a>
+			<a href="<?php echo $this->getBaseUrl()?>contact_us" class="whishlist-link"><span class="whishlist"></span><?php echo $this->__("Contact Us")?></a>
+        <?php else: ?>
+
+<?php if(strpos($_link->getUrl(),'checkout') !== false):?>
+           <a href="<?php echo Mage::getBaseUrl().'checkout/cart' ?>" class="<?php echo $anchorClass?>" title="<?php echo $_link->getTitle() ?>" <?php echo $_link->getAParams() ?>><span class="<?php echo $class?>"></span><?php echo $_link->getLabel() ?></a><?php //echo $_link->getAfterText() ?>
+<?php else:?>
+           <a href="<?php echo $_link->getUrl() ?>" class="<?php echo $anchorClass?>" title="<?php echo $_link->getTitle() ?>" <?php echo $_link->getAParams() ?>><span class="<?php echo $class?>"></span><?php echo $_link->getLabel() ?></a><?php //echo $_link->getAfterText() ?>
+<?php endif;?>
+
+<?php endif;?>
+      
+    <?php endforeach; ?>
+<a href="<?php echo $this->getBaseUrl()?>" class="login-link"><span class="login"></span>Help</a>
+<?php endif; ?>

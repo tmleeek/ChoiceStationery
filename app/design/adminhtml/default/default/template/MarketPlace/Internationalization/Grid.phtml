@@ -1,0 +1,52 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @copyright  Copyright (c) 2012 Boost My Shop (http://www.boostmyshop.com)
+ * @author : Nicolas MUGNIER
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @package MDN_MarketPlace
+ * @version 2.1
+ */
+?>
+<?php $_marketplaces = $this->getMarketPlaces(); ?>
+
+<div class="content-header">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td><h3><?php echo $this->__('Internationalization')?></h3></td>
+        </tr>
+    </table>
+</div>
+
+<div class="grid">
+    <table class="data" cellspacing="0" width="100%" >
+        <thead>
+            <tr class="headings">
+                <th class="a-center"><?php echo $this->__('Stores') ?></th>
+                <?php foreach($_marketplaces as $mp): ?>
+                <th class="a-center"><?php echo $mp->getMarketPlaceName() ?></th>
+                <?php endforeach ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php $i = 0 ?>
+            <?php foreach($this->getStores() as $store): ?>
+            <?php $class = ($i % 2 == 0) ? 'event pointer' : 'pointer'; ?>
+                <tr class="<?php echo $class; ?>">
+                    <td class="a-left"><?php echo $store->getname() ?></td>
+                    <?php foreach($_marketplaces as $mp): ?>
+                        <td class="a-center"><?php echo $this->getRowText($store, $mp); ?></td>
+                    <?php endforeach ?>
+                </tr>
+            <?php $i++ ?>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+</div>

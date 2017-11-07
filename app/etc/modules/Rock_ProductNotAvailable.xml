@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Rock_ProductNotAvailable>
+      <active>true</active>
+      <codePool>local</codePool>
+      <version>0.1.0</version>
+    </Rock_ProductNotAvailable>
+  </modules>
+</config>

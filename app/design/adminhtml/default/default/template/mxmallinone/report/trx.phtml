@@ -1,0 +1,91 @@
+<?php
+/* @var $this Mxm_AllInOne_Block_Adminhtml_Report_Trx */
+?>
+<style type="text/css">
+    .report-container {
+        border: 1px solid #ccc
+    }
+
+    .report-container .switcher {
+        margin-bottom: 0px;
+        border: 0;
+    }
+
+    .no-transactional {
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        padding: 24px;
+    }
+</style>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3><?php echo $this->__('%s Transactional Reporting', Mage::helper('mxmallinone')->getWhiteLabelName()); ?></h3></td>
+        </tr>
+    </table>
+</div>
+<div class="report-container">
+    <?php echo $this->getChildHtml('store_switcher'); ?>
+    <div>
+        <?php if ($this->hasTransactional()): ?>
+        <table class="date-picker" cellspacing="10">
+            <tr>
+                <td>
+                    <label for="date_from"><?php echo $this->__('Date From'); ?>:</label>
+                    <input type="text" id="date_from" name="date_from" value="<?php echo $this->getDateStr('from'); ?>" />
+                </td>
+                <td>
+                    <label for="date_from"><?php echo $this->__('Date To'); ?>:</label>
+                    <input type="text" id="date_to" name="date_to" value="<?php echo $this->getDateStr('to'); ?>" />
+                </td>
+                <td>
+                    <button type="button" title="<?php echo $this->__('Apply'); ?>" onclick="mxmApplyDates()">
+                        <span>
+                            <span><?php echo $this->__('Apply'); ?></span>
+                        </span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <script type="text/javascript">
+                (function() {
+                    var baseConfig = {
+                        ifFormat: '%Y/%m/%e',
+                        button: 'date_from_trig',
+                        singleClick: true
+                    };
+                    Calendar.setup(Object.extend({
+                        inputField: 'date_from'
+                    }, baseConfig));
+                    Calendar.setup(Object.extend({
+                        inputField: 'date_to'
+                    }, baseConfig));
+                })();
+                function mxmApplyDates() {
+                    var maxDays = (60 * 24 * 60 * 60 * 1000), // 60 days
+                        from = document.getElementById('date_from'),
+                        to   = document.getElementById('date_to'),
+                        fromDate = new Date(from.value),
+                        toDate = new Date(to.value),
+                        fromParam = from.value ? 'date_from/' + encode_base64(from.value) + '/' : '',
+                        toParam = to.value ? 'date_to/' + encode_base64(to.value) + '/' : '';
+                    if (toDate - fromDate > maxDays) {
+                        alert('You can only select a maximum amount of 60 days');
+                        return;
+                    } else if (toDate - fromDate < 0) {
+                        alert('From date must be before the to date');
+                        return;
+                    }
+                    setLocation('<?php echo $this->getDatePickerUrl(); ?>' + toParam + fromParam);
+                }
+            </script>
+        <?php echo $this->getChildHtml('mxmallinone_report_trx_tabs') ?>
+        <div id="report_tab_content"></div>
+        <?php else: ?>
+        <div class="no-transactional">
+            <?php echo $this->__('Transactional emails have not been set up to use %s for this website', Mage::helper('mxmallinone')->getWhiteLabelName()); ?>
+        </div>
+        <?php endif; ?>
+    </div>
+</div>

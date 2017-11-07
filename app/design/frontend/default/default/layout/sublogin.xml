@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+
+    <customer_account_navigation_sublogin>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="sublogin"><name>sublogin</name><path>sublogin/frontend/index</path><label>My Sublogins</label></action>
+        </reference>
+    </customer_account_navigation_sublogin>
+
+    <sublogin_frontend_index translate="label">
+        <label>My Sublogins</label>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/sublogin.css</stylesheet></action>
+        </reference>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="sublogin/list" name="sublogin_list" template="sublogin/list.phtml"/>
+        </reference>
+    </sublogin_frontend_index>
+
+    <sublogin_frontend_edit translate="label">
+        <label>Edit Sublogins</label>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/sublogin.css</stylesheet></action>
+        </reference>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="sublogin/edit" name="sublogin_edit" template="sublogin/edit.phtml"/>
+        </reference>
+    </sublogin_frontend_edit>
+</layout>

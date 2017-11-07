@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<config>
+    <api>
+        <resources>           
+            <mageb2b_sublogin>
+                <model>sublogin/api_sublogin_api</model>
+                <title>MageB2B - Sublogin</title>
+                <acl>mageb2b/sublogin</acl>
+                <methods>
+                    <list translate="title" module="sublogin">
+                        <title>List</title>
+						<method>items</method>
+						<acl>mageb2b/sublogin/list</acl>
+                    </list>
+                    <info translate="title" module="sublogin">
+                        <title>Single</title>
+						<method>info</method>
+                        <acl>mageb2b/sublogin/info</acl>
+                    </info>
+					<create translate="title" module="sublogin">
+                        <title>Create</title>
+                        <acl>mageb2b/sublogin/create</acl>
+                    </create>
+                    <update translate="title" module="sublogin">
+                        <title>Update</title>
+                        <acl>mageb2b/sublogin/update</acl>
+                    </update>
+                    <delete translate="title" module="sublogin">
+                        <title>Delete</title>
+                        <acl>mageb2b/sublogin/delete</acl>
+                    </delete>
+                </methods>
+				
+				<faults module="sublogin">
+                    <data_invalid>
+                        <code>100</code>
+                        <message>Invalid sublogin. Details in error message.</message>
+                    </data_invalid>
+                    <filters_invalid>
+                        <code>101</code>
+                        <message>Invalid filters specified. Details in error message.</message>
+                    </filters_invalid>
+                    <not_exists>
+                        <code>102</code>
+                        <message>Sublogin not exists.</message>
+                    </not_exists>
+                    <not_deleted>
+                        <code>103</code>
+                        <message>Sublogin not deleted. Details in error message.</message>
+                    </not_deleted>
+                </faults>
+            </mageb2b_sublogin>
+            
+            <mageb2b_sublogin_acl>
+                <model>sublogin/api_subloginAcl_api</model>
+                <title>MageB2B - Sublogin Acl</title>
+                <acl>mageb2b/sublogin_acl</acl>
+                <methods>
+                    <list translate="title" module="sublogin">
+                        <title>List</title>
+						<method>items</method>
+						<acl>mageb2b/sublogin_acl/list</acl>
+                    </list>
+                    <info translate="title" module="sublogin">
+                        <title>Single</title>
+						<method>info</method>
+                        <acl>mageb2b/sublogin_acl/info</acl>
+                    </info>
+					<create translate="title" module="sublogin">
+                        <title>Create</title>
+                        <acl>mageb2b/sublogin_acl/create</acl>
+                    </create>
+                    <update translate="title" module="sublogin">
+                        <title>Update</title>
+                        <acl>mageb2b/sublogin_acl/update</acl>
+                    </update>
+                    <delete translate="title" module="sublogin">
+                        <title>Delete</title>
+                        <acl>mageb2b/sublogin_acl/delete</acl>
+                    </delete>
+                </methods>
+				
+				<faults module="sublogin">
+                    <data_invalid>
+                        <code>100</code>
+                        <message>Invalid sublogin acl. Details in error message.</message>
+                    </data_invalid>
+                    <filters_invalid>
+                        <code>101</code>
+                        <message>Invalid filters specified. Details in error message.</message>
+                    </filters_invalid>
+                    <not_exists>
+                        <code>102</code>
+                        <message>Sublogin acl not exists.</message>
+                    </not_exists>
+                    <not_deleted>
+                        <code>103</code>
+                        <message>Sublogin acl not deleted. Details in error message.</message>
+                    </not_deleted>
+                </faults>
+            </mageb2b_sublogin_acl>
+            
+            <mageb2b_sublogin_budget>
+                <model>sublogin/api_subloginBudget_api</model>
+                <title>MageB2B - Sublogin Budget</title>
+                <acl>mageb2b/sublogin_budget</acl>
+                <methods>
+                    <list translate="title" module="sublogin">
+                        <title>List</title>
+						<method>items</method>
+						<acl>mageb2b/sublogin_budget/list</acl>
+                    </list>
+                    <info translate="title" module="sublogin">
+                        <title>Single</title>
+						<method>info</method>
+                        <acl>mageb2b/sublogin_budget/info</acl>
+                    </info>
+					<create translate="title" module="sublogin">
+                        <title>Create</title>
+                        <acl>mageb2b/sublogin_budget/create</acl>
+                    </create>
+                    <update translate="title" module="sublogin">
+                        <title>Update</title>
+                        <acl>mageb2b/sublogin_budget/update</acl>
+                    </update>
+                    <delete translate="title" module="sublogin">
+                        <title>Delete</title>
+                        <acl>mageb2b/sublogin_budget/delete</acl>
+                    </delete>
+                </methods>
+				
+				<faults module="sublogin">
+                    <data_invalid>
+                        <code>100</code>
+                        <message>Invalid sublogin budget. Details in error message.</message>
+                    </data_invalid>
+                    <filters_invalid>
+                        <code>101</code>
+                        <message>Invalid filters specified. Details in error message.</message>
+                    </filters_invalid>
+                    <not_exists>
+                        <code>102</code>
+                        <message>Sublogin budget not exists.</message>
+                    </not_exists>
+                    <not_deleted>
+                        <code>103</code>
+                        <message>Sublogin budget not deleted. Details in error message.</message>
+                    </not_deleted>
+                    <duplicate_entry>
+                        <code>104</code>
+                        <message>Sublogin budget is duplicated. Details in error message.</message>
+                    </duplicate_entry>
+                </faults>
+            </mageb2b_sublogin_budget>
+        </resources>
+        <v2>
+            <resources_function_prefix>
+                <mageb2b_sublogin>sublogin</mageb2b_sublogin>
+                <mageb2b_sublogin_acl>subloginAcl</mageb2b_sublogin_acl>
+                <mageb2b_sublogin_budget>subloginBudget</mageb2b_sublogin_budget>
+            </resources_function_prefix>
+        </v2>  
+        <acl>
+            <resources>
+                <mageb2b translate="title" module="sublogin">
+                    <title>MageB2B</title>
+                    <sort_order>3</sort_order>
+					<sublogin translate="title" module="sublogin">
+						<title>Sublogin</title>
+						<list translate="title" module="sublogin">
+                            <title>List</title>
+						</list>
+						<info translate="title" module="sublogin">
+                            <title>Single</title>
+						</info>
+						<create translate="title" module="sublogin">
+                            <title>Create</title>
+						</create>
+						<update translate="title" module="sublogin">
+                            <title>Update</title>
+						</update>
+						<delete translate="title" module="sublogin">
+                            <title>Delete</title>
+						</delete>
+					</sublogin>
+					<sublogin_acl translate="title" module="sublogin">
+						<title>Sublogin Acl</title>
+						<list translate="title" module="sublogin">
+                            <title>List</title>
+						</list>
+						<info translate="title" module="sublogin">
+                            <title>Single</title>
+						</info>
+						<create translate="title" module="sublogin">
+                            <title>Create</title>
+						</create>
+						<update translate="title" module="sublogin">
+                            <title>Update</title>
+						</update>
+						<delete translate="title" module="sublogin">
+                            <title>Delete</title>
+						</delete>
+					</sublogin_acl>
+					<sublogin_budget translate="title" module="sublogin">
+						<title>Sublogin Budget</title>
+						<list translate="title" module="sublogin">
+                            <title>List</title>
+						</list>
+						<info translate="title" module="sublogin">
+                            <title>Single</title>
+						</info>
+						<create translate="title" module="sublogin">
+                            <title>Create</title>
+						</create>
+						<update translate="title" module="sublogin">
+                            <title>Update</title>
+						</update>
+						<delete translate="title" module="sublogin">
+                            <title>Delete</title>
+						</delete>
+					</sublogin_budget>
+                </mageb2b>
+            </resources>
+        </acl>
+    </api>
+</config>

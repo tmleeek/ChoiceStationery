@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<widgets>
+    <tonerconfigurator_configurator type="tonerconfigurator/configurator">
+        <name>StockInTheChannel - Toner Configurator</name>
+        <description type="desc">Adds the StockInTheChannel Toner Configurator - Coded By Sinch</description>
+		<parameters>
+			<title translate="label">
+				<label>Title</label>
+				<visible>1</visible>
+				<required>1</required>
+				<type>text</type>
+				<value>Toner Configurator</value>
+			</title>
+			<styling translate="label">
+				<label>Style</label>
+				<visible>1</visible>
+				<required>1</required>
+				<type>select</type>
+				<values translate="label">
+					<main>
+						<label>Default Style</label>
+						<value>default</value>
+					</main>
+					<default_noback translate="label">
+						<label>Default - No Background (White Text and Borders)</label>
+						<value>default-noback</value>
+					</default_noback>
+					<inline translate="label">
+						<label>Inline</label>
+						<value>inline</value>
+					</inline>
+					<inline_noback translate="label">
+						<label>Inline - No Background</label>
+						<value>inline-noback</value>
+					</inline_noback>
+					<custom translate="label">
+						<label>Custom (Empty By Default)</label>
+						<value>custom</value>
+					</custom>
+				</values>
+			</styling>
+			<button_based translate="label">
+				<label>Use Button to Submit</label>
+				<visible>1</visible>
+				<required>1</required>
+				<type>select</type>
+				<values translate="label">
+					<yes>
+						<label>Yes</label>
+						<value>1</value>
+					</yes>
+					<no>
+						<label>No</label>
+						<value>0</value>
+					</no>
+				</values>
+			</button_based>
+			<search_text translate="label">
+				<label>Search Text</label>
+				<comment>The Text Used on the Search Button (if it exists)</comment>
+				<visible>1</visible>
+				<required>1</required>
+				<type>text</type>
+				<value>Search</value>
+			</search_text>
+			<loading_text translate="label">
+				<label>Loading Text</label>
+				<comment>The Text Used During AJAX Load</comment>
+				<visible>1</visible>
+				<required>1</required>
+				<type>text</type>
+				<value>Loading Category Information...</value>
+			</loading_text>
+		</parameters>
+    </tonerconfigurator_configurator>
+</widgets>

@@ -1,0 +1,5 @@
+<IfModule mod_rewrite.c>
+    Options +FollowSymLinks
+    RewriteEngine on
+    RewriteRule ^([^/]+)(/.*.(jpg|png|gif|jpeg))$ ../../lib/Compressor/Image/ServeScale.php?f=$2&d=$1
+</IfModule>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <!-- Applies to most pages !-->
+        <reference name="after_body_start">
+            <block type="mxmallinone/scripts" name="mxmallinone_scripts" as="mxmallinone_scripts" template="mxmallinone/scripts.phtml" />
+        </reference>
+
+        <reference name="left.newsletter">
+            <action method="setTemplateIf">
+                <template>mxmallinone/newsletter/subscribe.phtml</template>
+            </action>
+        </reference>
+    </default>
+</layout>

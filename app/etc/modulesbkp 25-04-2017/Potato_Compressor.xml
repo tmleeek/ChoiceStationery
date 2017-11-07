@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Potato_Compressor>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Potato_Compressor>
+    </modules>
+</config>

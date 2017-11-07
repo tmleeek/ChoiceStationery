@@ -1,0 +1,14 @@
+
+.feefo_logo { 
+    padding-bottom: 10px;
+    padding-top: 1px;
+	float:right;
+}
+
+#flint_feefo_product #flint_feefo_logo {
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
+
+.rating-box { width:69px; height:13px; font-size:0; line-height:0; background:url(../images/bkg_rating.png) 0 0 repeat-x; text-indent:-999em; overflow:hidden; background-size:14px 27px;}
+.rating-box .rating { float:left; height:13px; background:url(../images/bkg_rating.png) 0 100% repeat-x;background-size:14px 27px; }

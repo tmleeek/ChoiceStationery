@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <!-- <productnotavailable_adminhtml_productnotavailablebackend_index>
+	<reference name="content">
+	  <block type="productnotavailable/adminhtml_productnotavailablebackend" name="productnotavailablebackend" template="productnotavailable/productnotavailablebackend.phtml"/>
+	</reference>
+  </productnotavailable_adminhtml_productnotavailablebackend_index> -->
+  <productnotavailable_adminhtml_productnotavailable_index>
+	<reference name="content">
+	  <block type="productnotavailable/adminhtml_productnotavailable" name="productnotavailable" />
+	</reference>
+  </productnotavailable_adminhtml_productnotavailable_index>
+</layout>

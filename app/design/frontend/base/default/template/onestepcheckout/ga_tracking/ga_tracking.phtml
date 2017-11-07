@@ -1,0 +1,37 @@
+<?php
+/**
+ * OneStepCheckout
+ * 
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to One Step Checkout AS software license.
+ *
+ * License is available through the world-wide-web at this URL:
+ * https://www.onestepcheckout.com/LICENSE.txt
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to mail@onestepcheckout.com so we can send you a copy immediately.
+ *
+ * @category   Idev
+ * @package    Idev_OneStepCheckout
+ * @copyright  Copyright (c) 2009 OneStepCheckout  (https://www.onestepcheckout.com/)
+ * @license    https://www.onestepcheckout.com/LICENSE.txt
+ */
+
+// the following is not working for Fooman_GoogleAnalyticsPlus.xml because the following gets turned off
+// and fooman gets turned on. Now using new gaSettings().isAnyGALibraryFound()
+//$gaEnabled = Mage::helper('googleanalytics')->isGoogleAnalyticsAvailable();
+
+$osAdvancedEnabled = Mage::getStoreConfig('onestepcheckout/googleanalytics/enable', Mage::app()->getStore());
+?>
+<?php if ($osAdvancedEnabled) : ?>
+<script type="text/javascript">
+Event.observe(window, 'load', function() {
+    gas =  new gaSettings();
+    if (gas.isAnyGALibraryFound()) {
+          var config = {track_multiple: '<?php echo Mage::getStoreConfig('onestepcheckout/googleanalytics/track_multiple', Mage::app()->getStore());?>'};
+          new oscAdvancedGoogle(config);
+    }
+});
+</script>
+<?php endif;?>

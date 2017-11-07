@@ -1,0 +1,228 @@
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php 
+	$subloginBudget = $this->_getSubloginBudget();
+	$allSublogins = $this->_getAllCustomerSublogins();
+?>
+<div class="page-title">
+    <h1>
+        <?php echo $subloginBudget->getId() ? $this->__('Edit budget for sublogin %s', $subloginBudget->getEmail()) : $this->__('Create a new sublogin budget'); ?>
+    </h1>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php if ($allSublogins->getSize() > 0): ?>
+<form action="<?php echo $this->getUrl('sublogin/budget/save'); ?>" method="post" id="form-validate">
+	<?php if ($subloginBudget->getId()) { ?>
+		<input type="hidden" name="budget_id" id="budget_id" value="<?php echo $subloginBudget->getId() ?>" />
+	<?php } ?>
+	
+	<div class="fieldset">
+        <h2 class="legend"><?php echo $this->__('Sublogin Budget') ?></h2>		
+		<ul class="form-list">
+			<li class="field">
+				<label for="sublogin_id" class="required"><em>*</em><?php echo Mage::helper('sublogin')->__('Sublogin') ?></label>
+				<div class="input-box">
+					<select id="sublogin_id" name="sublogin_id">
+					<?php foreach ($allSublogins as $sublogin) {
+						$selected = '';
+						if ($subloginBudget->getSubloginId() == $sublogin->getId())
+							$selected = 'selected';
+						
+						echo '<option '.$selected.' value="'.$sublogin->getId().'">'.$sublogin->getEmail().'</option>';
+					} ?>
+					</select>
+				</div>
+			</li>
+			
+			<li class="field">
+				<label for="budget_type" class="required"><em>*</em><?php echo Mage::helper('sublogin')->__('Budget Type') ?></label>
+				<div class="input-box">
+					<select id="budget_type" name="budget_type">
+					<?php foreach (Mage::helper('sublogin/budget')->getBudgetTypesArray() as $budgetType) {
+						$selected = '';
+						if ($subloginBudget->getBudgetType() == $budgetType['value'])
+							$selected = 'selected';
+						
+						echo '<option '.$selected.' value="'.$budgetType['value'].'">'.$budgetType['label'].'</option>';
+					} ?>
+					</select>
+				</div>
+			</li>
+		</ul>
+		<div class="clearfix">&nbsp;</div>
+		<ul class="form-list">
+			<li class="field" id="year_container" style="display:none;">
+				<label for="year" class="required"><em>*</em><?php echo Mage::helper('sublogin')->__('Year') ?></label>
+				<div class="input-box">
+					<select id="year" name="year" class="ymd_fields">
+					<?php foreach (Mage::helper('sublogin/budget')->getYearsArray() as $year) {
+						$selected = '';
+						if ($subloginBudget->getYear() == $year['value'])
+							$selected = 'selected';
+						
+						echo '<option '.$selected.' value="'.$year['value'].'">'.$year['label'].'</option>';
+					} ?>
+					</select>
+				</div>
+			</li>
+			
+			<li class="field" id="yearly_container" style="display:none;">
+				<label for="yearly" class="required"><em>*</em><?php echo Mage::helper('sublogin')->__('Yearly') ?></label>
+				<div class="input-box">
+					<input type="text" name="yearly" id="yearly" value="<?php echo $subloginBudget->getData('yearly'); ?>" title="<?php echo Mage::helper('sublogin')->__('Yearly') ?>" class="input-text required-entry ymd_fields" />
+				</div>
+			</li>
+			
+			<li class="field" id="month_container" style="display:none;">
+				<label for="month" class="required"><em>*</em><?php echo Mage::helper('sublogin')->__('Month') ?></label>
+				<div class="input-box">
+					<select id="month" name="month" class="ymd_fields">
+					<?php foreach (Mage::helper('sublogin/budget')->getMonthsArray() as $month) {
+						$selected = '';
+						if ($subloginBudget->getMonth() == $month['value'])
+							$selected = 'selected';
+							
+						echo '<option '.$selected.' value="'.$month['value'].'">'.$month['label'].'</option>';
+					} ?>
+					</select>
+				</div>
+			</li>
+			
+			<li class="field" id="monthly_container" style="display:none;">
+				<label for="monthly" class="required"><em>*</em><?php echo Mage::helper('sublogin')->__('Monthly') ?></label>
+				<div class="input-box">
+					<input type="text" name="monthly" id="monthly" value="<?php echo $subloginBudget->getData('monthly'); ?>" title="<?php echo Mage::helper('sublogin')->__('Monthly') ?>" class="input-text required-entry ymd_fields" />
+				</div>
+			</li>
+			
+			<li class="field" id="day_container" style="display:none;">
+				<label for="day" class="required"><em>*</em><?php echo Mage::helper('sublogin')->__('Day') ?></label>
+				<div class="input-box">					
+					<input style="width:110px !important;" type="text" name="day" id="day" value="<?php echo $subloginBudget->getData('day'); ?>" title="<?php echo Mage::helper('sublogin')->__('Day') ?>" class="input-text ymd_fields required-entry" />
+					<img title="<?php echo $this->__('Select date')?>" id="day_trig" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN)."adminhtml/default/default/images/grid-cal.gif" ?>" class="v-middle"> 
+					
+					<script type="text/javascript">
+					//<![CDATA[
+					 Calendar.setup({
+							inputField : 'day',
+							ifFormat : '%Y-%m-%e', //'%m/%e/%y',
+							button : 'day_trig',
+							align : 'Bl',
+							singleClick : true
+						});
+					//]]>
+					</script>
+				</div>
+			</li>
+			
+			<li class="field" id="daily_container" style="display:none;">
+				<label for="daily" class="required"><em>*</em><?php echo Mage::helper('sublogin')->__('Daily') ?></label>
+				<div class="input-box">
+					<input type="text" name="daily" id="daily" value="<?php echo $subloginBudget->getData('daily'); ?>" title="<?php echo Mage::helper('sublogin')->__('Daily') ?>" class="input-text required-entry ymd_fields" />
+				</div>
+			</li>
+		</ul>
+		
+		<ul class="form-list">
+			<li class="field" id="per_order_container">
+				<label for="per_order"><?php echo Mage::helper('sublogin')->__('Per Order') ?></label>
+				<div class="input-box">
+					<input type="text" name="per_order" id="per_order" value="<?php echo $subloginBudget->getData('per_order'); ?>" title="<?php echo Mage::helper('sublogin')->__('Per Order') ?>" class="input-text" />
+				</div>
+			</li>
+			
+			<li class="field" id="amount_container">
+				<label for="amount" class="required"><em>*</em><?php echo Mage::helper('sublogin')->__('Amount') ?></label>
+				<div class="input-box">
+					<input type="text" name="amount" id="amount" value="<?php echo $subloginBudget->getData('amount'); ?>" title="<?php echo Mage::helper('sublogin')->__('Amount') ?>" class="input-text required-entry ymd_fields" />
+				</div>
+			</li>
+		</ul>
+
+		<div class="buttons-set">
+			<p class="required"><?php echo $this->__('* Required Fields') ?></p>
+			<p class="back-link"><a href="<?php echo $this->getUrl('sublogin/budget') ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+			<button type="submit" title="<?php echo $this->__('Save') ?>" class="button"><span><span><?php echo $this->__('Save') ?></span></span></button>
+		</div>
+    </div>
+</form>
+<script type="text/javascript">
+    //<![CDATA[
+    var subloginBudgetForm = new VarienForm('form-validate', true);
+    
+    $("budget_type").observe("change", function(){
+		selectedValue = $(this).value;
+		subloginDisplayContainerByBudgetType(selectedValue);
+	});
+	
+	showContainer = function (containerId) {
+		containers = ["day_container", "year_container", "month_container", "daily_container", "monthly_container", "yearly_container"];
+		containers.each(function(cntnrId){
+			if (cntnrId == containerId) {
+				$(cntnrId).show();
+			} else {
+				$(cntnrId).hide();
+			}
+		});
+	}
+	
+	subloginDisplayContainerByBudgetType = function(selectedValue){
+		// remove required validation from all
+		$$(".ymd_fields").each(function(elem){
+			elem.removeClassName("required-entry")
+		});
+		if (selectedValue == "yearly") {
+			$("amount_container").hide();
+			$("per_order_container").hide();
+			
+			showContainer("yearly_container");
+			$("yearly").addClassName("required-entry");
+		} else if (selectedValue == "year") {
+			$("amount_container").show();
+			$("amount").addClassName("required-entry");
+			
+			$("per_order_container").show();
+			showContainer("year_container");
+			$("year").addClassName("required-entry");
+		} else if (selectedValue == "monthly") {
+			$("amount_container").hide();
+			$("per_order_container").hide();
+			showContainer("monthly_container");
+			$("monthly").addClassName("required-entry");
+		} else if (selectedValue == "month") {
+			$("amount_container").show();
+			$("amount").addClassName("required-entry");
+			
+			$("per_order_container").show();
+			showContainer("month_container");
+			$("month").addClassName("required-entry");
+		} else if (selectedValue == "daily") {
+			$("amount_container").hide();
+			$("per_order_container").hide();
+			showContainer("daily_container");
+			$("daily").addClassName("required-entry");
+		} else if (selectedValue == "day") {
+			$("amount_container").show();
+			$("amount").addClassName("required-entry");
+			
+			$("per_order_container").show();
+			showContainer("day_container");
+			$("day").addClassName("required-entry");
+		} else {
+			$("day_container").hide();
+			$("year_container").hide();
+			$("month_container").hide();
+			$("daily_container").hide();
+			$("monthly_container").hide();
+			$("yearly_container").hide();
+		}
+	}
+	
+	subloginDisplayContainerByBudgetType("<?php echo $subloginBudget->getBudgetType() ?>");
+</script>
+
+<?php else: ?>
+<div class="fieldset">
+	<h2 class="legend"><?php echo $this->__('Sublogin budgets') ?></h2>
+	<p><?php echo $this->__('There are no sublogins you can set budgets for.'); ?></p>
+</div>
+<?php endif; ?>

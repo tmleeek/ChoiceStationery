@@ -1,0 +1,47 @@
+<?php
+$old	=date_default_timezone_get();
+date_default_timezone_set('Europe/London');
+$time	=date("H");
+$day	=date("D");
+if(date("Y-m-d")=="2015-05-22") {
+ $msg		="FREE Delivery on over 40,000 office products - order by 5:00pm Tuesday for same day dispatch.";
+}
+elseif(date("Y-m-d")=="2015-05-23") {
+ $msg		="FREE Delivery on over 40,000 office products - order by 5:00pm Tuesday for same day dispatch.";
+}
+elseif(date("Y-m-d")=="2015-05-24") {
+ $msg		="FREE Delivery on over 40,000 office products - order by 5:00pm Tuesday for same day dispatch.";
+}
+elseif(date("Y-m-d")=="2015-05-25") {
+ $msg		="FREE Delivery on over 40,000 office products - order by 5:00pm Tuesday for same day dispatch.";
+}
+elseif(($day=="Sat" || $day=="Sun") || ($time>="17" && $day=="Fri")) {
+ // It is Saturday or Sunday. Return Tuesday.
+ //$display=date('l jS F', strtotime(date("Y-m-d").' +2 Weekday'));
+ $msg		="FREE Delivery on over 40,000 office products - order by 5:00pm Monday for same day dispatch.";
+}
+//elseif($time<"17" && $day=="Fri") {
+ // It's a Friday before 17:00. Return Monday.
+ //$display=date('l jS F', strtotime(date("Y-m-d").' +1 Weekday'));
+ //$msg		="FREE Delivery on over 40,000 office products - order by 5:00pm today for same day dispatch.";
+//}
+elseif($time>="17") {
+ // It is a weekday after 17:00. Return +2 days.
+ $display=date('l jS F', strtotime(date("Y-m-d").' +2 Weekday'));
+ $msg		="FREE Delivery on over 40,000 office products - order by 5:00pm ".$display." for same day dispatch.";
+}
+else {
+ // It is a weekday before 17:00. Return +1 day.
+ //$display=date('l jS F', strtotime(date("Y-m-d").' +1 Weekday'));
+ $msg		="FREE Delivery on over 40,000 office products - order by 5:00pm today for same day dispatch.";
+}
+date_default_timezone_set($old);
+?>
+<?php $baseUrl = Mage::getBaseUrl( Mage_Core_Model_Store::URL_TYPE_WEB, true ); ?>
+<div class="page-head tablet-show" style="text-align: center;"><strong><img src="<?php echo $baseUrl ?>skin/frontend/default/theme453/images/free-shipping.png" alt="Free Delivery" width="40" height="24" />&nbsp; <span style="font-size: small;"><?=$msg;?></span> &nbsp;<strong><img src="<?php echo $baseUrl ?>skin/frontend/default/theme453/images/free-shipping.png" alt="Free Delivery" width="40" height="24" /></strong></strong></div>
+<div class="page-head tablet-hide" style="text-align: center;"><strong><img src="<?php echo $baseUrl ?>skin/frontend/default/theme453/images/free-shipping.png" alt="Free Delivery" width="40" height="24" />&nbsp; <span style="font-size: small;"><?=$msg;?></span> &nbsp;<strong><img src="<?php echo $baseUrl ?>skin/frontend/default/theme453/images/free-shipping.png" alt="Free Delivery" width="40" height="24" /></strong></strong></div>
+<p>&nbsp;</p>
+<?php /*
+<div class="page-head tablet-show" style="text-align: center;"><strong><img src="<?php echo $baseUrl ?>christmas.png" alt="Merry Christmas from Choice Stationery" width="30" height="24" />&nbsp; <span style="font-size: small;">We would like to wish all of our customers a very Merry Christmas and a Happy New Year.</span> &nbsp;<strong><img src="<?php echo $baseUrl ?>christmas.png" alt="Merry Christmas from Choice Stationery" width="30" height="24" /></strong></strong></div>
+<div class="page-head tablet-hide" style="text-align: center;"><strong><img src="<?php echo $baseUrl ?>christmas.png" alt="Merry Christmas from Choice Stationery" width="30" height="24" />&nbsp; <span style="font-size: small;">We would like to wish all of our customers a very Merry Christmas and a Happy New Year.</span> &nbsp;<strong><img src="<?php echo $baseUrl ?>christmas.png" alt="Merry Christmas from Choice Stationery" width="30" height="24" /></strong></strong></div>
+<p>&nbsp;</p> */ ?>

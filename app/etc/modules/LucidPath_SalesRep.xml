@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<LucidPath_SalesRep>
+			<active>false</active>
+			<codePool>community</codePool>
+			<version>1.3.0</version>
+		</LucidPath_SalesRep>
+	</modules>
+</config>

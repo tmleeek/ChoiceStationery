@@ -1,0 +1,139 @@
+<?php
+/**
+* @category Customer Version 1.0
+* @package MageB2B_Sublogin
+* @author AIRBYTES GmbH <info@airbytes.de>
+* @copyright AIRBYTES GmbH
+* @license commercial
+*/
+?>
+<?php
+	$formAttr = array(
+		'id' => 'transfer_customer_to_sublogin_form',
+		'name' => 'transfer_customer_to_sublogin_form',
+		'action' => Mage::helper('adminhtml')->getUrl('adminhtml/sublogin_index/save'),
+		'method' => 'post',
+		'enctype' => 'multipart/form-data',
+		// 'onclick' => 'transferCustomerToSubloginForm.submit()',
+	);
+	$form = new Varien_Data_Form($formAttr);
+	
+	$elemAttr = array(
+		'label' => Mage::helper('sublogin')->__('Sublogin Customer'),
+		'name'  => 'sublogin_customer',
+		'class'  => 'required-entry validate-match-customer',
+	);
+	$subloginCustomerElem = new Varien_Data_Form_Element_Text($elemAttr);
+	$subloginCustomerElem->setId('sublogin_customer');
+	$form->addElement($subloginCustomerElem);
+
+	$autocompleteRenderer = Mage::getSingleton('core/layout')->createBlock('sublogin/admin_autocompleter');
+	$autocompleteRenderer->setTemplate('sublogin/autocomplete_sublogin.phtml');
+	$autocompleteRenderer->setAutocompleteData($autocompleteRenderer->getCustomers());
+	$form->getElement('sublogin_customer')->setRenderer($autocompleteRenderer);
+	$subloginCustomerHtml = $form->getElement('sublogin_customer')->toHtml();
+	
+	
+	$elemAttr = array(
+		'label' => Mage::helper('sublogin')->__('Parent Customer'),
+		'name'  => 'entity_id',
+		'class'  => 'required-entry validate-match-customer',
+	);
+	$parentCustomerElem = new Varien_Data_Form_Element_Text($elemAttr);
+	$parentCustomerElem->setId('entity_id');
+	$form->addElement($parentCustomerElem);
+
+	// $autocompleteRenderer = Mage::getSingleton('core/layout')->createBlock('sublogin/admin_autocompleter');
+	// $autocompleteRenderer->setTemplate('sublogin/autocomplete_sublogin.phtml');
+	// $autocompleteRenderer->setAutocompleteData($autocompleteRenderer->getCustomers());
+	$form->getElement('entity_id')->setRenderer($autocompleteRenderer);
+	$parentCustomerHtml = $form->getElement('entity_id')->toHtml();
+?>
+
+
+<div class="content-header">
+	<h3 class="icon-head head-products"><?php echo Mage::helper('sublogin')->__('Transfer existing customers to sublogin') ?></h3>
+	
+	<p class="form-buttons">
+		<button id="transfer_save" title="<?php echo Mage::helper('sublogin')->__('Save') ?>" type="button" class="scalable save" onclick="transferCustomerToSubloginForm.submit()" style=""><span><span><span><?php echo Mage::helper('sublogin')->__('Save') ?></span></span></span></button>
+		
+		<button id="transfer_save" title="<?php echo Mage::helper('sublogin')->__('Save') ?>" type="button" class="scalable save" onclick="javascript:validateTransferBeforeSubmit('<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/sublogin_index/transfer') ?>')" style=""><span><span><span><?php echo Mage::helper('sublogin')->__('Save Old') ?></span></span></span></button>
+	</p>
+</div>
+
+<form <?php echo $form->serialize($form->getHtmlAttributes()) ?>>
+	<input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+	<input name="from_transfer" type="hidden" value="1" />
+	
+	<div id="" style="">
+		<div class="entry-edit box-left">
+			<div class="entry-edit-head">
+				<h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('sublogin')->__('Customer needs to be transferred as sublogin') ?></h4>
+				<div class="form-buttons"></div>
+			</div>
+			<div class="fieldset " id="settings">
+				<div class="hor-scroll">
+					<table class="form-list" cellspacing="0" id="sublogin_fields_before">
+						<?php echo $subloginCustomerHtml ?>
+					</table>
+				</div>
+			</div>
+		</div>
+	
+		<div class="entry-edit  box-right">
+			<div class="entry-edit-head">
+				<h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('sublogin')->__('Parent Customer') ?></h4>
+				<div class="form-buttons"></div>
+			</div>
+			<div class="fieldset " id="settings">
+				<div class="hor-scroll">
+					<table class="form-list" cellspacing="0">
+						<?php echo $parentCustomerHtml ?>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+<script type="text/javascript">
+<?php 
+$validateSubloginEmailUniqueUrl = Mage::helper('adminhtml')->getUrl('adminhtml/sublogin_index/isSubloginEmailUnique');
+$js = <<<JavaScript
+	var transferCustomerToSubloginForm = new varienForm('transfer_customer_to_sublogin_form');
+	
+	Validation.add('validate-match-customer','Sublogin and Parent customer should be different',function(the_field_value){
+        if($('sublogin_customer_hidden').value == $('entity_id_hidden').value)
+        {
+            return false;
+        }
+        return true;
+    });
+	
+	Validation.add('validate-sublogin-email', 'Sublogin email already exist', function(subloginEmail){
+		returnVal = false;
+		if (subloginEmail != '') {
+			new Ajax.Request('{$validateSubloginEmailUniqueUrl}',{
+				method: 'post',
+				asynchronous: false,
+				parameters: {"email":subloginEmail},
+				onComplete: function (transport) {
+					console.log('place1.2');
+					data = transport.responseText.evalJSON();
+					
+					if (data.isUnique == 1) {
+						returnVal = true;
+					} else {
+						returnVal = false;
+					}
+				}
+			});
+			return returnVal;
+		}
+		
+		return true;
+	});
+JavaScript;
+echo $js; 
+?>
+</script>

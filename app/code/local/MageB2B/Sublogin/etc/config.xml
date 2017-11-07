@@ -1,0 +1,412 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MageB2B_Sublogin>
+            <version>3.0</version>
+        </MageB2B_Sublogin>
+    </modules>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <sublogin after="Mage_Adminhtml">MageB2B_Sublogin_Adminhtml</sublogin>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <translate>
+            <modules>
+                <sublogin>
+                    <files>
+                        <default>MageB2B_Sublogin.csv</default>
+                    </files>
+                </sublogin>
+            </modules>
+        </translate>
+        <menu>
+            <customer>
+                <children>
+                    <sublogin module="sublogin">
+                        <title>Manage Sublogins</title>
+                        <sort_order>0</sort_order>
+                        <action>adminhtml/sublogin_index</action>
+                        <children>
+                            <acl>
+                                <title>Manage ACL</title>
+                                <sort_order>0</sort_order>
+                                <action>adminhtml/sublogin_acl</action>
+                            </acl>
+                            <budget>
+                                <title>Manage Budget</title>
+                                <sort_order>10</sort_order>
+                                <action>adminhtml/sublogin_budget</action>
+                            </budget>
+                        </children>
+                    </sublogin>
+                </children>
+            </customer>
+        </menu>
+        <events>
+            <core_block_abstract_prepare_layout_before>
+                <observers>
+                    <sublogin>
+                        <class>sublogin/observer</class>
+                        <method>addMassActionApproval</method>
+                    </sublogin>
+                </observers>
+            </core_block_abstract_prepare_layout_before>
+        </events>
+    </adminhtml>
+
+    <global>
+        <helpers>
+            <sublogin>
+                <class>MageB2B_Sublogin_Helper</class>
+            </sublogin>
+        </helpers>
+
+        <models>
+            <sublogin>
+                <class>MageB2B_Sublogin_Model</class>
+                <resourceModel>sublogin_resource</resourceModel>
+            </sublogin>
+            <customer_resource>
+                <rewrite>
+                    <customer>MageB2B_Sublogin_Model_Rewrite_CustomerResource</customer>
+                    <address_collection>MageB2B_Sublogin_Model_Rewrite_CustomerAddressCollection</address_collection>
+                </rewrite>
+            </customer_resource>
+
+            <sales_resource>
+                <rewrite>
+                    <quote>MageB2B_Sublogin_Model_Rewrite_SalesQuote</quote>
+                </rewrite>
+            </sales_resource>
+
+            <sublogin_resource>
+                <class>MageB2B_Sublogin_Model_Mysql4</class>
+                <entities>
+                    <sublogin>
+                        <table>customer_sublogin</table>
+                    </sublogin>
+                    <acl>
+                        <table>customer_sublogin_acl</table>
+                    </acl>
+                    <budget>
+                        <table>customer_sublogin_budget</table>
+                    </budget>
+                </entities>
+            </sublogin_resource>
+            <newsletter>
+                <rewrite>
+                    <subscriber>MageB2B_Sublogin_Model_Rewrite_Subscriber</subscriber>
+                </rewrite>
+            </newsletter>
+        </models>
+        <resources>
+            <sublogin_setup>
+                <setup>
+                    <module>MageB2B_Sublogin</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </sublogin_setup>
+            <sublogin_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </sublogin_write>
+            <sublogin_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </sublogin_read>
+        </resources>
+
+        <blocks>
+            <sublogin>
+                <class>MageB2B_Sublogin_Block</class>
+            </sublogin>
+            <customer>
+                <rewrite>
+                    <address_edit>MageB2B_Sublogin_Block_Rewrite_AddressEdit</address_edit>
+                </rewrite>
+            </customer>
+            <sales>
+                <rewrite>
+                    <order_recent>MageB2B_Sublogin_Block_Rewrite_CustomerOrdersRecent</order_recent>
+                    <order_history>MageB2B_Sublogin_Block_Rewrite_OrdersHistory</order_history>
+                </rewrite>
+            </sales>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_create_form_account>MageB2B_Sublogin_Block_Rewrite_OrderAccount</sales_order_create_form_account>
+                    <customer_edit_tab_orders>MageB2B_Sublogin_Block_Rewrite_TabOrders</customer_edit_tab_orders>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+
+        <events>
+            <!-- <customer_load_after>
+                <observers>
+                    <sublogin>
+                        <type>singleton</type>
+                        <class>sublogin/observer</class>
+                        <method>customerLoadAfter</method>
+                    </sublogin>
+                </observers>
+            </customer_load_after> -->
+            <customer_save_after>
+                <observers>
+                    <sublogin>
+                        <type>singleton</type>
+                        <class>sublogin/observer</class>
+                        <method>customerSaveAfter</method>
+                    </sublogin>
+                </observers>
+            </customer_save_after>
+            <customer_save_before>
+                <observers>
+                    <sublogin>
+                        <type>singleton</type>
+                        <class>sublogin/observer</class>
+                        <method>customerSaveBefore</method>
+                    </sublogin>
+                </observers>
+            </customer_save_before>
+            <!-- delete all existing sublogins if customer is deleted -->
+            <customer_delete_after>
+                <observers>
+                    <sublogin>
+                        <type>singleton</type>
+                        <class>sublogin/observer</class>
+                        <method>customerDeleteAfter</method>
+                    </sublogin>
+                </observers>
+            </customer_delete_after>
+            <!-- delete sublogin email from session -->
+            <customer_logout>
+                <observers>
+                    <sublogin>
+                        <type>singleton</type>
+                        <class>sublogin/observer</class>
+                        <method>customerLogout</method>
+                    </sublogin>
+                </observers>
+            </customer_logout>
+            <!-- add tab in adminhtml at customer edit form -->
+            <core_block_abstract_to_html_before>
+                <observers>
+                    <sublogin>
+                        <type>singleton</type>
+                        <class>sublogin/observer</class>
+                        <method>toHtmlBefore</method>
+                    </sublogin>
+                </observers>
+            </core_block_abstract_to_html_before>
+                        
+            <!-- saves sublogin id in sales flat order table -->
+            <checkout_type_onepage_save_order>
+                <observers>
+                    <customerid>
+                        <type>singleton</type>
+                        <class>sublogin/observer</class>
+                        <method>checkoutSaveBefore</method>
+                    </customerid>
+                </observers>
+            </checkout_type_onepage_save_order>
+            <!-- saves order state and status to approval if enabled -->
+            <sales_order_place_after>
+                <observers>
+                    <customerid>
+                        <type>singleton</type>
+                        <class>sublogin/observer</class>
+                        <method>subloginSalesOrderPlaceAfter</method>
+                    </customerid>
+                </observers>
+            </sales_order_place_after>
+            <!-- to do not save address in address book when sublogin is placing an order -->
+            <sales_quote_address_save_before>
+                <observers>
+                    <sublogin>
+                        <class>sublogin/observer</class>
+                        <method>subloginSalesQuoteAddressSaveBefore</method>
+                    </sublogin>
+                </observers>
+            </sales_quote_address_save_before>
+        </events>
+
+        <template>
+            <email>
+                <sublogin_email_new translate="label" module="sublogin">
+                    <label>Sublogin - new account</label>
+                    <file>sublogin_new.html</file>
+                    <type>html</type>
+                </sublogin_email_new>
+                <sublogin_email_reset_password translate="label" module="sublogin">
+                    <label>Sublogin - password reset</label>
+                    <file>sublogin_reset_password.html</file>
+                    <type>html</type>
+                </sublogin_email_reset_password>
+                <sublogin_email_expire_refresh translate="label" module="sublogin">
+                    <label>Sublogin - refresh expired account</label>
+                    <file>sublogin_expire_refresh.html</file>
+                    <type>html</type>
+                </sublogin_email_expire_refresh>
+                <sublogin_email_mainlogin_orderalert translate="label" module="sublogin">
+                    <label>Sublogin - Main login order alert</label>
+                    <file>sublogin_mainlogin_orderalert.html</file>
+                    <type>html</type>
+                </sublogin_email_mainlogin_orderalert>
+                <sublogin_email_order_require_approval translate="label" module="sublogin">
+                    <label>Sublogin - Order require approval</label>
+                    <file>sublogin_order_require_approval.html</file>
+                    <type>html</type>
+                </sublogin_email_order_require_approval>
+                <sublogin_email_order_declined translate="label" module="sublogin">
+                    <label>Sublogin - Order declined</label>
+                    <file>sublogin_order_declined.html</file>
+                    <type>html</type>
+                </sublogin_email_order_declined>
+            </email>
+        </template>
+        
+        <importexport>
+            <import_entities>
+                <sublogin translate="label">
+                    <model_token>sublogin/import_entity_sublogin</model_token>
+                    <label>Sublogins</label>
+                </sublogin>
+            </import_entities>
+			<export_entities>
+                <sublogin translate="label">
+                    <model_token>sublogin/export_entity_sublogin</model_token>
+                    <label>Sublogin</label>
+                </sublogin>
+            </export_entities>
+        </importexport> 
+        
+        <sales>
+            <order>
+                <statuses>
+                    <approval translate="label">
+                        <label>Approval</label>
+                    </approval>
+                    <approved translate="label">
+                        <label>Approved</label>
+                    </approved>
+                    <not_approved translate="label">
+                        <label>Not Approved</label>
+                    </not_approved>
+                </statuses>                
+                <states>
+                    <approval translate="label">
+                        <label>Approval</label>
+                        <statuses>
+                            <approval default="1"/>
+                        </statuses>
+                        <visible_on_front>1</visible_on_front>
+                    </approval>
+                    <approved translate="label">
+                        <label>Approved</label>
+                        <statuses>
+                            <approved default="1"/>
+                        </statuses>
+                        <visible_on_front>1</visible_on_front>
+                    </approved>
+                    <not_approved translate="label">
+                        <label>Not Approved</label>
+                        <statuses>
+                            <not_approved default="1"/>
+                        </statuses>
+                        <visible_on_front>1</visible_on_front>
+                    </not_approved>
+                </states>
+            </order>
+        </sales>
+    </global>
+
+    <frontend>
+        <routers>
+           <sublogin>
+              <use>standard</use>
+              <args>
+                  <module>MageB2B_Sublogin</module>
+                  <frontName>sublogin</frontName>
+              </args>
+           </sublogin>
+           <customer>
+                <args>
+                    <modules>
+                        <MageB2B_Sublogin before="Mage_Customer">MageB2B_Sublogin</MageB2B_Sublogin>
+                    </modules>
+                </args>
+            </customer>
+        </routers>
+
+        <layout>
+            <updates>
+                <sublogin>
+                    <file>sublogin.xml</file>
+                </sublogin>
+            </updates>
+        </layout>
+
+        <translate>
+            <modules>
+                <MageB2B_Sublogin>
+                    <files>
+                        <default>MageB2B_Sublogin.csv</default>
+                    </files>
+                </MageB2B_Sublogin>
+            </modules>
+        </translate>
+		
+		<events>
+			<!-- display my sublogins in customer area in frontend -->
+            <controller_action_layout_load_before>
+                <observers>
+                    <sublogin>
+                        <class>sublogin/observer</class>
+                        <method>addHandle</method>
+                    </sublogin>
+                </observers>
+            </controller_action_layout_load_before>
+		</events>
+    </frontend>
+
+    <default>
+        <sublogin>
+            <general>
+                <expire_interval>360</expire_interval>
+                <restrict_order_view>1</restrict_order_view>
+                <edit_in_grid>1</edit_in_grid>
+                <order_approval_cart_notice>Your order requires an approval before processing. So wait for your order to be approved. Once approved, order will be processed asap.</order_approval_cart_notice>
+                <save_sublogin_address>0</save_sublogin_address>
+            </general>
+            <form_fields>
+                <frontend>send_backendmails,create_sublogins,prefix,expire_date,acl,is_subscribed,order_needs_approval,active</frontend>
+                <admin>send_backendmails,create_sublogins,prefix,expire_date,acl,is_subscribed,order_needs_approval,active</admin>
+            </form_fields>
+            <email>
+                <send_from_email>sender@example.com</send_from_email>
+                <send_from_name>Sender</send_from_name>
+                <new>sublogin_email_new</new>
+                <reset_password>sublogin_email_reset_password</reset_password>
+                <expire_refresh>sublogin_email_expire_refresh</expire_refresh>
+                <mainlogin_orderalert>sublogin_email_mainlogin_orderalert</mainlogin_orderalert>
+                <order_require_approval>sublogin_email_order_require_approval</order_require_approval>
+                <order_declined>sublogin_email_order_declined</order_declined>
+				<customer_optional_email_templates>sublogin/email/new,sublogin/email/reset_password,sublogin/email/mainlogin_orderalert,sublogin/email/order_require_approval,sublogin/email/expire_refresh,sublogin/email/order_declined</customer_optional_email_templates>
+				<sublogin_optional_email_templates>sublogin/email/new,sublogin/email/reset_password,sublogin/email/mainlogin_orderalert,sublogin/email/order_require_approval,sublogin/email/expire_refresh,sublogin/email/order_declined</sublogin_optional_email_templates>
+            </email>
+        </sublogin>
+    </default>
+</config>

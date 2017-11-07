@@ -1,0 +1,58 @@
+<script>
+
+function SubmitCreateForm()
+{
+	//check if msg is filled
+	if (document.getElementById('description').value == '')	
+		alert('<?php echo $this->__('Please fill description field'); ?>');
+	else
+		document.getElementById('form_create').submit();
+}
+
+</script>
+
+<form id="form_create" name="form_create" method="POST" action="<?php echo $this->getSubmitUrl(); ?>">
+<input type="hidden" name="product_id" value="<?php echo $this->getProduct()->getId(); ?>">
+<input type="hidden" name="options" value="<?php echo $this->getOptionsSerialized(); ?>">
+
+<div class="page-title">
+    <h1><?php echo $this->__('Request for a new quotation') ?></h1>
+</div>
+
+<h2><?php echo $this->__('1. Your product') ?></h2>
+<table cellspacing="0" class="data-table" id="quotation-request-products">
+<thead>
+        <tr>
+            <th><?php echo $this->__('Product') ?></th>
+            <th width="100"><?php echo $this->__('Qty') ?></th>
+        </tr>
+</thead>
+<tbody>
+        <tr>
+            <td>
+                <a href="<?php echo $this->getProduct()->getProductUrl(); ?>"><?php echo $this->getProduct()->getName(); ?></a>
+                <i><?php echo $this->getOptions(); ?></i>
+            </td>
+            <td width="100"><input size="5" type="text" name="qty" id="qty" value="<?php echo $this->getQty(); ?>"></td>
+        </tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+
+<h2><?php echo $this->__('2. Type your message') ?></h2>
+
+<p>&nbsp;</p>
+
+<center>
+<textarea cols="110" rows="10" id="description" name="description"></textarea>
+</center>
+
+<p>&nbsp;</p>
+
+<h2><?php echo $this->__('3. Send us your inquiry') ?></h2>
+
+<center>
+<p><button type="button" onclick="SubmitCreateForm();" title="Save" class="button"><span><span><?php echo $this->__('Send Inquiry') ?></span></span></button></p>
+</center>
+
+</form>

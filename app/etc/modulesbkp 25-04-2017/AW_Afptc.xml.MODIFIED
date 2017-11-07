@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules> 
+        <AW_Afptc>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Webtex_CustomerPrices />
+                <Webtex_CustomerGroupsPrice />
+            </depends>
+        </AW_Afptc> 
+    </modules>
+</config>

@@ -1,0 +1,288 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MDN_Quotation>
+            <version>3.5.7</version>
+        </MDN_Quotation>
+    </modules>
+    
+    <frontend>
+        <secure_url>
+            <quote>/Quotation/</quote>
+        </secure_url>
+        <routers>
+            <Quotation>
+                <use>standard</use>
+                <args>
+                    <module>MDN_Quotation</module>
+                    <frontName>Quotation</frontName>
+                </args>
+            </Quotation>
+        </routers>
+        <!-- on inscrit notre fichier layout pour qu'il soit parse par magento (sinon il n'est pas considere) -->
+        <layout>
+            <updates>
+                <Quotation>
+                    <file>quotation.xml</file>
+                </Quotation>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <MDN_Quotation>
+                    <files>
+                        <default>MDN_Quotation.csv</default>
+                    </files>
+                </MDN_Quotation>
+            </modules>
+        </translate>
+        
+        <product>
+            <collection>
+                <attributes>
+                    <allow_individual_quote_request />
+                </attributes>
+            </collection>
+        </product>
+        
+    </frontend>
+        
+    <global>
+    
+        <blocks>
+            <adminhtml>
+                <rewrite>
+                    <customer_edit_tabs>MDN_Quotation_Block_Adminhtml_Customer_Edit_Tabs</customer_edit_tabs>
+                </rewrite>
+            </adminhtml>
+            <Quotation>
+                <class>MDN_Quotation_Block</class>
+            </Quotation>
+        </blocks>
+    	
+        <rewrite>
+            <!-- redirige l'url vers notre module -->
+            <MDN_quotation_adminhtml_customer>
+                <from><![CDATA[#^/admin/customer/quotations/id/#]]>
+                </from>
+                <to>quotations/customer/id/139/</to>
+            </MDN_quotation_adminhtml_customer>
+        </rewrite>
+        
+        <models>
+            <Quotation>
+                <class>MDN_Quotation_Model</class>
+                <resourceModel>Quotation_Mysql4</resourceModel>
+            </Quotation>
+            <Quotation_Mysql4>
+                <class>MDN_Quotation_Model_Mysql4</class>
+                <!-- defini les tables utilisables -->
+                <entities>
+                    <Quotation>
+                        <table>quotation</table>
+                    </Quotation>
+                    <Quotationitem>
+                        <table>quotation_items</table>
+                    </Quotationitem>
+                    <History>
+                        <table>quotation_history</table>
+                    </History>
+                </entities>
+            </Quotation_Mysql4>
+        </models>
+        
+        <resources>
+            <Quotation_setup>
+                <setup>
+                    <module>MDN_Quotation</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </Quotation_setup>
+            <Quotation_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </Quotation_write>
+            <Quotation_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </Quotation_read>
+        </resources>
+
+        <!-- helper utilise pour les Mage::helper('quotation') -->
+        <helpers>
+            <quotation>
+                <class>MDN_Quotation_Helper</class>
+            </quotation>
+            <bundle>
+                <rewrite>
+                    <catalog_product_configuration>MDN_Quotation_Helper_Bundle_Catalog_Product_Configuration</catalog_product_configuration>
+                </rewrite>
+            </bundle>
+        </helpers>
+	    
+	    <!-- to load those attributes in cart -->
+        <sales>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <is_quotation />
+                        <quotation_id />
+                    </product_attributes>
+                </item>
+            </quote>
+        </sales>
+
+        <!-- template pour les emails -->
+        <template>
+            <email>
+                <quotation_quote_notification_email_template translate="label" module="quotation">
+                    <label>New quotation available</label>
+                    <file>quotation/new_quotation_available.html</file>
+                    <type>html</type>
+                </quotation_quote_notification_email_template>
+                <quotation_customer_reminder_email_template translate="label" module="quotation">
+                    <label>Customer reminder</label>
+                    <file>quotation/customer_reminder.html</file>
+                    <type>html</type>
+                </quotation_customer_reminder_email_template>
+                <quotation_quotation_request_email_template translate="label" module="quotation">
+                    <label>Quotation Request</label>
+                    <file>quotation/new_quotation_request.html</file>
+                    <type>html</type>
+                </quotation_quotation_request_email_template>
+            </email>
+        </template>
+    
+    </global>
+    
+    <!-- on inscrit notre fichier layout pour qu'il soit parse par magento (sinon il n'est pas considere) -->
+    <adminhtml>
+    
+    	<!-- rajoute un menu dans la partie admin -->
+        <menu>
+		<!-- not compatible with magento 1.8.0.0
+            <customer>
+                <children>
+                    <quotation_list translate="title" module="quotation">
+                        <title>Quotations</title>
+                        <action>Quotation/Admin/List</action>
+                        <sort_order>90</sort_order>
+                    </quotation_list>
+                </children>
+            </customer> -->
+            <quotation>
+                <title>Quotation</title>
+                <sort_order>90</sort_order>
+                <children>                    
+                    <quotation_list>
+                        <title>Quotations List</title>
+                        <action>Quotation/Admin/List</action>
+                        <sort_order>90</sort_order>
+                    </quotation_list>
+                </children>
+            </quotation>
+        </menu>
+        <translate>
+            <modules>
+                <MDN_Quotation>
+                    <files>
+                        <default>MDN_Quotation.csv</default>
+                    </files>
+                </MDN_Quotation>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <Quotation>
+                    <file>quotation.xml</file>
+                </Quotation>
+            </updates>
+        </layout>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <quotation module="quotation">
+                                            <title>Quotations</title>
+                                        </quotation>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                        <customer>
+                            <children>
+                                <quotation_list module="quotation">
+                                    <title>Quotations</title>
+                                </quotation_list>
+                            </children>
+                        </customer>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+    <admin>
+        <routers>
+            <Quotation>
+                <use>admin</use>
+                <args>
+                    <module>MDN_Quotation</module>
+                    <frontName>Quotation</frontName>
+                </args>
+            </Quotation>
+        </routers>
+    </admin>
+        
+    <default>
+        <quotation>
+            <general>
+                <default_validity_duration>30</default_validity_duration>
+                <manufacturer_attribute_name>manufacturer</manufacturer_attribute_name>
+            </general>
+            <cart_options>
+                <empty_cart_before_adding_quote>1</empty_cart_before_adding_quote>
+                <empty_cart_after_quote_request>1</empty_cart_after_quote_request>
+            </cart_options>
+            <specific>
+                <enable_attachment>1</enable_attachment>
+            </specific>
+            <customer_reminder>
+                <email_identity>general</email_identity>
+                <email_template>quotation_customer_reminder_email_template</email_template>
+            </customer_reminder>
+            <quote_notification>
+                <email_identity>general</email_identity>
+                <email_template>quotation_quote_notification_email_template</email_template>
+            </quote_notification>
+            <quotation_request>
+                <email_identity>general</email_identity>
+                <email_template>quotation_quotation_request_email_template</email_template>
+            </quotation_request>
+        </quotation>
+    </default>
+    
+    <crontab>
+        <jobs>
+        	<!-- Cron to remind customer -->
+            <quote_customer_reminder>
+                <schedule>
+                    <cron_expr>0 19 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>Quotation/Observer::customer_reminder</model>
+                </run>
+            </quote_customer_reminder>
+        </jobs>
+    </crontab>
+    
+</config>

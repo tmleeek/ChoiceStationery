@@ -1,0 +1,5 @@
+.brandammo-all dl dt {
+	background-image: url(../images/brandammo-logo-bg.gif) !important;
+	text-indent: -5000px;
+	overflow: hidden;
+}

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<config>
+	  <tabs>
+		<rock_product_import translate="label" module="productcpimport">
+            <label>Rock Product Import</label>
+            <sort_order>0</sort_order>
+        </rock_product_import>
+	  </tabs>
+	  <sections>
+		<rock_product_import_configuration  translate="label" module="productcpimport">                    
+		<label>Configuration</label>
+		<tab>rock_product_import</tab>
+		<frontend_type>text</frontend_type>
+		<sort_order>0</sort_order>
+		<show_in_default>1</show_in_default>
+		<show_in_website>1</show_in_website>
+		<show_in_store>1</show_in_store>            
+					<groups>
+				      <rock_product_import_general translate="label"> 
+						  <label>General</label>
+						  <frontend_type>text</frontend_type>
+						  <sort_order>0</sort_order>
+						  <show_in_default>1</show_in_default>
+						  <show_in_website>1</show_in_website>
+						  <show_in_store>1</show_in_store>
+					       <fields>
+								<enabled translate="label">
+									<label>Enabled</label>
+									<frontend_type>select</frontend_type>
+									<source_model>adminhtml/system_config_source_yesno</source_model>
+									<sort_order>0</sort_order>
+									<show_in_default>1</show_in_default>
+									<show_in_website>1</show_in_website>
+									<show_in_store>1</show_in_store>
+									<comment>Select yes to enable the extension</comment>
+								</enabled>
+								<import translate="label">
+									<label>Import</label>
+									<frontend_type>button</frontend_type>
+									<frontend_model>Rock_ProductCPImport_Block_Adminhtml_System_Config_Form_Button</frontend_model>
+									<sort_order>20</sort_order>
+									<show_in_default>1</show_in_default>
+									<show_in_website>1</show_in_website>
+									<show_in_store>1</show_in_store>
+									<depends>
+								        <enabled>
+								            <fieldset>import</fieldset>
+								            <value>1</value>
+								        </enabled>
+								    </depends>
+								</import>
+								<cron_time translate="label">
+									<label>Cron Run Time</label>
+									<frontend_type>time</frontend_type>
+									<sort_order>0</sort_order>
+									<show_in_default>1</show_in_default>
+									<show_in_website>1</show_in_website>
+									<show_in_store>1</show_in_store>
+									<comment>Select time to run the import</comment>
+									<depends>
+								        <enabled>
+								            <fieldset>enabled</fieldset>
+								            <value>1</value>
+								        </enabled>
+								    </depends>
+								</cron_time>
+						   </fields>
+					   </rock_product_import_general>
+					</groups>
+		</rock_product_import_configuration>
+	  </sections>
+</config>

@@ -1,0 +1,17 @@
+<div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit fieldset-legend"><?php echo $this->__('Business Proposal') ?></h4>
+        </div>
+        <fieldset>
+            <div align="right">
+                <button type="button" class="scalable add" onClick="proposal.addSection();return false;"><?php echo $this->__('Add section'); ?></button>
+            </div>
+            <div id="preview"></div>
+            <div id="proposal_hidden_form"><?php echo $this->business_proposal_form ?></div>
+    </fieldset>
+</div>
+
+<script>
+    var proposalData = <?php echo $this->business_proposal_tab; ?>;
+    proposal.init(proposalData);
+</script>

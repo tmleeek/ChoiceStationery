@@ -1,0 +1,263 @@
+<?php
+/**
+* @category Customer Version 1.0
+* @package MageB2B_Sublogin
+* @author AIRBYTES GmbH <info@airbytes.de>
+* @copyright AIRBYTES GmbH
+* @license commercial
+*/
+?>
+<?php
+    $_htmlId      = $this->getElement()->getHtmlId();
+    $_htmlClass   = $this->getElement()->getClass();
+    $_htmlName    = $this->getElement()->getName();
+    $_readonly    = $this->getElement()->getReadonly();
+    $customer     = Mage::registry('current_customer');
+?>
+
+<?php if ($customer->getId()): ?>
+<?php if (Mage::getStoreConfig('sublogin/general/restrict_customer_list_sublogins')): ?>
+<p><b><?php echo Mage::helper('sublogin')->__('Attention: At current state only main customers can create sublogins in frontend. Restriction for sublogins is currently activated through the system configuration.'); ?></b></p>
+<p><b><?php echo Mage::helper('sublogin')->__('Giving sublogins the right to create sublogins themselves will not take effect. Please change the system configuration first.'); ?></b></p>
+<br />
+<?php endif; ?>
+<tr>
+    <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
+    <td class="grid tier">
+    <table cellspacing="0" class="data border" id="<?php echo $_htmlId?>_table" style="width:100%;">
+        <thead>
+            <tr class="headings">
+                <?php foreach ($this->getDisplayFields() as $field) { ?>
+                    <th><?php echo $field['label'];?></th>
+                <?php } ?>
+                <th class="last"><?php echo $this->__('Action'); ?></th>
+            </tr>
+        </thead>
+        <tbody id="<?php echo $_htmlId ?>_container">
+
+<?php
+ob_start();
+$first = true;
+?>
+
+<tr>
+    <?php foreach ($this->getDisplayFields() as $field) { ?>
+        <td>
+            <?php if ($first) { ?>
+                <input type="hidden" rel="{{index}}" name="<?php echo $_htmlName ?>[{{index}}][<?php echo $this->getIdField()?>]" value="{{<?php echo $this->getIdField()?>}}" />
+            <?php
+                $first = false;
+                }
+            ?>
+            <?php
+                if ($field['type'] == 'text') {
+            ?>
+                <input rel="{{index}}" class="input-text <?php echo $field['cssclass']?> <?php echo $field['name']?> <?php echo $field['required']?'required-entry':'' ?>" type="text" value="{{<?php echo $field['name']?>}}"
+                    name="<?php echo $_htmlName ?>[{{index}}][<?php echo $field['name']?>]" id="<?php echo $_htmlId?>_row_{{index}}_<?php
+                    echo $field['name']?>" style="<?php echo $field['style']?>" <?php echo $field['readonly']?'readonly="readonly" disabled="disabled"':''?>/>
+            <?php
+                }elseif ($field['type'] == 'select') {
+            ?>
+                <select rel="{{index}}" class="select <?php echo $field['cssclass']?> <?php echo $field['name']?> <?php echo
+                $field['required']?'required-entry':'' ?>" name="<?php echo $_htmlName ?>[{{index}}][<?php echo $field['name']?>]" id="<?php
+                echo $_htmlId?>_row_{{index}}_<?php echo $field['name']?>" style="<?php echo $field['style']?>" <?php echo
+                $field['readonly']?'readonly="readonly" disabled="disabled"':''?>>
+                    <?php foreach ($field['options'] as $k=>$v) { ?>
+                        <?php echo '<option value="'.$k.'" {{'.$field['name'].'_selected}}>'.$v.'</option>'; ?>
+                    <?php } ?>
+                </select>
+
+            <?php
+            }elseif ($field['type'] == 'multiselect')
+                {
+                ?>
+                <select multiple rel="{{index}}" class="select <?php echo $field['cssclass']?> <?php echo $field['name']?> <?php echo
+                $field['required']?'required-entry':'' ?>" name="<?php echo $_htmlName ?>[{{index}}][<?php echo $field['name']?>][]" id="<?php
+                echo $_htmlId?>_row_{{index}}_<?php echo $field['name']?>" style="<?php echo $field['style']?>" <?php echo
+                $field['readonly']?'readonly="readonly" disabled="disabled"':''?>>
+                    <?php foreach ($field['options'] as $k=>$v) { ?>
+                        <?php echo '<option value="'.$k.'" {{'.$field['name'].'_selected}}>'.$v.'</option>'; ?>
+                    <?php } ?>
+                </select>
+            <?php
+                }
+                elseif ($field['type'] == 'date') {
+            ?>
+                <input rel="{{index}}" class="input-text <?php echo $field['cssclass']?> <?php echo $field['name']?> <?php echo $field['required']?'required-entry':'' ?>" type="text" value="{{<?php echo $field['name']?>}}"
+                    name="<?php echo $_htmlName ?>[{{index}}][<?php echo $field['name']?>]" id="<?php echo $_htmlId?>_row_{{index}}_<?php
+                    echo $field['name']?>" style="<?php echo $field['style']?>" <?php echo $field['readonly']?'readonly="readonly" disabled="disabled"':''?>/>
+                <img style="margin-top:1px;float:right"
+                    id="<?php echo $_htmlId?>_row_{{index}}_<?php echo $field['name']?>_trig"
+                    src="<?php echo $this->getSkinUrl('images/grid-cal.gif'); ?>" />
+            <?php
+                }elseif ($field['type'] == 'checkbox') {
+            ?>
+                <input rel="{{index}}" class="input-checkbox <?php echo $field['cssclass']?> <?php echo $field['name']?> <?php echo $field['required']?'required-entry':'' ?>"
+                    type="checkbox" value="1"
+                    name="<?php echo $_htmlName ?>[{{index}}][<?php echo $field['name']?>]"
+                    id="<?php echo $_htmlId?>_row_{{index}}_<?php echo $field['name']?>"
+                    style="<?php echo $field['style']?>"
+                    {{<?php echo $field['name']?>_checked}}
+                    <?php echo $field['readonly']?'readonly="readonly" disabled="disabled"':''?>/>
+            <?php
+                }elseif ($field['type'] == 'html') {
+            ?>
+                <?php echo $field['html'] ?>
+            <?php } ?>
+        </td>
+    <?php } ?>
+
+    <td class="last">
+        <input type="hidden" name="<?php echo $_htmlName ?>[{{index}}][delete]" class="delete" value="" id="<?php echo $_htmlId?>_row_{{index}}_delete" />
+        <button title="<?php echo Mage::helper("core")->__("Delete") ?>" type="button"
+            class="scalable delete icon-btn" id="<?php echo $_htmlId?>_row_{{index}}_delete_button" onclick="return <?php echo $_htmlId?>TableControl.deleteItem(event);">
+            <span><?php echo Mage::helper("core")->__("Delete") ?></span>
+        </button>
+    </td>
+</tr>
+<?php
+    $template = ob_get_clean();
+    $index = 0;
+    foreach ($this->getValues() as $item)
+    {
+        $index++;
+        $row = $template;
+        $row = str_replace('{{index}}', $index, $row);
+        $row = str_replace('{{'.$this->getIdField().'}}', $item->getData($this->getIdField()), $row);
+        foreach ($this->getDisplayFields() as $field)
+        {
+            if ($field['onlyNewValue'])
+                $row = str_replace('{{'.$field['name'].'}}', '', $row);
+            elseif ($field['type'] == 'multiselect')
+            {
+                $addressIds = @explode(',',$item->getData($field['name']));
+                foreach ($addressIds as $id)
+                {
+                    $row = str_replace('"'.$id.'" {{'.$field['name'].'_selected}}', '"'.$id.'" selected="selected"',
+                        $row);
+                }
+                $row = str_replace(' {{'.$field['name'].'_selected}}', '', $row);
+            }
+            else
+            {
+                $row = str_replace('{{'.$field['name'].'}}', $item->getData($field['name']), $row);
+                $row = str_replace('{{'.$field['name'].'_checked}}',
+                    $item->getData($field['name'])?'checked="checked"':'',
+                    $row);
+                $row = str_replace('"'.$item->getData($field['name']).'" {{'.$field['name'].'_selected}}',
+                    '"'.$item->getData($field['name']).'" selected="selected"',
+                    $row);
+                $row = str_replace(' {{'.$field['name'].'_selected}}', '', $row);
+            }
+            if ($field['onlyNewRequired'])
+                $row = str_replace($field['name'].' required-entry', $field['name'], $row);
+        }
+        echo $row;
+    }
+?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="<?php echo count($this->getDisplayFields())+1?>" class="a-right">
+					<button onclick="return <?php echo $_htmlId?>TableControl.addItem()" class="scalable add" type="button"><span><?php echo $this->getAddbutton() ?></span></button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+<?php
+    foreach ($this->getBeforeJs() as $js)
+        echo '<script src="'.Mage::getBaseUrl('js').$js.'" type="text/javascript"></script>';
+?>
+<script type="text/javascript">
+//<![CDATA[
+var <?php echo $_htmlId?>TableTemplate = "<?php echo addslashes(str_replace(array("\n", "\r"), " ", $template)) ?>";
+
+function addCalendar(inputId)
+{
+    Calendar.setup({
+        inputField : inputId,
+        ifFormat : "<?php echo Mage::app()->getLocale()->getDateStrFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT)?>",
+        button : inputId+"_trig",
+        showsTime: false,
+        align : "Bl",
+        singleClick : true
+    });
+}
+var tableInputAddItemCallbackBefore = null;
+var tableInputAddItemCallbackAfter = null;
+var tableInputDeleteItemCallbackBefore = null;
+var tableInputDeleteItemCallbackAfter = null;
+
+var <?php echo $_htmlId?>TableControl = {
+    template: new Template(<?php echo $_htmlId?>TableTemplate, new RegExp('(^|.|\\r|\\n)({{\\s*(\\w+)\\s*}})', "")),
+    itemsCount: 0,
+    addItem : function () {
+        if (tableInputAddItemCallbackBefore !== null) {
+            if (!tableInputAddItemCallbackBefore(this)) {
+                return;
+            }
+        }
+        this.itemsCount += 1;
+        var data = {
+            <?php foreach ($this->getDisplayFields() as $field) echo $field['name'].': "",'."\n"?>
+            index: this.itemsCount
+        };
+
+        Element.insert($('<?php echo $_htmlId ?>_container'), {
+            bottom : this.template.evaluate(data)
+        });
+        <?php
+            foreach ($this->getDisplayFields() as $field)
+                if ($field['type'] == 'date')
+                    echo 'addCalendar("'.$_htmlId.'_row_"+this.itemsCount+"_'.$field['name'].'");';
+        ?>
+        if (tableInputAddItemCallbackAfter !== null) {
+            tableInputAddItemCallbackAfter(this);
+        }
+    },
+
+    deleteItem: function (event) {
+        var tr = Event.findElement(event, 'tr');
+        if (tableInputDeleteItemCallbackBefore) {
+            if (!tableInputDeleteItemCallbackBefore(this)) {
+                return;
+            }
+        }
+        if (tr) {
+            Element.select(tr, '.delete').each(function(elem){elem.value='1';});
+            Element.select(tr, ['input', 'select']).each(function(elem){elem.hide();});
+            Element.hide(tr);
+            Element.addClassName(tr, 'no-display template');
+        }
+        if (tableInputDeleteItemCallbackAfter) {
+            tableInputDeleteItemCallbackAfter(this);
+        }
+        return false;
+    }
+};
+
+var currentDate = new Date(<?php echo time()*1000; ?>);
+</script>
+<?php
+    foreach ($this->getAfterJs() as $js)
+        echo '<script src="'.Mage::getBaseUrl('js').$js.'" type="text/javascript"></script>';
+?>
+<script type="text/javascript">
+<?php
+foreach ($this->getValues() as $_item)
+{
+    echo $_htmlId.'TableControl.itemsCount++;';
+?>
+    if (tableInputAddItemCallbackBefore !== null)
+        tableInputAddItemCallbackBefore(<?php echo $_htmlId.'TableControl';?>, true); // maybe add a deleteitem?
+    if (tableInputAddItemCallbackAfter !== null)
+        tableInputAddItemCallbackAfter(<?php echo $_htmlId.'TableControl';?>, true);
+<?php
+}
+?>
+</script>
+</td></tr>
+<?php else: ?>
+    <p style="color: red;"><?php echo Mage::helper('sublogin')->__('You have to save the new customer first time before you can create sub logins.'); ?></p>
+<?php endif; ?>

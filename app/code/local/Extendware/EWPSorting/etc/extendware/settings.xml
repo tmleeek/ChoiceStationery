@@ -1,0 +1,323 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+        <Extendware_EWPSorting>
+        	<extendware>
+	        	<settings>
+	        		<scopes>
+		        		<main>
+							<tabs>
+						        <main translate="label comment ewhelp" module="ewpsorting">
+						            <label>Product Sorting</label>
+						            <sort_order>100</sort_order>
+						        </main>
+						    </tabs>
+							<sections>
+								<ewpsorting translate="label comment ewhelp" module="ewpsorting">
+									<class>separator-top</class>
+									<label>General</label>
+									<tab>main</tab>
+									<frontend_type>text</frontend_type>
+									<sort_order>100</sort_order>
+									<show_in_default>1</show_in_default>
+									<show_in_website>1</show_in_website>
+									<show_in_store>1</show_in_store>
+									<groups>
+										<general translate="label comment ewhelp" module="ewpsorting">
+						                    <label>General</label>
+						                    <frontend_type>text</frontend_type>
+						                    <sort_order>100</sort_order>
+						                    <show_in_default>1</show_in_default>
+						                    <show_in_website>0</show_in_website>
+						                    <show_in_store>0</show_in_store>
+						                    <fields>
+						                    	 <check_index_status translate="label comment ewhelp">
+						                            <label>Check Index</label>
+						                            <frontend_type>select</frontend_type>
+						                            <source_model>ewcore/adminhtml_config_data_option_enabledisable</source_model>
+						                            <sort_order>10</sort_order>
+						                            <show_in_default>1</show_in_default>
+						                            <show_in_website>1</show_in_website>
+						                            <show_in_store>1</show_in_store>
+						                            <comment><![CDATA[If enabled, an index will be auto disabled when it is not in a good state (green status). If your indexes are working well, then it is faster to disable this.]]></comment>
+						                        	<ewhelp><![CDATA[This will use a database query to check the status of the index so that the index can automatically be disabled if it is in a bad state or is currently building. If your indexes are always in a good state, you may disable this and save the extra database query.]]></ewhelp>
+						                        </check_index_status>
+						                    	<use_tier_price_status translate="label comment ewhelp">
+						                            <label>Tier Price Can Be Min Price</label>
+						                            <frontend_type>select</frontend_type>
+						                            <source_model>ewcore/adminhtml_config_data_option_enabledisable</source_model>
+						                            <sort_order>12</sort_order>
+						                            <show_in_default>1</show_in_default>
+						                            <show_in_website>1</show_in_website>
+						                            <show_in_store>1</show_in_store>
+						                            <comment><![CDATA[If enabled, the tier price will be used when calculating the minmimum price for products for the savings / discount sort methods.]]></comment>
+						                        </use_tier_price_status>
+						                        <out_of_stock_mode translate="label comment ewhelp">
+						                            <label>Out of Stock Mode</label>
+						                            <frontend_type>select</frontend_type>
+						                            <source_model>ewpsorting/adminhtml_config_data_option_outofstockmode</source_model>
+						                            <sort_order>20</sort_order>
+						                            <show_in_default>1</show_in_default>
+						                            <show_in_website>1</show_in_website>
+						                            <show_in_store>1</show_in_store>
+						                            <comment><![CDATA[The method used to determine if a product is out of stock or not.]]></comment>
+						                            <ewhelp><![CDATA[<ol>
+						                            <li><b>Stock Quantity</b> - product is considered out of stock is quantity is zero</li>
+						                            <li><b>Stock Status</b> - product is considered out of stock if stock status is "Out of Stock"</li>
+						                            <li><b>Is Saleable</b> - will use a combination of stock quantity, stock status, and managed status to determine stock statue (recommended)</li>
+						                            <li><b>Either quantity or stock status</b> - product is considered out of stock if quantity is zero or stock status is "Out of Stock"</li>
+						                            <li><b>Both quantity and stock status</b> - product is considered out of stock if quantity is zero and stock status is "Out of Stock"</li>
+						                            </ol>]]></ewhelp>
+						                        </out_of_stock_mode>
+						                        <reverse_sort_orders translate="label comment ewhelp">
+						                            <label>Reverse Sort Orders</label>
+						                            <frontend_model>ewpsorting/adminhtml_config_form_field_reversesortorders</frontend_model>
+                            						<backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+						                            <sort_order>30</sort_order>
+						                            <show_in_default>1</show_in_default>
+						                            <show_in_website>1</show_in_website>
+						                            <show_in_store>1</show_in_store>
+						                            <validators>
+						                            	<validator>
+						                            		<model>ewcore/data_validator_serialized_array</model>
+						                            		<options>
+						                            			<splittable_min_items>1</splittable_min_items>
+						                            			<splittable_max_items>1</splittable_max_items>
+						                            			<splittable_item_types>string</splittable_item_types>
+						                            			<splittable_item_min_length>1</splittable_item_min_length>
+						                            		</options>
+						                            	</validator>
+						                            </validators>
+						                            <comment><![CDATA[These sorts will be in the reverse direction of the default]]></comment>
+						                        	<ewhelp><![CDATA[You can find the code by lookin in the URL when sorting: yourdomain.com?order=[code]]]></ewhelp>
+						                        </reverse_sort_orders>
+						                        <sort_method_listing_order translate="label comment ewhelp">
+						                            <label>Sort Method Listing Order</label>
+						                            <frontend_model>ewpsorting/adminhtml_config_form_field_sortmethodlistingorder</frontend_model>
+                            						<backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+						                            <sort_order>31</sort_order>
+						                            <show_in_default>1</show_in_default>
+						                            <show_in_website>1</show_in_website>
+						                            <show_in_store>1</show_in_store>
+						                            <validators>
+						                            	<validator>
+						                            		<model>ewcore/data_validator_serialized_array</model>
+						                            		<options>
+						                            			<splittable_min_items>2</splittable_min_items>
+						                            			<splittable_max_items>2</splittable_max_items>
+						                            			<splittable_item_types>string|integer</splittable_item_types>
+						                            			<splittable_item_min_length>1</splittable_item_min_length>
+						                            		</options>
+						                            	</validator>
+						                            </validators>
+						                            <comment><![CDATA[This will control the order that methods are displayed in the frontend]]></comment>
+						                        	<ewhelp><![CDATA[You can find the code by lookin in the URL when sorting: yourdomain.com?order=[code]]]></ewhelp>
+						                        </sort_method_listing_order>
+						                        <disabled_sort_methods translate="label comment ewhelp">
+						                            <label>Disabled Sorts</label>
+						                            <frontend_type>multiselect</frontend_type>
+						                            <source_model>ewpsorting/adminhtml_config_data_option_method</source_model>
+						                            <sort_order>40</sort_order>
+						                            <show_in_default>1</show_in_default>
+						                            <show_in_website>1</show_in_website>
+						                            <show_in_store>1</show_in_store>
+						                            <can_be_empty>1</can_be_empty>
+						                            <comment><![CDATA[Select any sort methods you wish to disable. Use CTRL-Click to select more than one.]]></comment>
+						                        </disabled_sort_methods>
+						                        <disabled_indexes translate="label comment ewhelp">
+						                            <label>Disabled Indexes</label>
+						                            <frontend_type>multiselect</frontend_type>
+						                            <source_model>ewpsorting/adminhtml_config_data_option_index</source_model>
+						                            <sort_order>50</sort_order>
+						                            <show_in_default>1</show_in_default>
+						                            <show_in_website>1</show_in_website>
+						                            <show_in_store>1</show_in_store>
+						                            <can_be_empty>1</can_be_empty>
+						                            <comment><![CDATA[Select any indexes you wish to disable. Use CTRL-Click to select more than one.]]></comment>
+						                        </disabled_indexes>
+											</fields>
+										</general>
+									</groups>
+								</ewpsorting>
+								<ewpsorting_advanced translate="label comment ewhelp" module="ewpsorting">
+									<class>separator-top</class>
+									<label>Advanced</label>
+									<tab>main</tab>
+									<frontend_type>text</frontend_type>
+									<sort_order>200</sort_order>
+									<show_in_default>1</show_in_default>
+									<show_in_website>1</show_in_website>
+									<show_in_store>1</show_in_store>
+									<groups>
+										<general translate="label comment ewhelp" module="ewpsorting">
+						                    <label>General</label>
+						                    <frontend_type>text</frontend_type>
+						                    <sort_order>100</sort_order>
+						                    <show_in_default>1</show_in_default>
+						                    <show_in_website>0</show_in_website>
+						                    <show_in_store>0</show_in_store>
+						                    <fields>
+												<default_presort translate="label comment ewhelp">
+													<label>Default Pre-sort</label>
+													<frontend_model>ewpsorting/adminhtml_config_form_field_defaultpresort</frontend_model>
+                            						<backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+													<sort_order>10</sort_order>
+													<show_in_default>1</show_in_default>
+													<show_in_website>1</show_in_website>
+													<show_in_store>1</show_in_store>
+													<validators>
+						                            	<validator>
+						                            		<model>ewcore/data_validator_serialized_array</model>
+						                            		<options>
+						                            			<splittable_min_items>2</splittable_min_items>
+						                            			<splittable_max_items>2</splittable_max_items>
+						                            			<splittable_item_types>string|string</splittable_item_types>
+						                            			<splittable_item_min_length>1</splittable_item_min_length>
+						                            		</options>
+						                            	</validator>
+						                            </validators>
+													<comment><![CDATA[These will be used if a rule is not specifically defined in the sort configuration. Use "asc" or "desc" for direction.]]></comment>
+													<ewhelp><![CDATA[A pre-sort will be applied before the selected sort order. The most common use case is to sort by stock status, so that in-stock products are always shown first. You can find the code by lookin in the URL when sorting: yourdomain.com?order=[code]]]></ewhelp>
+												</default_presort>
+												<default_postsort translate="label comment ewhelp">
+													<label>Default Post-sort</label>
+													<frontend_model>ewpsorting/adminhtml_config_form_field_defaultpostsort</frontend_model>
+                            						<backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+													<sort_order>20</sort_order>
+													<show_in_default>1</show_in_default>
+													<show_in_website>1</show_in_website>
+													<show_in_store>1</show_in_store>
+													<validators>
+						                            	<validator>
+						                            		<model>ewcore/data_validator_serialized_array</model>
+						                            		<options>
+						                            			<splittable_min_items>2</splittable_min_items>
+						                            			<splittable_max_items>2</splittable_max_items>
+						                            			<splittable_item_types>string|string</splittable_item_types>
+						                            			<splittable_item_min_length>1</splittable_item_min_length>
+						                            		</options>
+						                            	</validator>
+						                            </validators>
+													<comment><![CDATA[These will be used if a rule is not specifically defined in the sort configuration. Use "asc" or "desc" for direction.]]></comment>
+													<ewhelp><![CDATA[Post sorting allows you to finely control the sorting when two products have the same sorted value. For example, if you sort by price and there are two products that are $10, you can use a post sort to show the best selling product first. You can find the code by lookin in the URL when sorting: yourdomain.com?order=[code]]]></ewhelp>
+												</default_postsort>
+												<config_rules translate="label comment ewhelp">
+						                            <label>Sort Configuration</label>
+						                            <frontend_type>textarea</frontend_type>
+						                            <sort_order>30</sort_order>
+						                            <show_in_default>1</show_in_default>
+						                            <show_in_website>1</show_in_website>
+						                    		<show_in_store>1</show_in_store>
+						                            <validators>
+						                            	<validator>
+						                            		<model>ewcore/data_validator_xml</model>
+						                            	</validator>
+						                            </validators>
+						                            <comment><![CDATA[You can change order code, pre-sort, post-sort, and label text using the config. Please refer to the user guide.]]></comment>
+						                        	<ewhelp><![CDATA[This is for very advanced users. It allows you to set pre-sort / post-sort for each individual sort. It also allows you to change the code / label that a sort uses so that you can rename "Best Sellers" to "Featured". Here is an example of supported values:
+<xmp>
+	<[original_code]>
+		<code>[new code]</code>
+		<label>[new frontend label]</label>
+		<presort>[pre-sort value that overrides default]</presort>
+		<postsort>[post-sort value that overrides default]</postsort>
+	</[original_code]>
+</xmp>
+														<br/>Please note, if you change the code, you will have to update configuration in other areas that depend on the code (such as reverse sorting, sort method listing order, etc).
+						                        	]]></ewhelp>
+						                        	<ewhelp_max_width>600px</ewhelp_max_width>
+						                        </config_rules>
+											</fields>
+										</general>
+										<period translate="label comment ewhelp" module="ewpsorting">
+						                    <label>Relevancy Periods</label>
+						                    <frontend_type>text</frontend_type>
+						                    <sort_order>200</sort_order>
+						                    <show_in_default>1</show_in_default>
+						                    <show_in_website>0</show_in_website>
+						                    <show_in_store>0</show_in_store>
+						                    <fields>
+						                        <ordered translate="label comment ewhelp">
+						                            <label>Best Sellers Period</label>
+						                            <frontend_type>text</frontend_type>
+						                            <sort_order>10</sort_order>
+						                            <show_in_default>1</show_in_default>
+						                            <show_in_website>0</show_in_website>
+						                            <show_in_store>0</show_in_store>
+						                            <validators>
+						                            	<validator>
+						                            		<model>ewcore/data_validator_integer</model>
+						                            		<options>
+						                            			<min_value>0</min_value>
+						                            		</options>
+						                            	</validator>
+						                            </validators>
+						                            <validate>required-entry validate-zero-or-greater</validate>
+						                            <comment><![CDATA[The number of days in the past that are used to determine best sellers. Put 0 to use all available history.]]></comment>
+						                        </ordered>
+						                        <viewed translate="label comment ewhelp">
+						                            <label>Popularity Period</label>
+						                            <frontend_type>text</frontend_type>
+						                            <sort_order>20</sort_order>
+						                            <show_in_default>1</show_in_default>
+						                            <show_in_website>0</show_in_website>
+						                            <show_in_store>0</show_in_store>
+						                            <validators>
+						                            	<validator>
+						                            		<model>ewcore/data_validator_integer</model>
+						                            		<options>
+						                            			<min_value>0</min_value>
+						                            		</options>
+						                            	</validator>
+						                            </validators>
+						                            <validate>required-entry validate-zero-or-greater</validate>
+						                            <comment><![CDATA[The number of days in the past that are used to determine popularity. Put 0 to use all available history.]]></comment>
+						                        </viewed>
+						                        <revenue translate="label comment ewhelp">
+						                            <label>Revenue Generated</label>
+						                            <frontend_type>text</frontend_type>
+						                            <sort_order>30</sort_order>
+						                            <show_in_default>1</show_in_default>
+						                            <show_in_website>0</show_in_website>
+						                            <show_in_store>0</show_in_store>
+						                            <validators>
+						                            	<validator>
+						                            		<model>ewcore/data_validator_integer</model>
+						                            		<options>
+						                            			<min_value>0</min_value>
+						                            		</options>
+						                            	</validator>
+						                            </validators>
+						                            <validate>required-entry validate-zero-or-greater</validate>
+						                            <comment><![CDATA[The number of days in the past that are used to determine revenue genrated. Put 0 to use all available history.]]></comment>
+						                        </revenue>
+						                        <rpm translate="label comment ewhelp">
+						                            <label>Performance (RPM) Period</label>
+						                            <frontend_type>text</frontend_type>
+						                            <sort_order>40</sort_order>
+						                            <show_in_default>1</show_in_default>
+						                            <show_in_website>0</show_in_website>
+						                            <show_in_store>0</show_in_store>
+						                            <validators>
+						                            	<validator>
+						                            		<model>ewcore/data_validator_integer</model>
+						                            		<options>
+						                            			<min_value>0</min_value>
+						                            		</options>
+						                            	</validator>
+						                            </validators>
+						                            <validate>required-entry validate-zero-or-greater</validate>
+						                            <comment><![CDATA[The number of days in the past that are used to determine RPM (revenue per thousand views). Put 0 to use all available history.]]></comment>
+						                        </rpm>
+											</fields>
+										</period>
+									</groups>
+								</ewpsorting_advanced>
+							</sections>
+						</main>
+					</scopes>
+				</settings>
+			</extendware>
+		</Extendware_EWPSorting>
+	</modules>
+</config>

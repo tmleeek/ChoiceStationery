@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:typens="urn:{{var wsdl.name}}" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/"
+    name="{{var wsdl.name}}" targetNamespace="urn:{{var wsdl.name}}">
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Magento">
+			<!-- Sublogin -->
+            <complexType name="subloginEntity">
+                <all>
+                    <element name="id" type="xsd:int" minOccurs="1" /> <!-- primary key -->
+                    <element name="entity_id" type="xsd:int" minOccurs="1" /> <!-- magento customer id -->
+                    <!--<element name="customer_id" type="xsd:int" minOccurs="1" />--> <!-- customer id from MageB2B_CustomerId extension For now there is no support to use this, but may be in future -->
+                    <element name="email" type="xsd:string" minOccurs="1" />
+                    <element name="password" type="xsd:string" minOccurs="1" />
+                    <element name="firstname" type="xsd:string" minOccurs="1" />
+                    <element name="lastname" type="xsd:string" minOccurs="1" />
+                    <element name="expire_date" type="xsd:string" minOccurs="0" />
+                    <element name="active" type="xsd:boolean" minOccurs="1" />
+                    <element name="send_backendmails" type="xsd:boolean" minOccurs="0" />
+                    <element name="create_sublogins" type="xsd:boolean" minOccurs="0" />
+                    <element name="is_subscribed" type="xsd:boolean" minOccurs="0" />
+                    <element name="store_id" type="xsd:int" minOccurs="1" />
+                    <element name="address_ids" type="xsd:string" minOccurs="0" />
+                    <element name="acl" type="xsd:string" minOccurs="0" />
+                    <element name="order_needs_approval" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+			<complexType name="subloginEntityArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:subloginEntity[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+			
+			<complexType name="subloginEntityToCreate">
+                <all>
+                    <element name="entity_id" type="xsd:int" minOccurs="1" /> <!-- magento customer id -->
+                    <!--<element name="customer_id" type="xsd:int" minOccurs="1" />--> <!-- customer id from MageB2B_CustomerId extension For now there is no support to use this, but may be in future -->
+                    <element name="email" type="xsd:string" minOccurs="1" />
+                    <element name="password" type="xsd:string" minOccurs="1" />
+                    <element name="firstname" type="xsd:string" minOccurs="1" />
+                    <element name="lastname" type="xsd:string" minOccurs="1" />
+                    <element name="expire_date" type="xsd:string" minOccurs="0" />
+                    <element name="active" type="xsd:boolean" minOccurs="1" />
+                    <element name="send_backendmails" type="xsd:boolean" minOccurs="0" />
+                    <element name="create_sublogins" type="xsd:boolean" minOccurs="0" />
+                    <element name="is_subscribed" type="xsd:boolean" minOccurs="0" />
+                    <element name="store_id" type="xsd:int" minOccurs="1" />
+                    <element name="address_ids" type="xsd:string" minOccurs="0" />
+                    <element name="acl" type="xsd:string" minOccurs="0" />
+                    <element name="order_needs_approval" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            
+            <!-- Sublogin ACL -->
+            <complexType name="subloginAcl">
+                <all>
+                    <element name="acl_id" type="xsd:int" minOccurs="1" /> <!-- primary key -->
+                    <element name="name" type="xsd:string" minOccurs="1" />
+                    <element name="identifier" type="xsd:string" minOccurs="1" />
+                </all>
+            </complexType>
+			<complexType name="subloginAclArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:subloginAcl[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+			
+			<complexType name="subloginAclToCreate">
+                <all>
+                    <element name="name" type="xsd:string" minOccurs="1" />
+                    <element name="identifier" type="xsd:string" minOccurs="1" />
+                </all>
+            </complexType>
+            
+            <!-- Sublogin Budget -->
+            <complexType name="subloginBudget">
+                <all>
+                    <element name="budget_id" type="xsd:int" minOccurs="1" /> <!-- primary key -->
+                    <element name="sublogin_id" type="xsd:int" minOccurs="1" />
+                    <element name="year" type="xsd:string" minOccurs="1" />
+                    <element name="month" type="xsd:string" minOccurs="0" />
+                    <element name="day" type="xsd:string" minOccurs="0" />
+                    <element name="per_order" type="xsd:string" minOccurs="0" />
+                    <element name="amount" type="xsd:string" minOccurs="1" />
+                </all>
+            </complexType>
+			<complexType name="subloginBudgetArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:subloginBudget[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+			
+			<complexType name="subloginBudgetToCreate">
+                <all>
+                    <element name="sublogin_id" type="xsd:int" minOccurs="1" />
+                    <element name="year" type="xsd:string" minOccurs="1" />
+                    <element name="month" type="xsd:string" minOccurs="0" />
+                    <element name="day" type="xsd:string" minOccurs="0" />
+                    <element name="per_order" type="xsd:string" minOccurs="0" />
+                    <element name="amount" type="xsd:string" minOccurs="1" />
+                </all>
+            </complexType>
+        </schema>
+    </types>
+	
+	<!-- Sublogin Request - Response -->
+	<message name="subloginListRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="filters" type="typens:filters" />
+    </message>
+    <message name="subloginListResponse">
+        <part name="result" type="typens:subloginEntityArray" />
+    </message>
+	
+	<message name="subloginInfoRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="id" type="xsd:int" />
+    </message>
+    <message name="subloginInfoResponse">
+        <part name="result" type="typens:subloginEntity" />
+    </message>
+	
+	<message name="subloginCreateRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="data" type="typens:subloginEntityToCreate" />
+    </message>
+    <message name="subloginCreateResponse">
+        <part name="result" type="xsd:int"/>
+    </message>
+	
+	<message name="subloginUpdateRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="id" type="xsd:int" />
+        <part name="data" type="typens:subloginEntityToCreate" />
+    </message>
+    <message name="subloginUpdateResponse">
+        <part name="result" type="xsd:boolean"/>
+    </message>
+	
+	<message name="subloginDeleteRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="id" type="xsd:int" />
+    </message>
+    <message name="subloginDeleteResponse">
+        <part name="result" type="xsd:boolean"/>
+    </message>
+    
+    <!-- Sublogin ACL Request - Response -->
+	<message name="subloginAclListRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="filters" type="typens:filters" />
+    </message>
+    <message name="subloginAclListResponse">
+        <part name="result" type="typens:subloginAclArray" />
+    </message>
+	
+	<message name="subloginAclInfoRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="id" type="xsd:int" />
+    </message>
+    <message name="subloginAclInfoResponse">
+        <part name="result" type="typens:subloginAcl" />
+    </message>
+	
+	<message name="subloginAclCreateRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="data" type="typens:subloginAclToCreate" />
+    </message>
+    <message name="subloginAclCreateResponse">
+        <part name="result" type="xsd:int"/>
+    </message>
+	
+	<message name="subloginAclUpdateRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="id" type="xsd:int" />
+        <part name="data" type="typens:subloginAclToCreate" />
+    </message>
+    <message name="subloginAclUpdateResponse">
+        <part name="result" type="xsd:boolean"/>
+    </message>
+	
+	<message name="subloginAclDeleteRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="id" type="xsd:int" />
+    </message>
+    <message name="subloginAclDeleteResponse">
+        <part name="result" type="xsd:boolean"/>
+    </message>
+    
+    <!-- Sublogin Budget Request - Response -->
+	<message name="subloginBudgetListRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="filters" type="typens:filters" />
+    </message>
+    <message name="subloginBudgetListResponse">
+        <part name="result" type="typens:subloginBudgetArray" />
+    </message>
+	
+	<message name="subloginBudgetInfoRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="id" type="xsd:int" />
+    </message>
+    <message name="subloginBudgetInfoResponse">
+        <part name="result" type="typens:subloginBudget" />
+    </message>
+	
+	<message name="subloginBudgetCreateRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="data" type="typens:subloginBudgetToCreate" />
+    </message>
+    <message name="subloginBudgetCreateResponse">
+        <part name="result" type="xsd:int"/>
+    </message>
+	
+	<message name="subloginBudgetUpdateRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="id" type="xsd:int" />
+        <part name="data" type="typens:subloginBudgetToCreate" />
+    </message>
+    <message name="subloginBudgetUpdateResponse">
+        <part name="result" type="xsd:boolean"/>
+    </message>
+	
+	<message name="subloginBudgetDeleteRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="id" type="xsd:int" />
+    </message>
+    <message name="subloginBudgetDeleteResponse">
+        <part name="result" type="xsd:boolean"/>
+    </message>
+	
+	<portType name="{{var wsdl.handler}}PortType">
+		<!-- Sublogin Operations -->
+        <operation name="subloginList">
+            <documentation>Retrieve Sublogins</documentation>
+            <input message="typens:subloginListRequest" />
+            <output message="typens:subloginListResponse" />
+        </operation>
+		<operation name="subloginInfo">
+            <documentation>Retrieve Single Sublogin</documentation>
+            <input message="typens:subloginInfoRequest" />
+            <output message="typens:subloginInfoResponse" />
+        </operation>
+		<operation name="subloginCreate">
+            <documentation>Add Sublogin</documentation>
+            <input message="typens:subloginCreateRequest" />
+            <output message="typens:subloginCreateResponse" />
+        </operation>
+		<operation name="subloginUpdate">
+            <documentation>Update Sublogin</documentation>
+            <input message="typens:subloginUpdateRequest" />
+            <output message="typens:subloginUpdateResponse" />
+        </operation>
+		<operation name="subloginDelete">
+            <documentation>Delete Sublogin</documentation>
+            <input message="typens:subloginDeleteRequest" />
+            <output message="typens:subloginDeleteResponse" />
+        </operation>
+        
+        <!-- Sublogin ACL Operations -->
+        <operation name="subloginAclList">
+            <documentation>Retrieve List of Sublogin Acl</documentation>
+            <input message="typens:subloginAclListRequest" />
+            <output message="typens:subloginAclListResponse" />
+        </operation>
+		<operation name="subloginAclInfo">
+            <documentation>Retrieve Single Sublogin Acl</documentation>
+            <input message="typens:subloginAclInfoRequest" />
+            <output message="typens:subloginAclInfoResponse" />
+        </operation>
+		<operation name="subloginAclCreate">
+            <documentation>Add Sublogin Acl</documentation>
+            <input message="typens:subloginAclCreateRequest" />
+            <output message="typens:subloginAclCreateResponse" />
+        </operation>
+		<operation name="subloginAclUpdate">
+            <documentation>Update Sublogin Acl</documentation>
+            <input message="typens:subloginAclUpdateRequest" />
+            <output message="typens:subloginAclUpdateResponse" />
+        </operation>
+		<operation name="subloginAclDelete">
+            <documentation>Delete Sublogin Acl</documentation>
+            <input message="typens:subloginAclDeleteRequest" />
+            <output message="typens:subloginAclDeleteResponse" />
+        </operation>
+        
+        <!-- Sublogin Budget Operations -->
+        <operation name="subloginBudgetList">
+            <documentation>Retrieve List of Sublogin Budget</documentation>
+            <input message="typens:subloginBudgetListRequest" />
+            <output message="typens:subloginBudgetListResponse" />
+        </operation>
+		<operation name="subloginBudgetInfo">
+            <documentation>Retrieve Single Sublogin Budget</documentation>
+            <input message="typens:subloginBudgetInfoRequest" />
+            <output message="typens:subloginBudgetInfoResponse" />
+        </operation>
+		<operation name="subloginBudgetCreate">
+            <documentation>Add Sublogin Budget</documentation>
+            <input message="typens:subloginBudgetCreateRequest" />
+            <output message="typens:subloginBudgetCreateResponse" />
+        </operation>
+		<operation name="subloginBudgetUpdate">
+            <documentation>Update Sublogin Budget</documentation>
+            <input message="typens:subloginBudgetUpdateRequest" />
+            <output message="typens:subloginBudgetUpdateResponse" />
+        </operation>
+		<operation name="subloginBudgetDelete">
+            <documentation>Delete Sublogin Budget</documentation>
+            <input message="typens:subloginBudgetDeleteRequest" />
+            <output message="typens:subloginBudgetDeleteResponse" />
+        </operation>
+	</portType>
+	
+	<binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        
+        <!-- Sublogin Operations Binding -->
+        <operation name="subloginList">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+		 <operation name="subloginInfo">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+		<operation name="subloginCreate">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+		<operation name="subloginUpdate">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+		<operation name="subloginDelete">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        
+        <!-- Sublogin Acl Operations Binding -->
+        <operation name="subloginAclList">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+		 <operation name="subloginAclInfo">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+		<operation name="subloginAclCreate">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+		<operation name="subloginAclUpdate">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+		<operation name="subloginAclDelete">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        
+        <!-- Sublogin Budget Operations Binding -->
+        <operation name="subloginBudgetList">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+		 <operation name="subloginBudgetInfo">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+		<operation name="subloginBudgetCreate">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+		<operation name="subloginBudgetUpdate">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+		<operation name="subloginBudgetDelete">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+	</binding>
+	
+	<service name="{{var wsdl.name}}Service">
+        <port name="{{var wsdl.handler}}Port" binding="typens:{{var wsdl.handler}}Binding">
+            <soap:address location="{{var wsdl.url}}" />
+        </port>
+    </service>
+</definitions>

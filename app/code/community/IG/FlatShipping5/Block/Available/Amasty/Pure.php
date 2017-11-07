@@ -1,0 +1,3 @@
+<?php /* added automatically by conflict fixing tool */ if (Mage::getConfig()->getNode('modules/Amasty_Methods/active')) {
+                class IG_FlatShipping5_Block_Available_Amasty_Pure extends Amasty_Methods_Block_Rewrite_Onepage_Shipping_Method_Available {}
+            } else { class IG_FlatShipping5_Block_Available_Amasty_Pure extends Amasty_Methods_Block_Rewrite_Onepage_Shipping_Method_Available {} } ?>

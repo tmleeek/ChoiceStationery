@@ -1,0 +1,185 @@
+<div class="entry-edit">
+
+    <div class="content-header">
+        <table cellspacing="0" class="grid-header">
+            <tr>
+                <td><h3><?php echo $this->__('Add a new router rule') ?></h3></td>
+                <td align="right">
+                    <button onclick="setLocation('<?php echo $this->getUrl('*/*/Grid') ?>')" class="scalable back" type="button"><span><?php echo $this->__('Back'); ?></span></button>
+                    <button onclick="document.getElementById('email_form').submit();" class="scalable save" type="button"><span><?php echo $this->__('Submit'); ?></span></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <?php /* ------------------------------------ ROUTEUR RULE FORM ------------------------------------  */ ?>
+    <form id="email_form" method="POST" name="email_form" action="<?php echo $this->getUrl("*/*/CreateNewRule"); ?>">
+        <div>
+            <input type="hidden" id="form_key" name="form_key"  value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+        </div>
+        
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Definition'); ?></h4>
+        </div>
+        <div id="rule_fieldset" class="fieldset ">
+            <div class="hor-scroll">
+                <table class="form-list" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Name'); ?></td>
+                            <td class="value">
+                               <input class="input-text" type="text" name="rule[cerr_name]" id="rule[cerr_name]" size="60" value="" style="width: 400px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Priority'); ?></td>
+                            <td class="value">
+                               <select class="select" name="rule[cerr_priority]" id="rule[cerr_priority]">
+                                 <?php for($i=0;$i<99;$i++): ?>
+                                    <option  value="<?php echo $i; ?>" ><?php echo $i; ?></option>
+                                 <?php endfor; ?>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Active'); ?></td>
+                            <td class="value">
+                               <select class="select" name="rule[cerr_active]" id="rule[cerr_active]">
+                                    <option  value="<?php echo MDN_CrmTicket_Model_EmailRouterRules::INACTIVE_RULE; ?>" ><?php echo $this->__('No') ?></option>
+                                    <option  value="<?php echo MDN_CrmTicket_Model_EmailRouterRules::ACTIVE_RULE; ?>" ><?php echo $this->__('Yes') ?></option>
+                               </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br/>
+        
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Rule criteria'); ?></h4>
+        </div>
+        <div id="ticket_fieldset" class="fieldset ">
+            <div class="hor-scroll">
+                <table class="form-list" cellspacing="0">
+                    <tbody>                      
+                        <tr>
+                            <td class="label"><?php echo $this->__('Email account'); ?></td>
+                            <td class="value">
+                               <select class="select" name="rule[cerr_email_account_id]" id="rule[email_account_id]">
+                                <option class="notselected" value="<?php echo 0; ?>" ><?php echo $this->__('Not selected') ?></option>
+                                  <?php foreach ($this->getEmailAccounts() as $account) : ?>
+                                      <?php
+                                      $limit = 25;
+                                      $shorterName = $account->getcea_name();
+                                      if(strlen($shorterName)>$limit){
+                                        $shorterName = substr($account->getcea_name(), 0, $limit).'...';
+                                      }
+                                      ?>
+                                      <option value="<?php echo $account->getId(); ?>"><?php echo $shorterName; ?></option>
+                                  <?php endforeach; ?>
+                              </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label"><?php echo $this->__('Email\'s Subject pattern'); ?></td>
+                            <td class="value">
+                                <input class="input-text" type="text" name="rule[cerr_subject_pattern]" id="cerr_subject_pattern" size="60" value="" style="width: 400px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Email\'s From pattern'); ?></td>
+                            <td class="value">
+                                <input class="input-text" type="text" name="rule[cerr_from_pattern]" id="cerr_from_pattern" size="60" value="" style="width: 400px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Email\'s Body pattern'); ?></td>
+                            <td class="value">
+                                <input class="input-text" type="text" name="rule[cerr_body_pattern]" id="cerr_body_pattern" size="60" value="" style="width: 400px;" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+              </div> 
+          </div>
+
+          <br/>
+
+          <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Rule effect'); ?></h4>
+          </div>
+          <div id="rule_fieldset" class="fieldset ">
+            <div class="hor-scroll">
+                <table class="form-list" cellspacing="0">
+                    <tbody>
+
+                        <tr>
+                            <td class="label"><?php echo $this->__('Category'); ?></td>
+                            <td class="value">
+                              <?php
+                                $block = $this->getLayout()->createBlock('CrmTicket/Admin_Category_Select');
+                                echo $block->getHtmlMenu(0, 'rule[cerr_category_id]', 'select', 0, null, true);
+                                ?>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label"><?php echo $this->__('Manager'); ?></td>
+                            <td class="value">
+                              <select class="required-entry select" name="rule[cerr_manager_id]" id="cerr_manager_id">
+                                    <option class="notselected" value="<?php echo 0; ?>" ><?php echo $this->__('Not selected') ?></option>
+                                    <?php foreach ($this->getManagers() as $managerId => $managerName) : ?>
+                                        <option value="<?php echo $managerId; ?>"><?php echo $managerName; ?></option>
+                                    <?php endforeach; ?>
+                              </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $this->__('Store'); ?></td>
+                            <td class="value">
+                              <select name="rule[cerr_store_id]" name="cerr_store_id">
+                                    <option class="notselected" value="<?php echo 0; ?>" ><?php echo $this->__('Not selected') ?></option>
+                                    <?php foreach ($this->getWebsiteCollection() as $website): ?>
+                                        <optgroup label="<?php echo $website->getName(); ?>">
+                                        <?php foreach ($this->getGroupCollection($website) as $group): ?>
+                                            <?php if ($group->getWebsiteId() != $website->getId()) continue; ?>
+                                            <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $group->getName(); ?>">
+                                            <?php foreach ($this->getStoreCollection($group) as $store): ?>
+                                                <?php if ($store->getGroupId() != $group->getId()) continue; ?>
+                                                    <option value="<? echo $store->getId(); ?>" >&nbsp;&nbsp;&nbsp;&nbsp; <?php echo $store->getName(); ?></option>
+                                            <?php endforeach; ?>
+                                            </optgroup>
+                                        <?php endforeach; ?>
+                                        </optgroup>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label"><?php echo $this->__('Status'); ?></td>
+                            <td class="value">
+                              <select class="select" name="rule[cerr_status]" id="ct_status">
+                                    <option class="notselected" value="<?php echo 0; ?>" ><?php echo $this->__('Not selected') ?></option>
+                                    <?php foreach (mage::getModel('CrmTicket/Ticket')->getStatuses() as $k => $v) : ?>
+                                        <option  value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                        </tr>                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </form>
+
+  <script type="text/javascript">
+      email_form = new varienForm('email_form', '');
+  </script>
+
+</div>
+

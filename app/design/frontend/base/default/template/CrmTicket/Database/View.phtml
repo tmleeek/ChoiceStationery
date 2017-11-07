@@ -1,0 +1,37 @@
+<?php $ticket = $this->getTicket(); ?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+<div class="page-title">
+    <h1><?php echo $this->__($ticket->getct_subject()); ?></h1>
+</div>
+
+<div class="col2-set generic-box">
+    <div style="float: left">
+        <table border="0" width="650px;" >
+            <tr>
+                <td>
+                    <?php echo $this->__('<b>Created at : </b>%s', $this->formatDate($ticket->getct_created_at(), 'long')); ?>
+                    <br><?php echo $this->__('<b>Updated at : </b>%s', $this->formatDate($ticket->getct_created_at(), 'long')); ?>
+                    <br><?php echo $this->__('<b>Category is : </b>%s', $ticket->getCategory()->getFullName()); ?>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<table border="0" width="650px;" class="data-table cart-table" >
+<?php foreach ($this->getTicket()->getMessages() as $message): ?>
+<tr>
+  <td>
+      <div >
+          <div style="float: left">
+              <p><b><?php echo $this->__('By %s, %s', $this->__($message->getctm_author()), Mage::helper('core')->formatDate($message->getctm_updated_at(), 'long', true)); ?></b></p>
+              <p><?php echo $message->getctm_content(); ?></p>
+          </div>
+      </div>
+  </td>
+</tr>    
+<!-- class="col2-set generic-box ticket-message-<?php /*echo $message->getctm_author();*/ ?>" -->
+<?php endforeach; ?>
+</table>

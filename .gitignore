@@ -26,6 +26,7 @@ dwsync.xml
 *.sass-cache
 *.zip
 *.sql
+*.sql.gz
 *.tar.gz
 *.tgz
 Thumbs.db

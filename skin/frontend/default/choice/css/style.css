@@ -1942,3 +1942,15 @@ h4.rewardpoints-title{
 	   -webkit-column-gap: 20px;
 	}
 }
+
+.order-outer.customnew .row
+{
+color:#fff;
+padding:10px;
+background :#e60003 !important;
+}
+#p_method_paypal_express
+{
+float: left;
+margin-top: 4px;
+}

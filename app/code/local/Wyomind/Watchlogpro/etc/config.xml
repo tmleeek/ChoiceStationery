@@ -12,8 +12,8 @@
             </license>
             <settingspro>
                 <use_whitelist_only>0</use_whitelist_only>
-                <block_duration>20</block_duration>
-                <attempts>10</attempts>
+                <block_duration>15</block_duration>
+                <attempts>15</attempts>
                 <blocked_message>Unauthorized Ip!</blocked_message>
                 <report>1</report>
                 <report_title>Watchlog has blocked one new IP!</report_title>

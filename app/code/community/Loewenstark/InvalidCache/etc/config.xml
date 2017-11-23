@@ -27,7 +27,7 @@
     <crontab>
         <jobs>
             <invalidcache_cron>
-                <schedule><cron_expr>0 4 * * *</cron_expr></schedule>
+                <schedule><cron_expr>0 8 * * *</cron_expr></schedule>
                 <run>
                     <model>invalidcache/observer::clearInvalidCache</model>
                 </run>

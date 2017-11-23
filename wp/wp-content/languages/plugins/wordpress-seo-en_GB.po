@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Yoast SEO - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-10-24 11:44:49+0000\n"
+"PO-Revision-Date: 2017-11-06 08:21:23+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3220,7 +3220,7 @@ msgstr "Page %1$d of %2$d"
 
 #: inc/class-wpseo-replace-vars.php:122
 msgid "You cannot overrule a WPSEO standard variable replacement by registering a variable with the same name. Use the \"wpseo_replacements\" filter instead to adjust the replacement value."
-msgstr "You cannot overrule a WPSEO standard variable replacement by registering a variable with the same name. Use the <code>wpseo_replacements</code> filter instead to adjust the replacement value."
+msgstr "You cannot overrule a WPSEO standard variable replacement by registering a variable with the same name. Use the \"wpseo_replacements\" filter instead to adjust the replacement value."
 
 #: inc/class-wpseo-replace-vars.php:118
 msgid "A replacement variable with the same name has already been registered. Try making your variable name unique."
@@ -3228,7 +3228,7 @@ msgstr "A replacement variable with the same name has already been registered. T
 
 #: inc/class-wpseo-replace-vars.php:109
 msgid "A replacement variable can not start with \"%%cf_\" or \"%%ct_\" as these are reserved for the WPSEO standard variable variables for custom fields and custom taxonomies. Try making your variable name unique."
-msgstr "A replacement variable can not start with <code>%%cf_</code> or <code>%%ct_</code> as these are reserved for the WPSEO standard variable variables for custom fields and custom taxonomies. Try making your variable name unique."
+msgstr "A replacement variable can not start with %%cf_ or %%ct_ as these are reserved for the WPSEO standard variable variables for custom fields and custom taxonomies. Try making your variable name unique."
 
 #: inc/class-wpseo-replace-vars.php:106
 msgid "A replacement variable can only contain alphanumeric characters, an underscore or a dash. Try renaming your variable."
@@ -3340,23 +3340,23 @@ msgstr "The old data of the imported plugin was deleted successfully."
 
 #: admin/views/tool-file-editor.php:149
 msgid "If you had a .htaccess file and it was editable, you could edit it from here."
-msgstr "If you had a <code>.htaccess</code> file and it was editable, you could edit it from here."
+msgstr "If you had a .htaccess file and it was editable, you could edit it from here."
 
 #: admin/views/tool-file-editor.php:144
 msgid "Save changes to .htaccess"
-msgstr "Save changes to <code>.htaccess</code>"
+msgstr "Save changes to .htaccess"
 
 #: admin/views/tool-file-editor.php:142
 msgid "Edit the content of your .htaccess:"
-msgstr "Edit the content of your <code>.htaccess</code>:"
+msgstr "Edit the content of your .htaccess:"
 
 #: admin/views/tool-file-editor.php:136
 msgid "If your .htaccess were writable, you could edit it from here."
-msgstr "If your <code>.htaccess</code> were writable, you could edit it from here."
+msgstr "If your .htaccess were writable, you could edit it from here."
 
 #: admin/views/tool-file-editor.php:124
 msgid ".htaccess file"
-msgstr "<code>.htaccess</code> file"
+msgstr ".htaccess file"
 
 #: admin/views/tool-file-editor.php:118
 msgid "Save changes to Robots.txt"
@@ -3364,23 +3364,23 @@ msgstr "Save changes to robots.txt"
 
 #: admin/views/tool-file-editor.php:116
 msgid "Edit the content of your robots.txt:"
-msgstr "Edit the content of your <code>robots.txt</code>:"
+msgstr "Edit the content of your robots.txt:"
 
 #: admin/views/tool-file-editor.php:110
 msgid "If your robots.txt were writable, you could edit it from here."
-msgstr "If your <code>robots.txt</code> were writable, you could edit it from here."
+msgstr "If your robots.txt were writable, you could edit it from here."
 
 #: admin/views/tool-file-editor.php:97
 msgid "If you had a robots.txt file and it was editable, you could edit it from here."
-msgstr "If you had a <code>robots.txt</code> file and it was editable, you could edit it from here."
+msgstr "If you had a robots.txt file and it was editable, you could edit it from here."
 
 #: admin/views/tool-file-editor.php:93
 msgid "Create robots.txt file"
-msgstr "Create <code>robots.txt</code> file"
+msgstr "Create robots.txt file"
 
 #: admin/views/tool-file-editor.php:92
 msgid "You don't have a robots.txt file, create one here:"
-msgstr "You don't have a <code>robots.txt</code> file, create one here:"
+msgstr "You don't have a robots.txt file, create one here:"
 
 #: admin/views/tool-file-editor.php:85
 msgid "Robots.txt"
@@ -3388,19 +3388,19 @@ msgstr "Robots.txt"
 
 #: admin/views/tool-file-editor.php:51
 msgid "You cannot edit the .htaccess file."
-msgstr "You cannot edit the <code>.htaccess</code> file."
+msgstr "You cannot edit the .htaccess file."
 
 #: admin/views/tool-file-editor.php:44
 msgid "Updated Robots.txt"
-msgstr "Updated <code>robots.txt</code>"
+msgstr "Updated robots.txt"
 
 #: admin/views/tool-file-editor.php:33
 msgid "You cannot edit the robots.txt file."
-msgstr "You cannot edit the <code>robots.txt</code> file."
+msgstr "You cannot edit the robots.txt file."
 
 #: admin/views/tool-file-editor.php:17
 msgid "You cannot create a robots.txt file."
-msgstr "You cannot create a <code>robots.txt</code> file."
+msgstr "You cannot create a robots.txt file."
 
 #: admin/views/tabs/advanced/rss.php:52
 msgid "A link to your site, with your site's name and description as anchor text."
@@ -4820,7 +4820,7 @@ msgstr "The URL that this page should redirect to."
 
 #: admin/metabox/class-metabox.php:122
 msgid "301 Redirect"
-msgstr "<code>301</code> Redirect"
+msgstr "301 Redirect"
 
 #. translators: 1: link open tag; 2: link close tag.
 #: admin/metabox/class-metabox.php:120
@@ -4941,7 +4941,7 @@ msgstr "Settings successfully imported."
 
 #: admin/class-import.php:133
 msgid "Unzipping failed - file settings.ini not found."
-msgstr "Unzipping failed - file <code>settings.ini</code> not found."
+msgstr "Unzipping failed - file settings.ini not found."
 
 #. translators: %s expands to an error message.
 #: admin/class-import.php:126

@@ -11,9 +11,12 @@ class Wyomind_Notificationmanager_Model_Resource_Setup extends Mage_Core_Model_R
                 if (($dh = opendir($dir)) != false) {
                     while (($file = readdir($dh)) !== false) {
                         if (is_dir($dir.$file) && $file != "." && $file != "..") {
-                            $enabled = Mage::getConfig()->getModuleConfig('Wyomind_'.ucfirst($namespace = strtolower($file)))->is('active', 'true');
-                            if ($enabled)
+                            $namespace = strtolower($file);
+                            $enabled = Mage::getConfig()->getModuleConfig('Wyomind_'.ucfirst($namespace))
+                                                        ->is('active', 'true');
+                            if ($enabled) {
                                 $ret[] = $file;
+                            }
                         }
                     }
                     closedir($dh);
@@ -24,15 +27,20 @@ class Wyomind_Notificationmanager_Model_Resource_Setup extends Mage_Core_Model_R
                 if (($dh = opendir($dir)) != false) {
                     while (($file = readdir($dh)) !== false) {
                         if (is_dir($dir.$file) && $file != "." && $file != "..") {
-                            $enabled = Mage::getConfig()->getModuleConfig('Wyomind_'.ucfirst($namespace = strtolower($file)))->is('active', 'true');
-                            if ($enabled)
+                            $namespace = strtolower($file);
+                            $enabled = Mage::getConfig()->getModuleConfig('Wyomind_'.ucfirst($namespace))
+                                                        ->is('active', 'true');
+                            if ($enabled) {
                                 $ret[] = $file;
+                            }
                         }
                     }
                     closedir($dh);
                 }
             }
-            Mage::getConfig()->saveConfig("notificationmanager/notificationmanager/extensions",implode(',',$ret), "default", "0");
+            Mage::getConfig()->saveConfig(
+                "notificationmanager/notificationmanager/extensions", implode(',', $ret), "default", "0"
+            );
             Mage::getConfig()->cleanCache();
         }
  

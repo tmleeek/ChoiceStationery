@@ -1,4 +1,8 @@
 <?xml version="1.0"?>
+<!--
+Copyright © 2017 Wyomind. All rights reserved.
+See LICENSE.txt for license details.
+-->
 <config>
     <tabs>
         <WYOMIND translate="label">
@@ -17,17 +21,17 @@
             <show_in_store>0</show_in_store>
             <groups>
                 <license translate="label">
-                    <label>License activation</label>
+                    <label>License</label>
                     <frontend_type>text</frontend_type>
-                    <sort_order>10</sort_order>
+                    <sort_order>1</sort_order>
                     <show_in_default>1</show_in_default>
-                    <show_in_website>0</show_in_website>
-                    <show_in_store>0</show_in_store>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
                     <fields>
                         <version translate="label comment">
                             <label>Extension version</label>
                             <frontend_type>text</frontend_type>
-                            <frontend_model>Wyomind_Watchlogpro_Model_System_Config_Source_Link</frontend_model>
+                            <frontend_model>Wyomind_Licensemanager_Block_Adminhtml_System_Config_Form_Field_Link</frontend_model>
                             <sort_order>0</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
@@ -35,27 +39,16 @@
                         </version>
                         <activation_key translate="label comment">
                             <label>Activation key</label>
-                            <comment>
-                <![CDATA[<span class="notice">Enter your activation key.</span>]]>
-                            </comment>
+                            <comment><![CDATA[<span class="notice">Enter your activation key and click on `save config`.</span>]]></comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>1</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                         </activation_key>
-                        <get_online_license translate="label comment">
-                            <frontend_type>hidden</frontend_type>
-                            <sort_order>2</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </get_online_license>
                         <activation_code translate="label comment">
                             <label>License code</label>
-                            <comment>
-                <![CDATA[<span class="notice">Do not fill this input, excepted if you are prompted to enter the license code manually.</span>]]>
-                            </comment>
+                            <comment><![CDATA[<span class="notice">Enter your license code <b>only if prompted<b>.</span>]]></comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>3</sort_order>
                             <show_in_default>1</show_in_default>
@@ -77,9 +70,7 @@
                             <label>Whitelisted IPs</label>
                             <frontend_type>text</frontend_type> 
                             <frontend_model>Wyomind_Watchlogpro_Block_Adminhtml_System_Config_Form_Field_Whitelist</frontend_model>
-                            <comment>
-                <![CDATA[<span class="notice">IPs authorized to access the admin</span>]]>
-                            </comment>
+                            <comment><![CDATA[<span class="notice">IPs authorized to access the admin</span>]]></comment>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
@@ -87,9 +78,7 @@
                         </whitelist>
                         <secret_key translate="label comment">
                             <label>Secret key to whitelist your IP</label>
-                            <comment>
-                <![CDATA[<span class="notice">Use http://www.example.com/watchlog/whitelist/add/key/{{YOUR SECRET KEY}} to automatically add your IP to the whitelist</span>]]>
-                            </comment>
+                            <comment><![CDATA[<span class="notice">Use http://www.example.com/watchlog/whitelist/add/key/{{YOUR SECRET KEY}} to automatically add your IP to the whitelist</span>]]></comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>11</sort_order>
                             <show_in_default>1</show_in_default>
@@ -109,38 +98,35 @@
                             <label>Blacklisted Ips</label>
                             <frontend_type>text</frontend_type> 
                             <frontend_model>Wyomind_Watchlogpro_Block_Adminhtml_System_Config_Form_Field_Blacklist</frontend_model>
-                            <comment>
-                <![CDATA[<span class="notice">IPs automatically blocked when attempting to access the backend</span>]]>
-                            </comment>
+                            <comment><![CDATA[<span class="notice">IPs automatically blocked when attempting to access the backend</span>]]></comment>
                             <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </blacklist>
+                        <attempts translate="label comment">
+                            <label>Number of attempts before being blacklisted</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[<span class="notice">0 : unlimited.</span>]]></comment>
+                            <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                             <depends>
                                 <use_whitelist_only>0</use_whitelist_only>
                             </depends>
-                        </blacklist>
-                        <attempts translate="label comment">
-                            <label>Number of attempts before being blacklisted</label>
-                            <frontend_type>text</frontend_type>
-                            <comment>
-                <![CDATA[<span class="notice">0 : unlimited.</span>]]>
-                            </comment>
-                            <sort_order>30</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
                         </attempts>
                         <block_duration translate="label comment">
-                            <label>Blacklisted IPs  blocked for X minutes</label>
+                            <label>Blacklisted IPs blocked for X minutes</label>
                             <frontend_type>text</frontend_type>
-                            <comment>
-                <![CDATA[<span class="notice">0 : unlimited.</span>]]>
-                            </comment>
+                            <comment><![CDATA[<span class="notice">0 : unlimited.</span>]]></comment>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
+                            <depends>
+                                <use_whitelist_only>0</use_whitelist_only>
+                            </depends>
                         </block_duration>
                         <blocked_message translate="label comment">
                             <label>Message to display if blocked</label>
@@ -150,11 +136,20 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                         </blocked_message>
-                            <report translate="label comment">
-                            <label>Send a report when an IP is automatically blocked </label>
+                        <block_frontend translate="label comment">
+                            <label>Block blacklisted IP on frontend</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </block_frontend>
+                        <report translate="label comment">
+                            <label>Send a report when an IP is automatically blocked </label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
@@ -162,7 +157,7 @@
                         <report_title translate="label comment">
                             <label>Report title</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>70</sort_order>
+                            <sort_order>80</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
@@ -172,11 +167,9 @@
                         </report_title>
                         <report_emails translate="label comment">
                             <label>Report recipients</label>
-                            <comment>
-              <![CDATA[<span class="notice">Emails must be separated with a comma (,).</span>]]>
-                            </comment>
+                            <comment><![CDATA[<span class="notice">Emails must be separated with a comma (,).</span>]]></comment>
                             <frontend_type>text</frontend_type>
-                            <sort_order>80</sort_order>
+                            <sort_order>90</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
@@ -190,7 +183,3 @@
         </watchlogpro>
     </sections>
 </config>
-
-
-
-

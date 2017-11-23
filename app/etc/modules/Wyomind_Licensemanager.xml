@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-
 <config>
     <modules>
         <Wyomind_Licensemanager>
@@ -7,4 +6,4 @@
             <codePool>local</codePool>
         </Wyomind_Licensemanager>
     </modules>
-</config> 
+</config>

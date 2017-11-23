@@ -1,18 +1,28 @@
 <?xml version="1.0"?>
+<!--
+Copyright © 2017 Wyomind. All rights reserved.
+See LICENSE.txt for license details.
+-->
 <config>
     <modules>
         <Wyomind_Watchlogpro>
-            <version>1.1.1</version>
+            <version>1.5.0</version>
         </Wyomind_Watchlogpro>
     </modules>
     <default>
         <watchlogpro>
             <license>
-                <version>1.1.1</version>
-            </license>
+                <label>Watchlog Pro</label>
+                <version>1.5.0</version>
+                <extension_code>lwp</extension_code>
+                <get_online_license>1</get_online_license>
+            <activation_key>3MSTG66V30XK4P2QC</activation_key></license>
             <settingspro>
+                <blacklist>[]</blacklist>
+                <whitelist>[]</whitelist>
                 <use_whitelist_only>0</use_whitelist_only>
                 <block_duration>20</block_duration>
+                <block_frontend>0</block_frontend>
                 <attempts>10</attempts>
                 <blocked_message>Unauthorized Ip!</blocked_message>
                 <report>1</report>
@@ -20,7 +30,6 @@
             </settingspro>
         </watchlogpro>
     </default>
-     
     <frontend>
         <routers>
             <watchlogpro>
@@ -31,6 +40,17 @@
                 </args>
             </watchlogpro>
         </routers>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <wyomind_watchlogpro_predispatch>
+                        <type>model</type>
+                        <class>Wyomind_Watchlogpro_Model_Observer</class>
+                        <method>checkIP</method> 
+                    </wyomind_watchlogpro_predispatch>
+                </observers>
+            </controller_action_predispatch>
+        </events>
     </frontend>
     <admin>
         <routers>
@@ -44,12 +64,10 @@
         </routers>
     </admin>
     <adminhtml>
-     
         <resources>
             <all>
                 <title>Allow Everything</title>
             </all>
-                
         </resources>
         <layout>
             <updates>
@@ -58,8 +76,26 @@
                 </watchlogpro>
             </updates>
         </layout>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <wyomind_watchlogpro_predispatch>
+                        <type>model</type>
+                        <class>Wyomind_Watchlogpro_Model_Observer</class>
+                        <method>checkIP</method> 
+                    </wyomind_watchlogpro_predispatch>
+                </observers>
+            </controller_action_predispatch>
+        </events>
     </adminhtml>
     <global>
+        <helpers>
+            <core>
+                <rewrite>
+                    <http>Wyomind_Watchlogpro_Helper_Http</http>
+                </rewrite>
+            </core>
+        </helpers>
         <events>
             <adminhtml_block_html_before>
                 <observers>
@@ -70,15 +106,6 @@
                     </wyomind_watchlogpro_grid_column>
                 </observers>
             </adminhtml_block_html_before>
-            <controller_action_predispatch>
-                <observers>
-                    <wyomind_watchlogpro_predispatch>
-                        <type>model</type>
-                        <class>Wyomind_Watchlogpro_Model_Observer</class>
-                        <method>checkIP</method> 
-                    </wyomind_watchlogpro_predispatch>
-                </observers>
-            </controller_action_predispatch>
         </events> 
         <template>
             <email>
@@ -95,7 +122,7 @@
             </watchlogpro>
             <watchlog>
                 <rewrite>
-                     <data>Wyomind_Watchlogpro_Helper_Data</data>
+                    <data>Wyomind_Watchlogpro_Helper_Data</data>
                 </rewrite>
             </watchlog>
         </helpers>
@@ -107,19 +134,21 @@
         <models>
             <watchlogpro>
                 <class>Wyomind_Watchlogpro_Model</class>
-                <resourceModel>watchlogpro_mysql4</resourceModel>
+                <resourceModel>watchlogpro_resource</resourceModel>
             </watchlogpro>
-            <watchlogpro_mysql4>
-                <class>Wyomind_Watchlogpro_Model_Mysql4</class>
-                <entities>
+            <watchlogpro_resource>
+                <class>Wyomind_Watchlogpro_Model_Resource</class>
+                <entities>		  
                 </entities>
-            </watchlogpro_mysql4>
+            </watchlogpro_resource>
+            <watchlog_resource>
+                <rewrite>
+                    <watchlog>Wyomind_Watchlogpro_Model_Resource_Watchlogpro</watchlog>
+                </rewrite>
+            </watchlog_resource>
             <watchlog>
                 <rewrite>
                     <observer>Wyomind_Watchlogpro_Model_Observer</observer>
-                </rewrite>
-                <rewrite>
-                    <watchlog>Wyomind_Watchlogpro_Model_Watchlog</watchlog>
                 </rewrite>
             </watchlog>
         </models>
@@ -144,6 +173,4 @@
             </watchlogpro_read>
         </resources>
     </global>
-</config> 
-
-
+</config>

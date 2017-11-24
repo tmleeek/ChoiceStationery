@@ -1,13 +1,15 @@
 <?php
-
-class Wyomind_Watchlogpro_Block_Adminhtml_System_Config_Form_Field_Blacklist extends Mage_Adminhtml_Block_System_Config_Form_Field {
-
-    protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element) {
-
+/**
+ * Copyright © 2017 Wyomind. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+class Wyomind_Watchlogpro_Block_Adminhtml_System_Config_Form_Field_Blacklist extends Mage_Adminhtml_Block_System_Config_Form_Field
+{
+    protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element) 
+    {
         $html = "";
-
-        $html .= "<input class=' input-text'  type='hidden' id='" . $element->getHtmlId() . "' name='" . $element->getName() . "' value='" . $element->getEscapedValue() . "' '" . $element->serialize($element->getHtmlAttributes()) . "/>";
-
+        $html .= "<input class=' input-text' type='hidden' id='" . $element->getHtmlId() . "' name='" . $element->getName() . "' "
+                    . "value='" . $element->getEscapedValue() . "' '" . $element->serialize($element->getHtmlAttributes()) . "/>";
         $html .= '<div class="grid" style="width:500px">
                     <div class="hor-scroll">
                         <table cellspacing="0" id="watchlogGrid_table" class="data">
@@ -18,15 +20,17 @@ class Wyomind_Watchlogpro_Block_Adminhtml_System_Config_Form_Field_Blacklist ext
                                     <th class="a-center" style="width:50px"><span class="nobr"></span></th>
                                 </tr>
                             </thead>
-                            <tbody id="bl_body">
-                                ';
+                            <tbody id="bl_body">';
+        
         $ips = json_decode($element->getValue());
-        if (!is_array($ips))
+        if (!is_array($ips)) {
             $ips = array();
+        }
+        
         foreach ($ips as $ip) {
             $html .= '<tr title="#" class="pointer">'
                     . '<td class="a-center bl_ip">' . $ip->ip . '</td>'
-                    . '<td class="a-center">' . (!isset($ip->until) ? '-' : Mage::getModel('core/date')->date('m/d/Y H:i:s', strtotime($ip->until))) . '</td>'
+                    . '<td class="a-center bl_date">' . (!isset($ip->until) ? '-' : Mage::getModel('core/date')->date('m/d/Y H:i:s', strtotime($ip->until))) . '</td>'
                     . '<td>'
                     . '<button class="scalable delete" type="button" onclick="bl_ip_delete(this);">
                         <span>
@@ -42,14 +46,14 @@ class Wyomind_Watchlogpro_Block_Adminhtml_System_Config_Form_Field_Blacklist ext
         $html .= '<tr id="bl_add">
                     <td colspan="2"></td>
                     <td>
-                    <button class="scalable add" type="button" onclick="bl_ip_add()" style="">
-                    <span>
+                        <button class="scalable add" type="button" onclick="bl_ip_add()" style="">
                         <span>
-                            <span>Add IP</span>
+                            <span>
+                                <span>Add IP</span>
+                            </span>
                         </span>
-                    </span>
-                   </button>
-                   </td>
+                       </button>
+                    </td>
                    </tr>
                 </tbody>
             </table>
@@ -73,7 +77,7 @@ class Wyomind_Watchlogpro_Block_Adminhtml_System_Config_Form_Field_Blacklist ext
                 input.setAttribute("type","text");
                 input.setAttribute("class","input-text");
                 input.style.width="auto";
-                input.observe("change",bl_update_ips);  
+                input.observe("change",bl_update_ips);
                 
                 td_blocked_until.innerHTML = "-";
                 td_blocked_until.setAttribute("class","a-center");
@@ -89,15 +93,25 @@ class Wyomind_Watchlogpro_Block_Adminhtml_System_Config_Form_Field_Blacklist ext
                 
             }
             function bl_update_ips() {
+                var ipPattern = /^(\d{1,3})\.(\d{1,3})\.(\*|(?:\d{1,3}))\.(\*|(?:\d{1,3}))$/;
                 var ips = new Array();
                 $$(".bl_ip").each(function(ip) {
-                    ips.push({ip:ip.innerHTML});
+                    if (null != ip.innerHTML.match(ipPattern)) {
+                        var until = ip.next(\'.bl_date\').innerHTML;
+                        if (until != "-") {
+                            ips.push({ip:ip.innerHTML, until: until});
+                        } else {
+                            ips.push({ip:ip.innerHTML});
+                        }
+                    }
                 });
                 $$("#bl_body .input-text").each(function(ip) {
-                    ips.push({ip:ip.value});
+                    if (null != ip.value.match(ipPattern)) {
+                        ips.push({ip:ip.value});
+                    }
                 });
+
                 bl_ips = ips;
-                console.log(bl_ips);
                 $("' . $element->getHtmlId() . '").value = Object.toJSON(bl_ips);
             }
             ';
@@ -105,5 +119,4 @@ class Wyomind_Watchlogpro_Block_Adminhtml_System_Config_Form_Field_Blacklist ext
 
         return $html;
     }
-
 }

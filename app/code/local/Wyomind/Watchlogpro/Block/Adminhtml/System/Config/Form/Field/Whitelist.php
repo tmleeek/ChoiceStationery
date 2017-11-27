@@ -1,14 +1,15 @@
 <?php
-
-class Wyomind_Watchlogpro_Block_Adminhtml_System_Config_Form_Field_Whitelist extends Mage_Adminhtml_Block_System_Config_Form_Field {
-
-
-    protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element) {
-
+/**
+ * Copyright © 2017 Wyomind. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+class Wyomind_Watchlogpro_Block_Adminhtml_System_Config_Form_Field_Whitelist extends Mage_Adminhtml_Block_System_Config_Form_Field
+{
+    protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element) 
+    {
         $html = "";
-
-        $html .= "<input class=' input-text'  type='hidden' id='" . $element->getHtmlId() . "' name='" . $element->getName() . "' value='" . $element->getEscapedValue() . "' '" . $element->serialize($element->getHtmlAttributes()) . "/>";
-
+        $html .= "<input class=' input-text' type='hidden' id='" . $element->getHtmlId() . "' name='" . $element->getName() . "' "
+                    . "value='" . $element->getEscapedValue() . "' '" . $element->serialize($element->getHtmlAttributes()) . "/>";
         $html .= '<div class="grid" style="width:275px">
                     <div class="hor-scroll">
                         <table cellspacing="0" id="watchlogGrid_table" class="data">
@@ -18,11 +19,13 @@ class Wyomind_Watchlogpro_Block_Adminhtml_System_Config_Form_Field_Whitelist ext
                                     <th class="a-center" style="width:50px"><span class="nobr"></span></th>
                                 </tr>
                             </thead>
-                            <tbody id="wl_body">
-                                ';
+                            <tbody id="wl_body">';
+        
         $ips = json_decode($element->getValue());
- if (!is_array($ips))
+        if (!is_array($ips)) {
             $ips = array();
+        }
+        
         foreach ($ips as $ip) {
             $html .= '<tr title="#" class="pointer">'
                     . '<td class="a-center wl_ip">' . $ip . '</td>'
@@ -84,15 +87,21 @@ class Wyomind_Watchlogpro_Block_Adminhtml_System_Config_Form_Field_Whitelist ext
                 
             }
             function wl_update_ips() {
+                var ipPattern = /^(\d{1,3})\.(\d{1,3})\.(\*|(?:\d{1,3}))\.(\*|(?:\d{1,3}))$/;
                 var ips = new Array();
                 $$(".wl_ip").each(function(ip) {
-                    ips.push(ip.innerHTML);
+                    if (null != ip.innerHTML.match(ipPattern)) {
+                        console.log(ip.innerHTML);
+                        ips.push(ip.innerHTML);
+                    }
                 });
                 $$("#wl_body .input-text").each(function(ip) {
-                    ips.push(ip.value);
+                    if (null != ip.value.match(ipPattern)) {
+                        ips.push(ip.value);
+                    }
                 });
                 wl_ips = ips;
-                console.log(wl_ips);
+                
                 $("' . $element->getHtmlId() . '").value = Object.toJSON(wl_ips);
             }
             ';
@@ -100,5 +109,4 @@ class Wyomind_Watchlogpro_Block_Adminhtml_System_Config_Form_Field_Whitelist ext
 
         return $html;
     }
-
 }

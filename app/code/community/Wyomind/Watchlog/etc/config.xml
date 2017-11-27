@@ -1,14 +1,17 @@
 <?xml version="1.0"?>
+<!--
+Copyright © 2017 Wyomind. All rights reserved.
+--> 
 <config>
     <modules>
         <Wyomind_Watchlog>
-            <version>1.1.1</version>
+            <version>1.2.0</version>
         </Wyomind_Watchlog>
     </modules>
     <default>
         <watchlogpro>
             <license>
-                <version>1.1.1</version>
+                <version>1.2.0</version>
             </license>
             <settings>
                 <history>30</history>
@@ -23,7 +26,6 @@
 <br/> Please check <a href='%s'>Watchlog panel</a> for further details.]]></notification_description>
                 <notification_details><![CDATA[Watchlog has detected an abnormaly high level of failed connection attempts to your backoffice (%s&#37;).
 <br/> <b>Upgrade Watchlog to <a href="https://www.wyomind.com/watchlog-security-enhancement-magento.html" target="_blank">Watchlog Pro</a> to protect your store!</b>]]></notification_details>
-                
             </settings>
         </watchlogpro>
     </default>
@@ -41,16 +43,16 @@
         <models>
             <watchlog>
                 <class>Wyomind_Watchlog_Model</class>
-                <resourceModel>watchlog_mysql4</resourceModel>
+                <resourceModel>watchlog_resource</resourceModel>
             </watchlog>
-            <watchlog_mysql4>
-                <class>Wyomind_Watchlog_Model_Mysql4</class>
+            <watchlog_resource>
+                <class>Wyomind_Watchlog_Model_Resource</class>
                 <entities>		  
                     <watchlog>
                         <table>watchlog</table>
                     </watchlog>
                 </entities>
-            </watchlog_mysql4>
+            </watchlog_resource>
         </models>
         <resources>
             <watchlog_setup>

@@ -1,8 +1,9 @@
 <?php
 
-class Wyomind_Notificationmanager_Model_Adminhtml_System_Config_Form_Field_Extensions {
-
-    public function XML2Array($xml) {
+class Wyomind_Notificationmanager_Model_Adminhtml_System_Config_Form_Field_Extensions
+{
+    public function XML2Array($xml) 
+    {
         $newArray = array();
         $array = (array) $xml;
         foreach ($array as $key => $value) {
@@ -13,10 +14,11 @@ class Wyomind_Notificationmanager_Model_Adminhtml_System_Config_Form_Field_Exten
                 $newArray [$key] = $this->XML2Array($value, true);
             }
         }
-        return $newArray; 
+        return $newArray;
     }
 
-    public function toOptionArray() {
+    public function toOptionArray() 
+    {
         $dir = "app/code/local/Wyomind/";
         $ret = array();
         if (is_dir($dir)) {
@@ -29,17 +31,19 @@ class Wyomind_Notificationmanager_Model_Adminhtml_System_Config_Form_Field_Exten
                             $label = $this->XML2Array($xml);
                             $label = $label['sections'][$namespace]['label'];
 
-                            $enabled = Mage::getConfig()->getModuleConfig('Wyomind_' . ucfirst($namespace))->is('active', 'true');
+                            $enabled = Mage::getConfig()->getModuleConfig('Wyomind_' . ucfirst($namespace))
+                                                        ->is('active', 'true');
 
-                            if ($enabled)
+                            if ($enabled) {
                                 $ret[] = array('label' => $label, 'value' => $file);
+                            }
                         }
                     }
                 }
                 closedir($dh);
             }
         }
-       
+
         $dir = "app/code/community/Wyomind/";
         if (is_dir($dir)) {
             if (($dh = opendir($dir)) != false) {
@@ -49,13 +53,18 @@ class Wyomind_Notificationmanager_Model_Adminhtml_System_Config_Form_Field_Exten
                             $xml = simplexml_load_file($dir . $file . '/etc/system.xml');
                             $namespace = strtolower($file);
                             $label = $this->XML2Array($xml);
-                            $label = $label['sections'][$namespace]['label'];
+                            if (isset($label['sections'][$namespace])) {
+                                $label = $label['sections'][$namespace]['label'];
 
-                            $enabled = Mage::getConfig()->getModuleConfig('Wyomind_' . ucfirst($namespace))->is('active', 'true');
-                            if ($label == null)
-                                $label = ucfirst($namespace);
-                            if ($enabled)
-                                $ret[] = array('label' => $label, 'value' => $file);
+                                $enabled = Mage::getConfig()->getModuleConfig('Wyomind_' . ucfirst($namespace))
+                                                            ->is('active', 'true');
+                                if ($label == null) {
+                                    $label = ucfirst($namespace);
+                                }
+                                if ($enabled) {
+                                    $ret[] = array('label' => $label, 'value' => $file);
+                                }
+                            }
                         }
                     }
                 }
@@ -64,5 +73,4 @@ class Wyomind_Notificationmanager_Model_Adminhtml_System_Config_Form_Field_Exten
         }
         return $ret;
     }
-
 }

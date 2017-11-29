@@ -2,24 +2,27 @@
 /**
  * Mirasvit
  *
- * This source file is subject to the Mirasvit Software License, which is available at http://mirasvit.com/license/.
+ * This source file is subject to the Mirasvit Software License, which is available at https://mirasvit.com/license/.
  * Do not edit or add to this file if you wish to upgrade the to newer versions in the future.
- * If you wish to customize this module for your needs
+ * If you wish to customize this module for your needs.
  * Please refer to http://www.magentocommerce.com for more information.
  *
  * @category  Mirasvit
- * @package   Sphinx Search Ultimate
- * @version   2.3.1
- * @revision  601
- * @copyright Copyright (C) 2013 Mirasvit (http://mirasvit.com/)
+ * @package   mirasvit/extension_mcore
+ * @version   1.0.17
+ * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
 
 class Mirasvit_MstCore_Model_Feed_Updates extends Mirasvit_MstCore_Model_Feed_Abstract
 {
+    const VAR_MST_FEED_UPDATE = 'mst_feed_update';
+
     public function check()
     {
-        if (time() - intval(Mage::app()->loadCache(Mirasvit_MstCore_Helper_Config::UPDATES_FEED_URL)) > 12 * 60 * 60) {
+        if (Mage::helper('mstcore/config')->isNotificationsEnabled() &&
+            time() - intval(Mage::helper('mstcore')->getVar(self::VAR_MST_FEED_UPDATE)) > 12 * 60 * 60
+        ) {
             $this->refresh();
         }
     }
@@ -33,7 +36,7 @@ class Mirasvit_MstCore_Model_Feed_Updates extends Mirasvit_MstCore_Model_Feed_Ab
                 $params['modules'][$name] = (string) $module->version;
             }
 
-            Mage::app()->saveCache(time(), Mirasvit_MstCore_Helper_Config::UPDATES_FEED_URL);
+            Mage::helper('mstcore')->setVar(self::VAR_MST_FEED_UPDATE, time());
 
             $xml = $this->getFeed(Mirasvit_MstCore_Helper_Config::UPDATES_FEED_URL, $params);
 
@@ -50,7 +53,9 @@ class Mirasvit_MstCore_Model_Feed_Updates extends Mirasvit_MstCore_Model_Feed_Ab
                 }
             }
 
-            Mage::getModel('adminnotification/inbox')->parse($items);
+            if (Mage::getModel('adminnotification/inbox')) {
+                Mage::getModel('adminnotification/inbox')->parse($items);
+            }
         } catch (Exception $ex) {
             Mage::logException($ex);
         }

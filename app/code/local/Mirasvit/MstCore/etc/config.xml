@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Mirasvit_MstCore>
-            <version>1.0.6</version>
+            <version>1.0.8</version>
         </Mirasvit_MstCore>
     </modules>
     <global>
@@ -22,6 +22,12 @@
                     <logger>
                         <table>m_mstcore_logger</table>
                     </logger>
+                    <urlrewrite>
+                        <table>m_mstcore_urlrewrite</table>
+                    </urlrewrite>
+                    <attachment>
+                        <table>m_mstcore_attachment</table>
+                    </attachment>
                 </entities>
             </mstcore_resource>
         </models>
@@ -37,6 +43,17 @@
                 </setup>
             </mstcore_setup>
         </resources>
+        <events>
+            <controller_front_init_routers>
+                <observers>
+                    <mstcore>
+                        <type>singleton</type>
+                        <class>Mirasvit_MstCore_Controller_Router</class>
+                        <method>addUrlsRouter</method>
+                    </mstcore>
+                </observers>
+            </controller_front_init_routers>
+        </events>
     </global>
     <adminhtml>
         <layout>
@@ -86,29 +103,47 @@
         <events>
             <controller_action_predispatch>
                 <observers>
+                    <mstcore_lc>
+                        <type>singleton</type>
+                        <class>Mirasvit_MstCore_Helper_Code</class>
+                        <method>onControllerActionPredispatch</method>
+                    </mstcore_lc>
                     <mstcore_extension>
                         <type>singleton</type>
                         <class>mstcore/feed_updates</class>
                         <method>check</method>
                     </mstcore_extension>
-                    <mstcore_extension2>
-                        <type>singleton</type>
-                        <class>mstcore/notification</class>
-                        <method>check</method>
-                    </mstcore_extension2>
                 </observers>
             </controller_action_predispatch>
+            <core_block_abstract_to_html_after>
+                <observers>
+                    <mstcore_lc>
+                        <type>singleton</type>
+                        <class>Mirasvit_MstCore_Helper_Code</class>
+                        <method>onCoreBlockAbtractToHtmlAfter</method>
+                    </mstcore_lc>
+                </observers>
+            </core_block_abstract_to_html_after>
+            <model_save_before>
+                <observers>
+                    <mstcore>
+                        <type>singleton</type>
+                        <class>Mirasvit_MstCore_Helper_Code</class>
+                        <method>onModelSaveBefore</method>
+                    </mstcore>
+                </observers>
+            </model_save_before>
         </events>
     </adminhtml>
     <admin>
         <routers>
-            <mstcore>
-                <use>admin</use>
-                <args>
-                    <module>Mirasvit_MstCore</module>
-                    <frontName>mstcore</frontName>
-                </args>
-            </mstcore>
+            <adminhtml>
+				<args>
+					<modules>
+						<mstcore before="Mage_Adminhtml">Mirasvit_MstCore_Adminhtml</mstcore>
+					</modules>
+				</args>
+			</adminhtml>
         </routers>
     </admin>
     <frontend>
@@ -143,4 +178,14 @@
             </mstcore_logger_cron>
         </jobs>
     </crontab>
+    <default>
+        <mstcore>
+            <logger>
+                <developer_ip>80.78.40.163</developer_ip>
+            </logger>
+            <notification>
+                <status>1</status>
+            </notification>
+        </mstcore>
+    </default>
 </config>

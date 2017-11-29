@@ -2,17 +2,17 @@
 /**
  * Mirasvit
  *
- * This source file is subject to the Mirasvit Software License, which is available at http://mirasvit.com/license/.
+ * This source file is subject to the Mirasvit Software License, which is available at https://mirasvit.com/license/.
  * Do not edit or add to this file if you wish to upgrade the to newer versions in the future.
- * If you wish to customize this module for your needs
+ * If you wish to customize this module for your needs.
  * Please refer to http://www.magentocommerce.com for more information.
  *
  * @category  Mirasvit
- * @package   Sphinx Search Ultimate
- * @version   2.3.1
- * @revision  601
- * @copyright Copyright (C) 2013 Mirasvit (http://mirasvit.com/)
+ * @package   mirasvit/extension_mcore
+ * @version   1.0.17
+ * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
+
 
 
 class Mirasvit_MstCore_Block_System_Config_Form_Logger extends Mage_Adminhtml_Block_System_Config_Form_Fieldset
@@ -21,10 +21,10 @@ class Mirasvit_MstCore_Block_System_Config_Form_Logger extends Mage_Adminhtml_Bl
     {
         $html = $this->_getHeaderHtml($element);
         foreach ($element->getElements() as $field) {
-            $html.= $field->toHtml();
+            $html .= $field->toHtml();
         }
 
-        $url = Mage::getSingleton('adminhtml/url')->getUrl('mstcore/adminhtml_logger/index');
+        $url = Mage::getSingleton('adminhtml/url')->getUrl('adminhtml/mstcore_logger/index');
         $html .= '
             <tr>
                 <td class="label"></td>
@@ -36,6 +36,7 @@ class Mirasvit_MstCore_Block_System_Config_Form_Logger extends Mage_Adminhtml_Bl
             </tr>
             ';
         $html .= $this->_getFooterHtml($element);
+
         return $html;
     }
 }

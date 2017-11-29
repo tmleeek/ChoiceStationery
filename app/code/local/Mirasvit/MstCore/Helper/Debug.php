@@ -2,16 +2,15 @@
 /**
  * Mirasvit
  *
- * This source file is subject to the Mirasvit Software License, which is available at http://mirasvit.com/license/.
+ * This source file is subject to the Mirasvit Software License, which is available at https://mirasvit.com/license/.
  * Do not edit or add to this file if you wish to upgrade the to newer versions in the future.
- * If you wish to customize this module for your needs
+ * If you wish to customize this module for your needs.
  * Please refer to http://www.magentocommerce.com for more information.
  *
  * @category  Mirasvit
- * @package   Sphinx Search Ultimate
- * @version   2.3.1
- * @revision  601
- * @copyright Copyright (C) 2013 Mirasvit (http://mirasvit.com/)
+ * @package   mirasvit/extension_mcore
+ * @version   1.0.17
+ * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
 
@@ -23,9 +22,9 @@ class Mirasvit_MstCore_Helper_Debug extends Mage_Core_Helper_Abstract
     protected $_id       = 0;
 
     /**
-     * Ð¡ÑÐ°ÑÑ Ð´ÐµÐ±Ð°Ð³Ð¸Ð½Ð³Ð° ÑÑÐ½ÐºÑÐ¸Ð¸
+     * Start method debuging
      *
-     * @return array $uid - ÑÐ½Ð¸ÐºÐ°Ð»ÑÐ½ÑÐ¹ Ð¸Ð´ÐµÐ½ÑÐ¸ÑÐ¸ÐºÐ°ÑÐ¾Ñ
+     * @return array $uid - unique identificatior
      */
     public function start()
     {
@@ -50,18 +49,18 @@ class Mirasvit_MstCore_Helper_Debug extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * ÐÐµÐ»Ð°ÐµÑ ÑÐ¾ÑÑÐ°Ð½ÐµÐ½Ð¸Ðµ Ð¿ÑÐ¾Ð¼ÐµÐ¶ÑÑÐ¾ÑÐ½ÑÑ Ð¿ÐµÑÐµÐ¼ÐµÐ½Ð½ÑÑ Ð² ÑÑÐ½ÐºÑÐ¸Ð¸
+     * Save data in method
      *
-     * @param  array $uid - ÑÐ½Ð¸ÐºÐ°Ð»ÑÐ½ÑÐ¹ Ð¸Ð´ÐµÐ½ÑÐ¸ÑÐ¸ÐºÐ°ÑÐ¾Ñ, ÐºÐ¾ÑÐ¾ÑÑÐ¹ Ð½Ð°Ð¼ Ð²Ð¾Ð·Ð²ÑÐ°ÑÐ°ÐµÑ ÑÑÐ½ÐºÑÐ¸Ñ start
-     * @param  array $data - ÐµÑÐ»Ð¸ Ð¿ÐµÑÐ²ÑÐ¹ Ð°ÑÐ³ÑÐ¼ÐµÐ½Ñ Ð½Ð°Ð·Ð²Ð°Ð½Ð¸Ðµ Ð¿ÐµÑÐµÐ¼ÐµÐ½Ð½Ð¾Ð¹, ÑÐ¾ ÑÑÐ¾ Ð±ÑÐ´ÐµÑ Ð·Ð½Ð°ÑÐµÐ½Ð¸Ðµ Ð¿ÐµÑÐµÐ¼ÐµÐ½Ð½Ð¾Ð¹
+     * @param  array $uid - unique identificator (returned by start method)
+     * @param  array $data
      * @return
      */
-    public function dump($uid = false, $data = array()) //$uid = false Ð´Ð»Ñ ÑÐ¾Ð²Ð¼ÐµÑÑÐ¸Ð¼Ð¾ÑÑÐ¸ Ð²ÐµÑÑÐ¸Ð¹
+    public function dump($uid = false, $data = array()) //$uid = false for compatiblity
     {
         if (!$this->isEnabled()) {
             return false;
         }
-        if (is_string($uid)) {//Ð´Ð»Ñ ÑÐ¾Ð²Ð¼ÐµÑÑÐ¸Ð¼Ð¾ÑÑÐ¸ Ð²ÐµÑÑÐ¸Ð¹
+        if (is_string($uid)) { # for compatiblity
             $data = array($uid => $data);
         }
 
@@ -75,18 +74,18 @@ class Mirasvit_MstCore_Helper_Debug extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * ÐÐ°Ð²ÐµÑÑÐ°ÐµÑ Ð´ÐµÐ±Ð°Ð³Ð¸Ð½Ð³ Ð² ÑÑÐ½ÐºÑÐ¸Ð¸
+     * End of debuging
      *
-     * @param  array $data - Ð¼Ð°ÑÑÐ¸Ð² Ð´Ð»Ñ ÑÐ¾ÑÑÐ°Ð½ÐµÐ½Ð¸Ñ Ð² Ð»Ð¾Ð³Ðµ Ð´ÐµÐ±Ð°Ð³Ð³ÐµÑÐ°
-     * @param  array $data2 - ÑÑÑÐ°ÑÐµÐ»Ð¾. Ð´Ð»Ñ Ð¾Ð±ÑÐ°ÑÐ½Ð¾Ð¹ ÑÐ¾Ð²Ð¼ÐµÑÑÐ¾Ð¸Ð¼Ð¾ÑÑÐ¸
+     * @param  array $data - array for save in debuger log
+     * @param  array $data2 - deprecated. for compatiblity
      * @return
      */
-    public function end($uid = false, $data = array()) //$uid = false Ð´Ð»Ñ ÑÐ¾Ð²Ð¼ÐµÑÑÐ¸Ð¼Ð¾ÑÑÐ¸ Ð²ÐµÑÑÐ¸Ð¹
+    public function end($uid = false, $data = array()) //$uid = false for compatiblity
     {
         if (!$this->isEnabled()) {
             return false;
         }
-        if (is_string($uid)) {//Ð´Ð»Ñ ÑÐ¾Ð²Ð¼ÐµÑÑÐ¸Ð¼Ð¾ÑÑÐ¸ Ð²ÐµÑÑÐ¸Ð¹
+        if (is_string($uid)) {//for compatiblity
             $data = array($uid => $data);
         }
         $caller = array();
@@ -182,7 +181,11 @@ class Mirasvit_MstCore_Helper_Debug extends Mage_Core_Helper_Abstract
         }
 
         if ($this->_filename == null) {
-            $this->_filename = time();
+            if (isset($_SERVER["REQUEST_URI"])) {
+                $this->_filename = time().'-'. str_replace('/', '-', $_SERVER["REQUEST_URI"]);
+            } else {
+                $this->_filename = time();
+            }
 
             // remove old files
             if ($handle = opendir($path)) {
@@ -198,8 +201,38 @@ class Mirasvit_MstCore_Helper_Debug extends Mage_Core_Helper_Abstract
         return $path.DS.'debug_'.$this->_filename.'.log';
     }
 
+   protected function _checkAllowFilesNumber()
+    {
+        $maxFilesNumber = 10;
+        $maxFilesSize = 10; // specified in megabytes
+        $path = Mage::getBaseDir('var').DS.'log/mst';
+        if ($handle = opendir($path)) {
+            $fileCount = 0;
+            $filesSize = 0;
+            while (false !== ($file = readdir($handle))) {
+                if (($file != '.')
+                    && ($file != '..')) {
+                    $fileCount++;
+                    $filesSize += sprintf("%u", filesize($path . DS . $file));
+                }
+            }
+            $filesSize = $filesSize/1048576;
+        }
+        if (($fileCount > $maxFilesNumber)
+            || ($filesSize > $maxFilesSize)) {
+                if ($handle = opendir($path)) {
+                    while(false !== ($file = readdir($handle))) {
+                        if ( is_file ($path."/".$file)) {
+                            unlink ($path."/".$file);
+                        }
+                    }
+                }
+        }
+    }
+
     protected function _write($data)
     {
+        $this-> _checkAllowFilesNumber();
         $formatter = new Zend_Log_Formatter_Simple('%message%'.PHP_EOL);
 
         $writer = new Zend_Log_Writer_Stream($this->_getFile());

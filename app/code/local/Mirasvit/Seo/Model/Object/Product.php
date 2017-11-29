@@ -1,0 +1,133 @@
+<?php
+/**
+ * Mirasvit
+ *
+ * This source file is subject to the Mirasvit Software License, which is available at https://mirasvit.com/license/.
+ * Do not edit or add to this file if you wish to upgrade the to newer versions in the future.
+ * If you wish to customize this module for your needs.
+ * Please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category  Mirasvit
+ * @package   mirasvit/extension_seo
+ * @version   1.3.18
+ * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
+ */
+
+
+class Mirasvit_Seo_Model_Object_Product extends Mirasvit_Seo_Model_Object_Abstract
+{
+    protected $_product;
+    protected $_category;
+    protected $_parseObjects = array();
+
+    public function _construct()
+    {
+        parent::_construct();
+        $this->_product = Mage::registry('current_product');
+        if (!$this->_product) {
+            $this->_product = Mage::registry('product');
+        }
+        if (!$this->_product) {
+            return;
+        }
+
+
+        $this->_parseObjects['product'] = $this->_product;
+
+        $this->setAdditionalVariable('product', 'url', $this->_product->getProductUrl());
+        $this->setAdditionalVariable('product', 'final_price', $this->_product->getFinalPrice());
+        $this->setAdditionalVariable('product', 'final_price_minimal', Mage::helper('seo')->getCurrentProductFinalPrice($this->_product));
+        $this->setAdditionalVariable('product', 'final_price_range', Mage::helper('seo')->getCurrentProductFinalPriceRange($this->_product));
+
+
+        $categoryId = $this->_product->getSeoCategory();
+        $this->_category = Mage::registry('current_category');
+
+        if ($this->_category && !$categoryId) {
+            $this->_parseObjects['category'] = $this->_category;
+        } elseif ($this->_product) {
+            if (!$categoryId) {
+                $categoryIds = $this->_product->getCategoryIds();
+                if (count($categoryIds) > 0) {
+                    //we need this for multi websites configuration
+                    $categoryRootId = Mage::app()->getStore()->getRootCategoryId();
+                    $category = Mage::getModel('catalog/category')->getCollection()
+                                ->addFieldToFilter('path', array('like' => "%/{$categoryRootId}/%"))
+                                ->addFieldToFilter('main_table.entity_id', $categoryIds)
+                                ->setOrder('level', 'desc')
+                                ->setOrder('main_table.entity_id', 'desc')
+                                ->getFirstItem()
+                            ;
+                    $categoryId = $category->getId();
+                }
+            }
+            //load category with flat data attributes
+            $category = Mage::getModel('catalog/category')->load($categoryId);
+            $this->_category = $category;
+            $this->_parseObjects['category'] = $category;
+            if (!Mage::registry('seo_current_category')) {// to be sure that register will not be done twice
+                Mage::register('seo_current_category', $category);
+            };
+        }
+
+        $this->_parseObjects['store'] = Mage::getModel('seo/object_store');
+
+        $this->init();
+    }
+
+    public function getConfig()
+    {
+        return Mage::getSingleton('seo/config');
+    }
+
+    protected function init()
+    {
+        if ($this->_category) {
+            $categorySeo = Mage::getSingleton('seo/object_category');
+            $this->setMetaTitle($categorySeo->getProductMetaTitle());
+            $this->setMetaKeywords($categorySeo->getProductMetaKeywords());
+            $this->setMetaDescription($categorySeo->getProductMetaDescription());
+
+            $this->setTitle($categorySeo->getProductTitle());
+            $this->setShortDescription($categorySeo->getProductShortDescription());
+            $this->setFullDescription($categorySeo->getProductFullDescription());
+            $this->setDescription($categorySeo->getProductDescription());
+
+            $this->addAdditionalVariables($categorySeo->getAdditionalVariables());
+        }
+
+        if ($this->getConfig()->isProductMetaTagsUsed()) {
+            if ($this->_product->getMetaTitle()) {
+                $this->setMetaTitle($this->parse($this->_product->getMetaTitle()));
+            }
+
+            if ($this->_product->getMetaKeyword()) {
+                $this->setMetaKeywords($this->parse($this->_product->getMetaKeyword()));
+            }
+
+            if ($this->_product->getMetaDescription()) {
+                $this->setMetaDescription($this->parse($this->_product->getMetaDescription()));
+            }
+        } else {
+            $this->setMetaTitle($this->parse($categorySeo->getProductMetaTitle()));
+            $this->setMetaKeywords($this->parse($categorySeo->getProductMetaKeywords()));
+            $this->setMetaDescription($this->parse($categorySeo->getProductMetaDescription()));
+        }
+
+        if (!$this->getTitle()) {
+            $this->setTitle($this->_product->getName());
+        }
+
+        if (!$this->getMetaTitle()) {
+            $this->setMetaTitle($this->_product->getName());
+        }
+
+        if (!$this->getMetaKeywords()) {
+            $this->setMetaKeywords($this->_product->getName());
+        }
+
+        if (!$this->getMetaDescription()) {
+            $this->setMetaDescription(Mage::helper('core/string')->substr($this->_product->getDescription(), 0, 255));
+        }
+    }
+}

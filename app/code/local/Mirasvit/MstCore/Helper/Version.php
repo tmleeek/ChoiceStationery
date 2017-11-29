@@ -2,16 +2,15 @@
 /**
  * Mirasvit
  *
- * This source file is subject to the Mirasvit Software License, which is available at http://mirasvit.com/license/.
+ * This source file is subject to the Mirasvit Software License, which is available at https://mirasvit.com/license/.
  * Do not edit or add to this file if you wish to upgrade the to newer versions in the future.
- * If you wish to customize this module for your needs
+ * If you wish to customize this module for your needs.
  * Please refer to http://www.magentocommerce.com for more information.
  *
  * @category  Mirasvit
- * @package   Sphinx Search Ultimate
- * @version   2.3.1
- * @revision  601
- * @copyright Copyright (C) 2013 Mirasvit (http://mirasvit.com/)
+ * @package   mirasvit/extension_mcore
+ * @version   1.0.17
+ * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
 
@@ -29,6 +28,9 @@ class Mirasvit_MstCore_Helper_Version extends Mage_Core_Helper_Abstract
                 $xml = @simplexml_load_file($configEE,'SimpleXMLElement', LIBXML_NOCDATA);
                 if ($xml !== false) {
                     $package = (string)$xml->default->design->package->name;
+                    if (!$package) {
+                        $package = strtolower(Mage::getEdition());
+                    }
                     if ($package == 'enterprise') {
                         self::$_edition = 'ee';
                     } else {
@@ -40,5 +42,18 @@ class Mirasvit_MstCore_Helper_Version extends Mage_Core_Helper_Abstract
             }
         }
         return self::$_edition;
+    }
+
+    public function getModuleVersionFromDb($module)
+    {
+        $resource = Mage::getSingleton('core/resource');
+        $connection = $resource->getConnection('core_write');
+        $tableName = $resource->getTableName('core_resource');
+        $query = "SELECT * FROM {$tableName} WHERE code='{$module}_setup'";
+        $results = $connection->fetchAll($query);
+        if (count($results) == 0) {
+            return false;
+        }
+        return $results[0]['version'];
     }
 }

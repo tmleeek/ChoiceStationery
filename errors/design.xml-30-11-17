@@ -26,5 +26,5 @@
  */
 -->
 <config>
-    <skin>choice</skin>
+    <skin>default</skin>
 </config>

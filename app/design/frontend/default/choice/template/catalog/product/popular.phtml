@@ -52,7 +52,7 @@ $_products->getSelect()->limit(8);
                 <?php echo $this->getPriceHtml($_product, true, '-new') ?>
                                      <div class="add-btn">
 <a class="add-to-basket" onclick="setLocation('<?php echo Mage::helper('checkout/cart')->getAddUrl($_product) ?>')"><?php echo $this->__('ADD TO BASKET') ?></a>
-<span class="cart-img"> <i class="sprite sprite-add-to-basket-img"></i></span></div>                                </div><!--end of offer-box-->
+<span class="cart-img"><a class="cart-img" onclick="setLocation('<?php echo Mage::helper('checkout/cart')->getAddUrl($_product) ?>')"><i class="sprite sprite-add-to-basket-img"></i></a></span></div>                                </div><!--end of offer-box-->
                                     
                                 </div>
                 <!--end of col-md-3-->

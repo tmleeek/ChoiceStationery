@@ -609,6 +609,10 @@ tr.summary-details-excluded { font-style:italic; }
 .block-reorder .actions a {}
 .block-reorder .actions a:hover { }
 
+/************************************************************************ Block: Blog *******************************************************************************************/
+.block-blog .block-content ul li.item { margin-left: 20px; }
+.block-blog .block-title strong { font-weight: 500; line-height: 1.1; font-size: 24px; margin-top: 20px; margin-bottom: 10px; display: block; }
+
 /************************************************************************* Paypal **************************************************************************************************/
 .paypal-logo { display:inline-block; margin:0; text-align:center; overflow:hidden;margin:0 15px 10px 0;}
 .paypal-logo a { float:none; display:inline-block; }
@@ -1080,22 +1084,32 @@ tr.summary-details-excluded { font-style:italic; }
 .custom-servis-ul li {	border-bottom:1px solid #e5e5e5;list-style:none;margin-bottom:20px;padding-bottom:10px;}
 .custom-servis-ul li h3 {
 	background:url(../images/icos-set.png) 0 0 no-repeat;
-	font-size:13px;
+	/*font-size:13px;
 	line-height:16px;
-	color:#25aae1;
+	color:#25aae1;*/
 	text-transform:uppercase;
 	font-weight:normal;
 	margin-bottom:13px;
 	padding: 2px 0 8px 46px;
 }
+.custom-servis-ul li.item-1 h3 {background-position: 0 4px;}
 .custom-servis-ul li.item-2 h3 {background-position: 0 -124px;}
-.custom-servis-ul li.item-3 h3 {background-position: 0 -253px;}
-.custom-servis-ul li.item-4 h3 {background-position: 0 -377px;}
+.custom-servis-ul li.item-3 h3 {background-position: 0 -249px;}
+.custom-servis-ul li.item-4 h3 {background-position: 0 -373px;}
 .custom-servis-ul li.item-5 h3 {background-position: 0 -501px;}
 .custom-servis-ul li.item-6 h3 {background-position: 0 -638px;}
-.custom-servis-ul li.item-7 h3 {background-position: 0 -764px;}
+.custom-servis-ul li.item-7 h3 {background-position: 0 -757px;}
 
-.custom-servis-ul li p{ font-size:12px; color:#8a8989; line-height:18px; margin-bottom:10px;}
+.custom-servis-ul li p{ font-size:13px; color:#8a8989; line-height:18px; margin-bottom:10px;}
+.custom-servis-ul li p a, .cms-customer-service .std p a, .cms-terms .std .panel .panel-body a { color: #072c73 !important; text-decoration: underline; }
+.custom-servis-ul li p a:hover, .cms-customer-service .std p a:hover, .cms-terms .std .panel .panel-body a:hover, .cms-terms .std .order-right a:hover { color: #E60003 !important; text-decoration: none; }
+/* Terms and Conditions */
+.cms-terms .std .inner-panel-body { padding-left: 15px; }
+.cms-terms .std .panel { margin-bottom: 10px; }
+.cms-terms .std .panel .panel-heading h3 { margin: 5px 0; font-size:20px; }
+.cms-terms .std .panel .panel-body { padding-bottom: 0; }
+.order-right a { cursor: pointer; }
+.cms-terms .std .order-right a { color: #fff !important; text-decoration: underline; }
 /* Sitemap */
 .page-sitemap .links { text-align:right; margin:0 8px -47px 0; overflow:hidden; }
 .page-sitemap .links a span{display:inline-block; padding-right:29px;}

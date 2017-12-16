@@ -24,16 +24,16 @@
 // TODO: write some conversion tests.
 // TODO: do a bottom paginator for the show optimized images table.
 // TODO: check this patch, to see if the use of 'full' causes any issues: https://core.trac.wordpress.org/ticket/37840 .
-// TODO: perhaps have an optional footer thingy that says how many images have been optimized.
 // TODO: integrate AGR, since it's "abandoned", but possibly using gifsicle for better GIFs.
 // TODO: use this: https://codex.wordpress.org/AJAX_in_Plugins#The_post-load_JavaScript_Event .
 // TODO: on images without srscet, add 2x and 3x versions anyway.
 // TODO: check what happens to WebP images when restoring original from backups.
+// TODO: use got_mod_rewrite to warn folks not to bother with webp htaccess.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'EWWW_IMAGE_OPTIMIZER_VERSION', '402.0' );
+define( 'EWWW_IMAGE_OPTIMIZER_VERSION', '404.0' );
 
 // Initialize a couple globals.
 $ewww_debug = '';
@@ -155,6 +155,8 @@ add_action( 'ewww_image_optimizer_auto', 'ewww_image_optimizer_auto' );
 add_action( 'wr2x_retina_file_added', 'ewww_image_optimizer_retina', 20, 2 );
 // AJAX action hook for inserting WebP rewrite rules into .htaccess.
 add_action( 'wp_ajax_ewww_webp_rewrite', 'ewww_image_optimizer_webp_rewrite' );
+// AJAX action hook for removing WebP rewrite rules from .htaccess.
+add_action( 'wp_ajax_ewww_webp_unwrite', 'ewww_image_optimizer_webp_unwrite' );
 // AJAX action hook for manually optimizing/converting an image.
 add_action( 'wp_ajax_ewww_manual_optimize', 'ewww_image_optimizer_manual' );
 // AJAX action hook for manually restoring a converted image.
@@ -1192,7 +1194,7 @@ function ewww_image_optimizer_admin_init() {
 	if ( is_multisite() && is_plugin_active_for_network( EWWW_IMAGE_OPTIMIZER_PLUGIN_FILE_REL ) ) {
 		ewwwio_debug_message( 'saving network settings' );
 		// Set the common network settings if they have been POSTed.
-		if ( isset( $_POST['option_page'] ) && false !== strpos( $_POST['option_page'], 'ewww_image_optimizer_options' ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'ewww_image_optimizer_options-options' ) && current_user_can( 'manage_network_options' ) && ! get_site_option( 'ewww_image_optimizer_allow_multisite_override' ) ) {
+		if ( isset( $_POST['option_page'] ) && false !== strpos( $_POST['option_page'], 'ewww_image_optimizer_options' ) && isset( $_POST['ewww_image_optimizer_jpg_level'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'ewww_image_optimizer_options-options' ) && current_user_can( 'manage_network_options' ) && ! get_site_option( 'ewww_image_optimizer_allow_multisite_override' ) ) {
 			ewwwio_debug_message( 'network-wide settings, no override' );
 			if ( ewww_image_optimizer_function_exists( 'print_r' ) ) {
 				ewwwio_debug_message( print_r( $_POST, true ) );
@@ -1351,6 +1353,16 @@ function ewww_image_optimizer_admin_init() {
 	// Alert user if multiple re-optimizations detected.
 	add_action( 'network_admin_notices', 'ewww_image_optimizer_notice_reoptimization' );
 	add_action( 'admin_notices', 'ewww_image_optimizer_notice_reoptimization' );
+	if ( ! empty( $_GET['page'] ) ) {
+		if ( 'regenerate-thumbnails' == $_GET['page']
+			|| 'force-regenerate-thumbnails' == $_GET['page']
+			|| 'ajax-thumbnail-rebuild' == $_GET['page']
+			|| 'regenerate_thumbnails_advanced' == $_GET['page']
+		) {
+			// Add a notice for thumb regeneration.
+			add_action( 'admin_notices', 'ewww_image_optimizer_thumbnail_regen_notice' );
+		}
+	}
 	ewww_image_optimizer_ajax_compat_check();
 	ewwwio_memory( __FUNCTION__ );
 }
@@ -1719,6 +1731,14 @@ function ewww_image_optimizer_remove_obsolete_settings() {
 function ewww_image_optimizer_network_settings_saved() {
 	ewwwio_debug_message( '<b>' . __FUNCTION__ . '()</b>' );
 	echo "<div id='ewww-image-optimizer-settings-saved' class='updated fade'><p><strong>" . esc_html__( 'Settings saved', 'ewww-image-optimizer' ) . '.</strong></p></div>';
+}
+
+/**
+ * Informs the user about optimization during thumbnail regeneration.
+ */
+function ewww_image_optimizer_thumbnail_regen_notice() {
+	echo "<div id='ewww-image-optimizer-thumb-regen-notice' class='notice notice-info is-dismissible'><p><strong>" . esc_html__( 'New thumbnails will be optimized by the EWWW Image Optimizer as they are generated. You may wish to disable the plugin and run a bulk optimize later to speed up the process.', 'ewww-image-optimizer' ) . '</strong>';
+	echo '&nbsp;<a href="http://docs.ewww.io/article/49-regenerate-thumbnails" target="_blank" data-beacon-article="5a0f84ed2c7d3a272c0dc801">' . esc_html__( 'Learn more.', 'ewww-image-optimizer' ) . '</a></p></div>';
 }
 
 /**
@@ -2151,7 +2171,9 @@ function ewww_image_optimizer_network_deactivate( $network_wide ) {
  * Removes rules from .htaccess file added by EWWW for WebP rewriting.
  */
 function ewww_image_optimizer_uninstall() {
-	insert_with_markers( ewww_image_optimizer_htaccess_path(), 'EWWWIO', '' );
+	if ( ewwwio_extract_from_markers( ewww_image_optimizer_htaccess_path(), 'EWWWIO' ) ) {
+		insert_with_markers( ewww_image_optimizer_htaccess_path(), 'EWWWIO', '' );
+	}
 }
 
 /**
@@ -4618,13 +4640,15 @@ function ewww_image_optimizer_resize_upload( $file ) {
 		ewwwio_debug_message( 'no image editor function' );
 		return false;
 	}
+
+	// From here...
 	remove_filter( 'wp_image_editors', 'ewww_image_optimizer_load_editor', 60 );
 	$editor = wp_get_image_editor( $file );
 	if ( is_wp_error( $editor ) ) {
 		ewwwio_debug_message( 'could not get image editor' );
 		return false;
 	}
-	// Rotation should not happen here anymore, so don't worry about it breaking the dimensions.
+	// Rotation only happens on existing media here, so we need to swap dimension when we rotate by 90.
 	$orientation = ewww_image_optimizer_get_orientation( $file, $type );
 	$rotated     = false;
 	switch ( $orientation ) {
@@ -4660,6 +4684,7 @@ function ewww_image_optimizer_resize_upload( $file ) {
 		ewwwio_debug_message( 'error saving resized image' );
 	}
 	add_filter( 'wp_image_editors', 'ewww_image_optimizer_load_editor', 60 );
+	// to here is replaced by cloud/API function.
 	$new_size = ewww_image_optimizer_filesize( $new_file );
 	if ( $new_size && $new_size < $orig_size ) {
 		// Use this action to perform any operations on the original file before it is overwritten with the new, smaller file.
@@ -4668,6 +4693,7 @@ function ewww_image_optimizer_resize_upload( $file ) {
 		// TODO: see if there is a way to just check that meta exists on the new image.
 		// Use PEL to get the exif (if Remove Meta is unchecked) and GD is in use, so we can save it to the new image.
 		if ( 'image/jpeg' === $type && ( ewww_image_optimizer_get_option( 'ewww_image_optimizer_metadata_skip_full' ) || ! ewww_image_optimizer_get_option( 'ewww_image_optimizer_jpegtran_copy' ) ) && ! ewww_image_optimizer_imagick_support() ) {
+			ewwwio_debug_message( 'manually copying metadata for GD' );
 			$old_jpeg = new PelJpeg( $file );
 			$old_exif = $old_jpeg->getExif();
 			$new_jpeg = new PelJpeg( $new_file );
@@ -6864,9 +6890,11 @@ function ewww_image_optimizer_htaccess_path() {
 		$newhtpath = trailingslashit( $htpath . $path_diff ) . '.htaccess';
 		if ( is_file( $newhtpath ) ) {
 			ewwwio_debug_message( 'subdir install confirmed' );
+			ewwwio_debug_message( "using $newhtpath" );
 			return $newhtpath;
 		}
 	}
+	ewwwio_debug_message( "using $htpath.htaccess" );
 	return $htpath . '.htaccess';
 }
 
@@ -6875,6 +6903,7 @@ function ewww_image_optimizer_htaccess_path() {
  */
 function ewww_image_optimizer_webp_rewrite() {
 	ewwwio_ob_clean();
+	ewwwio_debug_message( '<b>' . __FUNCTION__ . '()</b>' );
 	// Verify that the user is properly authorized.
 	if ( ! wp_verify_nonce( $_REQUEST['ewww_wpnonce'], 'ewww-image-optimizer-settings' ) ) {
 		wp_die( esc_html__( 'Access denied.', 'ewww-image-optimizer' ) );
@@ -6891,11 +6920,37 @@ function ewww_image_optimizer_webp_rewrite() {
 }
 
 /**
+ * Called via AJAX, removes WebP rewrite rules from the .htaccess file.
+ */
+function ewww_image_optimizer_webp_unwrite() {
+	ewwwio_ob_clean();
+	ewwwio_debug_message( '<b>' . __FUNCTION__ . '()</b>' );
+	// Verify that the user is properly authorized.
+	if ( ! wp_verify_nonce( $_REQUEST['ewww_wpnonce'], 'ewww-image-optimizer-settings' ) ) {
+		wp_die( esc_html__( 'Access denied.', 'ewww-image-optimizer' ) );
+	}
+	if ( insert_with_markers( ewww_image_optimizer_htaccess_path(), 'EWWWIO', '' ) ) {
+		esc_html_e( 'Removal successful', 'ewww-image-optimizer' );
+	} else {
+		esc_html_e( 'Removal failed', 'ewww-image-optimizer' );
+	}
+	wp_die();
+}
+
+/**
  * If rules are present, stay silent, otherwise, gives us some rules to insert!
+ *
+ * @return array Rules to be inserted.
  */
 function ewww_image_optimizer_webp_rewrite_verify() {
 	ewwwio_debug_message( '<b>' . __FUNCTION__ . '()</b>' );
-	$current_rules = extract_from_markers( ewww_image_optimizer_htaccess_path(), 'EWWWIO' );
+	if ( ewww_image_optimizer_get_option( 'ewww_image_optimizer_exactdn' ) ) {
+		if ( ewwwio_extract_from_markers( ewww_image_optimizer_htaccess_path(), 'EWWWIO' ) ) {
+			ewwwio_debug_message( 'removing htaccess webp to prevent ExactDN problems' );
+			insert_with_markers( ewww_image_optimizer_htaccess_path(), 'EWWWIO', '' );
+		}
+	}
+	$current_rules = ewwwio_extract_from_markers( ewww_image_optimizer_htaccess_path(), 'EWWWIO' );
 	$ewww_rules    = array(
 		'<IfModule mod_rewrite.c>',
 		'RewriteEngine On',
@@ -6917,12 +6972,48 @@ function ewww_image_optimizer_webp_rewrite_verify() {
 		! ewww_image_optimizer_array_search( 'Header append Vary Accept', $current_rules ) ||
 		! ewww_image_optimizer_array_search( 'AddType image/webp', $current_rules )
 	) {
-		ewwwio_memory( __FUNCTION__ );
+		ewwwio_debug_message( 'missing or invalid rules' );
 		return $ewww_rules;
 	} else {
-		ewwwio_memory( __FUNCTION__ );
+		ewwwio_debug_message( 'all good' );
 		return;
 	}
+}
+
+/**
+ * Extracts strings from between the BEGIN and END markers in the .htaccess file.
+ *
+ * @param string $filename The file within which to search.
+ * @param string $marker The bounary marker of the desired content.
+ * @return array An array of strings from a file (.htaccess ) from between BEGIN and END markers.
+ */
+function ewwwio_extract_from_markers( $filename, $marker ) {
+	// All because someone didn't test changes in core...
+	global $wp_version;
+	if ( '4.9' != $wp_version ) {
+		return extract_from_markers( $filename, $marker );
+	}
+	$result = array();
+
+	if ( ! file_exists( $filename ) ) {
+		return $result;
+	}
+
+	$markerdata = explode( "\n", implode( '', file( $filename ) ) );
+
+	$state = false;
+	foreach ( $markerdata as $markerline ) {
+		if ( false !== strpos( $markerline, '# END ' . $marker ) ) {
+			$state = false;
+		}
+		if ( $state ) {
+			$result[] = $markerline;
+		}
+		if ( false !== strpos( $markerline, '# BEGIN ' . $marker ) ) {
+			$state = true;
+		}
+	}
+	return $result;
 }
 
 /**
@@ -7292,6 +7383,10 @@ function ewww_image_optimizer_options( $network = 'singlesite' ) {
 			$toolkit_output = str_replace( 'color: red', 'color: gray', $toolkit_output );
 		}
 		$status_output .= $toolkit_output;
+	} else {
+		ewww_image_optimizer_gd_support();
+		ewww_image_optimizer_gmagick_support();
+		ewww_image_optimizer_imagick_support();
 	} // End if().
 	$mimetype_output = '<b>' . esc_html__( 'Only need one of these:', 'ewww-image-optimizer' ) . ' </b><br>';
 	// Initialize this variable to check for the 'file' command if we don't have any php libraries we can use.
@@ -7630,12 +7725,17 @@ function ewww_image_optimizer_options( $network = 'singlesite' ) {
 	$output[] = "</table>\n</div>\n";
 	$output[] = "<p class='submit'><input type='submit' class='button-primary' value='" . esc_attr__( 'Save Changes', 'ewww-image-optimizer' ) . "' /></p>\n";
 	$output[] = "</form>\n";
-	if ( ewww_image_optimizer_get_option( 'ewww_image_optimizer_webp' ) && ! ewww_image_optimizer_get_option( 'ewww_image_optimizer_webp_for_cdn' ) && ! ewww_image_optimizer_ce_webp_enabled() ) {
+	// Make sure .htaccess rules are terminated when ExactDN is enabled.
+	if ( ewww_image_optimizer_get_option( 'ewww_image_optimizer_exactdn' ) ) {
+		ewww_image_optimizer_webp_rewrite_verify();
+	}
+	if ( ewww_image_optimizer_get_option( 'ewww_image_optimizer_webp' ) && ! ewww_image_optimizer_get_option( 'ewww_image_optimizer_webp_for_cdn' ) && ! ewww_image_optimizer_ce_webp_enabled() && ! ewww_image_optimizer_get_option( 'ewww_image_optimizer_exactdn' ) ) {
 		$output[] = "<form id='ewww-webp-rewrite'>\n";
 		$output[] = '<p>' . esc_html__( 'There are many ways to serve WebP images to visitors with supported browsers. You may choose any you wish, but it is recommended to serve them with an .htaccess file using mod_rewrite and mod_headers. The plugin can insert the rules for you if the file is writable, or you can edit .htaccess yourself.', 'ewww-image-optimizer' ) . "</p>\n";
 		if ( ! ewww_image_optimizer_webp_rewrite_verify() ) {
 			$output[] = "<img id='webp-image' src='" . plugins_url( '/images/test.png', __FILE__ ) . "' style='float: right; padding: 0 0 10px 10px;'>\n" .
-				"<p id='ewww-webp-rewrite-status'><b>" . esc_html__( 'Rules verified successfully', 'ewww-image-optimizer' ) . "</b></p>\n";
+				"<p id='ewww-webp-rewrite-status'><b>" . esc_html__( 'Rules verified successfully', 'ewww-image-optimizer' ) . "</b></p>\n" .
+				"<button type='submit' id='ewww-webp-remove' class='button-secondary action'>" . esc_html__( 'Remove Rewrite Rules', 'ewww-image-optimizer' ) . "</button>\n";
 			ewwwio_debug_message( 'webp .htaccess rewriting enabled' );
 		} else {
 			$output[] = "<pre id='webp-rewrite-rules' style='background: white; font-color: black; border: 1px solid black; clear: both; padding: 10px;'>\n" .
@@ -7653,7 +7753,7 @@ function ewww_image_optimizer_options( $network = 'singlesite' ) {
 				"AddType image/webp .webp</pre>\n" .
 				"<img id='webp-image' src='" . plugins_url( '/images/test.png', __FILE__ ) . "' style='float: right; padding-left: 10px;'>\n" .
 				"<p id='ewww-webp-rewrite-status'>" . esc_html__( 'The image to the right will display a WebP image with WEBP in white text, if your site is serving WebP images and your browser supports WebP.', 'ewww-image-optimizer' ) . "</p>\n" .
-				"<button type='submit' class='button-secondary action'>" . esc_html__( 'Insert Rewrite Rules', 'ewww-image-optimizer' ) . "</button>\n";
+				"<button type='submit' id='ewww-webp-insert' class='button-secondary action'>" . esc_html__( 'Insert Rewrite Rules', 'ewww-image-optimizer' ) . "</button>\n";
 			ewwwio_debug_message( 'webp .htaccess rules not detected' );
 		}
 		$output[] = "</form>\n";

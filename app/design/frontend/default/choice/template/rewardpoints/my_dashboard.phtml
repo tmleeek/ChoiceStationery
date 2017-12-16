@@ -26,20 +26,30 @@
     <?php echo $this->getChildHtml('top') ?>
 
     <div class="box-account box-info">
-            <div class="box-account box-recent">
-                <div class="box-head">
-                    <h2><?php echo $this->__('Points') ?></h2>
-                </div>
-                <?php echo $this->getChildHtml('points') ?>
-            </div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="box-head">
+					<h2><?php echo $this->__('Points') ?></h2>
+				</div>
+			</div>
+			<div class="panel-body">
+				<?php echo $this->getChildHtml('points') ?>
+			</div>
+		</div>
     </div>
 
     <div class="box-account box-info">
-        <div class="box-head">
-            <h2><?php echo $this->__('Account Information') ?></h2>
-        </div>
-        <?php echo $this->getChildHtml('info') ?>
-        <?php echo $this->getChildHtml('address') ?>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="box-head">
+					<h2><?php echo $this->__('Account Information') ?></h2>
+				</div>
+			</div>
+			<div class="panel-body">
+				<?php echo $this->getChildHtml('info') ?>
+				<?php echo $this->getChildHtml('address') ?>
+			</div>
+		</div>
     </div>
 
 

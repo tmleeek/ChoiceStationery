@@ -35,7 +35,11 @@
     <a href="<?php echo $this->getCustomPrintUrl($_invoice) ?>" onclick="this.target='_blank'" class="link-print"><?php echo $this->__('Print Custom PDF Invoice') ?></a>
     <?php endif?>
     </h2>
-<h3 class="table-caption"><?php echo $this->__('Items Invoiced') ?></h3>
+<div class="box">
+	<div class="box-title">
+		<h3 class="table-caption"><?php echo $this->__('Items Invoiced') ?></h3>
+	</div>
+</div>
 <table class="data-table" id="my-invoice-table-<?php echo $_invoice->getId(); ?>">
     <col />
     <col width="1" />

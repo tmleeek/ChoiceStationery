@@ -270,6 +270,9 @@ Customer account address book
 
     <customer_address_index translate="label">
         <label>Customer My Account Address Book</label>
+        <reference name="head">
+			<action method="addItem"><type>skin_js</type><name>js/equalheight.js</name><params/></action>
+		</reference>
         <!-- Mage_Customer -->
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">

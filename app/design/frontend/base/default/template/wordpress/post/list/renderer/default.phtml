@@ -8,15 +8,17 @@
 ?>
 <?php $post = $this->getPost() ?>
 <div class="post-list-item">
-	<h2><a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a></h2>
+	
 	<?php echo $this->getBeforePostContentHtml() ?>
 	<div class="post-entry entry<?php if ($post->getFeaturedImage()): ?> post-entry-with-image<?php endif; ?>">
 		<?php if ($post->isViewableForVisitor()): ?>
 			<?php if ($featuredImage = $post->getFeaturedImage()): ?>
-				<div class="featured-image left">
+				<div class="featured-image col-md-3 col-xs-12 left">
 					<a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"><img src="<?php echo $featuredImage->getAvailableImage() ?>" alt="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"/></a>
 				</div>
 			<?php endif; ?>
+			<div class="col-md-9 cpl-xs-12">
+				<h3><a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a></h3>
 			<?php if ($this->displayExcerptInFeed() || $post->hasMoreTag()): ?>
 				<?php 
 					/**
@@ -28,8 +30,13 @@
 				?>
 				<?php echo $post->getPostExcerpt(50) ?>
 			<?php else: ?>
-				<?php echo $post->getPostContent() ?>
+				<?php //echo $post->getPostContent() ?>
+				<p>
+					<?php echo $post->getPostExcerpt(50) ?>
+					<a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->__('Read more') ?>"><?php echo $this->__('Read more') ?></a>
+				</p>
 			<?php endif; ?>
+			</div>
 		<?php else: ?>
 			<?php echo $this->getPasswordProtectHtml($post) ?>
 		<?php endif; ?>

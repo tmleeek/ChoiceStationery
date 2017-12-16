@@ -38,12 +38,12 @@
     <table class="data-table tracking-table" id="my-tracking-table-<?php echo $_shipment->getId(); ?>">
         <tbody>
             <tr>
-                <td colspan="2">
+                <td class="track-link" colspan="2">
                     <a href="#" onclick="popWin('<?php echo $this->helper('shipping')->getTrackingPopupUrlBySalesModel($_shipment) ?>','trackshipment','width=800,height=600,top=0,left=0,resizable=yes,scrollbars=yes'); return false;" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Track this shipment')) ?>"><?php echo $this->__('Track this shipment') ?></a>
                 </td>
             </tr>
             <tr>
-                <th class="label"><?php echo $this->__('Tracking Number(s):') ?></th>
+                <td class=""><?php echo $this->__('Tracking Number(s):') ?></ts>
                 <td>&nbsp;
                 <?php
                 $i = 1;
@@ -63,7 +63,11 @@
     </table>
     <script type="text/javascript">decorateTable('my-tracking-table-<?php echo $_shipment->getId(); ?>')</script>
 <?php  endif; ?>
-<h3 class="table-caption"><?php echo $this->__('Items Shipped') ?></h3>
+<div class="box">
+	<div class="box-title">
+		<h3 class="table-caption"><?php echo $this->__('Items Shipped') ?></h3>
+	</div>
+</div>
 <table class="data-table" id="my-shipment-table-<?php echo $_shipment->getId(); ?>">
     <col />
     <col width="1" />

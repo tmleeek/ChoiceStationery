@@ -1,87 +1,88 @@
-<p>&nbsp;</p>
-<?php $items = $this->getList()->getItems(); ?>
-<?php $_hlp = Mage::helper('amlist'); ?>
-<?php if (count($items)): ?>
-<form action="<?php echo $this->getUrl('*/*/update') ?>" method="post">
-<input type="hidden" name="list_id" value="<?php echo $this->getList()->getId() ?>">
-<input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
-<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('custom_pricing')->toHtml(); ?><br />
-    <table cellspacing="0" width="100%" class="data-table box-table" id="amlist-table">
-    <col width="30" />
-    <col width="130" />
-    <col />
-    <col />
-    <col />
-    <col width="120"/> 
-        <thead>
-            <tr>
-                <th>&nbsp;</th>
-                <th><?php echo $this->__('Product') ?></th>
-                <th><?php echo $this->__('Details') ?></th>
-                <th><?php echo $this->__('Qty') ?></th>
-                <th><?php echo $this->__('Price') ?></th>
-                <th class="a-center">&nbsp;</th>
-            </tr>
-        </thead>
-		<tbody>
-        
-        <?php 
-            $allLists = $this->getAllLists($this->getList()->getId()); 
-            $total    = 0;
-        ?>
-        <?php foreach ($items as $item): $id = $item->getId();?>
-            <tr>
-                <td>
-                    <input type="checkbox" name="cb[]" value="<?php echo $id ?>" <?php /*checked */?>/>
-                </td>
-                <td>
-                    <div><a href="<?php echo $item->getProduct()->getProductUrl() ?>"><img src="<?php echo $this->helper('catalog/image')->init($item->getProduct(), 'small_image')->resize(113, 113); ?>" alt="<?php echo $this->htmlEscape($item->getProduct()->getName()) ?>" width="113" /></a></div>
-                </td>
-                <td>
-                    <div><a href="<?php echo $item->getProduct()->getProductUrl() ?>" title="<?php echo $this->htmlEscape($item->getProduct()->getName()) ?>"><?php echo $this->htmlEscape($item->getProduct()->getName()) ?></a></div>
-                    <?php echo $item->getOptionsHtml() ?>
-                    <?php if(!$item->getProduct()->isSaleable()){ ?> Not Saleable <?php } ?>
-                </td>
-                <td>
-                   <input type="text" size="2" name="qty[<?php echo $id ?>]" value="<?php echo $item->getQty() ?>" class="input-text" />
-                </td>
-                <td>&pound;<?php $price = $item->getPrice(); $total += ($price * $item->getQty());  echo $price; ?>
-                </td>
-                <td>
-                <?php if ($allLists->getSize()): ?> 
-                <?php echo $this->__('Move to:')?><p>
-                <select name="moveto[<?php echo $id ?>]">
-                    <option value="0"><?php echo $this->__('Select ...') ?></option>
-                    <?php foreach ($allLists as $l): ?>
-                    <option value="<?php echo $l->getId()?>"><?php echo $this->htmlEscape($l->getTitle())?></option>
-                    <?php endforeach ?>
-                </select>
-                </p>
-                <?php endif; ?>
-                    <a href="<?php echo $this->getUrl('*/*/removeItem', array('id'=>$id))?>" onclick="return confirm('<?php echo $this->__('Are you sure?') ?>')" class="link-remove" ><?php echo $this->__('Remove') ?></a>
-                </td>
-            </tr>
-        <?php endforeach ?>
-        <?php /* if ($total): ?>
-            <tr>
-                <td colspan="4" style="text-align:right"><strong><?php echo $this->__('Total:')?></strong></td>
-                <td colspan="2" style="text-align:left"><strong>&pound;<?php echo sprintf('%.2f',$total) ?></strong></td>
-            </tr>        
-        <?php endif */ ?>
-        </tbody>
-    </table>
-    <div class="buttons-set">
-        <a href="<?php echo $this->getUrl('*/*/index') ?>" class="left">&laquo; <?php echo $this->__('All Folders') ?></a> 
-        <button type="submit" class="button" name="do"><span><span><?php echo $this->__('Update') ?></span></span></button>
-        <button type="submit" onclick="this.form.action='<?php echo $this->getUrl('*/*/cart') ?>'" class="button" type="button" style="margin-right:5px;"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
-    </div>
-</form>
-<script type="text/javascript">decorateTable('amlist-table')</script>
-<?php else: ?>
-    <?php if ($this->getList()->getId()): ?>
-    <p><?php echo $this->__('Start adding items from the <a href="%s">catalog</a> to your favourites right now!', Mage::getBaseUrl())?></p>
-    <?php endif; ?>
-    <div class="button-set">
-        <a href="<?php echo $this->getUrl('*/*/index') ?>" class="left">&laquo; <?php echo $this->__('All Folders') ?></a> 
-    </div>
-<?php endif ?>
+	<p>&nbsp;</p>
+	<?php $items = $this->getList()->getItems(); ?>
+	<?php $_hlp = Mage::helper('amlist'); ?>
+	<?php if (count($items)): ?>
+	<form action="<?php echo $this->getUrl('*/*/update') ?>" method="post">
+	<input type="hidden" name="list_id" value="<?php echo $this->getList()->getId() ?>">
+	<input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('custom_pricing')->toHtml(); ?><br />
+		<table cellspacing="0" width="100%" class="data-table box-table" id="amlist-table">
+		<col width="30" />
+		<col width="130" />
+		<col />
+		<col />
+		<col />
+		<col width="120"/> 
+			<thead>
+				<tr>
+					<th>&nbsp;</th>
+					<th><?php echo $this->__('Product') ?></th>
+					<th><?php echo $this->__('Details') ?></th>
+					<th><?php echo $this->__('Qty') ?></th>
+					<th><?php echo $this->__('Price') ?></th>
+					<th class="a-center">&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+			
+			<?php 
+				$allLists = $this->getAllLists($this->getList()->getId()); 
+				$total    = 0;
+			?>
+			<?php foreach ($items as $item): $id = $item->getId();?>
+				<tr>
+					<td>
+						<input type="checkbox" name="cb[]" value="<?php echo $id ?>" <?php /*checked */?>/>
+					</td>
+					<td>
+						<div><a href="<?php echo $item->getProduct()->getProductUrl() ?>"><img src="<?php echo $this->helper('catalog/image')->init($item->getProduct(), 'small_image')->resize(113, 113); ?>" alt="<?php echo $this->htmlEscape($item->getProduct()->getName()) ?>" width="113" /></a></div>
+					</td>
+					<td>
+						<div><a href="<?php echo $item->getProduct()->getProductUrl() ?>" title="<?php echo $this->htmlEscape($item->getProduct()->getName()) ?>"><?php echo $this->htmlEscape($item->getProduct()->getName()) ?></a></div>
+						<?php echo $item->getOptionsHtml() ?>
+						<?php if(!$item->getProduct()->isSaleable()){ ?> Not Saleable <?php } ?>
+					</td>
+					<td>
+					   <input type="text" size="2" name="qty[<?php echo $id ?>]" value="<?php echo $item->getQty() ?>" class="input-text form-control" />
+					</td>
+					<td>&pound;<?php $price = $item->getPrice(); $total += ($price * $item->getQty());  echo $price; ?>
+					</td>
+					<td>
+					<?php if ($allLists->getSize()): ?> 
+					<?php echo $this->__('Move to:')?><p>
+					<select class="form-control" name="moveto[<?php echo $id ?>]">
+						<option value="0"><?php echo $this->__('Select ...') ?></option>
+						<?php foreach ($allLists as $l): ?>
+						<option value="<?php echo $l->getId()?>"><?php echo $this->htmlEscape($l->getTitle())?></option>
+						<?php endforeach ?>
+					</select>
+					</p>
+					<?php endif; ?>
+						<a href="<?php echo $this->getUrl('*/*/removeItem', array('id'=>$id))?>" onclick="return confirm('<?php echo $this->__('Are you sure?') ?>')" class="link-remove btn-remove" title="Remove"><?php echo $this->__('Remove') ?></a>
+					</td>
+				</tr>
+			<?php endforeach ?>
+			<?php /* if ($total): ?>
+				<tr>
+					<td colspan="4" style="text-align:right"><strong><?php echo $this->__('Total:')?></strong></td>
+					<td colspan="2" style="text-align:left"><strong>&pound;<?php echo sprintf('%.2f',$total) ?></strong></td>
+				</tr>        
+			<?php endif */ ?>
+			</tbody>
+		</table>
+		<div class="buttons-set">
+			<a href="<?php echo $this->getUrl('*/*/index') ?>" class="left">&laquo; <?php echo $this->__('All Folders') ?></a> 
+			<button type="submit" class="button" name="do"><span><span><?php echo $this->__('Update') ?></span></span></button>
+			<button type="submit" onclick="this.form.action='<?php echo $this->getUrl('*/*/cart') ?>'" class="button" type="button" style="margin-right:5px;"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+		</div>
+	</form>
+	<script type="text/javascript">decorateTable('amlist-table')</script>
+	<?php else: ?>
+		<?php if ($this->getList()->getId()): ?>
+		<p><?php echo $this->__('Start adding items from the <a href="%s">catalog</a> to your favourites right now!', Mage::getBaseUrl())?></p>
+		<?php endif; ?>
+		<div class="button-set">
+			<a href="<?php echo $this->getUrl('*/*/index') ?>" class="left">&laquo; <?php echo $this->__('All Folders') ?></a> 
+		</div>
+	<?php endif ?>
+</div>

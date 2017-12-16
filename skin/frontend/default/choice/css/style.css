@@ -1667,8 +1667,8 @@ margin-top: 5px;
 color: #000;
 }
 .account-create li {
-float: left;
-clear: both;
+/*float: left;
+clear: both;*/
 }
 /* Account Login/Create Pages ============================================================ */
 
@@ -1942,6 +1942,7 @@ h4.rewardpoints-title{
 	   -webkit-column-gap: 20px;
 	}
 }
+
 .order-outer.customnew .row
 {
 color:#fff;

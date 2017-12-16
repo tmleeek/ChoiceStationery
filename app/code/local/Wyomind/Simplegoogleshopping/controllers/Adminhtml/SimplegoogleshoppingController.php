@@ -55,7 +55,7 @@ class Wyomind_Simplegoogleshopping_Adminhtml_SimplegoogleshoppingController exte
     }
 
     public function generateAction() {
-
+		
         try {
 
             $id = $this->getRequest()->getParam('simplegoogleshopping_id');

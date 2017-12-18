@@ -35,32 +35,34 @@
 	<div class="contact-left"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('contact_block')->toHtml() ?></div>
 	<form action="<?php echo $this->getFormAction(); ?>" id="contactForm" method="post">
 		<div class="fieldset">
-			<h2><?php echo Mage::helper('contacts')->__('Contact Information') ?></h2>
+			<div class="block-title">
+				<h2><?php echo Mage::helper('contacts')->__('Contact Information') ?></h2>
+			</div>
 			<ul class="form-list">
 				<li class="fields">
 					<div class="field">
-						<label for="name" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Name') ?></label>
+						<label for="name" class="required control-label"><em>*</em><?php echo Mage::helper('contacts')->__('Name') ?></label>
 						<div class="input-box">
-							<input name="name" id="name" title="<?php echo Mage::helper('contacts')->__('Name') ?>" value="<?php echo $this->htmlEscape($this->helper('contacts')->getUserName()) ?>" class="input-text required-entry" type="text" />
+							<input name="name" id="name" title="<?php echo Mage::helper('contacts')->__('Name') ?>" value="<?php echo $this->htmlEscape($this->helper('contacts')->getUserName()) ?>" class="input-text required-entry form-control" type="text" />
 						</div>
 					</div>
 					<div class="field">
-						<label for="email" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Email') ?></label>
+						<label for="email" class="required control-label"><em>*</em><?php echo Mage::helper('contacts')->__('Email') ?></label>
 						<div class="input-box">
-							<input name="email" id="email" title="<?php echo Mage::helper('contacts')->__('Email') ?>" value="<?php echo $this->htmlEscape($this->helper('contacts')->getUserEmail()) ?>" class="input-text required-entry validate-email" type="text" />
+							<input name="email" id="email" title="<?php echo Mage::helper('contacts')->__('Email') ?>" value="<?php echo $this->htmlEscape($this->helper('contacts')->getUserEmail()) ?>" class="input-text form-control required-entry validate-email" type="text" />
 						</div>
 					</div>
 					<div class="field last">
-						<label for="telephone"><?php echo Mage::helper('contacts')->__('Telephone') ?></label>
+						<label for="telephone" class="control-label"><?php echo Mage::helper('contacts')->__('Telephone') ?></label>
 						<div class="input-box">
-							<input name="telephone" id="telephone" title="<?php echo Mage::helper('contacts')->__('Telephone') ?>" value="" class="input-text" type="text" />
+							<input name="telephone" id="telephone" title="<?php echo Mage::helper('contacts')->__('Telephone') ?>" value="" class="form-control input-text" type="text" />
 						</div>
 					</div>
 				</li>
 				<li class="wide">
-					<label for="comment" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Comment') ?></label>
+					<label for="comment" class="required control-label"><em>*</em><?php echo Mage::helper('contacts')->__('Comment') ?></label>
 					<div class="input-box">
-						<textarea name="comment" id="comment" title="<?php echo Mage::helper('contacts')->__('Comment') ?>" class="required-entry input-text" cols="5" rows="3"></textarea>
+						<textarea name="comment" id="comment" title="<?php echo Mage::helper('contacts')->__('Comment') ?>" class="required-entry form-control input-text" cols="5" rows="3"></textarea>
 					</div>
 				</li>
 			</ul>

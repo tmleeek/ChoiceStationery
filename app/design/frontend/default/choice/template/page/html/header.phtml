@@ -80,6 +80,7 @@ if(!$customerSessionModel->isLoggedIn()){
         <?php echo $this->getChildHtml('topMenu'); ?>
 </div>
 <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('header-text')->toHtml();?>
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('header-promo')->toHtml();?>
 <!-- Filter under the menu-->
 <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_content')->toHtml();?>
 <!-- for home page only show the banner and filter block-->

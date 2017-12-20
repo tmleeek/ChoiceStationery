@@ -2298,6 +2298,8 @@ ul.ul_checkbox li {
 .abtblock p { line-height: 30px; }
 .abtblock ul li { margin-bottom: 15px; line-height: 25px; }
 .abtblock ul { margin-bottom: 30px; }
+
+/******* Registration page *********/
 .fieldset .row { padding:5px; }
 .account-create #_cp_button_div_id, .my-account #_cp_button_div_id { width: 33.33%; float: left; padding: 0 15px; }
 .account-create #_cp_button_id.scalable, .my-account #_cp_button_id.scalable, .my-account .group-select button { color: #fff; border-radius: 4px; padding: 6px 12px; height: 34px; width: 100%; margin: 0 0 10px 0; }
@@ -2334,6 +2336,14 @@ label.required em { float:right; font-style:normal; color:#f00;  }
 .middle-container .order-container .order-outer .offer a:hover { color: #E60003; }
 .middle-container .order-container .order-outer .delivery a:hover { color: #072c73; }
 
+/*************** header promo section ***************/
+.header-promo-section { background: #e62700; margin-top: 7px; }
+.header-promo-section .promo-section { font-size: 16px; font-weight: 600; text-align:center; color: #fff; margin: 6.5px 0; }
+.header-promo-section .promo-section:before { display: inline-block; font-family: 'FontAwesome'; content: "\f1bb"; font-size: 20px; position: relative; line-height: 30px; color:#fff; cursor: pointer; padding: 0 30px 0 10px; }
+.header-promo-section .promo-section:after { display: inline-block; font-family: 'FontAwesome'; content: "\f1bb"; font-size: 20px; position: relative; line-height: 30px; color:#fff; cursor: pointer; padding: 0 10px 0 30px; }
+.header-promo-section .promo-section span { display: inline-block; line-height:30px; }
+.header-promo-section .promo-section .promo-right:before { display: inline-block; font-family: 'FontAwesome'; content: "\f0d1"; font-size: 20px; position: relative; line-height: 30px; color:#fff; cursor: pointer; padding: 0 20px 0 30px; }
+
 @media screen and (max-width: 767px){ 
 	/*.cms-about-choice-stationery-supplies .three > div span { left: -30%; }*/
 	.cms-about-choice-stationery-supplies .three > div span i { left: 35%; }
@@ -2352,4 +2362,10 @@ and (orientation : landscape) {
 	.cms-about-choice-stationery-supplies .three > div:hover span { top: 210px; }
 	.cms-about-choice-stationery-supplies .three > div, .cms-about-choice-stationery-supplies .three > div .wrapper { height: 300px; }
 	.cms-about-choice-stationery-supplies .three > div span .mamber-img { margin-top: 25px; } 
+}
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+	.header-promo-section { display: none; }
 }

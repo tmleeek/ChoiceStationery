@@ -2343,6 +2343,7 @@ label.required em { float:right; font-style:normal; color:#f00;  }
 .header-promo-section .promo-section:after { display: inline-block; font-family: 'FontAwesome'; content: "\f1bb"; font-size: 20px; position: relative; line-height: 30px; color:#fff; cursor: pointer; padding: 0 10px 0 30px; }
 .header-promo-section .promo-section span { display: inline-block; line-height:30px; }
 .header-promo-section .promo-section .promo-right:before { display: inline-block; font-family: 'FontAwesome'; content: "\f0d1"; font-size: 20px; position: relative; line-height: 30px; color:#fff; cursor: pointer; padding: 0 20px 0 30px; }
+.header-promo-section .promo-section .promo-full:before, .header-promo-section .promo-section .promo-full:after { display: inline-block; font-family: 'FontAwesome'; content: "\f06b"; font-size: 20px; position: relative; line-height: 30px; color:#fff; cursor: pointer; padding: 0 20px 0 20px; }
 
 @media screen and (max-width: 767px){ 
 	/*.cms-about-choice-stationery-supplies .three > div span { left: -30%; }*/

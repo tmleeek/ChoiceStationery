@@ -2068,7 +2068,7 @@ tr.summary-details-excluded { font-style:italic; }
     z-index:99999;
 }
 
-.search-autocomplete{
+.search-autocomplete, .searchautocomplete .searchautocomplete-loader {
 	z-index:9999;
 	cursor:pointer;
 	background: none repeat scroll 0 0 #F9F9F9;
@@ -2076,6 +2076,10 @@ tr.summary-details-excluded { font-style:italic; }
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.18);
     color: #000000;
     padding: 10px;
+    top: 46px;
+    width: 100%;
+    border-radius: 5px 5px 5px 5px;
+    position: absolute;
 }
 .cart-collaterals h2{
 	border-bottom: 1px solid #000000;
@@ -2349,6 +2353,11 @@ label.required em { float:right; font-style:normal; color:#f00;  }
   color: #072c73;
   text-decoration: none;
 }
+
+/********** search autocomplete loader ***********/
+.searchautocomplete .searchautocomplete-loader { text-align: center; }
+.searchautocomplete .searchautocomplete-loader:after { position: relative; /*top: 11px; right: 50%; left: 50%;*/ width: 16px; height: 16px; background: url(../images/mirasvit/loader.gif); content: ""; display: inline-block; }
+.searchautocomplete .searchautocomplete-loader:before { border-color: transparent transparent #CCC transparent; content: ""; position: absolute; border-style: solid; border-width: 5px; height: 0; width: 0; top: -11px; left: 30px; }
 
 @media screen and (max-width: 767px){ 
 	/*.cms-about-choice-stationery-supplies .three > div span { left: -30%; }*/

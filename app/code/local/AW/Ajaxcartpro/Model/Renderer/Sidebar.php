@@ -27,7 +27,7 @@
 
 class AW_Ajaxcartpro_Model_Renderer_Sidebar extends Varien_Object implements AW_Ajaxcartpro_Model_Renderer_Interface
 {
-    const BLOCK_NAME = 'cart_header';
+    const BLOCK_NAME = 'minicart_head';
 
     public function renderFromLayout($layout)
     {

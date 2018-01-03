@@ -116,7 +116,7 @@
 								<!--end of qty--> </div>
 							  <div class="col-md-5">
 							  <div class="add-btn">
-								<a href="#" class="add-to-basket" onclick="ewAddProductToCart('<?php echo $this->getAddToCartUrl($_product) ?>', <?php echo $_product->getId(); ?>); return false;"><?php echo $this->__('ADD TO BASKET') ?></a>
+								<a href="javascript:void(0)" class="add-to-basket" onclick="ewAddProductToCart('<?php echo $this->getAddToCartUrl($_product) ?>', <?php echo $_product->getId(); ?>); return false;"><?php echo $this->__('ADD TO BASKET') ?></a>
 								<span class="cart-img"><a class="cart-img" onclick="ewAddProductToCart('<?php echo $this->getAddToCartUrl($_product) ?>', <?php echo $_product->getId(); ?>); return false;"> <i class="sprite sprite-add-to-basket-img"></i></a></span></div>     
 							
 							</div>
@@ -211,7 +211,7 @@
 						<div class="add-btnwrap">
 						<?php if($_product->isSaleable()): ?>
 							<div class="add-btn">
-								<a href="#" class="add-to-basket" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><?php echo $this->__('ADD TO BASKET') ?></a>
+								<a href="javascript:void(0)" class="add-to-basket" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><?php echo $this->__('ADD TO BASKET') ?></a>
 								<span class="cart-img"><a class="cart-img" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"> <i class="sprite sprite-add-to-basket-img"></i></a></span>
 							</div>                                
 						<!--end of offer-box-->

@@ -36,19 +36,19 @@
     <?php $_cartQty = $this->getSummaryCount() ?>
     <i class="sprite sprite-cart"></i>
     <div class="block-content">
-    <?php if ($_cartQty>0) { ?>
-        <div class="summary">
-            <?php if ($_cartQty==1) { ?>
-                <a href="<?php echo $this->getBaseUrl()?>checkout/cart"><p class="amount-2"><?php echo $this->__('<strong title="%s">%s item</strong>', $this->getUrl('checkout/cart'), $_cartQty) ?></p></a>
-            <?php } else { ?>
-                <a href="<?php echo $this->getBaseUrl()?>checkout/cart"><p class="amount-2"><?php echo $this->__('<strong title="%s">%s items</strong>', $this->getUrl('checkout/cart'), $_cartQty) ?></p></a>
-            <?php } ?>
+	<?php if ($_cartQty>0) { ?>
+		<div class="summary">
+			<?php if ($_cartQty==1) { ?>
+				<a href="javascript:void(0)"><p class="amount-2"><?php echo $this->__('<strong title="%s">%s item</strong>', $this->__('Cart Summary'), $_cartQty) ?></p></a>
+			<?php } else { ?>
+				<a href="javascript:void(0)"><p class="amount-2"><?php echo $this->__('<strong title="%s">%s items</strong>', $this->__('Cart Summary'), $_cartQty) ?></p></a>
+			<?php } ?>
 		</div>
 <?php } else { ?>
-        <div class="empty">
-			<?php echo $this->__('0 item(s)') ?>
-        </div>
-    <?php } ?>
+		<div class="summary">
+			<a href="javascript:void(0)"><p class="amount-2"><?php echo $this->__('0 item(s)') ?></p></a>
+		</div>
+	<?php } ?>
     </div>
 </div>
 <?php } ?>

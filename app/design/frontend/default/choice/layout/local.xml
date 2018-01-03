@@ -30,6 +30,11 @@
 <action method="addItem"><type>skin_css</type><name>css/custom.css</name><params/></action>
 <action method="addItem"><type>skin_css</type><name>css/styles_edited.css</name><params/></action>
 <action method="addItem"><type>skin_css</type><name>js/cycle2slider.css</name><params/></action>
+
+<action method="addItem"><type>skin_js</type><name>js/lib/modernizr.custom.min.js</name></action>
+<action method="addItem"><type>skin_js</type><name>js/lib/enquire.js</name></action>
+				<action method="addItem"><type>skin_js</type><name>js/app.js</name></action>
+				<action method="addItem"><type>skin_js</type><name>js/minicart.js</name></action>
 	</reference>
 	<reference name="root">
 		<reference name="top.links">

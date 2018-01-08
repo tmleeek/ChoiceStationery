@@ -556,6 +556,7 @@ tr.summary-details-excluded { font-style:italic; }
 #post-list h3 a:hover { color: #E60003; }
 #post-list li.item .post-entry p { margin-bottom: 0; }
 #post-list li.item .post-entry p a { padding: 0px 5px; font-size: 12px; background-color: #072c73; border-radius: 4px; text-decoration: none; color: #fff; white-space: nowrap; }
+#post-list li.item .post-entry p a[href^='tel:'] { color: #072c73; text-decoration: none; background: transparent; }
 #post-list li.item .post-entry p a:hover { color: #fff; background-color: #E60003; }
 #post-list li.item .post-entry, .post-view .post-entry { font-size: 100%; }
 
@@ -1822,12 +1823,12 @@ label.required em { float:right; font-style:normal; color:#f00;  }
 /*************** header promo section ***************/
 .header-promo-section { background: #e62700; margin-top: 7px; }
 .header-promo-section .promo-section { font-size: 16px; font-weight: 600; text-align:center; color: #fff; margin: 6.5px 0; }
-.header-promo-section .promo-section:before { display: inline-block; font-family: 'FontAwesome'; content: "\f1bb"; font-size: 20px; position: relative; line-height: 30px; color:#fff; cursor: pointer; padding: 0 30px 0 10px; }
-.header-promo-section .promo-section:after { display: inline-block; font-family: 'FontAwesome'; content: "\f1bb"; font-size: 20px; position: relative; line-height: 30px; color:#fff; cursor: pointer; padding: 0 10px 0 30px; }
+.header-promo-section .promo-section:before { display: inline-block; font-family: 'FontAwesome'; content: "\f0d1"; font-size: 20px; position: relative; line-height: 30px; color:#fff; padding: 0 30px 0 10px; }
+.header-promo-section .promo-section:after { display: inline-block; font-family: 'FontAwesome'; content: "\f0d1"; font-size: 20px; position: relative; line-height: 30px; color:#fff; padding: 0 30px 0 10px; -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)"; -webkit-transform: scale(-1, 1); -ms-transform: scale(-1, 1); transform: scale(-1, 1); }
 .header-promo-section .promo-section span { display: inline-block; line-height:30px; }
-.header-promo-section .promo-section .promo-right:before { display: inline-block; font-family: 'FontAwesome'; content: "\f0d1"; font-size: 20px; position: relative; line-height: 30px; color:#fff; cursor: pointer; padding: 0 20px 0 30px; }
+.header-promo-section .promo-section .promo-right:before { display: inline-block; font-family: 'FontAwesome'; content: "\f06b"; font-size: 20px; position: relative; line-height: 30px; color:#fff; padding: 0 20px 0 30px; }
 .header-promo-section .promo-section .promo-full:before,
-.header-promo-section .promo-section .promo-full:after { display: inline-block; font-family: 'FontAwesome'; content: "\f06b"; font-size: 20px; position: relative; line-height: 30px; color:#fff; cursor: pointer; padding: 0 20px 0 20px; }
+.header-promo-section .promo-section .promo-full:after { display: inline-block; font-family: 'FontAwesome'; content: "\f06b"; font-size: 20px; position: relative; line-height: 30px; color:#fff; padding: 0 20px 0 20px; }
 
 /*  Fixed header  */
 .header .header-outer .header-bottom.fixed-header { position: fixed; width: 100%; border-bottom: 2px solid #E60003; background: #fff; padding: 5px 0px; z-index: 9999; top: 0; transition: all linear 250ms; }
@@ -1908,10 +1909,7 @@ label.required em { float:right; font-style:normal; color:#f00;  }
 .banner-container .banner,
 .amslider { z-index: 0; }
 
-.main-container a[href^='tel:'] {
-  color: #072c73;
-  text-decoration: none;
-}
+.main-container a[href^='tel:'] { color: #072c73; text-decoration: none; }
 
 @media only screen and (min-width: 771px) {
   .checkout-types.minicart { float: none; text-align: center; }

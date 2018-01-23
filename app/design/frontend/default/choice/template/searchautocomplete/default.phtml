@@ -50,3 +50,16 @@ $_url             = $this->getAjaxUrl();
         <div style="display:none" id="search_autocomplete" class="UI-PLACEHOLDER search-autocomplete"></div>
     </div>
 </form>
+
+<script>
+	$j(document).ready(function (){
+		$j('#search').on('input',function(e){
+			$j('.searchautocomplete-loader').show();
+			$j('#search_autocomplete').hide();
+		});
+		$j('#search_autocomplete').on("DOMSubtreeModified",function(){
+			$j('.searchautocomplete-loader').hide();
+			$j('#search_autocomplete').show();
+		});
+	});
+</script>

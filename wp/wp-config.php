@@ -26,7 +26,8 @@ define( 'FORCE_SSL_ADMIN', true ); // Force SSL for Dashboard - Security > Setti
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'choicesa_choicestationerycom');
+//define('DB_NAME', 'choicesa_choicestationerycom');
+define('DB_NAME', 'choicesathjnery_csdevtest');
 
 /** MySQL database username */
 define('DB_USER', 'choicesa_choiceQ');

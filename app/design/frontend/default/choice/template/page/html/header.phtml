@@ -67,9 +67,12 @@ if(!$customerSessionModel->isLoggedIn()){
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-xs-6 col-sm-6 col-md-2">
-                                	<div class="basket-container">
+                                	<!--div class="basket-container">
                                     	<?php echo $this->getChildHtml('topcart'); ?>
-                                    </div>
+                                    </div-->
+                                    <div class="header-minicart">
+										<?php echo $this->getChildHtml('minicart_head'); ?>
+									</div>
                                 </div>
                             </div><!--end of row-->
                          </div><!--end of container-->
@@ -80,6 +83,7 @@ if(!$customerSessionModel->isLoggedIn()){
         <?php echo $this->getChildHtml('topMenu'); ?>
 </div>
 <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('header-text')->toHtml();?>
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('header-promo')->toHtml();?>
 <!-- Filter under the menu-->
 <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_content')->toHtml();?>
 <!-- for home page only show the banner and filter block-->

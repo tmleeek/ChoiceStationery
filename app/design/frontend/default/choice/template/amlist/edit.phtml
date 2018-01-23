@@ -1,30 +1,31 @@
-<?php $_list = $this->getList(); ?>
-<?php if ($this->getTitle()): ?>
-<div class="page-head button-level">
-    <h3><?php echo $this->getTitle() ?></h3>
-</div>
-<?php endif; ?>
-<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-<form action="<?php echo $this->getUrl('*/*/save', array('id'=>$_list->getId())) ?>" method="post" id="form-validate">
-<input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
-    <fieldset class="group-select">
-        <ul>
-            <li>
-                <div class="input-box">
-                    <input type="text" name="title" value="<?php echo $this->htmlEscape($_list->getTitle()) ?>" title="<?php echo $this->__('Name') ?>" class="required-entry input-text" id="title" />
-                </div>
-                <div class="input-box">
-                    <label>&nbsp;</label><br />
-                    <button class="button" type="submit"><span><span><?php echo $this->__('Save Name') ?></span></span></button>
-                </div>
-            </li>
-        </ul>            
-    </fieldset>
-    <div class="buttons-set">
-    </div>
-</form>
-<script type="text/javascript">
-//<![CDATA[
-var dataForm = new VarienForm('form-validate', true);
-//]]>
-</script>
+<div class="my-account">
+	<?php $_list = $this->getList(); ?>
+	<?php if ($this->getTitle()): ?>
+	<div class="page-head button-level page-title">
+		<h2><?php echo $this->getTitle() ?></h2>
+	</div>
+	<?php endif; ?>
+	<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+	<form action="<?php echo $this->getUrl('*/*/save', array('id'=>$_list->getId())) ?>" method="post" id="form-validate">
+	<input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+		<fieldset class="group-select">
+			<ul>
+				<li>
+					<div class="input-box col-md-4 col-xs-12">
+						<input type="text" name="title" value="<?php echo $this->htmlEscape($_list->getTitle()) ?>" title="<?php echo $this->__('Name') ?>" class="required-entry form-control input-text" id="title" />
+					</div>
+					<div class="input-box col-md-4 col-xs-12">
+						<!--label>&nbsp;</label><br /-->
+						<button class="button" type="submit"><span><span><?php echo $this->__('Save Name') ?></span></span></button>
+					</div>
+				</li>
+			</ul>            
+		</fieldset>
+		<div class="buttons-set">
+		</div>
+	</form>
+	<script type="text/javascript">
+	//<![CDATA[
+	var dataForm = new VarienForm('form-validate', true);
+	//]]>
+	</script>

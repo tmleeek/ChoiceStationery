@@ -258,3 +258,31 @@ jQuery(".toner-configurator select").selectbox();
 jQuery(window).load(function() {
 
 });
+
+/*********************** JQuery for make header fixed after scroll for mini-cart pop up ***********************/
+function headerScroll(){
+	var numli = $j('#cart-sidebar li').length;
+	if (numli > 0){
+		$j('#cart-sidebar li').hide();
+		$j('#cart-sidebar li').slice(0,3).show();
+	}
+	var s = jQuery(".header-bottom");
+	if(jQuery(window).width() >= 769){
+		var pos = s.position();				   
+		jQuery(document).scroll(function() {
+			var windowpos = jQuery(window).scrollTop();
+			if (windowpos >= 210) {
+				s.addClass("fixed-header");
+			} else {
+				s.removeClass("fixed-header");	
+			}
+		});
+	} else {
+		s.removeClass("fixed-header");
+		jQuery(document).scroll(function() {
+			s.removeClass("fixed-header");	
+		});
+	}
+}
+jQuery(document).ready(headerScroll);
+jQuery(window).on('load resize', headerScroll);

@@ -1,6 +1,6 @@
 var AW_AjaxCartProUpdaterObject = new AW_AjaxCartProUpdater(
     'skipLinks',
-    ['a.skip-cart', 'div#header-cart'],
+    ['div.skip-cart', 'div#header-cart'],
     ['.skip-links .header-minicart>']
 );
 Object.extend(AW_AjaxCartProUpdaterObject, {
@@ -11,14 +11,15 @@ Object.extend(AW_AjaxCartProUpdaterObject, {
         return null;
     },
     afterUpdate: function(html, selectors){
-        var skipLinks = $j('.skip-cart');
+        /*var skipLinks = $j('.skip-cart');
         var skipContents = $j('#header-cart');
 
         skipLinks.on('click', function (e) {
             e.preventDefault();
 
             var self = $j(this);
-            var target = self.attr('href');
+            //var target = self.attr('href');
+            target = self.attr('data-target-element');
 
             // Get target element
             try {
@@ -38,17 +39,17 @@ Object.extend(AW_AjaxCartProUpdaterObject, {
             var isSkipContentOpen = elem.hasClass('skip-active') ? 1 : 0;
 
             // Hide all stubs
-            skipLinks.removeClass('skip-active');
-            skipContents.removeClass('skip-active');
+            /*skipLinks.removeClass('skip-active');
+            skipContents.removeClass('skip-active');*/
 
             // Toggle stubs
-            if (isSkipContentOpen) {
+            /*if (isSkipContentOpen) {
                 self.removeClass('skip-active');
             } else {
                 self.addClass('skip-active');
                 elem.addClass('skip-active');
-            }
-        });
+            }*/
+        //});
 
         $j('#header-cart').on('click', '.skip-link-close', function(e) {
             var parent = $j(this).parents('.skip-content');

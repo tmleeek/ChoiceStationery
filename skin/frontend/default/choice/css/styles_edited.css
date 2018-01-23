@@ -1987,3 +1987,5 @@ and (min-device-width : 320px)
 and (max-device-width : 480px) {
 	.header-promo-section { display: none; }
 }
+
+.sort-by .selector .sbToggle:after { font-family: 'FontAwesome'; content: "\f078"; font-size: 14px; display: inline-block; color: #000000; margin: 4px 0px 0px 6px;}

@@ -37,7 +37,7 @@ class AW_Ajaxcartpro_Test_WebDriver_SettingDisplayFor extends EcomDev_PHPUnit_Te
         $btnList = $this->_webDriver->findElements(WebDriverBy::cssSelector('.btn-cart'));
         $btn = $btnList[2];/** @var WebDriverElement $btn */
         $btn->click();
-        $this->_webDriver->wait(10, 500)->until(
+        $this->_webDriver->wait(1, 100)->until(
             WebDriverExpectedCondition::visibilityOfElementLocated(
                 WebDriverBy::id('product-addtocart-form-acp')
             )

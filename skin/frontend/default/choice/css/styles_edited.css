@@ -1827,9 +1827,9 @@ label.required em { float:right; font-style:normal; color:#f00;  }
 .header-promo-section .promo-section:after { display: inline-block; font-family: 'FontAwesome'; content: "\f0d1"; font-size: 20px; position: relative; line-height: 30px; color:#fff; padding: 0 30px 0 10px; -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)"; -webkit-transform: scale(-1, 1); -ms-transform: scale(-1, 1); transform: scale(-1, 1); }
 .header-promo-section .promo-section span { display: inline-block; line-height:30px; }
 .header-promo-section .promo-section .promo-right:before { display: inline-block; font-family: 'FontAwesome'; content: "\f06b"; font-size: 20px; position: relative; line-height: 30px; color:#fff; padding: 0 20px 0 30px; }
-.header-promo-section .promo-section .promo-full:before,
+/*.header-promo-section .promo-section .promo-full:before,
 .header-promo-section .promo-section .promo-full:after { display: inline-block; font-family: 'FontAwesome'; content: "\f06b"; font-size: 20px; position: relative; line-height: 30px; color:#fff; padding: 0 20px 0 20px; }
-
+*/
 /*  Fixed header  */
 .header .header-outer .header-bottom.fixed-header { position: fixed; width: 100%; border-bottom: 2px solid #E60003; background: #fff; padding: 5px 0px; z-index: 9999; top: 0; transition: all linear 250ms; }
 .header .header-outer .header-bottom.fixed-header .logo img { width: 50%; height: auto; transition: all linear 250ms; padding-top: 0; }

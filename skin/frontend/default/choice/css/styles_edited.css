@@ -1989,3 +1989,6 @@ and (max-device-width : 480px) {
 }
 
 .sort-by .selector .sbToggle:after { font-family: 'FontAwesome'; content: "\f078"; font-size: 14px; display: inline-block; color: #000000; margin: 4px 0px 0px 6px;}
+
+
+.product-description-detail ul {list-style: initial;}

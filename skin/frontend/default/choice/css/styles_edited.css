@@ -1951,7 +1951,7 @@ label.required em { float:right; font-style:normal; color:#f00;  }
 .lb-prev, .lb-next { width: 29px; height: 45px; position: absolute; top: 50%; -webkit-transform: translateX(0%) translateY(-50%); -moz-transform: translateX(0%) translateY(-50%); -ms-transform: translateX(0%) translateY(-50%); transform: translateX(0%) translateY(-50%); }
 .lb-loader { height: 32px; width: 32px; left: 50%; top: 50%; -webkit-transform: translateX(-50%) translateY(-50%); -moz-transform: translateX(0%) translateY(-50%); -ms-transform: translateX(0%) translateY(-50%); transform: translateX(-50%) translateY(-50%); }
 
-.main-container .need-help-container .container, .main-container .payment-container .container, .main-container .footer-top .container {background-color:transparent}
+.main-container .need-help-container .container, .main-container .payment-container .container, .main-container .footer-top .container, .main-container .footer-bottom .container {background-color:transparent}
 
 @media screen and (max-width: 767px){ 
 	/*.cms-about-choice-stationery-supplies .three > div span { left: -30%; }*/

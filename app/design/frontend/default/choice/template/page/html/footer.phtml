@@ -1,3 +1,9 @@
+ <div class="main-container col1-layout">
+ <div class="container">
+ <?php echo $this->getLayout()->createBlock('reports/product_viewed')->setTemplate('reports/home_product_viewed.phtml')->toHtml(); ?>
+ </div>
+ </div>
+<?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('recently-viewed')->toHtml();?>
 <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('four-boxes')->toHtml();?>
 <footer class="footer">
 

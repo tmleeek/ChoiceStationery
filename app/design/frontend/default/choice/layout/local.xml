@@ -21,6 +21,8 @@
 <action method="addItem"><type>skin_js</type><name>js/jquery.cycle2.swipe.min.js</name><params/></action>
 <action method="addItem"><type>skin_js</type><name>js/mgt_lazy_image_loader/lazy-image-loader.js</name></action>
 <action method="addItem"><type>skin_js</type><name>js/mgt_lazy_image_loader/common.js</name></action>
+
+<action method="addItem"><type>skin_js</type><name>js/jquery.bxslider.min.js</name></action>
 			
 <action method="addItem"><type>skin_css</type><name>css/bootstrap.min.css</name><params/></action>
 <action method="addItem"><type>skin_css</type><name>css/font-awesome.min.css</name><params/></action>
@@ -30,6 +32,12 @@
 <action method="addItem"><type>skin_css</type><name>css/custom.css</name><params/></action>
 <action method="addItem"><type>skin_css</type><name>css/styles_edited.css</name><params/></action>
 <action method="addItem"><type>skin_css</type><name>js/cycle2slider.css</name><params/></action>
+
+<action method="addItem"><type>skin_css</type><name>css/jquery.bxslider.css</name><params/></action>
+
+
+                
+
 
 <action method="addItem"><type>skin_js</type><name>js/lib/modernizr.custom.min.js</name></action>
 <action method="addItem"><type>skin_js</type><name>js/lib/enquire.js</name></action>
@@ -48,9 +56,6 @@
 		<reference name="root">
             <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
         </reference>
-	<reference name="left">
-		<block type="reports/product_viewed" name="product.recently.viewed" as="product_recently_viewed" after="-" template="reports/home_product_viewed.phtml"/>
-	</reference>
     </catalog_category_layered>
     <catalogsearch_result_index>
     	 <reference name="left">

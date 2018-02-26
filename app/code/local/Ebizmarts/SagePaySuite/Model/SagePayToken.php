@@ -196,14 +196,6 @@ class Ebizmarts_SagePaySuite_Model_SagePayToken extends Ebizmarts_SagePaySuite_M
             $postData['CV2'] = $postData['c_v2'];
         }
 
-        //surcharge XML
-        if (Mage::helper('sagepaysuite')->surchargesModuleEnabled() == true) {
-            $surchargeXML = $this->getSurchargeXml($this->_getQuote());
-            if (!is_null($surchargeXML)) {
-                $postData['SurchargeXML'] = $surchargeXML;
-            }
-        }
-
         $postData = Mage::helper('sagepaysuite')->arrayKeysToCamelCase($postData);
 
         if (isset($postData['Storetoken'])) {

@@ -91,7 +91,7 @@ class Ebizmarts_SagePaySuite_Block_Checkout_Serversuccess extends Mage_Core_Bloc
                 $preventInvoice = ((int)Mage::getStoreConfig('payment/sagepaysuite/prevent_invoicing') === 1);
                 Mage::getSingleton('sagepaysuite/session')->setCreateInvoicePayment($autoInvoice && !$preventInvoice);
 
-                if ($this->isPreSaveEnabled()) {
+                if ($this->isPreSaveEnabled() && $firstArrive) {
                     $order = Mage::getModel('sales/order')->load($this->getRequest()->getParam('oide'));
 
                     //change status

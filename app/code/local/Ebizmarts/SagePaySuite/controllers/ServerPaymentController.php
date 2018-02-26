@@ -105,7 +105,6 @@ class Ebizmarts_SagePaySuite_ServerPaymentController extends Mage_Core_Controlle
                         }
 
                         $order = Mage::getModel('sales/order')->load($orderId);
-                        $order->setStatus("sagepaysuite_pending_payment")->save();
 
                         $dbtrn->setOrderId($orderId)->save();
 
@@ -331,10 +330,28 @@ class Ebizmarts_SagePaySuite_ServerPaymentController extends Mage_Core_Controlle
         }
     }
 
+    protected function getLastNotifyId()
+    {
+        return Mage::getSingleton('core/session')->getRunningNotify();
+    }
+
+    protected function setLastNotifyId($id)
+    {
+        Mage::getSingleton('core/session')->setRunningNotify($id);
+    }
+
     public function notifyAction()
     {
-
         Sage_Log::log($this->getRequest()->getPost(), null, 'SagePaySuite_POST_Requests.log');
+
+        $postUniqueId = $this->getRequest()->getPost('VendorTxCode');
+
+        if ($this->getLastNotifyId() != $postUniqueId) {
+            $this->setLastNotifyId($postUniqueId);
+        } else {
+            Sage_Log::log("Duplicate post ignored: " . $postUniqueId, null, 'SagePaySuite_POST_Requests.log');
+            return;
+        }
 
         if ($this->isPreSaveEnabled()) {
             return $this->notifyActionWhenOrderPreSaved();
@@ -370,7 +387,7 @@ class Ebizmarts_SagePaySuite_ServerPaymentController extends Mage_Core_Controlle
             ->setData("cavv", $this->getRequest()->getPost('CAVV'))
             ->setData("card_type", $this->getRequest()->getPost('CardType'))
             ->setData("vps_signature", $this->getRequest()->getPost('VPSSignature'))
-            ->setData("expiry_date", $this->getRequest()->getPost('ExpiryDate'))
+            ->setData("card_expiry_date", $this->getRequest()->getPost('ExpiryDate'))
             ->setPostcodeResult($this->getRequest()->getPost('PostCodeResult'))
             ->setData('cv2result', $this->getRequest()->getPost('CV2Result'))
             ->setThreedSecureStatus($this->getRequest()->getPost('3DSecureStatus'))
@@ -930,7 +947,7 @@ class Ebizmarts_SagePaySuite_ServerPaymentController extends Mage_Core_Controlle
             ->setData("cavv", $this->getRequest()->getPost('CAVV'))
             ->setData("card_type", $this->getRequest()->getPost('CardType'))
             ->setData("vps_signature", $this->getRequest()->getPost('VPSSignature'))
-            ->setData("expiry_date", $this->getRequest()->getPost('ExpiryDate'))
+            ->setData("card_expiry_date", $this->getRequest()->getPost('ExpiryDate'))
             ->setPostcodeResult($this->getRequest()->getPost('PostCodeResult'))
             ->setData('cv2result', $this->getRequest()->getPost('CV2Result'))
             ->setThreedSecureStatus($this->getRequest()->getPost('3DSecureStatus'))

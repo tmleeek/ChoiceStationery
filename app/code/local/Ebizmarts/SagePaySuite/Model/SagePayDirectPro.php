@@ -25,8 +25,8 @@ class Ebizmarts_SagePaySuite_Model_SagePayDirectPro extends Ebizmarts_SagePaySui
     protected $_canRefundInvoicePartial = true;
     protected $_canVoid = true;
     protected $_canUseInternal = false;
-    protected $_canUseCheckout = true;
-    protected $_canUseForMultishipping = true;
+    protected $_canUseCheckout = false;
+    protected $_canUseForMultishipping = false;
 
     public function registerToken($payment)
     {
@@ -59,17 +59,12 @@ class Ebizmarts_SagePaySuite_Model_SagePayDirectPro extends Ebizmarts_SagePaySui
 
         $trnCurrency = (string)$this->getConfigData('trncurrency');
 
-        $sessionSurcharge = 0;
-        if (Mage::helper('sagepaysuite')->surchargesModuleEnabled() == true) {
-            $sessionSurcharge = $this->_getSessionSurcharge();
-        }
-
         if ($trnCurrency == 'store') {
-            $pdata ['Amount'] = $this->formatAmount($quote->getGrandTotal() - $sessionSurcharge, $quote->getCurrencyCode());
+            $pdata ['Amount'] = $this->formatAmount($quote->getGrandTotal(), $quote->getCurrencyCode());
         } else if ($trnCurrency == 'switcher') {
-            $pdata ['Amount'] = $this->formatAmount($quote->getGrandTotal() - $sessionSurcharge, Mage::app()->getStore()->getCurrentCurrencyCode());
+            $pdata ['Amount'] = $this->formatAmount($quote->getGrandTotal(), Mage::app()->getStore()->getCurrentCurrencyCode());
         } else {
-            $pdata ['Amount'] = $this->formatAmount($quote->getBaseGrandTotal() - $sessionSurcharge, $quote->getQuoteCurrencyCode());
+            $pdata ['Amount'] = $this->formatAmount($quote->getBaseGrandTotal(), $quote->getQuoteCurrencyCode());
         }
 
         if ($request['Status'] == parent::RESPONSE_CODE_PAYPAL_OK) {
@@ -487,8 +482,16 @@ class Ebizmarts_SagePaySuite_Model_SagePayDirectPro extends Ebizmarts_SagePaySui
             try {
                 $onePage->saveOrder();
             } catch (Exception $ex) {
-                Mage::getModel('sagepaysuite/api_payment')->voidPayment($_transaction);
-                Mage::getSingleton('checkout/session')->addError(Mage::helper('checkout')->__($ex->getMessage()));
+
+                try {
+                    Sage_Log::log("Voiding payment. Error saving the order: " . $ex->getMessage(), null, 'saveOrder.log');
+                    Mage::getModel('sagepaysuite/api_payment')->voidPayment($_transaction);
+                    Mage::getSingleton('checkout/session')->addError(Mage::helper('checkout')->__($ex->getMessage()));
+                } catch(Exception $e) {
+                    Sage_Log::log("Error voiding payment. Check your orphan transaction grid." . $e->getMessage(), null, 'saveOrder.log');
+                    Mage::getSingleton('checkout/session')->addError(Mage::helper('checkout')->__("There was an error while saving the order. Please contact the administrator to confirm if the payment was taken."));
+                }
+
                 return;
             }
 
@@ -574,17 +577,12 @@ class Ebizmarts_SagePaySuite_Model_SagePayDirectPro extends Ebizmarts_SagePaySui
         $quoteObj = $this->_getQuote();
         $quoteObj2 = $this->getQuoteDb($quoteObj);
 
-        $sessionSurcharge = 0;
-        if (Mage::helper('sagepaysuite')->surchargesModuleEnabled() == true) {
-            $sessionSurcharge = $this->_getSessionSurcharge();
-        }
-
         if (is_null($macOrder)) {
-            $amount = $this->formatAmount($quoteObj2->getGrandTotal() - $sessionSurcharge, $quoteObj2->getCurrencyCode());
+            $amount = $this->formatAmount($quoteObj2->getGrandTotal(), $quoteObj2->getCurrencyCode());
         } else {
-            $amount = $this->formatAmount($macOrder->getGrandTotal() - $sessionSurcharge, $macOrder->getCurrencyCode());
+            $amount = $this->formatAmount($macOrder->getGrandTotal(), $macOrder->getCurrencyCode());
 
-            $baseAmount = $this->formatAmount($macOrder->getBaseGrandTotal() - $sessionSurcharge, $macOrder->getQuoteCurrencyCode());
+            $baseAmount = $this->formatAmount($macOrder->getBaseGrandTotal(), $macOrder->getQuoteCurrencyCode());
 
             $quoteObj->setMacAmount($amount);
             $quoteObj->setBaseMacAmount($baseAmount);
@@ -860,14 +858,6 @@ class Ebizmarts_SagePaySuite_Model_SagePayDirectPro extends Ebizmarts_SagePaySui
         }
 
         $request->setWebsite(Mage::app()->getStore()->getWebsite()->getName());
-
-        //surcharge XML
-        if (Mage::helper('sagepaysuite')->surchargesModuleEnabled() == true) {
-            $surchargeXML = $this->getSurchargeXml($this->_getQuote());
-            if (!is_null($surchargeXML)) {
-                $request->setSurchargeXML($surchargeXML);
-            }
-        }
 
         $customerXML = $this->getCustomerXml($this->_getQuote());
         if (!is_null($customerXML)) {

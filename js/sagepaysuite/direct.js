@@ -226,12 +226,7 @@ Validation.addAllThese(
     }],
         ['validate-nickname', 'Invalid description.', function (v, elm) {
             var nums = v.match(/\d/g);
-
-            if(nums.length > 8) {
-                return false;
-            } else {
-                return true;
-            }
+            return (nums == null || nums.length <= 8);
         }]
     ]
 );

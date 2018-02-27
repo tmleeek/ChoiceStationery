@@ -43,65 +43,6 @@ class Ebizmarts_SagePaySuite_Adminhtml_SpsServerPaymentController extends Mage_A
         return (int)Mage::getStoreConfig('payment/sagepayserver_moto/pre_save') === 1;
     }
 
-//    public function saveOrderAction() {
-//
-//        Mage::log("SAVE ORDER");
-//
-//        $this->_expireAjax();
-//
-//        $resultData = array();
-//
-//        try {
-//
-//            $result = $this->getServerModel()->registerTransaction($this->getRequest()->getPost());
-//            $resultData = $result->getData();
-//
-//            if ($result->getResponseStatus() == Ebizmarts_SagePaySuite_Model_Api_Payment :: RESPONSE_CODE_APPROVED) {
-//
-//                if($this->isPreSaveEnabled()){
-//
-//                    //save order process
-//                    $dbtrn = Mage::getModel('sagepaysuite2/sagepaysuite_transaction')->loadByVendorTxCode($result->getVendorTxCode());
-//
-//                    //disable email sending until order is completed
-//                    Mage::app()->getStore()->setConfig(Mage_Sales_Model_Order::XML_PATH_EMAIL_ENABLED, "0");
-//
-//                    //save order
-//                    $sOrder = $this->_sAdminOrder();
-//
-//                    if (is_string($sOrder)) {
-//                        $resultData['response_status'] = 'ERROR';
-//                        $resultData['response_status_detail'] = 'An error occurred: ' . $sOrder;
-//                    } else {
-//
-//                        $orderId = Mage::registry('last_order_id');
-//                        $order = Mage::getModel('sales/order')->load($orderId);
-//                        $order->setStatus("sagepaysuite_pending_payment")->save();
-//
-//                        $dbtrn->setOrderId($orderId)->save();
-//
-//                        $redirectUrl = $result->getNextUrl();
-//                        $resultData['success'] = true;
-//                        $resultData['error'] = false;
-//                    }
-//                }else {
-//                    $redirectUrl = $result->getNextUrl();
-//                    $resultData['success'] = true;
-//                    $resultData['error'] = false;
-//                }
-//            }
-//        } catch (Exception $e) {
-//            $resultData['response_status'] = 'ERROR';
-//            $resultData['response_status_detail'] = $e->getMessage();
-//        }
-//
-//        if (isset($redirectUrl)) {
-//            $resultData['redirect'] = $redirectUrl;
-//        }
-//
-//        return $this->getResponse()->setBody(Zend_Json :: encode($resultData));
-//    }
-
     public function getSPSModel()
     {
         return Mage:: getModel('sagepaysuite/sagePayServerMoto');
@@ -158,17 +99,20 @@ class Ebizmarts_SagePaySuite_Adminhtml_SpsServerPaymentController extends Mage_A
                     //disable invoice
                     Mage::getSingleton('sagepaysuite/session')->setInvoicePayment(false);
 
+                    $shouldNotify = false;
+                    if(isset($post['order']['comment']['customer_note_notify'])) {
+                        $shouldNotify = $post['order']['comment']['customer_note_notify'];
+                    }
+
                     //save order
-                    $sOrder = $this->_sAdminOrder($dbtrn->getOrderEmail(), $groupId);
+                    Mage::register('isSaveOrderBefore', true);
+                    $sOrder = $this->_sAdminOrder($dbtrn->getOrderEmail(), $groupId, $shouldNotify);
 
                     if (is_string($sOrder)) {
                         $resultData['response_status'] = 'ERROR';
                         $resultData['response_status_detail'] = 'An error occurred: ' . $sOrder;
                     } else {
                         $orderId = Mage::registry('last_order_id');
-                        $order = Mage::getModel('sales/order')->load($orderId);
-                        $order->setStatus("sagepaysuite_pending_payment")->save();
-
                         $dbtrn->setOrderId($orderId)->save();
                     }
                 }
@@ -439,7 +383,14 @@ class Ebizmarts_SagePaySuite_Adminhtml_SpsServerPaymentController extends Mage_A
 
                             $sagePayServerSession->setDummyId($orderId);
                         } else {
-                            $sOrder = $this->_sAdminOrder($dbtrn->getOrderEmail(), $this->getRequest()->getParam('g'));
+
+                            $shouldNotify = false;
+                            if ($request->getParam('n')) {
+                                $shouldNotify = (bool)$request->getParam('n');
+                            }
+
+                            $sOrder = $this->_sAdminOrder($dbtrn->getOrderEmail(), $this->getRequest()->getParam('g'), $shouldNotify);
+
                             if (is_string($sOrder)) {
                                 $sagePayServerSession->setFailStatus($sOrder);
                                 /** The status indicates a failure of one state or another, so send the customer to orderFailed instead * */
@@ -586,23 +537,23 @@ class Ebizmarts_SagePaySuite_Adminhtml_SpsServerPaymentController extends Mage_A
         return Mage:: getSingleton('adminhtml/sales_order_create');
     }
 
-    private function _sAdminOrder($email,$groupId)
+    private function _sAdminOrder($email,$groupId, $notify = false)
     {
         $this->_getOrderCreateModel()
             ->initRuleData()
             ->getQuote()->collectTotals()
             ->save();
 
-        //$email = $this->getRequest()->getParam('l');
+        $postData = array(
+            'account' => array('group_id' => $groupId, 'email' => $email)
+        );
 
-        //$groupId = $this->getRequest()->getParam('g');
+        if ($notify) {
+            $postData['comment'] = array('customer_note_notify' => (int)$notify);
+        }
 
         $order = $this->_getOrderCreateModel()
-            ->importPostData(
-                array(
-                'account' => array('group_id' => $groupId, 'email' => $email)
-                )
-            )
+            ->importPostData($postData)
             ->setIsValidate(true)
             ->createOrder();
 

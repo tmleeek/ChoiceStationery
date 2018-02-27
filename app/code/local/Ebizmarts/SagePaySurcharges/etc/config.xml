@@ -42,16 +42,6 @@
             </totals>
         </pdf>
         <sales>
-            <quote>
-                <totals>
-                    <surcharge>
-                        <class>sagepaysurcharges/total_charge</class>
-                        <after>subtotal</after>
-                        <before>tax</before>
-                        <renderer>sagepaysurcharges/checkout_surcharge</renderer>
-                    </surcharge>
-                </totals>
-            </quote>
             <order_invoice>
                 <totals>
                     <surcharge>

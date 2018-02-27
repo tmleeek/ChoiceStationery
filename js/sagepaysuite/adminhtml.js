@@ -1,6 +1,5 @@
 Event.observe(
     window, 'load', function () {
-
     var slElements = $$('select.rel-to-selected');
     if(parseInt(slElements.length) > 0) {
             $$('select.rel-to-selected').each(
@@ -18,9 +17,8 @@ Event.observe(
                     }
                 }
             );
+
     }
-
-
     if((typeof $("ebizmarts-helpdesk-trigger")) != "undefined") {
         Event.observe(
             "ebizmarts-helpdesk-trigger", "click", function (event) {
@@ -48,6 +46,8 @@ Event.observe(
             }
         );
     }
+
+
 
     }
 );

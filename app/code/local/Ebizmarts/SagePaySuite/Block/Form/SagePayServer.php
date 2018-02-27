@@ -17,11 +17,7 @@ class Ebizmarts_SagePaySuite_Block_Form_SagePayServer extends Ebizmarts_SagePayS
 
         $_code = 'sagepayserver';
 
-        if (!$this->helper('sagepaysuite')->creatingAdminOrder()) {
-            if (Mage::helper('sagepaysuite')->surchargesModuleEnabled() == true) {
-                $this->setChild('surcharges.list', $this->getLayout()->createBlock('sagepaysurcharges/checkout_surchargesList', 'surcharges.list'));
-            }
-        } else {
+        if ($this->helper('sagepaysuite')->creatingAdminOrder()) {
             $_code = 'sagepayserver_moto';
         }
         

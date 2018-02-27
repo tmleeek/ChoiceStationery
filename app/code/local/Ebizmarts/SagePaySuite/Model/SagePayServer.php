@@ -299,7 +299,35 @@ class Ebizmarts_SagePaySuite_Model_SagePayServer extends Ebizmarts_SagePaySuite_
         return $sessionIdQueryString;
     }
 
-    protected function _buildRequest($adminParams = array())
+    protected function _getSessionUserName() {
+        return Mage::getSingleton('admin/session')->getUser()->getUsername();
+    }
+
+    protected function _getCurrentCurrencyCode() {
+        return Mage::app()->getStore()->getCurrentCurrencyCode();
+    }
+
+    protected function _getSagePayBasket() {
+        return Mage::helper('sagepaysuite')->getSagePayBasket($this->_getQuote(), false);
+    }
+
+    protected function _getLocaleCode() {
+        return Mage::app()->getLocale()->getLocaleCode();
+    }
+
+    protected function _getWebsiteName() {
+        return Mage::app()->getStore()->getWebsite()->getName();
+    }
+
+    protected function _getApplyAvsCv2($billing) {
+        return $this->_SageHelper()->getApplyAvsCv2(
+            $this->getConfigData('apply_AVSCV2'),
+            $billing->getCountry(),
+            $this->getConfigData('avscv2')
+        );
+    }
+
+    public function _buildRequest($adminParams = array())
     {
 
         $quoteObj = $this->_getQuote();
@@ -320,6 +348,10 @@ class Ebizmarts_SagePaySuite_Model_SagePayServer extends Ebizmarts_SagePaySuite_
             $confParam .= '&g=' . $adminParams['order']['account']['group_id'];
         }
 
+        if(isset($adminParams['order']['comment']['customer_note_notify'])) {
+            $confParam .= '&n=' . $adminParams['order']['comment']['customer_note_notify'];
+        }
+
         // Transaction registration action
         $action = $this->getConfigData('payment_action');
 
@@ -334,7 +366,7 @@ class Ebizmarts_SagePaySuite_Model_SagePayServer extends Ebizmarts_SagePaySuite_
         $data['Vendor'] = $vendor;
         $data['VendorTxCode'] = $this->_vendorTxC;
         if ($this->_getIsAdmin()) {
-            $data['User'] = Mage::getSingleton('admin/session')->getUser()->getUsername();
+            $data['User'] = $this->_getSessionUserName();
         } else {
             $data['User'] = ($customerEmail == null ? $billing->getEmail() : $customerEmail);
         }
@@ -347,8 +379,8 @@ class Ebizmarts_SagePaySuite_Model_SagePayServer extends Ebizmarts_SagePaySuite_
                 $data['Amount'] = $this->formatAmount($quoteObj->getGrandTotal(), $adminParams['order']['currency']);
                 $data['Currency'] = $adminParams['order']['currency'];
             } else {
-                $data['Amount'] = $this->formatAmount($quoteObj->getGrandTotal(), Mage::app()->getStore()->getCurrentCurrencyCode());
-                $data['Currency'] = Mage::app()->getStore()->getCurrentCurrencyCode();
+                $data['Amount'] = $this->formatAmount($quoteObj->getGrandTotal(), $this->_getCurrentCurrencyCode());
+                $data['Currency'] = $this->_getCurrentCurrencyCode();
             }
         } else {
             $data['Amount'] = $this->formatAmount($quoteObj->getBaseGrandTotal(), $quoteObj->getBaseCurrencyCode());
@@ -412,7 +444,7 @@ class Ebizmarts_SagePaySuite_Model_SagePayServer extends Ebizmarts_SagePaySuite_
 
         $data['ContactNumber'] = substr($this->_cphone($billing->getTelephone()), 0, 20);
 
-        $basket = Mage::helper('sagepaysuite')->getSagePayBasket($this->_getQuote(), false);
+        $basket = $this->_getSagePayBasket();
         if (!empty($basket)) {
             if ($basket[0] == "<") {
                 $data['BasketXML'] = $basket;
@@ -421,9 +453,9 @@ class Ebizmarts_SagePaySuite_Model_SagePayServer extends Ebizmarts_SagePaySuite_
             }
         }
 
-        $data['Language'] = substr(Mage::app()->getLocale()->getLocaleCode(), 0, 2);
+        $data['Language'] = substr($this->_getLocaleCode(), 0, 2);
 
-        $data['Website'] = Mage::app()->getStore()->getWebsite()->getName();
+        $data['Website'] = $this->_getWebsiteName();
 
         $data['Profile'] = (string)$this->getConfigData('template_profile');
 
@@ -440,19 +472,7 @@ class Ebizmarts_SagePaySuite_Model_SagePayServer extends Ebizmarts_SagePaySuite_
 
         $data['AllowGiftAid'] = (int) $this->getConfigData('allow_gift_aid');
 
-        $data['ApplyAVSCV2'] = $this->_SageHelper()->getApplyAvsCv2(
-            $this->getConfigData('apply_AVSCV2'),
-            $billing->getCountry(),
-            $this->getConfigData('avscv2')
-        );
-
-        //surcharge XML
-        if (Mage::helper('sagepaysuite')->surchargesModuleEnabled() == true) {
-            $surchargeXML = $this->getSurchargeXml($this->_getQuote());
-            if (!is_null($surchargeXML)) {
-                $data['SurchargeXML'] = $surchargeXML;
-            }
-        }
+        $data['ApplyAVSCV2'] = $this->_getApplyAvsCv2($billing);
 
         $customerXML = $this->getCustomerXml($quoteObj);
         if (!is_null($customerXML)) {
@@ -467,6 +487,9 @@ class Ebizmarts_SagePaySuite_Model_SagePayServer extends Ebizmarts_SagePaySuite_
         $request->setData($data);
 
         $this->rewardPointsBuildRequest();
+
+//        Mage::log($request, null, "test.log", true);
+//        var_dump($request);
 
         return $request;
     }

@@ -73,8 +73,10 @@
 
           <div class="button-row">
           		<div class="col-md-3">
-                    <button type="submit" name="update_cart_action" value="empty_cart" title="<?php echo $this->__('clear my basket'); ?>" class="button btn-clear" id="empty_cart_button"><?php echo $this->__('clear my basket'); ?></button>
-					<!--[if lt IE 8]>
+                    <button type="submit" name="update_cart_action" value="empty_cart" title="<?php echo $this->__('clear my basket'); ?>" class="button btn-clear btn-remove"   onclick="checkMeq()" id="empty_cart_button"><?php echo $this->__('clear my basket'); ?></button>
+                    
+
+<!--[if lt IE 8]>
                             <input type="hidden" id="update_cart_action_container" />
                             <script type="text/javascript">
                             //<![CDATA[
@@ -130,3 +132,25 @@
     </div> 
     <!--end of middle-container-->
     
+  -<script>
+	  
+  $j(':submit[name="submit"][value="empty_cart"]').click(function() {
+    return window.confirm(this.title || 'Delete this record?');
+});
+</script>
+<script type="text/javascript">
+function checkMeq() {
+    if (confirm("Are you sure you want to delete this item?")) {
+		//alert('a');
+		document.getElementById("empty_cart_button").value="empty_cart";
+		
+       // window.location=deleteUrl;
+        return true;
+    } else {
+		document.getElementById("empty_cart_button").value="Nempty_cart";
+		
+		//alert('b');
+        return false;
+    }
+}
+</script>  

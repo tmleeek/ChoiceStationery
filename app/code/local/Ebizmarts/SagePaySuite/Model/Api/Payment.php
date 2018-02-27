@@ -181,52 +181,59 @@ class Ebizmarts_SagePaySuite_Model_Api_Payment extends Mage_Payment_Model_Method
             $storeId = $this->getStore();
         }
 
-        if (!in_array($field, $this->_sharedConf)) {
-            $_code = $this->getCode();
-        } else {
-            if (($field == 'vendor') && (strpos($this->getCode(), 'moto') !== FALSE)) {
+            if (!in_array($field, $this->_sharedConf)) {
                 $_code = $this->getCode();
             } else {
-                $_code = 'sagepaysuite';
+                if (($field == 'vendor') && (strpos($this->getCode(), 'moto') !== FALSE)) {
+                    $_code = $this->getCode();
+                } else {
+                    $_code = 'sagepaysuite';
+                }
             }
-        }
 
-        if (($_code != 'sagepaysuite') && (strpos($this->getCode(), 'moto') !== FALSE)) {
-            $_code = $this->getCode();
-            if (Mage::getSingleton('adminhtml/session_quote')->getStoreId()) {
-                $storeId = Mage::getSingleton('adminhtml/session_quote')->getStoreId();
+            if (($_code != 'sagepaysuite') && (strpos($this->getCode(), 'moto') !== FALSE)) {
+                $_code = $this->getCode();
+                if (Mage::getSingleton('adminhtml/session_quote')->getStoreId()) {
+                    $storeId = Mage::getSingleton('adminhtml/session_quote')->getStoreId();
+                }
             }
-        }
 
-        $path = 'payment/' . $_code . '/' . $field;
+            $path = 'payment/' . $_code . '/' . $field;
 
-        $value = Mage::getStoreConfig($path, $storeId);
+            $value = Mage::getStoreConfig($path, $storeId);
 
-        if ($field == 'timeout_message') {
-            $store = Mage::app()->getStore($storeId);
-            $value = $this->_sageHelper()->__(str_replace(array('{store_name}', '{admin_email}'), array($store->getName(), Mage::getStoreConfig('trans_email/ident_general/email', $storeId)), Mage::getStoreConfig('payment/sagepaysuite/timeout_message', $storeId)));
-        }
+            if ($field == 'timeout_message') {
+                $store = Mage::app()->getStore($storeId);
+                $value = $this->_sageHelper()->__(str_replace(array('{store_name}', '{admin_email}'), array($store->getName(), Mage::getStoreConfig('trans_email/ident_general/email', $storeId)), Mage::getStoreConfig('payment/sagepaysuite/timeout_message', $storeId)));
+            }
 
-        $confValue = new stdClass;
-        $confValue->value = $value;
+            $confValue = new stdClass;
+            $confValue->value = $value;
 
-        Mage::dispatchEvent('sagepaysuite_get_configvalue_' . $field, array('confobject' => $confValue, 'path' => $path));
+            Mage::dispatchEvent('sagepaysuite_get_configvalue_' . $field, array('confobject' => $confValue, 'path' => $path));
 
-        //euro payment pending status
-        if ($path == "payment/sagepayserver/order_status" && $this->getSageSuiteSession()->getEuroPaymentIsPending() === true) {
-            $confValue->value = "pending";
-        }
+            //euro payment pending status
+            if ($path == "payment/sagepayserver/order_status" && $this->getSageSuiteSession()->getEuroPaymentIsPending() === true) {
+                $confValue->value = "pending";
+            }
 
-        return $confValue->value;
+            //save order before status
+            $isSaveOrderBefore = Mage::registry('isSaveOrderBefore');
+            if (($path == "payment/sagepayserver/order_status" || $path == 'payment/sagepayserver_moto/order_status') && $isSaveOrderBefore) {
+                $confValue->value = "sagepaysuite_pending_payment";
+                Mage::unregister('isSaveOrderBefore');
+            }
+
+            return $confValue->value;
     }
 
     public function getUrl($key, $tdcall = false, $code = null, $mode = null)
     {
         if ($tdcall) {
-            $key = $key .= '3d';
+            $key .= '3d';
         }
 
-        $_code = (is_null($code) ? $this->getCode() : $code);
+        $_code = (empty($code) ? $this->getCode() : $code);
         $_mode = (is_null($mode) ? $this->getConfigData('mode') : $mode);
 
         $urls = Mage::helper('sagepaysuite')->getSagePayUrlsAsArray();
@@ -319,13 +326,8 @@ class Ebizmarts_SagePaySuite_Model_Api_Payment extends Mage_Payment_Model_Method
         //Fix problem on STORE config for MOTO orders
         $trnCurrency = (string)$this->getConfigData('trncurrency', $quote2->getStoreId());
 
-        $sessionSurcharge = 0;
-        if (Mage::helper('sagepaysuite')->surchargesModuleEnabled() == true) {
-            $sessionSurcharge = $this->_getSessionSurcharge();
-        }
-
         if ($trnCurrency == 'store') {
-            $request->setAmount($this->formatAmount($quote2->getGrandTotal() - $sessionSurcharge, $quote2->getQuoteCurrencyCode()));
+            $request->setAmount($this->formatAmount($quote2->getGrandTotal(), $quote2->getQuoteCurrencyCode()));
             $request->setCurrency($quote2->getQuoteCurrencyCode());
         } else if ($trnCurrency == 'switcher') {
             if ($this->_getIsAdmin()) {
@@ -334,10 +336,10 @@ class Ebizmarts_SagePaySuite_Model_Api_Payment extends Mage_Payment_Model_Method
                 $currencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
             }
 
-            $request->setAmount($this->formatAmount($quote2->getGrandTotal() - $sessionSurcharge, $currencyCode));
+            $request->setAmount($this->formatAmount($quote2->getGrandTotal(), $currencyCode));
             $request->setCurrency($currencyCode);
         } else {
-            $request->setAmount($this->formatAmount($quote2->getBaseGrandTotal() - $sessionSurcharge, $quote2->getBaseCurrencyCode()));
+            $request->setAmount($this->formatAmount($quote2->getBaseGrandTotal(), $quote2->getBaseCurrencyCode()));
             $request->setCurrency($quote2->getBaseCurrencyCode());
         }
 
@@ -585,6 +587,10 @@ class Ebizmarts_SagePaySuite_Model_Api_Payment extends Mage_Payment_Model_Method
                 if (isset($adminParams['order']['account']['group_id'])) {
                     $confParam .= '&g=' . $adminParams['order']['account']['group_id'];
                 }
+
+                if(isset($adminParams['order']['comment']['customer_note_notify'])) {
+                    $confParam .= '&n=' . $adminParams['order']['comment']['customer_note_notify'];
+                }
             }
 
             $this->getSageSuiteSession()->setLastVendorTxCode($vendorTxCode);
@@ -786,11 +792,17 @@ class Ebizmarts_SagePaySuite_Model_Api_Payment extends Mage_Payment_Model_Method
         }
     }
 
+    public function getRemoteAddress()
+    {
+        return Mage::helper('core/http')->getRemoteAddr();
+    }
+
     public function getClientIp()
     {
-        $remoteIp = Mage::helper('core/http')->getRemoteAddr();
+        $remoteIp = $this->getRemoteAddress();
+
         //check if more than one IP:
-        $allIps = explode(", ", $remoteIp);
+        $allIps = explode(",", preg_replace('/\s/','',$remoteIp));
         if (count($allIps) > 1) {
             $remoteIp = $allIps[count($allIps) - 1];
         }

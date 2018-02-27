@@ -704,6 +704,70 @@
 	SetEnvIF X-FORWARDED-FOR "^1\.22\.160\.127$" DenyAccess
 	SetEnvIF X-CLUSTER-CLIENT-IP "^1\.22\.160\.127$" DenyAccess
 
+	SetEnvIF REMOTE_ADDR "^185\.186\.87\.50$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^185\.186\.87\.50$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^185\.186\.87\.50$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^212\.129\.9\.202$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^212\.129\.9\.202$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^212\.129\.9\.202$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^85\.152\.12\.2$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^85\.152\.12\.2$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^85\.152\.12\.2$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^212\.83\.178\.35$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^212\.83\.178\.35$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^212\.83\.178\.35$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^185\.86\.164\.103$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^185\.86\.164\.103$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^185\.86\.164\.103$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^185\.86\.164\.102$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^185\.86\.164\.102$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^185\.86\.164\.102$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^185\.86\.164\.104$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^185\.86\.164\.104$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^185\.86\.164\.104$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^185\.86\.164\.107$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^185\.86\.164\.107$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^185\.86\.164\.107$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^185\.86\.164\.101$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^185\.86\.164\.101$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^185\.86\.164\.101$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^185\.86\.164\.100$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^185\.86\.164\.100$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^185\.86\.164\.100$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^185\.86\.164\.106$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^185\.86\.164\.106$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^185\.86\.164\.106$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^185\.86\.164\.98$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^185\.86\.164\.98$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^185\.86\.164\.98$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^185\.86\.164\.105$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^185\.86\.164\.105$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^185\.86\.164\.105$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^185\.86\.164\.99$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^185\.86\.164\.99$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^185\.86\.164\.99$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^185\.86\.164\.110$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^185\.86\.164\.110$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^185\.86\.164\.110$" DenyAccess
+
+	SetEnvIF REMOTE_ADDR "^185\.86\.164\.109$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^185\.86\.164\.109$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^185\.86\.164\.109$" DenyAccess
+
 	<IfModule mod_litespeed.c>
 		Order allow,deny
 		Allow from all
@@ -839,6 +903,22 @@
 		Deny from 173.81.136.250
 		Deny from 67.209.193.204
 		Deny from 1.22.160.127
+		Deny from 185.186.87.50
+		Deny from 212.129.9.202
+		Deny from 85.152.12.2
+		Deny from 212.83.178.35
+		Deny from 185.86.164.103
+		Deny from 185.86.164.102
+		Deny from 185.86.164.104
+		Deny from 185.86.164.107
+		Deny from 185.86.164.101
+		Deny from 185.86.164.100
+		Deny from 185.86.164.106
+		Deny from 185.86.164.98
+		Deny from 185.86.164.105
+		Deny from 185.86.164.99
+		Deny from 185.86.164.110
+		Deny from 185.86.164.109
 	</IfModule>
 
 	# Disable XML-RPC - Security > Settings > WordPress Tweaks > XML-RPC

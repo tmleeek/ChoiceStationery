@@ -1922,11 +1922,14 @@ label.required em { float:right; font-style:normal; color:#f00;  }
 
 
 
-.qwer .special-offer-container .special-offer-outer .product-list-box .product-box .add-btn .add-to-basket{padding: 0px 6px 0px 0px;}
+.qwer .special-offer-container .special-offer-outer .product-list-box .product-box .add-btn .add-to-basket{padding: 0px 20px 0px 5px;}
+.qwer .special-offer-container .product-list-box .sprite-add-to-basket-img{left: -23px !important;}
 .bx-viewport{height: 471px !important;}
-.qwer .product-box{height: 452px;}
+.qwer .product-box{height: 471px;}
 .slie{width:27%;float:left;position: relative;min-height: 1px;padding-right: 15px;padding-left: 15px;}
 .cms-home .qwer .bx-wrapper .bx-prev {left: -51px !important;}
+.qwer .special-offer-container .special-offer-outer .product-list-box .product-box a img{margin: 13px auto;}
+.qwer .ambrands-header-container{background: #fff !important;}
 .cms-home .qwer .bx-wrapper .bx-next {right: -57px !important;}
 .bx-wrapper .bx-controls-direction a{height: 43px !important;}
 .catalog-category-view .ambrands-header-container{background: #fff;}

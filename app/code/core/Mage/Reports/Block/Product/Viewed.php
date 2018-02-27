@@ -33,6 +33,7 @@
  */
 class Mage_Reports_Block_Product_Viewed extends Mage_Reports_Block_Product_Abstract
 {
+	
     const XML_PATH_RECENTLY_VIEWED_COUNT    = 'catalog/recently_products/viewed_count';
 
     /**
@@ -60,7 +61,9 @@ class Mage_Reports_Block_Product_Viewed extends Mage_Reports_Block_Product_Abstr
      */
     public function getCount()
     {
+		
         $ids = $this->getProductIds();
+       
         if (!empty($ids)) {
             return count($ids);
         }
@@ -75,6 +78,7 @@ class Mage_Reports_Block_Product_Viewed extends Mage_Reports_Block_Product_Abstr
      */
     protected function _toHtml()
     {
+		//echo "14--"; echo $this->getCount(); 
         if (!$this->getCount()) {
             return '';
         }

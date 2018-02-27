@@ -44,6 +44,10 @@
 				<action method="addItem"><type>skin_js</type><name>js/app.js</name></action>
 				<action method="addItem"><type>skin_js</type><name>js/minicart.js</name></action>
 	</reference>
+	
+	
+
+	
 	<reference name="root">
 		<reference name="top.links">
 			 <!-- Removes 'My Account' link -->
@@ -51,6 +55,16 @@
 			 <remove name="cart_link"/>
 		</reference>
 	</reference>
+	<!--<reference name="footer">    
+		<block type="reports/product_viewed" name="footer.reports.product.viewed"  before="-" as="footer.reports.product.viewed" template="reports/home_product_viewed.phtml">
+		 <action method="setCacheLifetime"><lifetime>null</lifetime></action>
+		 </block>
+	  </reference>-->
+<reference name="footer">
+            <block type="reports/product_viewed" name="product.recently.viewed" as="product_recently_viewed" template="reports/home_product_viewed.phtml"/>
+			<action method="setCacheLifetime"><lifetime>null</lifetime></action>
+        </reference>
+	
     </default>
     <catalog_category_layered>
 		<reference name="root">
@@ -69,6 +83,7 @@
 		<action method="addItem"><type>skin_js</type><name>js/jquery.fancybox.js</name><params/></action>
 		<action method="addItem"><type>skin_css</type><name>css/jquery.fancybox.css</name><params/></action>
 		</reference>
+		 
 	</catalog_product_view>
 	<checkout_onepage_success>
 	<label>One Page Checkout Success</label>

@@ -30,9 +30,6 @@
  * @see Mage_Reports_Block_Product_Viewed
  */
 ?>
-  
- 
-
 <script>
 	$j(document).ready(function(){
 		var totalItems = $j('.bxslider li').length;
@@ -84,7 +81,7 @@
 <?php
 
  if ($_products = $this->getRecentlyViewedProducts()): 
-  $temp = count($_products);
+  $temp = count($_products); 
   
  ?>
 <div class="amslider-container"> 
@@ -114,7 +111,7 @@
 							<div class="amlabel-div"> 
 								<?php echo Mage::helper('amlabel')->getLabels($_product) ?>
 							</div>
-							<a href="<?php echo $_product->getProductUrl() ?>"><img class="lazy" src="<?php echo $this->getSkinUrl('images/mgt_lazy_image_loader/loader.gif'); ?>" data-src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(200) ?>" width="32" height="32" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" /></a>
+							<a href="<?php echo $_product->getProductUrl() ?>"><img  src="<?php /*echo $this->getSkinUrl('images/mgt_lazy_image_loader/loader.gif'); */ echo $this->helper('catalog/image')->init($_product, 'image')->resize(200) ?>" data-src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(200) ?>" width="32" height="32" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" /></a>
 							<a href="<?php echo $_product->getProductUrl() ?>"><p class="item-name"><?php echo $this->htmlEscape($_product->getName()) ?></p></a>
 							<?php $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)?>
 							<p class="price-title">Your price:<span class="availability"><?php if($stock->getIsInStock()):?><i class="fa fa-check"></i><?php echo $this->__('In Stock')?><?php else:?><?php echo $this->__('out of stock')?><?php endif?></span></p>

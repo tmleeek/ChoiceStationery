@@ -1,0 +1,102 @@
+.mp-ajax-reviews-existing-box .label {
+  display: none;
+}
+.mp-ajax-reviews-notification-existing {
+  padding: 10px;
+}
+.mp-ajax-reviews-notification-existing .mp-orders-label {
+  margin-bottom: 5px;
+}
+.mp-ajax-reviews-notification-existing .mp-slider-track {
+  background-color: rgba(213, 95, 7, 0.2);
+  height: 16px;
+  width: 450px;
+}
+.mp-ajax-reviews-notification-existing .mp-slider-track.mp-slider-active {
+  cursor: pointer;
+}
+.mp-ajax-reviews-notification-existing .mp-slider-fill {
+  height: 16px;
+  position: absolute;
+  background-color: rgba(213, 95, 7, 0.6);
+}
+.mp-ajax-reviews-notification-existing .mp-slider-handler {
+  width: 12px;
+  height: 20px;
+  display: inline-block;
+  position: absolute;
+  background-color: #d55f07;
+  border: 1px solid black;
+}
+.mp-ajax-reviews-notification-existing .mp-orders-info {
+  margin-top: 20px;
+  border: 1px solid #d55f07;
+  background-color: rgba(213, 95, 7, 0.2);
+  width: 450px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.mp-ajax-reviews-notification-existing .mp-orders-info-item {
+  display: inline-block;
+  width: 28%;
+  text-align: center;
+  padding: 10px;
+  border-right: 1px solid #d55f07;
+}
+.mp-ajax-reviews-notification-existing .mp-orders-info-item:last-child {
+  border-right: 0;
+}
+.mp-ajax-reviews-notification-existing .mp-orders-data {
+  font-size: 18px;
+  color: #d55f07;
+}
+.massaction .entry-edit fieldset input.mp-send-copy-email.validation-failed {
+  border: 1px dashed #eb340a !important;
+  background: #faebe7 !important;
+}
+.notification-preview {
+  text-align: center;
+}
+.notification-preview .email-details,
+.notification-preview .email-body {
+  border: 1px solid #d6d6d6;
+  margin: 0 auto;
+}
+.notification-preview .email-details {
+  width: 660px;
+  height: 89px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: #EAEAEA;
+  border-bottom: none;
+  padding: 10px;
+  text-align: left;
+}
+.notification-preview .email-details dt,
+.notification-preview .email-details dd {
+  float: left;
+  padding: 2px 0;
+}
+.notification-preview .email-details dl {
+  width: 390px;
+  overflow: hidden;
+}
+.notification-preview .email-details dt {
+  width: 100px;
+  color: #666;
+  text-shadow: 1px 1px 0 #FFFFFF;
+}
+.notification-preview .email-details dd {
+  width: 290px;
+}
+.notification-preview .email-body {
+  width: 660px;
+  height: 600px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: #FFFFFF;
+  display: block;
+}

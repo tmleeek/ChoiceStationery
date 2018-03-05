@@ -1,0 +1,168 @@
+@import "__ink";
+
+@figure: #3399CC;
+
+@footer-back: #EBEBEB;
+@header-back: #9acde6;
+@back: #ebf5fa;
+
+@text: #222222;
+@btn-text: #ffffff;
+
+@border: #999999;
+
+body {
+
+  background: @footer-back;
+
+  font-family: Helvetica;
+
+  a {
+    color: @figure !important;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+  color: @figure !important;
+}
+
+.header {
+  background: @header-back;
+}
+
+.footer {
+  background: @footer-back;
+  p {
+    padding-top: 6px;
+    font-size: 12px;
+  }
+}
+
+.panel {
+
+  background: @footer-back;
+  border: 1px solid @border;
+
+  p {
+    font-size: 16px;
+    padding-top: 6px !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+
+  }
+}
+
+img.logo {
+  float: none !important;
+}
+
+.title, .paragraph, .product, .notice {
+  background-color: @back;
+}
+
+.title, .product {
+
+  h1 {
+
+    font-size: 36px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 125%;
+    text-align: center;
+  }
+
+  h3 {
+
+    font-size: 28px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 125%;
+  }
+}
+
+.paragraph {
+
+  &.first {
+    td {
+      padding-top: 0 !important;
+      padding-bottom: 5px !important;
+    }
+  }
+
+  &.last {
+    td {
+      padding-top: 5px !important;
+      padding-bottom: 10px !important;
+    }
+  }
+
+  p {
+    font-size: 16px;
+  }
+}
+
+.product {
+
+  background-color: @back;
+
+  .purchased {
+    color: @border;
+    font-weight: bold;
+  }
+
+  img.thumbnail {
+    border: 1px solid @figure;
+    background-color: #ffffff;
+  }
+
+  table.button td,
+  table.button:hover td,
+  table.button:visited td,
+  table.button:active td {
+    background:  @figure !important;
+    border: 1px solid @figure !important;
+  }
+
+  table.button td a,
+  table.button:hover td a,
+  table.button:visited td a,
+  table.button:active td a {
+    color: @btn-text !important;
+  }
+
+  table.button {
+    display: table !important;
+    width: initial !important;
+    td {
+      padding: 16px 32px !important;
+      background:  @figure !important;
+    }
+  }
+}
+
+.no-padding {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+@media only screen and (max-width: 480px) {
+  h1 {
+    font-size: 24px !important;
+    line-height: 125% !important;
+  }
+
+  h3 {
+    font-size: 24px !important;
+    line-height: 125% !important;
+  }
+
+  table.button td a {
+    font-size: 18px !important;
+  }
+
+}
+

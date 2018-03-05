@@ -43,7 +43,16 @@ class Mage_CatalogSearch_ResultController extends Mage_Core_Controller_Front_Act
      */
     public function indexAction()
     {
+		
+		
+		
         $query = Mage::helper('catalogsearch')->getQuery();
+        //$query1 = preg_replace('/(?<=[a-z])(?=\d)|(?<=\d)(?=[a-z])/i', ' ', $query['query_text']);
+       // $query = $query2;
+       
+        
+       // echo '<pre>';
+        //print_r($query);
         /* @var $query Mage_CatalogSearch_Model_Query */
 
         $query->setStoreId(Mage::app()->getStore()->getId());

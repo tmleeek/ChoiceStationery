@@ -24,7 +24,7 @@ class Mirasvit_SearchSphinx_Test_Model_Synonym extends EcomDev_PHPUnit_Test_Case
 	*/
 	public function getSynonymsByWord()
 	{
-		$synonyms = Mage::getModel('searchsphinx/synonym')->getSynonymsByWord('word01');
+		$synonyms = Mage::getModel('searchsphinx/synonym')->getSynonymsByWord('word02');
 		$this->assertEquals($synonyms, array('word02', 'word03', 'word04', 'word05'));
 
 		$synonyms = Mage::getModel('searchsphinx/synonym')->getSynonymsByWord('word01x');

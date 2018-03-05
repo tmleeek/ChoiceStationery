@@ -33,7 +33,10 @@
 ?>
 <nav class="navbar navbar-default">
 <ul class="nav navbar-nav">
-<?php foreach ($this->getItems() as $_item): ?>
+
+
+<?php 
+foreach ($this->getItems() as $_item): ?>
     <li>
         <?php if ($_item->getCount() > 0): ?>
         <a href="<?php echo $this->urlEscape($_item->getUrl()) ?>"><?php echo $_item->getLabel() ?></a>

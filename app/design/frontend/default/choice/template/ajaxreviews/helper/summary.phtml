@@ -1,0 +1,36 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $this Magpleasure_Ajaxreviews_Block_Review_Helper */
+
+?>
+<?php if ($this->getReviewsCount()): ?>
+    <div class="mp-reviews-rating-summary">
+        <?php $helper = Mage::helper('ajaxreviews') ?>
+        <?php if ($this->getRatingSummary()): ?>
+            <div class="mp-review-rating-box"
+                style="<?php echo $helper->getRatingFigureImageStyle() ?>">
+                <div class="mp-review-rating"
+                    style="width:<?php echo $this->getRatingSummary() ?>%;<?php echo $helper->getRatingFigureImageStyle() ?>"></div>
+            </div>
+        <?php endif; ?>
+        <?php $moduleName = $this->getRequest()->getModuleName();
+        $cntrlName = $this->getRequest()->getControllerName();
+        $isProductPage = $helper->isInCatalogProductPage($moduleName, $cntrlName, $this->getProduct()->getId(), Mage::registry('current_product'));
+        $productUrl = $this->getProduct()->getProductUrl();
+        $tabText = $helper->__('Review'); ?>
+        <a href="<?php echo $this->getReviewsUrl() ?>"
+           onclick="return openMpAjaxReviews('<?php echo $isProductPage ?>','<?php echo $productUrl ?>', '<?php echo $tabText ?>', true)"
+           class="mp-reviews-summary-count"><?php echo $this->getReviewsCount() ?>&nbsp;<?php
+            echo Mage::helper('ajaxreviews')->__('Review(s)') ?></a>
+    </div>
+<?php elseif (Mage::registry('current_product') && Mage::registry('current_product')->getId() == $this->getProduct()->getId()): ?>
+    <script type="text/ng-template" id="magpleasure/ajaxreviews/helper/summary/template.html">
+        <?php echo $this->getTemplateHtml(); ?>
+    </script>
+    <div class="ecom-ajax-reviews-add-review"></div>
+<?php endif; ?>

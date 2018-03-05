@@ -1,0 +1,38 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $_helper Magpleasure_Ajaxreviews_Helper_Data */
+?>
+<?php $_helper = Mage::helper('ajaxreviews') ?>
+<?php if (Mage::registry(Magpleasure_Ajaxreviews_Helper_Data::EMAIL_RESULT_MSG_KEY)): ?>
+    <div class="mp-email-result-box">
+        <div class="mp-email-result"
+             style="<?php echo $_helper->getTextStyle(); if (Mage::registry(Magpleasure_Ajaxreviews_Helper_Data::EMAIL_RESULT_MSG_FAILED_KEY)) echo ";background-color:rgba(140,42,75,0.2);border:1px solid #8C2A4B" ?>">
+            <span><?php echo Mage::registry(Magpleasure_Ajaxreviews_Helper_Data::EMAIL_RESULT_MSG_KEY) ?></span>
+            <?php if ($link = Mage::registry(Magpleasure_Ajaxreviews_Helper_Data::EMAIL_RESULT_LINK_KEY)): ?>
+                <a href="<?php echo $link ?>"><?php echo $_helper->__('View review') ?></a>
+            <?php endif ?>
+            <?php if ($_data = Mage::registry(Magpleasure_Ajaxreviews_Helper_Data::EMAIL_RESULT_TEST_REVIEW_KEY)): ?>
+                <?php $_data = explode(',', $_data) ?>
+                <div class="mp-email-result-test-box">
+                    <div class="mp-email-result-review-label"><?php echo $_helper->__('Nickname') . ':'?></div>
+                    <div class="mp-email-result-review-data"><?php echo $_data[0]?></div>
+                    <?php if ($_data[1]): ?>
+                        <div class="mp-email-result-review-label"><?php echo $_helper->__('Average Rating') . ':' ?></div>
+                        <div class="mp-email-result-test-rating-box" style="<?php echo $_helper->getRatingFigureImageStyle(true) ?>">
+                            <div class="mp-email-result-test-rating" style="width:<?php echo $_data[1] ?>%;<?php echo $_helper->getRatingFigureImageStyle(true) ?>"></div>
+                        </div>
+                    <?php endif ?>
+                    <div class="mp-email-result-review-label"><?php echo $_helper->__('Summary of the Review') . ':' ?> </div>
+                    <div class="mp-email-result-review-data"><?php echo $_data[2]?></div>
+                    <div class="mp-email-result-review-label"><?php echo $_helper->__('Review') . ':' ?> </div>
+                    <div class="mp-email-result-review-data"><?php echo $_data[3]?></div>
+                </div>
+            <?php endif ?>
+        </div>
+    </div>
+<?php endif ?>

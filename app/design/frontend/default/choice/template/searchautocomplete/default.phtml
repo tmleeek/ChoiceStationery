@@ -6,6 +6,7 @@ $_currentIndex    = Mage::getSingleton('core/app')->getRequest()->getParam('inde
 $_filterType      = $this->getFilterType();
 $_url             = $this->getAjaxUrl();
 ?>
+
 <form id="search_mini_form" action="<?php echo $_helper->getResultUrl() ?>" method="get"
     class="searchautocomplete UI-SEARCHAUTOCOMPLETE"
     data-tip="<?php echo $this->__(Mage::getStoreConfig('searchautocomplete/general/tip')) ?>"
@@ -53,6 +54,7 @@ $_url             = $this->getAjaxUrl();
 
 <script>
 	$j(document).ready(function (){
+		
 		$j('#search').on('input',function(e){
 			$j('.searchautocomplete-loader').show();
 			$j('#search_autocomplete').hide();
@@ -61,5 +63,30 @@ $_url             = $this->getAjaxUrl();
 			$j('.searchautocomplete-loader').hide();
 			$j('#search_autocomplete').show();
 		});
-	});
+	
+	
+	
+	$j("#search_mini_form").submit(function(){
+	//alert("hi");	
+
+   // Let's find the input to check
+   var $input = document.getElementById('search').value;
+   //alert($input);
+   if ($input) { 
+	   //alert('yes');
+     // Value is falsey (i.e. null), lets set a new one
+    // $input=replace(/([^\d]*)(\d*)([^\w]*)/, $input);
+     var month = $input.replace(/([a-z])(\d)/gi, '$1 $2');
+  // alert(month);
+   $j('#search').val(month)
+   
+  // abc - 12345 - #$*%
+   }
+   
+});
+
+});
+	
+	
+	
 </script>

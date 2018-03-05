@@ -1,0 +1,13 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $this Magpleasure_Ajaxreviews_Block_Review_Helper */
+/** @var $_helper Magpleasure_Ajaxreviews_Helper_Data */
+
+?>
+<?php $_helper = Mage::helper('ajaxreviews') ?>
+<a href="" ng-click="openReviewForm()"><?php echo $_helper->__($_helper->getConfigValue('style', 'first_review')) ?></a>

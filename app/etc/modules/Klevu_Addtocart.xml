@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Klevu_Addtocart>
+      <active>false</active>
+      <codePool>community</codePool>
+    </Klevu_Addtocart>
+  </modules>
+</config>

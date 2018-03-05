@@ -16,6 +16,7 @@ class Amasty_Finder_Block_Adminhtml_Finder_Grid extends Mage_Adminhtml_Block_Wid
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('amfinder/finder')->getCollection();
+        
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }

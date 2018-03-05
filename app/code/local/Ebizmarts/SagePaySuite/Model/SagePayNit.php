@@ -28,17 +28,12 @@ class Ebizmarts_SagePaySuite_Model_SagePayNit extends Ebizmarts_SagePaySuite_Mod
         $quoteObj = $this->_getQuote();
         $quoteObj2 = $this->getQuoteDb($quoteObj);
 
-        $sessionSurcharge = 0;
-        if (Mage::helper('sagepaysuite')->surchargesModuleEnabled() == true) {
-            $sessionSurcharge = $this->_getSessionSurcharge();
-        }
-
         if (is_null($macOrder)) {
-            $amount = $this->formatAmount($quoteObj2->getGrandTotal() - $sessionSurcharge, $quoteObj2->getCurrencyCode());
+            $amount = $this->formatAmount($quoteObj2->getGrandTotal(), $quoteObj2->getCurrencyCode());
         } else {
-            $amount = $this->formatAmount($macOrder->getGrandTotal() - $sessionSurcharge, $macOrder->getCurrencyCode());
+            $amount = $this->formatAmount($macOrder->getGrandTotal(), $macOrder->getCurrencyCode());
 
-            $baseAmount = $this->formatAmount($macOrder->getBaseGrandTotal() - $sessionSurcharge, $macOrder->getQuoteCurrencyCode());
+            $baseAmount = $this->formatAmount($macOrder->getBaseGrandTotal(), $macOrder->getQuoteCurrencyCode());
 
             $quoteObj->setMacAmount($amount);
             $quoteObj->setBaseMacAmount($baseAmount);
@@ -89,7 +84,6 @@ class Ebizmarts_SagePaySuite_Model_SagePayNit extends Ebizmarts_SagePaySuite_Mod
             ->setThreedSecureStatus($_res->getData('3DSecureStatus'))
             ->setCavv($_res->getData('CAVV'))
             ->setRedFraudResponse($_res->getData('FraudResponse'))
-            ->setSurchargeAmount($_res->getData('Surcharge'))
             ->setBankAuthCode($_res->getData('BankAuthCode'))
             ->setDeclineCode($_res->getData('DeclineCode'))
             ->save();
@@ -185,14 +179,6 @@ class Ebizmarts_SagePaySuite_Model_SagePayNit extends Ebizmarts_SagePaySuite_Mod
 
         if (array_key_exists("expiry_date", $postData)) {
             unset($postData["expiry_date"]);
-        }
-
-        //surcharge XML
-        if (Mage::helper('sagepaysuite')->surchargesModuleEnabled() == true) {
-            $surchargeXML = $this->getSurchargeXml($this->_getQuote());
-            if (!is_null($surchargeXML)) {
-                $postData['SurchargeXML'] = $surchargeXML;
-            }
         }
 
         $postData = Mage::helper('sagepaysuite')->arrayKeysToCamelCase($postData);
@@ -333,7 +319,6 @@ class Ebizmarts_SagePaySuite_Model_SagePayNit extends Ebizmarts_SagePaySuite_Mod
                 ->setThreedSecureStatus($result->getData('3DSecureStatus'))
                 ->setCavv($result->getData('CAVV'))
                 ->setRedFraudResponse($result->getData('FraudResponse'))
-                ->setSurchargeAmount($result->getData('Surcharge'))
                 ->setBankAuthCode($result->getData('BankAuthCode'))
                 ->setDeclineCode($result->getData('DeclineCode'))
                 ->save();

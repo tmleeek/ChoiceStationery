@@ -1,0 +1,11 @@
+<config>
+	<modules>
+		<Klevu_Boosting>
+			<active>false</active>
+			<codePool>community</codePool>
+            <depends>
+                <Klevu_Search/>
+            </depends>
+		</Klevu_Boosting>
+	</modules>
+</config>

@@ -95,9 +95,9 @@ class Mage_CatalogSearch_Helper_Data extends Mage_Core_Helper_Abstract
     {
         if (!$this->_query) {
             $this->_query = Mage::getModel('catalogsearch/query')
-                ->loadByQuery($this->getQueryText());
+                ->loadByQuery(preg_replace('/(?<=[a-z])(?=\d)|(?<=\d)(?=[a-z])/i', ' ', $this->getQueryText()));
             if (!$this->_query->getId()) {
-                $this->_query->setQueryText($this->getQueryText());
+                $this->_query->setQueryText(preg_replace('/(?<=[a-z])(?=\d)|(?<=\d)(?=[a-z])/i', ' ', $this->getQueryText()));
             }
         }
         return $this->_query;
@@ -171,6 +171,8 @@ class Mage_CatalogSearch_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getResultUrl($query = null)
     {
+		print_r($query);
+		
         return $this->_getUrl('catalogsearch/result', array(
             '_query' => array(self::QUERY_VAR_NAME => $query),
             '_secure' => $this->_getApp()->getFrontController()->getRequest()->isSecure()

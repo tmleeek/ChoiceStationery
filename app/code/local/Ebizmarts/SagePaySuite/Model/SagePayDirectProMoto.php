@@ -18,6 +18,6 @@ class Ebizmarts_SagePaySuite_Model_SagePayDirectProMoto extends Ebizmarts_SagePa
      */
     protected $_canUseCheckout          = false;
     protected $_canUseForMultishipping  = false;
-    protected $_canUseInternal          = true;
+    protected $_canUseInternal          = false;
 
 }

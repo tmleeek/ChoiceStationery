@@ -1,0 +1,181 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+?>
+<?php $products = $this->getProducts(); ?>
+<!-- Paragraph -->
+<table class="row paragraph first">
+    <tr>
+        <td class="center" align="center">
+            <center>
+                <table class="container">
+                    <tr>
+                        <td class="wrapper last">
+
+                            <table class="twelve columns">
+                                <tr>
+                                    <td>
+                                        <p>
+                                            <?php
+                                            $text = '';
+                                            if(count($products) == 1) {
+                                                $text = '<a href="' . $products[0]['name'] . '">' . $products[0]['name'] . '</a>';
+                                            }
+                                            else {
+                                                $text = '<span>goods</span>';
+                                            }
+                                            ?>
+                                            <span>Hello <?php echo $this->getCustomerName();?>, you've recently bought </span>
+                                            <?php echo $text; ?><span>, what do you think about it?</span>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </td>
+    </tr>
+</table>
+<!-- Paragraph End -->
+<?php foreach ($products as $product): ?>
+<!-- Product -->
+<table class="row product">
+    <tr>
+        <td class="center" align="center">
+            <table class="twelve columns container">
+                <tr>
+                    <?php if ($product['thumbnail']) : ?>
+                    <td class="wrapper">
+                        <table class="four columns">
+                            <tr>
+                                <td class="">
+
+                                    <table class="four columns">
+                                        <tr>
+                                            <td class="text-pad-left text-pad-right">
+                                                <a href="<?php echo $product['url'];?>"
+                                                       title="<?php echo $product['name'];?>"
+                                                       target="_blank">
+
+                                                    <img alt="<?php echo $product['name'];?>"
+                                                             class="thumbnail"
+                                                             src="<?php echo $product['thumbnail'];?>"
+                                                             width="150"
+                                                             height="150">
+                                                </a>
+                                            </td>
+                                            <td class="expander"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="expander"></td>
+                            </tr>
+                        </table>
+
+                    </td>
+                    <td class="wrapper last">
+
+                        <table class="eight columns">
+                            <tr>
+                                <td class="text-pad-left text-pad-right">
+
+                                    <h3><?php echo $product['name'];?></h3>
+                                    <span class="purchased">Purchased on <?php echo $product['purchase_date'];?>&nbsp;</span>
+                                    <br/><br/>
+
+                                    <!--[if mso]>
+                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+                                                 xmlns:w="urn:schemas-microsoft-com:office:word"
+                                                 href="<?php echo $product['review_url'];?>"
+                                                 style="height:40px;v-text-anchor:middle;width:300px;"
+                                                 arcsize="5%" stroke="f"
+                                                 fillcolor="<?php echo $this->getColor();?>">
+                                        <w:anchorlock/>
+                                        <center style="color:#ffffff;font-family:Helvetica;font-size:16px;font-weight:bold;">
+                                            Review This Item
+                                        </center>
+                                    </v:roundrect>
+                                    <![endif]-->
+                                    <!--[if !mso]-->
+                                    <table class="button medium-button radius">
+                                        <tr>
+                                            <td>
+                                                <a href="<?php echo $product['review_url'];?>">Review This Item</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!--[endif]-->
+
+                                </td>
+                                <td class="expander"></td>
+                            </tr>
+                        </table>
+
+                    </td>
+
+                    <?php else: ?>
+                    <td class="wrapper">
+
+                        <table class="six columns">
+                            <tr>
+                                <td class="text-pad-left text-pad-right">
+
+                                    <h3><?php echo $product['name'];?></h3>
+                                    <span class="purchased">Purchased on <?php echo $product['purchase_date'];?>&nbsp;</span>
+                                    <br/><br/>
+
+                                </td>
+                                <td class="expander"></td>
+                            </tr>
+                        </table>
+
+                    </td>
+
+                    <td class="wrapper last">
+
+                        <table class="six columns">
+                            <tr>
+                                <td class="text-pad-left text-pad-right">
+
+                                    <!--[if mso]>
+                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" 
+                                                 xmlns:w="urn:schemas-microsoft-com:office:word"
+                                                 href="<?php echo $product['review_url'];?>"
+                                                 style="height:40px;v-text-anchor:middle;width:300px;"
+                                                 arcsize="5%" stroke="f"
+                                                 fillcolor="<?php echo $this->getColor();?>">
+                                        <w:anchorlock/>
+                                        <center style="color:#ffffff;font-family:Helvetica;font-size:16px;font-weight:bold;">
+                                            Review This Item
+                                        </center>
+                                    </v:roundrect>
+                                    <![endif]-->
+                                    <!--[if !mso]-->
+                                    <table class="button medium-button radius">
+                                        <tr>
+                                            <td>
+                                                <a href="<?php echo $product['review_url'];?>">Review This Item</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!--[endif]-->
+
+                                </td>
+                                <td class="expander"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <?php endif; ?>
+                    <td class="expander"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<!-- Product End -->
+<?php endforeach; ?>

@@ -67,7 +67,7 @@ class Amasty_Finder_Block_Adminhtml_Finder_Edit_Tab_Products extends Mage_Adminh
     {
         $products = Mage::getModel('amfinder/value')->getCollection()
             ->joinAllFor($this->getFinder());
-        
+      
         $this->setCollection($products);
         return parent::_prepareCollection();
     }

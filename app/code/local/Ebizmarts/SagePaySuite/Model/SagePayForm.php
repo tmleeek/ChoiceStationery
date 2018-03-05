@@ -1,5 +1,7 @@
 <?php
 
+require BP . DS . "lib/phpseclib/Crypt/Rijndael.php";
+
 /**
  * FORM main model
  *
@@ -28,6 +30,14 @@ class Ebizmarts_SagePaySuite_Model_SagePayForm extends Ebizmarts_SagePaySuite_Mo
     protected $_canUseCheckout = true;
     protected $_canUseForMultishipping = false;
 
+    /** @var Crypt_AES */
+    private $phpseclib;
+
+    public function __construct()
+    {
+        $this->phpseclib = new Crypt_Rijndael(CRYPT_RIJNDAEL_MODE_CBC);
+    }
+
     public function validate() 
     {
         Mage_Payment_Model_Method_Abstract::validate();
@@ -55,17 +65,40 @@ class Ebizmarts_SagePaySuite_Model_SagePayForm extends Ebizmarts_SagePaySuite_Mo
         return $output;
     }
 
-    public function decrypt($strIn) 
+    public function decrypt($dataToDecrypt)
     {
         $cryptPass = $this->getEncryptionPass();
+        $this->phpseclib->setKey($cryptPass);
+        $this->phpseclib->setIV($cryptPass);
 
         //** remove the first char which is @ to flag this is AES encrypted
-        $strIn = substr($strIn, 1);
+        $hex = substr($dataToDecrypt, 1);
+
+        // Throw exception if string is malformed
+        if (!preg_match('/^[0-9a-fA-F]+$/', $hex)) {
+            throw new InvalidArgumentException(__('Invalid encryption string'));
+        }
 
         //** HEX decoding
-        $strIn = pack('H*', $strIn);
+        $strIn = pack('H*', $hex);
 
-        return $this->removePKCS5Padding(mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $cryptPass, $strIn, MCRYPT_MODE_CBC, $cryptPass));
+        return $this->phpseclib->decrypt($strIn);
+    }
+
+    /**
+     * @param $dataToSend
+     * @param $cryptPass
+     * @return string
+     */
+    public function encrypt($dataToSend, $cryptPass)
+    {
+        $this->phpseclib->setKey($cryptPass);
+        $this->phpseclib->setIV($cryptPass);
+        $binaryCipherText = $this->phpseclib->encrypt($dataToSend);
+        $hexadecimalText   = bin2hex($binaryCipherText);
+        $uppercaseHexadecimalText = strtoupper($hexadecimalText);
+
+        return "@$uppercaseHexadecimalText";
     }
 
     public function makeCrypt()
@@ -199,14 +232,6 @@ class Ebizmarts_SagePaySuite_Model_SagePayForm extends Ebizmarts_SagePaySuite_Mo
            $data['eMailMessage'] = substr($eMessage, 0, 7500);
         }
 
-        //surcharge XML
-        if (Mage::helper('sagepaysuite')->surchargesModuleEnabled() == true) {
-            $surchargeXML = $this->getSurchargeXml($this->_getQuote());
-            if (!is_null($surchargeXML)) {
-                $data['SurchargeXML'] = $surchargeXML;
-            }
-        }
-
         $customerXML = $this->getCustomerXml($quoteObj);
         if (!is_null($customerXML)) {
             $data['CustomerXML'] = $customerXML;
@@ -242,13 +267,9 @@ class Ebizmarts_SagePaySuite_Model_SagePayForm extends Ebizmarts_SagePaySuite_Mo
                 ->save();
 
         Mage::getSingleton('sagepaysuite/session')->setLastVendorTxCode($data['VendorTxCode']);
+        $strCrypt = $this->encrypt($dataToSend, $cryptPass);
 
-        //** add PKCS5 padding to the text to be encypted
-        $pkcs5Data = $this->addPKCS5Padding($dataToSend);
-
-        $strCrypt = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $cryptPass, $pkcs5Data, MCRYPT_MODE_CBC, $cryptPass);
-
-        return "@" . bin2hex($strCrypt);
+        return $strCrypt;
     }
 
     protected function _getDataToSend($data)
@@ -266,29 +287,6 @@ class Ebizmarts_SagePaySuite_Model_SagePayForm extends Ebizmarts_SagePaySuite_Mo
 
     }
 
-    //** PHP's mcrypt does not have built in PKCS5 Padding, so we use this
-    public function addPKCS5Padding($input) 
-    {
-        $blocksize = 16;
-        $padding = "";
-
-        // Pad input to an even block size boundary
-        $padlength = $blocksize - (strlen($input) % $blocksize);
-        for ($i = 1; $i <= $padlength; $i++) {
-            $padding .= chr($padlength);
-        }
-
-        return $input . $padding;
-    }
-
-    // Need to remove padding bytes from end of decoded string
-    public function removePKCS5Padding($decrypted) 
-    {
-        $padChar = ord($decrypted[strlen($decrypted) - 1]);
-
-        return substr($decrypted, 0, -$padChar);
-    }
-
     public function capture(Varien_Object $payment, $amount) 
     {
         #Process invoice
@@ -296,5 +294,4 @@ class Ebizmarts_SagePaySuite_Model_SagePayForm extends Ebizmarts_SagePaySuite_Mo
             return $this->captureInvoice($payment, $amount);
         }
     }
-
 }

@@ -146,8 +146,8 @@ class Mage_CatalogSearch_Block_Result extends Mage_Core_Block_Template
      */
     public function setListCollection()
     {
-//        $this->getListBlock()
-//           ->setCollection($this->_getProductCollection());
+        $this->getListBlock()
+				->setCollection($this->_getProductCollection());
        return $this;
     }
 
@@ -169,7 +169,8 @@ class Mage_CatalogSearch_Block_Result extends Mage_Core_Block_Template
     protected function _getProductCollection()
     {
         if (is_null($this->_productCollection)) {
-            $this->_productCollection = $this->getListBlock()->getLoadedProductCollection();
+           // $this->_productCollection = $this->getListBlock()->getLoadedProductCollection();
+           $this->_productCollection = Mage::getSingleton('catalogsearch/layer')->getProductCollection();
         }
 
         return $this->_productCollection;

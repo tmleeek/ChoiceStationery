@@ -1,14 +1,14 @@
 <?php
 set_time_limit(0);
-
+echo "test";
 $mageFilename = 'app/Mage.php';
 require_once $mageFilename;
 Mage::setIsDeveloperMode(true);
 ini_set('display_errors', 1);
 umask(0);
-Mage::app('admin');
-Mage::register('isSecureArea', 1);
-//echo "1";die;
+//Mage::app('admin');
+//Mage::register('isSecureArea', 1);
+echo "1";die;
  try{
 
 $csv = new Varien_File_Csv();
@@ -38,14 +38,14 @@ if($row == 0){
     //echo $results1[0]['entity_id'];
 	if(!isset($results1[0]['entity_id'])){
 		//echo "hi";die;
-		$query2 = 'SELECT entity_id FROM catalog_product_entity where sku ="'.$product[0].'"';
-		$results2 = $readConnection->fetchAll($query2);
+		/*$query2 = 'SELECT entity_id FROM catalog_product_entity where sku ="'.$product[0].'"';
+		$results2 = $readConnection->fetchAll($query2);*/
 		//echo $results2[0]['entity_id']; die;
 		if(isset($results2[0]['entity_id'])){
 			$query = 'insert into catalog_product_entity_varchar (entity_type_id, attribute_id, store_id, entity_id, value) values ("4", "553", "0", "'.$results2[0]['entity_id'].'", "'.$ean.'")';
 		}
 	} else {
-		$query = 'UPDATE catalog_product_entity_varchar set value = "'.$ean.'" WHERE attribute_id = 553 AND entity_id IN (SELECT entity_id FROM catalog_product_entity where sku ="'.$product[0].'")';
+		/*$query = 'UPDATE catalog_product_entity_varchar set value = "'.$ean.'" WHERE attribute_id = 553 AND entity_id IN (SELECT entity_id FROM catalog_product_entity where sku ="'.$product[0].'")';*/
 		//echo $query; die;
 		
 	}

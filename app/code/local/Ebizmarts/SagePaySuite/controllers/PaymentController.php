@@ -174,6 +174,8 @@ class Ebizmarts_SagePaySuite_PaymentController extends Mage_Core_Controller_Fron
 
         $this->oneStepCheckoutSubscribeToNewsletter($requestParams);
 
+        $this->getOnepage()->getQuote()->save();
+
         //GiftCard
         Mage::dispatchEvent('checkout_controller_onepage_save_shipping_method', array('request' => $this->getRequest(), 'quote' => $this->getOnepage()->getQuote()));
     }
@@ -326,6 +328,15 @@ class Ebizmarts_SagePaySuite_PaymentController extends Mage_Core_Controller_Fron
         if ($dataM = $this->getRequest()->getPost('shipping_method', '')) {
             //$this->getOnepage()->saveShippingMethod($this->sanitize_string($dataM));
             $this->getOnepage()->saveShippingMethod($dataM);
+        }
+
+        //Magemaven Order comments
+        $orderComment = $this->getRequest()->getPost('ordercomment');
+        if (is_array($orderComment) && isset($orderComment['comment'])) {
+            $comment = trim($orderComment['comment']);
+            if (!empty($comment)) {
+                $this->getSageSuiteSession()->setOrderComments($comment);
+            }
         }
 
         if ($paymentMethod == 'sagepaypaypal') {

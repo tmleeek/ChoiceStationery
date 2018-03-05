@@ -1,0 +1,283 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $this Magpleasure_Ajaxreviews_Block_Placing_Additional */
+/** @var $_helper Magpleasure_Ajaxreviews_Helper_Data */
+?>
+<div class="mp-ajax-reviews mp-ajax-reviews-indexing">
+    <?php echo $this->getChildHtml('toolbar'); ?>
+    <?php $_helper = $this->_helper(); ?>
+    <?php $_addMarkup = $this->needRichSnippetsMarkup(); ?>
+    <?php $_name = $this->escapeHtml($this->getProduct()->getName()); ?>
+    <?php $_url = $_helper->getProductCanonicalUrl($this->getProduct()); ?>
+    <?php $_averageRating = $this->getAverageRating(); ?>
+    <div
+        class="mp-header" <?php if ($_addMarkup && $_averageRating) echo 'itemscope itemprop="aggregateRating" itemtype="http://schema.org/AggregateRating"'; ?>>
+        <div class="mp-header-rating-box" style="<?php echo $_helper->getRatingFigureImageStyle(true); ?>">
+            <?php if ($_addMarkup && $_averageRating): ?>
+                <meta itemprop="ratingValue" content="<?php echo round($this->getAverageRating() * 5 / 100, 1); ?>">
+                <div style="display: none !important;" itemprop="itemReviewed" itemscope
+                     itemtype="http://schema.org/Product">
+                    <meta itemprop="name" content="<?php echo $_name; ?>">
+                    <meta itemprop="sameAs" content="<?php echo $_url; ?>">
+                </div>
+            <?php endif; ?>
+            <div class="mp-header-rating"
+                 style="width:<?php echo $this->getAverageRating(); ?>%;<?php echo $_helper->getRatingFigureImageStyle(true); ?>"></div>
+        </div>
+        <span class="mp-count" style="<?php echo $_helper->getTextStyle() ?>"><span
+                <?php if ($_addMarkup && $_averageRating) echo 'itemprop="ratingCount"'; ?>><?php echo $this->getReviews()->getSize(); ?></span>&nbsp;<?php echo $_helper->__('Review(s)'); ?></span>
+    </div>
+    <?php foreach ($this->getReviews()->addRateVotes() as $_review): ?>
+        <div class="mp-review c-both <?php echo $_helper->getDesignClass(); ?>"
+            <?php $_rating = $_helper->getReviewRating($_review); ?>
+            <?php $_addReviewMarkup = $_addMarkup && $_rating; ?>
+            <?php if ($_addReviewMarkup) echo 'itemscope itemprop="review" itemtype="http://schema.org/Review"'; ?>>
+            <?php if ($_addReviewMarkup): ?>
+                <meta itemprop="about" content="<?php echo $this->getProduct()->getName(); ?>">
+                <div style="display: none !important;" itemprop="itemReviewed" itemscope
+                     itemtype="http://schema.org/Product">
+                    <meta itemprop="name" content="<?php echo $_name; ?>">
+                    <meta itemprop="sameAs" content="<?php echo $_url; ?>">
+                </div>
+            <?php endif; ?>
+            <?php $nickname = $this->escapeHtml($_review->getNickname()); ?>
+            <?php if ($_helper->showIcons()): ?>
+                <div class="mp-icon">
+                    <div class="mp-icon-box"
+                         style="background-color:<?php echo $_helper->getIconColor($nickname); ?>">
+                        <span class="mp-icon-letter"><?php preg_match('/^./u', $nickname, $matches); echo strtoupper($matches[0]); ?></span>
+                    </div>
+                </div>
+            <?php endif ?>
+            <div class="mp-content <?php if (!$_helper->showIcons()) echo 'full-width'; ?>">
+                <div
+                    class="mp-nickname" <?php if ($_addReviewMarkup) echo 'itemprop="author"'; ?>><?php echo $nickname; ?></div>
+                <div>
+                    <?php if ($_addReviewMarkup): ?>
+                        <meta itemprop="datePublished"
+                              content="<?php echo date('Y-m-d', strtotime($_review->getCreatedAt())) ?>">
+                    <?php endif; ?>
+                    <span class="mp-date"><?php echo $this->formatDate($_review->getCreatedAt(), 'long'); ?></span>
+
+                    <div class="mp-review-rating-box" style="<?php echo $_helper->getRatingFigureImageStyle() ?>"
+                        <?php if ($_addReviewMarkup) echo 'itemscope itemprop="reviewRating" itemtype="http://schema.org/Rating"'; ?>>
+                        <?php if ($_addReviewMarkup): ?>
+                            <meta itemprop="ratingValue" content="<?php echo round($_rating * 5 / 100, 1); ?>">
+                        <?php endif; ?>
+                        <div class="mp-review-rating"
+                             style="width:<?php echo $_rating; ?>%;<?php echo $_helper->getRatingFigureImageStyle(); ?>"></div>
+                    </div>
+                </div>
+                <a class="mp-title" <?php if ($_addReviewMarkup) echo 'itemprop="description"'; ?>
+                   href="<?php echo Mage::getUrl('review/product/view', array('id' => $_review->getId())) ?>"><?php echo $this->escapeHtml($_review->getTitle()) ?></a>
+
+                <div <?php if ($_addReviewMarkup) echo 'itemprop="reviewBody"'; ?>
+                    style="white-space: pre-wrap"><?php echo $this->escapeHtml($_review->getDetail()); ?></div>
+                <?php if ($_helper->isShareEnabled()): ?>
+                    <?php $_url = $this->getReviewUrl($_review->getId());
+                    $_title = $_review->getTitle();
+                    $_content = $this->escapeHtml($_review->getDetail()); ?>
+                    <div class="mp-bottom">
+                        <span class="mp-share mp-facebook" title="Facebook">
+                            <a target="_blank"
+                               href="http://www.facebook.com/share.php?u=<?php echo $_url; ?>&title=<?php echo $_title; ?>"></a>
+                        </span>
+                        <span class="mp-share mp-google" title="Google +">
+                            <a target="_blank" href="https://plus.google.com/share?url=<?php echo $_url; ?>"></a>
+                        </span>
+                        <span class="mp-share mp-pinterest" title="Pinterest">
+                            <a target="_blank"
+                               href="https://pinterest.com/pin/create/button/?url=<?php echo $_url; ?>&media=<?php echo $this->getProductImageUrl(); ?>&description=<?php echo $_content; ?>"></a>
+                        </span>
+                        <span class="mp-share mp-twitter" title="Twitter">
+                            <a target="_blank"
+                               href="http://twitter.com/home?status=<?php echo $_title; ?>+<?php echo $_url; ?>"></a>
+                        </span>
+                        <span class="mp-share mp-tumblr" title="Tumblr">
+                            <a target="_blank"
+                               href="http://www.tumblr.com/share/link?url=<?php echo urlencode($_url); ?>&amp;name=<?php echo $_title; ?>&amp;description=<?php echo $_content; ?>"></a>
+                        </span>
+                    </div>
+                <?php endif ?>
+            </div>
+        </div>
+    <?php endforeach ?>
+</div>
+
+<script type="text/javascript">
+    mpCommonAngular.factory("ajaxReviewsCommon", function () {
+        return {
+            getReviewText: function () {
+                return "<?php echo Mage::helper('ajaxreviews')->__('Review'); ?>";
+            },
+            getErrorText: function () {
+                return "<?php echo Mage::helper('ajaxreviews')->__('Sorry, something went wrong.'); ?>";
+            },
+            getCurrentCustomerId: function () {
+                return '<?php echo $this->_helper()->getCurrentCustomerId(); ?>';
+            },
+            getAvgRating: function () {
+                return '<?php echo $this->getAverageRating(); ?>';
+            },
+            getReviewsCount: function () {
+                return '<?php echo Mage::helper('ajaxreviews')->getReviewsCount($this->getProduct()); ?>';
+            },
+            useSorting: function () {
+                return 0 != <?php echo $this->_helper()->getConfigValue('general', 'use_sorting'); ?>;
+            },
+            getSortingTypes: function () {
+                return '<?php echo $this->_helper()->getConfigValue('general', 'sorting_types'); ?>';
+            },
+            showIcons: function () {
+                return 0 != <?php echo $this->_helper()->getConfigValue('style', 'enabled_icon'); ?>;
+            },
+            getIconDisplay: function () {
+                return '<?php echo $this->_helper()->getConfigValue('style', 'display_icon'); ?>';
+            },
+            getDefaultAvatar: function () {
+                return '<?php echo $this->getDefaultAvatar(); ?>';
+            },
+            getProductImageUrl: function () {
+                return '<?php echo $this->getProductImageUrl(); ?>';
+            },
+            getProductInfo: function () {
+                return {
+                    product_id: '<?php echo $this->getProduct()->getId(); ?>',
+                    category_id: '<?php echo $this->getProduct()->getCategoryId(); ?>'
+                };
+            },
+            getRatings: function () {
+                return <?php echo Zend_Json::encode($this->getRatings()); ?>;
+            },
+            getRatingValuesGradation: function () {
+                return <?php echo Zend_Json::encode($this->getRatingValuesGradation()); ?>;
+            },
+            getRatingTypesGradation: function () {
+                return <?php echo Zend_Json::encode($this->getRatingTypesGradation()); ?>;
+            },
+            allowGuestReview: function () {
+                return <?php echo $this->allowGuestReview() ? "true" : "false"; ?>;
+            },
+            isCustomerCanReview: function () {
+                return <?php echo $this->_helper()->isCustomerCanReview(
+                    $this->getProduct()->getId(),
+                    Mage::getSingleton('customer/session')->getCustomer()->getId()
+                ) ? "true" : "false"; ?>;
+            },
+            isPurchaseToReview: function () {
+                return <?php echo $this->_helper()->isPurchaseToReview() ? "true" : "false"; ?>;
+            },
+            isVotesEnabled: function () {
+                return 0 != <?php echo $this->_helper()->getConfigValue('general', 'vote'); ?>;
+            },
+            getCustomerName: function () {
+                return '<?php echo $this->_helper()->getCurrentCustomerName(); ?>';
+            },
+            getLocalStorageFormKey: function () {
+                var key = '<?php echo Mage::getBaseUrl (Mage_Core_Model_Store::URL_TYPE_WEB); ?>'.replace('http://', '').replace(/\//g, '-');
+                key += '<?php echo Mage::app()->getStore()->getCode() . '-'; ?>';
+                return key + '<?php echo $this->getProduct()->getId(); ?>';
+            },
+            getSortingTypeNames: function () {
+                return {
+                    newest: '<?php echo $this->_helper()->__('Newest'); ?>',
+                    useful: '<?php echo $this->_helper()->__('The Most Useful'); ?>',
+                    topRated: '<?php echo $this->_helper()->__('Top Rated'); ?>'
+                };
+            }
+
+        }
+    })
+
+    mpCommonAngular.factory("ajaxReviewsUrl", function () {
+        return {
+            vote: function () {
+                return '<?php echo $this->getUrl('ajaxreviews/index/vote/', $this->getUrlParams()); ?>';
+            },
+            post: function () {
+                return '<?php echo $this->getUrl('ajaxreviews/index/post/', $this->getUrlParams()); ?>';
+            },
+            login: function () {
+                return '<?php echo $this->getUrl('ajaxreviews/account/login/'); ?>';
+            },
+            confirmation: function () {
+                return '<?php echo $this->getUrl('ajaxreviews/account/confirmation/'); ?>';
+            },
+            register: function () {
+                return '<?php echo $this->getUrl('customer/account/create/'); ?>';
+            },
+            getReviews: function () {
+                return '<?php echo $this->getUrl('ajaxreviews/index/getReviews/'); ?>';
+            }
+        }
+    })
+
+    mpCommonAngular.factory("ajaxReviewsDialog", function () {
+        return {
+            isHowToEnabled: function () {
+                return 0 != <?php echo $this->_helper()->getConfigValue('how_to_write', 'enabled'); ?>;
+            },
+            howToTitle: function () {
+                <?php $title = $this->_helper()->getConfigValue('how_to_write', 'title'); ?>
+                return "<?php echo $this->_helper()->__($title); ?>";
+            },
+            howToText: function () {
+                <?php $text = $this->_helper()->getConfigValue('how_to_write', 'message_text'); ?>
+                return "<?php echo $this->_helper()->getPrepareText($text); ?>";
+            },
+            howToBtnLabel: function () {
+                <?php $text = $this->_helper()->getConfigValue('how_to_write', 'button_label'); ?>
+                return "<?php echo $this->_helper()->__($text); ?>";
+            },
+            needPurchaseTitle: function () {
+                <?php $title = $this->_helper()->getConfigValue('purchase', 'title'); ?>
+                return "<?php echo $this->_helper()->__($title); ?>";
+            },
+            needPurchaseText: function () {
+                <?php $text = $this->_helper()->getConfigValue('purchase', 'message_text'); ?>
+                return "<?php echo $this->_helper()->getPrepareText($text); ?>";
+            },
+            needPurchaseBtnLabel: function () {
+                <?php $text = $this->_helper()->getConfigValue('purchase', 'button_label'); ?>
+                return "<?php echo $this->_helper()->__($text); ?>";
+            },
+            thankTitle: function () {
+                <?php $title = $this->_helper()->getConfigValue('thank_you', 'title'); ?>
+                return "<?php echo $this->_helper()->__($title); ?>";
+            },
+            thankText: function () {
+                <?php $text = $this->_helper()->getConfigValue('thank_you', 'message_text'); ?>
+                return "<?php echo $this->_helper()->getPrepareText($text); ?>";
+            },
+            thankBtnLabel: function () {
+                <?php $text = $this->_helper()->getConfigValue('thank_you', 'button_label'); ?>
+                return "<?php echo $this->_helper()->__($text); ?>";
+            }
+        }
+    })
+
+    mpCommonAngular.factory("ajaxReviewsAddReviewFactory", function ($rootScope) {
+        var scope = $rootScope.$new();
+        return {
+            openForm: function () {
+                scope.$broadcast('open-form');
+            },
+            $on: function () {
+                scope.$on.apply(scope, arguments);
+            }
+        }
+    })
+</script>
+
+<script type="text/ng-template" id="magpleasure/ajaxreviews/reviews.html">
+    <?php echo $this->getTemplateHtml(); ?>
+</script>
+
+<a name="mp-ajax-all-reviews"></a>
+<div class="mp-ajax-reviews ecom-ajax-reviews-dynamic" click-anywhere-but-here="hideForm()"
+     ctrl-enter="sendData()"></div>

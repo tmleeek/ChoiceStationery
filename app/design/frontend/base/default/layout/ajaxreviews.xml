@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+-->
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addCss">
+                <style>ajaxreviews/css/styles.css</style>
+            </action>
+        </reference>
+    </default>
+
+    <magpleasure_default>
+        <reference name="extra_head">
+            <action method="addExtraJs">
+                <script>ajaxreviews/script.js</script>
+            </action>
+        </reference>
+    </magpleasure_default>
+
+    <catalog_product_view>
+        <update handle="apply_angularjs"/>
+        <update handle="apply_angularjs_animate"/>
+
+        <reference name="extra_head">
+            <action method="setAngularParseSymbols">
+                <startSymbol>{{{</startSymbol>
+                <endSymbol>}}}</endSymbol>
+            </action>
+            <action method="addExtraJs">
+                <script>ajaxreviews/reviews.js</script>
+            </action>
+            <action method="addRelation">
+                <module>ecomAjaxReviewsApp</module>
+            </action>
+        </reference>
+        <reference name="product.info">
+            <block type="ajaxreviews/placing_custom" name="mp.ajaxreviews" as="mp_ajaxreviews"
+                   template="ajaxreviews/product/view/list.phtml"/>
+        </reference>
+        <reference name="product.info.additional">
+            <block type="ajaxreviews/placing_additional" template="ajaxreviews/product/view/list.phtml"/>
+        </reference>
+    </catalog_product_view>
+
+    <ajaxreviews_pending_approve>
+        <reference name="root">
+            <action method="setTemplate">
+                <type>page/empty.phtml</type>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="ajaxreviews.pending.approve"
+                   template="ajaxreviews/email/result.phtml">
+            </block>
+        </reference>
+    </ajaxreviews_pending_approve>
+
+    <ajaxreviews_pending_reject>
+        <reference name="root">
+            <action method="setTemplate">
+                <type>page/empty.phtml</type>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="ajaxreviews.pending.reject"
+                   template="ajaxreviews/email/result.phtml">
+            </block>
+        </reference>
+    </ajaxreviews_pending_reject>
+
+    <ajaxreviews_review_emailpost>
+        <reference name="root">
+            <action method="setTemplate">
+                <type>page/empty.phtml</type>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="ajaxreviews.review.post"
+                   template="ajaxreviews/email/result.phtml">
+            </block>
+        </reference>
+    </ajaxreviews_review_emailpost>
+
+    <ajaxreviews_review_unsubscribe>
+        <reference name="root">
+            <action method="setTemplate">
+                <type>page/empty.phtml</type>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="ajaxreviews.review.unsubscribe"
+                   template="ajaxreviews/email/result.phtml">
+            </block>
+        </reference>
+    </ajaxreviews_review_unsubscribe>
+
+    <review_product_view>
+        <reference name="head">
+            <block type="ajaxreviews/review_view_og" name="ajaxreviews.review.og" template="ajaxreviews/view/og.phtml"></block>
+        </reference>
+    </review_product_view>
+    <ajaxreviews_review_testemailpost>
+        <reference name="root">
+            <action method="setTemplate">
+                <type>page/empty.phtml</type>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="ajaxreviews.review.testpost"
+                   template="ajaxreviews/email/result.phtml">
+            </block>
+        </reference>
+    </ajaxreviews_review_testemailpost>
+
+    <ajaxreviews_review_testunsubscribe>
+        <reference name="root">
+            <action method="setTemplate">
+                <type>page/empty.phtml</type>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="ajaxreviews.review.testunsubscribe"
+                   template="ajaxreviews/email/result.phtml">
+            </block>
+        </reference>
+    </ajaxreviews_review_testunsubscribe>
+
+    <ajaxreviews_review_preview>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="ajaxreviews/email_preview" name="ajaxreviews.email.preview"/>
+        </block>
+    </ajaxreviews_review_preview>
+</layout>

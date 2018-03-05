@@ -624,6 +624,7 @@
                     <show_in_store>1</show_in_store>
                     <fields>
                         <active translate="label">
+                            <comment>This integration is no longer available by default. Contact us for more information on how to enable it</comment>
                             <label>Enabled</label>
                             <frontend_type>select</frontend_type>
                             <config_path>payment/sagepaydirectpro/active</config_path>
@@ -1393,6 +1394,7 @@
                     <fields>
                         <active translate="label">
                             <label>Enabled</label>
+                            <comment>This integration is no longer available by default. Contact us for more information on how to enable it</comment>
                             <frontend_type>select</frontend_type>
                             <config_path>payment/sagepaydirectpro_moto/active</config_path>
                             <source_model>adminhtml/system_config_source_yesno</source_model>

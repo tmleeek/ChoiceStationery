@@ -220,7 +220,22 @@
             
                   </div>
                   <div class="tab-pane" id="review">
-                    <p class="review-text"><?php echo $this->getChildHtml('feefo_reviews')?></p>
+                   <!-- <p class="review-text"><?php //echo $this->getChildHtml('feefo_reviews')?></p>-->
+                    <p class="review-text">
+							<div class="product-collateral toggle-content tabs">
+							<?php if ($review = $this->getChildGroup('review_info', 'getChildHtml')):?>
+								<dl id="collateral-tabs" class="collateral-tabs">
+									<?php foreach ($review as $alias => $html):?>
+										<dt class="tab"><span><?php echo $this->escapeHtml($this->getChildData($alias, 'title')) ?></span></dt> 
+										<dd class="tab-container">
+											<div class="tab-content"><?php echo $html ?></div>
+										</dd>
+									<?php endforeach;?>
+								</dl>
+							<?php endif; ?>
+						</div>
+					</p>
+               
                   </div>
                 </div>
               </div>

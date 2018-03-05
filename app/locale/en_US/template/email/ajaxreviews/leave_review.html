@@ -1,0 +1,173 @@
+<!--@subject You have new item to review on {{var store_name}}! @-->
+
+<body id="outlook">
+<table class="body">
+    <tr>
+        <td class="center" align="center" valign="top">
+            <center>
+                <!-- Header -->
+                <table class="row header">
+                    <tr>
+                        <td class="center" align="center">
+                            <center>
+                                <table class="container">
+                                    <tr>
+                                        <td class="wrapper last">
+
+                                            <table class="twelve columns">
+                                                <tr>
+                                                    <td class="center" align="center">
+                                                        <center>
+                                                            <a href="{{store url=''}}" title="{{var store_name}}">
+                                                                <img class="logo"
+                                                                     alt="{{var store_name}}"
+                                                                     src="{{var logo_url}}"/>
+                                                            </a>
+                                                        </center>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+                <!-- Header End -->
+
+                <!-- Title -->
+                <table class="row title">
+                    <tr>
+                        <td class="center" align="center">
+                            <center>
+                                <table class="container">
+                                    <tr>
+                                        <td class="wrapper last">
+
+                                            <table class="twelve columns">
+                                                <tr>
+                                                    <td class="center" align="center">
+                                                        <center>
+                                                            &nbsp;
+                                                            <h1>You have new item(s) to review</h1>
+                                                            &nbsp;
+                                                        </center>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+                <!-- Title End-->
+
+                {{block type='core/template' area='frontend' template='ajaxreviews/email/leave_review_products.phtml' products=$products.key color=$figure_color customer_name=$customer_name}}
+
+                <!-- Notice -->
+                <table class="row notice">
+                    <tr>
+                        <td class="center" align="center">
+                            <center>
+                                <table class="container">
+                                    <tr>
+                                        <td class="panel last">
+
+                                            <table class="twelve columns">
+                                                <tr>
+                                                    <td class="no-padding">
+                                                        <p>
+                                                            <strong>Why review?</strong>
+                                                            Leaving a review shares your unique experience with future
+                                                            buyers and may help them to make the right decision.
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+                <!-- Notice End -->
+
+                <!-- Paragraph -->
+                <table class="row paragraph last">
+                    <tr>
+                        <td class="center" align="center">
+                            <center>
+                                <table class="container">
+                                    <tr>
+                                        <td class="wrapper last">
+
+
+                                            <table class="twelve columns">
+                                                <tr>
+                                                    <td>
+                                                        <p>
+                                                            We really appreciate your feedback and hope to see you again
+                                                            soon.
+                                                            &nbsp;
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+                <!-- Paragraph End -->
+
+                <!-- Footer -->
+                <table class="row footer">
+                    <tr>
+                        <td class="center" align="center">
+                            <center>
+                                <table class="container">
+                                    <tr>
+                                        <td class="wrapper last">
+                                            <table class="twelve columns">
+                                                <tr>
+                                                    <td>
+                                                        <p>
+                                                            You are
+                                                            receiving this email because you
+                                                            registered on <a href="{{var store_url}}" target="_blank">{{var
+                                                            store_domain}}</a>
+                                                            with this email address.
+                                                            <br/>
+                                                            To stop receiving these emails,
+                                                            <a href="{{var unsubscribe_url}}" target="_blank">unsubscribe
+                                                                here</a>.
+
+                                                        </p>
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+                <!-- Footer End -->
+            </center>
+        </td>
+    </tr>
+</table>
+</body>
+
+{{inlinecss file="ajaxreviews/css/email.css"}}
+{{replacecss from="/#3399CC/i" to="figure_color"}}
+{{replacecss from="/#ebf5fa/i" to="back_color"}}
+{{replacecss from="/#9acde6/i" to="header_color"}}

@@ -1,12 +1,12 @@
 <?php
 /**
  * @author Amasty Team
- * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
  * @package Amasty_Base
  */
 
 
-if (!Mage::helper('core')->isModuleEnabled('Mage_AdminNotification')) {
+if (!Mage::helper('ambase')->isModuleActive('Mage_AdminNotification')) {
     return;
 }
 

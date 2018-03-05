@@ -52,10 +52,17 @@ class Mirasvit_SearchSphinx_Helper_Query extends Mage_Core_Helper_Abstract
                 $query = str_replace(' '.$word.' ', ' '.$replace.' ', $query);
             }
         }
+		//$query = preg_replace('/(?<=[a-z])(?=\d)|(?<=\d)(?=[a-z])/i', ' ', $query);
 
         $arWords    = Mage::helper('core/string')->splitWords($query, true);
-        $arSynonyms = Mage::getSingleton('searchsphinx/synonym')->getSynonymsByWord($arWords, $store);
 
+        
+        $arSynonyms = Mage::getSingleton('searchsphinx/synonym')->getSynonymsByWord($arWords, $store);
+        //print_r($query);
+//exit();
+//print_r($result);
+//print_r($arWords);
+//exit();
         $logic = 'like';
 
         foreach ($arWords as $word) {
@@ -100,7 +107,8 @@ class Mirasvit_SearchSphinx_Helper_Query extends Mage_Core_Helper_Abstract
         }
 
         Mage::helper('mstcore/debug')->end($uid, $result);
-
+//print_r($result);
+//exit("test");
         return $result;
     }
 

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<modules>
+			<Magecomp_Recaptcha>
+					<version>2.0.4</version>
+			</Magecomp_Recaptcha>
+	</modules>
+	
+	<frontend>
+		<routers>
+			<recaptcha>
+					<use>standard</use>
+					<args>
+						<module>Magecomp_Recaptcha</module>
+						<frontName>contacts</frontName>
+					</args>
+			</recaptcha>
+	    </routers>
+		<layout>
+		     <updates>
+				<recaptcha>
+					<file>recaptcha.xml</file>
+				</recaptcha>		
+			</updates>
+		</layout>
+    </frontend>
+	<global>
+	   <models>
+            <recaptcha>
+                <class>Magecomp_Recaptcha_Model</class>
+                <resourceModel>recaptcha_mysql4</resourceModel>
+            </recaptcha>
+            <recaptcha_mysql4>
+                <class>Magecomp_Recaptcha_Model_Mysql4</class>
+                <entities>
+                    <recaptcha>
+                        <table>recaptcha</table>
+                    </recaptcha>
+                </entities>
+            </recaptcha_mysql4>
+        </models>
+		 
+		<resources>
+            <recaptcha_setup>
+                <setup>
+                    <module>Magecomp_Recaptcha</module>
+                </setup>
+            </recaptcha_setup>
+        </resources>
+		<helpers>
+            <recaptcha>
+                <class>Magecomp_Recaptcha_Helper</class>
+            </recaptcha>
+        </helpers>
+		<template>
+            <email>
+                <mcm_contacts module="recaptcha">
+                    <label>Contact</label>
+                    <file>mcm_contacts.html</file>
+                    <type>html</type>
+                </mcm_contacts>
+            </email>
+        </template>	
+	</global>
+	
+	<adminhtml>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<magecomp>
+											<title>Magecomp - All</title>
+										</magecomp>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+</config>

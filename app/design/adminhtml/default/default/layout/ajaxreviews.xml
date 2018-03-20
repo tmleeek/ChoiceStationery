@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+-->
+<layout version="0.1.0">
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="addJs">
+                <file>jscolor/jscolor.js</file>
+            </action>
+        </reference>
+    </adminhtml_system_config_edit>adminhtml_ajaxreviews_notification
+    <adminhtml_ajaxreviews_notification_view>
+        <reference name="head">
+            <action method="addCss">
+                <style>ajaxreviews/css/styles.css</style>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="ajaxreviews/adminhtml_notification_review_edit"
+                   name="admin.ajaxreviews.notification.review.edit"/>
+        </reference>
+    </adminhtml_ajaxreviews_notification_view>
+    <adminhtml_ajaxreviews_notification_review>
+        <reference name="head">
+            <action method="addCss">
+                <style>ajaxreviews/css/styles.css</style>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="ajaxreviews/adminhtml_notification_review" name="admin.ajaxreviews.notification.review"/>
+        </reference>
+    </adminhtml_ajaxreviews_notification_review>
+    <adminhtml_ajaxreviews_notification_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="ajaxreviews/adminhtml_notification_review_grid" name="admin.ajaxreviews.notification.grid"/>
+        </block>
+    </adminhtml_ajaxreviews_notification_grid>
+    <adminhtml_ajaxreviews_notification_existing>
+        <update handle="apply_angularjs"/>
+        <reference name="extra_head">
+            <action method="setAngularParseSymbols">
+                <startSymbol>{{{</startSymbol>
+                <endSymbol>}}}</endSymbol>
+            </action>
+            <action method="addExtraJs">
+                <script>ajaxreviews/adminhtml/notification/existing.js</script>
+            </action>
+            <action method="addExtraJs">
+                <script>ajaxreviews/adminhtml/notification/slider.js</script>
+            </action>
+            <action method="addDirective">
+                <alias>mpAjaxReviewsNotificationExisting</alias>
+                <class>MpAjaxReviewsNotificationExistingDirective</class>
+            </action>
+            <action method="addDirective">
+                <alias>mpAjaxReviewsSlider</alias>
+                <class>MpAjaxReviewsSliderDirective</class>
+            </action>
+        </reference>
+        <reference name="head">
+            <action method="addCss">
+                <style>ajaxreviews/css/styles.css</style>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="ajaxreviews/adminhtml_notification_existing_edit"
+                   name="admin.ajaxreviews.notification.existing.orders"/>
+        </reference>
+    </adminhtml_ajaxreviews_notification_existing>
+</layout>

@@ -21,7 +21,7 @@ class Amasty_Base_Block_Adminhtml_Promo extends Mage_Adminhtml_Block_Widget_Form
 
     public function getLatestNotification()
     {
-        if (!Mage::helper('core')->isModuleEnabled('Mage_AdminNotification')) {
+        if (!Mage::helper('ambase')->isModuleActive('Mage_AdminNotification')) {
             return null;
         }
 

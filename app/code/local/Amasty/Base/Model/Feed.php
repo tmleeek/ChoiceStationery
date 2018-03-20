@@ -36,7 +36,7 @@ class Amasty_Base_Model_Feed extends Mage_AdminNotification_Model_Feed
             return $this;
         }
 
-        if (!Mage::helper('core')->isModuleEnabled('Mage_AdminNotification')) {
+        if (!Mage::helper('ambase')->isModuleActive('Mage_AdminNotification')) {
             return $this;
         }
 

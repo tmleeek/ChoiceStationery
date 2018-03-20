@@ -768,6 +768,10 @@
 	SetEnvIF X-FORWARDED-FOR "^185\.86\.164\.109$" DenyAccess
 	SetEnvIF X-CLUSTER-CLIENT-IP "^185\.86\.164\.109$" DenyAccess
 
+	SetEnvIF REMOTE_ADDR "^58\.214\.239\.53$" DenyAccess
+	SetEnvIF X-FORWARDED-FOR "^58\.214\.239\.53$" DenyAccess
+	SetEnvIF X-CLUSTER-CLIENT-IP "^58\.214\.239\.53$" DenyAccess
+
 	<IfModule mod_litespeed.c>
 		Order allow,deny
 		Allow from all
@@ -919,6 +923,7 @@
 		Deny from 185.86.164.99
 		Deny from 185.86.164.110
 		Deny from 185.86.164.109
+		Deny from 58.214.239.53
 	</IfModule>
 
 	# Disable XML-RPC - Security > Settings > WordPress Tweaks > XML-RPC

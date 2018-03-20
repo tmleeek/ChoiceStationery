@@ -329,6 +329,9 @@ div.alert button:hover{ cursor:pointer; background-position:0 -9px;}
 .toolbar .sorter { color:#8A8989; padding: 0 0px; }
 .toolbar-bottom { }
 
+
+.menu-container .ms-topmenu{z-index:99 !important;}   
+.col-left .amslider-container{display:none;}
 /* Data Table */
 .data-table { width:100%; }
 .data-table th { padding:12px 20px 12px 20px; border:1px solid #404040; font-weight:bold; white-space:nowrap; color:#000; }

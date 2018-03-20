@@ -9,11 +9,6 @@
 class WPSEO_OpenGraph_Image {
 
 	/**
-	 * @var array $options Holds options passed to the constructor.
-	 */
-	private $options;
-
-	/**
 	 * @var array $images Holds the images that have been put out as OG image.
 	 */
 	private $images = array();
@@ -27,12 +22,9 @@ class WPSEO_OpenGraph_Image {
 	/**
 	 * Constructor.
 	 *
-	 * @param array          $options Options set.
 	 * @param string|boolean $image   Optional image URL.
 	 */
-	public function __construct( $options, $image = false ) {
-		$this->options = $options;
-
+	public function __construct( $image = false ) {
 		// If an image was not supplied or could not be added.
 		if ( empty( $image ) || ! $this->add_image( $image ) ) {
 			$this->set_images();
@@ -110,8 +102,9 @@ class WPSEO_OpenGraph_Image {
 			$this->get_posts_page_image();
 		}
 
-		if ( is_singular() ) {
-			$this->get_singular_image();
+		$frontend_page_type = new WPSEO_Frontend_Page_Type();
+		if ( $frontend_page_type->is_simple_page() ) {
+			$this->get_singular_image( $frontend_page_type->get_simple_page_id() );
 		}
 
 		if ( is_category() || is_tax() || is_tag() ) {
@@ -132,8 +125,8 @@ class WPSEO_OpenGraph_Image {
 	 * If the frontpage image exists, call add_image.
 	 */
 	private function get_front_page_image() {
-		if ( $this->options['og_frontpage_image'] !== '' ) {
-			$this->add_image( $this->options['og_frontpage_image'] );
+		if ( WPSEO_Options::get( 'og_frontpage_image', '' ) !== '' ) {
+			$this->add_image( WPSEO_Options::get( 'og_frontpage_image' ) );
 		}
 	}
 
@@ -155,31 +148,35 @@ class WPSEO_OpenGraph_Image {
 
 	/**
 	 * Get the images of the singular post.
+	 *
+	 * @param null|int $post_id The post id to get the images for.
 	 */
-	private function get_singular_image() {
-		global $post;
+	private function get_singular_image( $post_id = null ) {
+		if ( $post_id === null ) {
+			$post_id = get_the_ID();
+		}
 
-		if ( $this->get_opengraph_image_post() ) {
+		if ( $this->get_opengraph_image_post( $post_id ) ) {
 			return;
 		}
 
-		if ( $this->get_attachment_page_image( $post->ID ) ) {
+		if ( $this->get_attachment_page_image( $post_id ) ) {
 			return;
 		}
 
-		if ( $this->get_featured_image( $post->ID ) ) {
+		if ( $this->get_featured_image( $post_id ) ) {
 			return;
 		}
 
-		$this->get_content_images( $post );
+		$this->get_content_images( get_post( $post_id ) );
 	}
 
 	/**
 	 * Get default image and call add_image.
 	 */
 	private function get_default_image() {
-		if ( count( $this->images ) === 0 && isset( $this->options['og_default_image'] ) && $this->options['og_default_image'] !== '' ) {
-			$this->add_image( $this->options['og_default_image'] );
+		if ( count( $this->images ) === 0 && WPSEO_Options::get( 'og_default_image', '' ) !== '' ) {
+			$this->add_image( WPSEO_Options::get( 'og_default_image' ) );
 		}
 	}
 

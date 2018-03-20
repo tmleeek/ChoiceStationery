@@ -1,0 +1,14 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $this Magpleasure_Ajaxreviews_Block_Review_View_Og */
+?>
+<meta property="og:url" content="<?php echo Mage::helper('core/url')->getCurrentUrl() ?>">
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="<?php echo $this->getShareTitle() ?>">
+<meta property="og:description" content="<?php echo $this->getReviewData()->getDetail() ?>">
+<meta property="og:image" content="<?php echo $this->helper('catalog/image')->init($this->getProductData(), 'small_image') ?>">

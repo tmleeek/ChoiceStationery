@@ -8,6 +8,28 @@
 
 class Amasty_Base_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    /**
+     * @param string $moduleName the full module name, example Mage_Core
+     * @return boolean
+     */
+    public function isModuleEnabled($moduleName = null)
+    {
+        if (!Mage::getConfig()->getNode('modules/' . $moduleName)) {
+            return false;
+        }
+
+        $isActive = Mage::getConfig()->getNode('modules/' . $moduleName . '/active');
+        if (!$isActive || !in_array((string)$isActive, array('true', '1'))) {
+            return false;
+        }
+        return true;
+    }
+
+    public function isEnterpriseEdition()
+    {
+        return Mage::getConfig()->getNode('modules/Enterprise_Enterprise');
+    }
+
     public function isVersionLessThan($major = 1, $minor = 4)
     {
         $curr = explode('.', Mage::getVersion()); // 1.3. compatibility
@@ -155,11 +177,16 @@ class Amasty_Base_Helper_Data extends Mage_Core_Helper_Abstract
     public function getParentClasses($class)
     {
         $parents = @class_parents($class);
-        if ($parents === false) {
-            $result = array('<span style="color:red">error occurred</span>');
-        } else {
+        $result = null;
+
+        if ($parents !== false) {
             $result = array_values($parents);
+        } 
+
+        if (!$result || count($result) == 0) {
+            $result = array('<span style="color:red">error occurred</span>');
         }
+        
         return $result;
     }
 

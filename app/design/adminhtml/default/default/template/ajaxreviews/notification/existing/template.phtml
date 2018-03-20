@@ -1,0 +1,40 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $_helper Magpleasure_Ajaxreviews_Helper_Data */
+?>
+<?php $_helper = Mage::helper('ajaxreviews') ?>
+
+<div>
+    <div class="mp-orders-label"><?php echo $_helper->__('Period since Purchase') . ': ' ?>{{periods[interval.interval]}}</div>
+    <mp-ajax-reviews-slider range-interval="interval.interval" min-range="interval.min"
+                            max-range="interval.max" ng-mouseup="checkInterval()" ng-mouseleave="checkInterval()">
+    </mp-ajax-reviews-slider>
+</div>
+<div class="mp-orders-info">
+    <div class="mp-orders-info-item">
+        <div class="mp-orders-label"><?php echo $_helper->__('Orders:') ?></div>
+        <div class="mp-orders-data">{{info.orders}}</div>
+    </div>
+    <div class="mp-orders-info-item">
+        <div class="mp-orders-label"><?php echo $_helper->__('Items:') ?></div>
+        <div class="mp-orders-data">{{info.items}}</div>
+    </div>
+    <div class="mp-orders-info-item">
+        <div class="mp-orders-label"><?php echo $_helper->__('Mails Count:') ?></div>
+        <div class="mp-orders-data">{{info.notifications}}</div>
+    </div>
+</div>
+<ul class="messages" style="margin-top: 20px" ng-show="error">
+    <li class="error-msg" style="margin:0!important">
+        <ul>
+            <li><?php echo $_helper->__('Sorry, something went wrong.') ?></li>
+        </ul>
+    </li>
+</ul>
+<input type="hidden" id="interval" name="interval" ng-value="interval.interval"/>
+

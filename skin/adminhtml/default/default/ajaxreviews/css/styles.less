@@ -1,0 +1,128 @@
+@import "__lesshat";
+
+.mp-ajax-reviews-existing-box {
+
+  & .label {
+    display: none;
+  }
+}
+
+.mp-ajax-reviews-notification-existing {
+  padding: 10px;
+
+  & .mp-orders-label {
+    margin-bottom: 5px;
+  }
+
+  & .mp-slider-track {
+    background-color: rgba(213, 95, 7, 0.2);
+    height: 16px;
+    width: 450px;
+
+    &.mp-slider-active {
+      cursor: pointer;
+    }
+  }
+
+  & .mp-slider-fill {
+    height: 16px;
+    position: absolute;
+    background-color: rgba(213, 95, 7, 0.6);
+  }
+
+  & .mp-slider-handler {
+    width: 12px;
+    height: 20px;
+    display: inline-block;
+    position: absolute;
+    background-color: rgb(213, 95, 7);
+    border: 1px solid black;
+  }
+
+  & .mp-orders-info {
+    margin-top: 20px;
+    border: 1px solid rgb(213, 95, 7);
+    background-color: rgba(213, 95, 7, 0.2);
+    width: 450px;
+    .box-sizing(border-box);
+  }
+
+  & .mp-orders-info-item {
+    display: inline-block;
+    width: 28%;
+    text-align: center;
+    padding: 10px;
+    border-right: 1px solid rgb(213, 95, 7);
+
+    &:last-child {
+      border-right: 0;
+    }
+  }
+
+  & .mp-orders-data {
+    font-size: 18px;
+    color: rgb(213, 95, 7);
+  }
+}
+
+.massaction {
+
+  & .entry-edit {
+
+    & fieldset {
+
+      & input.mp-send-copy-email.validation-failed {
+        border: 1px dashed #eb340a !important;
+        background: #faebe7 !important;
+      }
+    }
+  }
+}
+
+.notification-preview {
+  text-align: center;
+
+  & .email-details,
+  & .email-body {
+    border: 1px solid #d6d6d6;
+    margin: 0 auto;
+  }
+
+  & .email-details {
+    .size(660px, 89px);
+    .box-sizing(border-box);
+    background-color: #EAEAEA;
+    border-bottom: none;
+    padding: 10px;
+    text-align: left;
+
+    & dt,
+    & dd {
+      float: left;
+      padding: 2px 0;
+    }
+
+    & dl {
+      width: 390px;
+      overflow: hidden;
+    }
+
+    & dt {
+      width: 100px;
+      color: #666;
+      text-shadow: 1px 1px 0 #FFFFFF;
+    }
+
+    & dd {
+      width: 290px;
+    }
+  }
+
+  & .email-body {
+    .size(660px, 600px);
+    .box-sizing(border-box);
+    background-color: #FFFFFF;
+    display: block;
+  }
+
+}

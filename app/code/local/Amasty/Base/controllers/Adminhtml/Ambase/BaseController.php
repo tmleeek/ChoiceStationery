@@ -32,7 +32,7 @@ class Amasty_Base_Adminhtml_Ambase_BaseController extends Mage_Adminhtml_Control
 
     public function closePromoAction()
     {
-        if (!Mage::helper('core')->isModuleEnabled('Mage_AdminNotification')) {
+        if (!Mage::helper('ambase')->isModuleActive('Mage_AdminNotification')) {
             return;
         }
 

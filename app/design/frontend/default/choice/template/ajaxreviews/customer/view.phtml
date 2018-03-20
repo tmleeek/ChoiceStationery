@@ -1,0 +1,67 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $this Magpleasure_Ajaxreviews_Block_Review_Customer_View */
+?>
+<?php if ($this->getProductData()->getId()): ?>
+    <div class="product-review mp-customer-review">
+        <div class="page-title">
+            <h1><?php echo $this->__('Review Details') ?></h1>
+        </div>
+        <?php $productData = $this->getProductData();
+        $name = $this->escapeHtml($productData->getName()) ?>
+        <div class="product-img-box">
+            <a class="product-image" href="<?php echo $productData->getProductUrl() ?>"
+               title="<?php echo $name ?>">
+                <img
+                    src="<?php echo $this->helper('catalog/image')->init($productData, 'small_image')->resize(125, 125); ?>"
+                    width="125" height="125" alt="<?php echo $name ?>"/>
+            </a>
+            <?php if ($this->getRating() && $this->getRating()->getSize()): ?>
+                <p class="label"><?php echo $this->__('Average Customer Rating') . ':' ?></p>
+                <?php echo $this->getReviewsSummaryHtml($productData) ?>
+            <?php endif; ?>
+        </div>
+        <div class="product-details">
+            <h2 class="product-name"><?php echo $name ?></h2>
+            <?php $_helper = Mage::helper('ajaxreviews') ?>
+            <?php if ($this->getRating() && $this->getRating()->getSize()): ?>
+                <table class="ratings-table" style="margin: 10px 0">
+                    <?php foreach ($this->getRating() as $_rating): ?>
+                        <?php if ($_rating->getPercent()): ?>
+                            <tr>
+                                <th style="vertical-align: middle"><?php echo $this->escapeHtml($_rating->getRatingCode()) ?></th>
+                                <td>
+                                    <div class="mp-review-rating-box"
+                                         style="margin:0;<?php echo $_helper->getRatingFigureImageStyle() ?>">
+                                        <div class="mp-review-rating"
+                                             style="width:<?php echo ceil($_rating->getPercent()) ?>%;<?php echo $_helper->getRatingFigureImageStyle() ?>"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </table>
+            <?php endif; ?>
+            <dl>
+                <?php $reviewData = $this->getReviewData();
+                $createdAt = $this->dateFormat($reviewData->getCreatedAt())?>
+                <dt style="<?php echo $_helper->getTextStyle() ?>"><?php
+                    if ($this->isReviewOwner()):
+                        echo $this->__('Your Review (submitted on %s):', $createdAt);
+                    else:
+                        echo $this->__('Review (submitted on %s):', $createdAt);
+                    endif ?></dt>
+                <dd><?php echo nl2br($this->escapeHtml($reviewData->getDetail())) ?></dd>
+            </dl>
+        </div>
+        <div class="buttons-set">
+            <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>">
+                    <small>&laquo; </small><?php echo $this->__('Back to My Reviews') ?></a></p>
+        </div>
+    </div>
+<?php endif; ?>

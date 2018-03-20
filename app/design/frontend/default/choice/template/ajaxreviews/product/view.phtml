@@ -1,0 +1,25 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $this Magpleasure_Ajaxreviews_Block_Review_Product_View */
+/** @var $_helper Mage_Catalog_Helper_Output */
+?>
+<?php $_helper = Mage::helper('catalog/output') ?>
+<?php $_product = $this->getProduct(); ?>
+<div class="mp-reviews-product-view">
+    <div class="product-name">
+        <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+    </div>
+    <?php echo $this->getChildHtml('media') ?>
+    <div class="mp-review-info">
+        <?php echo $this->getReviewsSummaryHtml($_product, false, true) ?>
+        <p class="back-link"><a
+                href="<?php echo $_product->getProductUrl() ?>">&laquo;&nbsp;<?php echo Mage::helper('ajaxreviews')->__('Back to Product') ?></a>
+        </p>
+    </div>
+    <?php echo $this->getChildHtml('product_additional_data') ?>
+</div>

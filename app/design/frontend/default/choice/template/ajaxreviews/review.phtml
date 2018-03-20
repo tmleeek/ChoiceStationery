@@ -1,0 +1,231 @@
+
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $this Magpleasure_Ajaxreviews_Block_Review_View */
+/** @var $helper Magpleasure_Ajaxreviews_Helper_Data */
+?>
+<?php
+#echo "===========================================";
+//$varitest = Mage::getModel('ajaxreviews/resource_review_review_collection');
+//echo "<pre>"; print_r($varitest); echo "</pre>";
+ ?>
+<!--  code for all review display in one page -->
+<?php
+
+#$con = Mage::getSingleton('core/resource')->getConnection('core_write');
+#$re=$con->query('SELECT rd.title, rd.detail, rd.nickname, rd.review_id, r.created_at, sum(vt.percent) as precn, r.entity_pk_value FROM review_detail AS rd LEFT JOIN review AS r USING  (review_id ) LEFT JOIN rating_option_vote AS vt USING ( review_id ) WHERE r.status_id = "1" GROUP BY vt.`review_id` order by r.created_at desc LIMIT $start_from, $record_per_page');
+
+/*'SELECT rd.title, rd.detail, rd.nickname, r.created_at, sum(vt.percent) as precn, r.entity_pk_value FROM review_detail AS rd LEFT JOIN review AS r USING  (review_id ) LEFT JOIN rating_option_vote AS vt USING ( review_id ) WHERE r.status_id = "1" GROUP BY vt.`review_id`
+';*/
+?>
+<?php /*
+<table border="1">
+<tr>
+	<th colspan="2">Date</th>	
+	<th>Score</th>	
+	<th>Customer Comment</th>	
+</tr>
+
+<?php while($rows=$re->fetch()) 
+{
+?>
+
+<?php $productId = $rows['entity_pk_value'];
+$product = Mage::getModel('catalog/product')->load($productId);
+$imageThumbnailUrl = $product->getThumbnailUrl();
+$product_url = $product->getProductUrl();
+
+?>
+ 
+<?php
+$res_rate=$con->query("SELECT r.rating_code,rt.percent  FROM `rating` as r left join rating_option_vote as rt using(rating_id)  WHERE  
+rt.review_id='".$rows['review_id']."' order by r.rating_code asc ");
+ while($rows_rate=$res_rate->fetch()) 
+{
+?>
+<tr>
+                <div class="percentage"style="width:<?php echo $rows_rate['percent'];  ?>%" class="rating"></div>
+    <?php
+
+?>
+<td colspan="2"><?php 
+
+  // echo date("d F Y", $rows['created_at']);
+ 
+  echo $rows['created_at'];
+	
+?></td>
+
+                    <td><?php echo $rows_rate['percent']; ?></td>          
+ 
+<td><?php echo $rows['detail']; ?></td>
+<?php
+}
+}
+
+?>
+  </tr>
+   </table> */ ?>
+   
+<?php // Added by Ramsandip solanki ?>
+
+<?php
+$review_avr = 0;
+$record_per_page = 30;
+$page = '';
+if(isset($_GET["page"]))
+{
+ $page = $_GET["page"];
+}
+else
+{
+ $page = 1;
+}
+
+$start_from = ($page-1)*$record_per_page;
+$con = Mage::getSingleton('core/resource')->getConnection('core_write');
+// This is for paggination
+$repag=$con->query('SELECT `e`.*, `rt`.`review_id`, `rt`.`created_at` AS `review_created_at`, `rt`.`entity_pk_value`, `rt`.`status_id`, `rdt`.`title`, `rdt`.`nickname`, `rdt`.`detail`, `rdt`.`customer_id`, `rdt`.`store_id` FROM `catalog_product_entity` AS `e` INNER JOIN `review` AS `rt` ON rt.entity_pk_value = e.entity_id INNER JOIN `review_detail` AS `rdt` ON rdt.review_id = rt.review_id');
+    $rowspag=$repag->fetchAll();
+    $total_records = count($rowspag);
+  // End of paggination
+  
+  // This is for calculation
+//$repag=$con->query('SELECT `e`.*, `rt`.`review_id`, `rt`.`created_at` AS `review_created_at`, `rt`.`entity_pk_value`, `rt`.`status_id`, `rdt`.`title`, `rdt`.`nickname`, `rdt`.`detail`, `rdt`.`customer_id`, `rdt`.`store_id` FROM `catalog_product_entity` AS `e` INNER JOIN `review` AS `rt` ON rt.entity_pk_value = e.entity_id INNER JOIN `review_detail` AS `rdt` ON rdt.review_id = rt.review_id');
+$retotc=$con->query('SELECT sum(vt.percent) as precn, `e`.*, `rt`.`review_id`, `rt`.`created_at` AS `review_created_at`, `rt`.`entity_pk_value`, `rt`.`status_id`, `rdt`.`title`, `rdt`.`nickname`, `rdt`.`detail`, `rdt`.`customer_id`, `rdt`.`store_id` FROM `catalog_product_entity` AS `e` INNER JOIN `review` AS `rt` ON rt.entity_pk_value = e.entity_id INNER JOIN `review_detail` AS `rdt` ON rdt.review_id = rt.review_id INNER JOIN rating_option_vote AS vt ON vt.review_id = rt.review_id  where `rt`.`status_id` = 1 GROUP BY vt.`review_id` order by rt.created_at desc');
+    $rowstcnt=$retotc->fetchAll();
+    $total_records_count = count($rowstcnt);
+  // End of calculation
+    
+//echo 'SELECT rd.title, rd.detail, rd.nickname, rd.review_id, r.created_at, sum(vt.percent) as precn, r.entity_pk_value FROM review_detail AS rd LEFT JOIN review AS r USING  (review_id ) LEFT JOIN rating_option_vote AS vt USING ( review_id ) WHERE r.status_id = "1" GROUP BY vt.`review_id` order by r.created_at desc LIMIT '.$start_from.', '.$record_per_page;
+//die("Working");
+$renew=$con->query('SELECT sum(vt.percent) as precn, `e`.*, `rt`.`review_id`, `rt`.`created_at` AS `review_created_at`, `rt`.`entity_pk_value`, `rt`.`status_id`, `rdt`.`title`, `rdt`.`nickname`, `rdt`.`detail`, `rdt`.`customer_id`, `rdt`.`store_id` FROM `catalog_product_entity` AS `e` INNER JOIN `review` AS `rt` ON rt.entity_pk_value = e.entity_id INNER JOIN `review_detail` AS `rdt` ON rdt.review_id = rt.review_id INNER JOIN rating_option_vote AS vt ON vt.review_id = rt.review_id  where `rt`.`status_id` = 1 GROUP BY vt.`review_id` order by rt.created_at desc');
+    while($rowsnew=$renew->fetch()) 
+	{		
+		$precn_avr = round($rowsnew['precn']/3);
+		$review_avr = $review_avr+$precn_avr;
+	}
+	$totalavramt = round($review_avr/$total_records_count);
+	//echo 'SELECT sum(vt.percent) as precn, `e`.*, `rt`.`review_id`, `rt`.`created_at` AS `review_created_at`, `rt`.`entity_pk_value`, `rt`.`status_id`, `rdt`.`title`, `rdt`.`nickname`, `rdt`.`detail`, `rdt`.`customer_id`, `rdt`.`store_id` FROM `catalog_product_entity` AS `e` INNER JOIN `review` AS `rt` ON rt.entity_pk_value = e.entity_id INNER JOIN `review_detail` AS `rdt` ON rdt.review_id = rt.review_id INNER JOIN rating_option_vote AS vt ON vt.review_id = rt.review_id  where `rt`.`status_id` = 1 order by rt.created_at desc LIMIT '.$start_from.', '.$record_per_page;
+$re=$con->query('SELECT rd.title, rd.detail, rd.nickname, rd.review_id, r.created_at, sum(vt.percent) as precn, r.entity_pk_value FROM review_detail AS rd LEFT JOIN review AS r USING  (review_id ) LEFT JOIN rating_option_vote AS vt USING ( review_id ) WHERE rd.detail != "" and r.status_id = "1" GROUP BY vt.`review_id` order by r.created_at desc LIMIT '.$start_from.', '.$record_per_page);
+//$re=$con->query('SELECT sum(vt.percent) as precn, `e`.*, `rt`.`review_id`, `rt`.`created_at` AS `review_created_at`, `rt`.`entity_pk_value`, `rt`.`status_id`, `rdt`.`title`, `rdt`.`nickname`, `rdt`.`detail`, `rdt`.`customer_id`, `rdt`.`store_id` FROM `catalog_product_entity` AS `e` INNER JOIN `review` AS `rt` ON rt.entity_pk_value = e.entity_id INNER JOIN `review_detail` AS `rdt` ON rdt.review_id = rt.review_id INNER JOIN rating_option_vote AS vt ON vt.review_id = rt.review_id  where `rt`.`status_id` = 1 GROUP BY vt.`review_id` order by rt.created_at ASC LIMIT '.$start_from.', '.$record_per_page);
+	
+
+?>
+<h3 id="tot_rev_avr" style="color:#072c73; margin-top:45px;">Reviews - Average <?php echo $totalavramt; ?>% (<?php echo $total_records; ?> reviews)</h3>
+<div class="product-tab-panel">
+   <table class="data-tabl" id="product-ajax-reviews" style="width:100%;">
+      <colgroup>
+         <col width="15%">
+         <col width="20%">
+         <col width="65%">
+      </colgroup>
+      <thead>
+         <tr>
+            <th style="background:#e60003; color:#ffffff;">Date</th>
+            <th style="background:#e60003; color:#ffffff;">Score</th>
+            <th style="background:#e60003; color:#ffffff;">Customer Comment</th>
+         </tr>
+      </thead>
+      <tbody id="rom_temp">
+		<?php while($rows=$re->fetch()) 
+		{		
+			$precn_avr = round($rows['precn']/3);
+			?>
+			 <tr class="mp-review c-both mp-rounded ng-scope" ng-repeat="review in reviews">
+				<td><span class="mp-date ng-binding"><?php echo date("d-M-Y",strtotime($rows['created_at'])); ?></span></td>
+				<td>
+				   <div ng-show="review.rating > 0">
+					  <div class="mp-review-rating-box" style="background-image:url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA); ?>/ajaxreviews/default/figure_small.png');background-image:url('http://dev.choicestationery.com/media/ajaxreviews/default/figure_small.svg'),none">
+						 <div class="mp-review-rating" ng-style="{'width':'<?php echo $precn_avr; ?>%'}" style="background-image: url(&quot;http://dev.choicestationery.com/media/ajaxreviews/default/figure_small.svg&quot;), none; width: <?php echo $precn_avr; ?>%;"></div>
+					  </div>
+				   </div>
+				</td>
+				<td>
+				   <div style="white-space: pre-wrap; line-height:25px;" class="ng-binding"><?php echo $rows['detail']; ?></div>
+				   <?php /* <div class="mp-bottom">
+					  <span class="mp-share mp-facebook" title="Facebook">
+					  <a target="_blank" ng-href="http://www.facebook.com/share.php?u=http://dev.choicestationery.com/review/product/view/id/211/&amp;title=Great as always; a very good alternative to the real thing" href="http://www.facebook.com/share.php?u=http://dev.choicestationery.com/review/product/view/id/211/&amp;title=Great as always; a very good alternative to the real thing"></a>
+					  </span>
+					  <span class="mp-share mp-google" title="Google +">
+					  <a target="_blank" ng-href="https://plus.google.com/share?url=http://dev.choicestationery.com/review/product/view/id/211/" href="https://plus.google.com/share?url=http://dev.choicestationery.com/review/product/view/id/211/"></a>
+					  </span>
+					  <span class="mp-share mp-pinterest" title="Pinterest">
+					  <a target="_blank" ng-href="https://pinterest.com/pin/create/button/?url=http://dev.choicestationery.com/review/product/view/id/211/&amp;media=http%3A%2F%2Fdev.choicestationery.com%2Fmedia%2Fcatalog%2Fproduct%2Fcache%2F1%2Fimage%2F9df78eab33525d08d6e5fb8d27136e95%2FP%2FG%2FPG512T.jpg&amp;description=Great as always; a very good alternative to the real thing" href="https://pinterest.com/pin/create/button/?url=http://dev.choicestationery.com/review/product/view/id/211/&amp;media=http%3A%2F%2Fdev.choicestationery.com%2Fmedia%2Fcatalog%2Fproduct%2Fcache%2F1%2Fimage%2F9df78eab33525d08d6e5fb8d27136e95%2FP%2FG%2FPG512T.jpg&amp;description=Great as always; a very good alternative to the real thing"></a>
+					  </span>
+					  <span class="mp-share mp-twitter" title="Twitter">
+					  <a target="_blank" ng-href="http://twitter.com/home?status=Great as always; a very good alternative to the real thing+http://dev.choicestationery.com/review/product/view/id/211/" href="http://twitter.com/home?status=Great as always; a very good alternative to the real thing+http://dev.choicestationery.com/review/product/view/id/211/"></a>
+					  </span>
+					  <span class="mp-share mp-tumblr" title="Tumblr">
+					  <a target="_blank" ng-href="http://www.tumblr.com/share/link?url=http%3A%2F%2Fdev.choicestationery.com%2Freview%2Fproduct%2Fview%2Fid%2F211%2F&amp;name=tests test  posted a review of Think Alternative Replacement Canon PG-512 High Capacity Cartridge&amp;description=Great as always; a very good alternative to the real thing" href="http://www.tumblr.com/share/link?url=http%3A%2F%2Fdev.choicestationery.com%2Freview%2Fproduct%2Fview%2Fid%2F211%2F&amp;name=tests test  posted a review of Think Alternative Replacement Canon PG-512 High Capacity Cartridge&amp;description=Great as always; a very good alternative to the real thing"></a>
+					  </span>
+				   </div> */ ?>
+				</td>
+			 </tr>
+			 <?php
+         } 
+         
+         ?>
+      </tbody>
+   </table>
+   <div class="mp-ajax-reviews" >
+   <?php
+   //$repag=$con->query('SELECT sum(vt.percent) as precn, `e`.*, `rt`.`review_id`, `rt`.`created_at` AS `review_created_at`, `rt`.`entity_pk_value`, `rt`.`status_id`, `rdt`.`title`, `rdt`.`nickname`, `rdt`.`detail`, `rdt`.`customer_id`, `rdt`.`store_id` FROM `catalog_product_entity` AS `e` INNER JOIN `review` AS `rt` ON rt.entity_pk_value = e.entity_id INNER JOIN `review_detail` AS `rdt` ON rdt.review_id = rt.review_id INNER JOIN rating_option_vote AS vt ON vt.review_id = rt.review_id  where `rt`.`status_id` = 1 GROUP BY vt.`review_id`');
+   $repag=$con->query('SELECT rd.title, rd.detail, rd.nickname, rd.review_id, r.created_at, sum(vt.percent) as precn, r.entity_pk_value FROM review_detail AS rd LEFT JOIN review AS r USING  (review_id ) LEFT JOIN rating_option_vote AS vt USING ( review_id ) WHERE r.status_id = "1" GROUP BY vt.`review_id`');
+    $rowspag=$repag->fetchAll();
+    $total_records = count($rowspag);
+    $total_pages = ceil($total_records/$record_per_page);
+    $start_loop = $page;
+    $difference = $total_pages - $page;
+    if($difference <= 5)
+    {
+     $start_loop = $total_pages - 5;
+    }
+    $end_loop = $start_loop + 4;
+    if($page > 1)
+    {
+     echo "<a href='?page=1'>First</a>";
+     echo "<a href='?page=".($page - 1)."'><<</a>";
+    }
+    for($i=$start_loop; $i<=$end_loop; $i++)
+    {     
+     echo "<a href='?page=".$i."'>".$i."</a>";
+    }
+    if($page <= $end_loop)
+    {
+     echo "<a href='?page=".($page + 1)."'>>></a>";
+     echo "<a href='?page=".$total_pages."'>Last</a>";
+    }
+    ?>
+    </div>
+   <?php /* <div class="mp-ajax-reviews" >
+   <div class="mp-more animated-inline" id="loadMore" style="text-transform: uppercase;">Load more</div>
+   </div> */ ?>
+</div>
+	<?php /* 
+<script>
+	$j(document).ready(function () {
+    //var size_li = $j("#rom_temp tr").size();
+    size_li = <?php echo $total_records; ?>;
+    total_rev = <?php echo $review_avr; ?>;
+    alert(size_li+" "+total_rev);
+    var total_per = parseFloat( total_rev/size_li );
+    $j("#tot_rev_avr").html("Reviews - Average "+total_per+"% ("+size_li+" reviews)");
+    //alert(size_li); 
+    //x=10;
+    //$j('#product-ajax-reviews tr:lt('+x+')').show("slow");
+    /*$j('#loadMore').click(function () {
+        x= (x+5 <= size_li) ? x+5 : size_li;
+        $j('#product-ajax-reviews tr:lt('+x+')').show("slow");
+        if(x == size_li){$j('#loadMore').hide();}
+    });* /
+});
+</script> */ ?>
+<?php // End by Ramsandip solanki ?>
+ </div>
+

@@ -1,0 +1,329 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+-->
+<config>
+    <modules>
+        <Magpleasure_Ajaxreviews>
+            <version>1.3.3</version>
+        </Magpleasure_Ajaxreviews>
+    </modules>
+    <frontend>
+        <routers>
+            <ajaxreviews>
+                <use>standard</use>
+                <args>
+                    <module>Magpleasure_Ajaxreviews</module>
+                    <frontName>ajaxreviews</frontName>
+                </args>
+            </ajaxreviews>
+        </routers>
+        <layout>
+            <updates>
+                <ajaxreviews>
+                    <file>ajaxreviews.xml</file>
+                </ajaxreviews>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Magpleasure_Ajaxreviews>
+                    <files>
+                        <default>Magpleasure_Ajaxreviews.csv</default>
+                    </files>
+                </Magpleasure_Ajaxreviews>
+            </modules>
+        </translate>
+        <events>
+            <controller_action_predispatch_catalog_product_view>
+                <observers>
+                    <ajaxreviews_controller_action_predispatch_catalog_product_view>
+                        <type>singleton</type>
+                        <class>ajaxreviews/observer</class>
+                        <method>productPreDispatch</method>
+                    </ajaxreviews_controller_action_predispatch_catalog_product_view>
+                </observers>
+            </controller_action_predispatch_catalog_product_view>
+        </events>
+    </frontend>
+    <adminhtml>
+        <menu>
+            <catalog>
+                <children>
+                    <reviews_ratings>
+                        <children>
+                            <ajaxreviews translate="title" module="ajaxreviews">
+                                <title>AJAX Reviews</title>
+                                <sort_order>1000</sort_order>
+                                <children>
+                                    <config translate="title" module="ajaxreviews">
+                                        <title>Configuration</title>
+                                        <sort_order>10</sort_order>
+                                        <action>adminhtml/system_config/edit/section/ajaxreviews</action>
+                                    </config>
+                                    <review_email translate="title" module="ajaxreviews">
+                                        <title>Mails after Purchase</title>
+                                        <sort_order>20</sort_order>
+                                        <action>adminhtml/ajaxreviews_notification/review</action>
+                                    </review_email>
+                                </children>
+                            </ajaxreviews>
+                        </children>
+                    </reviews_ratings>
+                </children>
+            </catalog>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <catalog>
+                            <children>
+                                <reviews_ratings>
+                                    <children>
+                                        <ajaxreviews translate="title" module="ajaxreviews">
+                                            <title>AJAX Reviews</title>
+                                            <sort_order>1000</sort_order>
+                                            <children>
+                                                <config translate="title">
+                                                    <title>Configuration</title>
+                                                    <sort_order>10</sort_order>
+                                                </config>
+                                                <review_email translate="title">
+                                                    <title>Mails after Purchase</title>
+                                                    <sort_order>20</sort_order>
+                                                </review_email>
+                                            </children>
+                                        </ajaxreviews>
+                                    </children>
+                                </reviews_ratings>
+                            </children>
+                        </catalog>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <ajaxreviews>
+                                            <title>Magpleasure - AJAX Reviews</title>
+                                        </ajaxreviews>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <translate>
+            <modules>
+                <Magpleasure_Ajaxreviews>
+                    <files>
+                        <default>Magpleasure_Ajaxreviews.csv</default>
+                    </files>
+                </Magpleasure_Ajaxreviews>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <ajaxreviews>
+                    <file>ajaxreviews.xml</file>
+                </ajaxreviews>
+            </updates>
+        </layout>
+        <events>
+            <admin_system_config_changed_section_ajaxreviews>
+                <observers>
+                    <ajaxreviews_config_changed>
+                        <type>singleton</type>
+                        <class>ajaxreviews/observer</class>
+                        <method>updateImages</method>
+                    </ajaxreviews_config_changed>
+                </observers>
+            </admin_system_config_changed_section_ajaxreviews>
+        </events>
+    </adminhtml>
+    <crontab>
+        <jobs>
+            <magpleasure_ajaxreviews>
+                <schedule>
+                    <cron_expr>*/5 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>ajaxreviews/cron::run</model>
+                </run>
+            </magpleasure_ajaxreviews>
+        </jobs>
+    </crontab>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Magpleasure_Ajaxreviews after="Mage_Adminhtml">Magpleasure_Ajaxreviews_Adminhtml</Magpleasure_Ajaxreviews>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <global>
+        <models>
+            <ajaxreviews>
+                <class>Magpleasure_Ajaxreviews_Model</class>
+                <resourceModel>ajaxreviews_mysql4</resourceModel>
+            </ajaxreviews>
+            <ajaxreviews_mysql4>
+                <class>Magpleasure_Ajaxreviews_Model_Mysql4</class>
+                <entities>
+                    <votes>
+                        <table>mp_ajaxreviews_votes</table>
+                    </votes>
+                    <votes_aggregated>
+                        <table>mp_ajaxreviews_votes_aggregated</table>
+                    </votes_aggregated>
+                    <notification_pending>
+                        <table>mp_ajaxreviews_email_pending</table>
+                    </notification_pending>
+                    <notification_review>
+                        <table>mp_ajaxreviews_email_leave_review</table>
+                    </notification_review>
+                </entities>
+            </ajaxreviews_mysql4>
+        </models>
+        <resources>
+            <ajaxreviews_setup>
+                <setup>
+                    <module>Magpleasure_Ajaxreviews</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </ajaxreviews_setup>
+            <ajaxreviews_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </ajaxreviews_write>
+            <ajaxreviews_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </ajaxreviews_read>
+        </resources>
+        <blocks>
+            <ajaxreviews>
+                <class>Magpleasure_Ajaxreviews_Block</class>
+            </ajaxreviews>
+            <review>
+                <rewrite>
+                    <view>Magpleasure_Ajaxreviews_Block_Review_View</view>
+                    <product_view_list>Magpleasure_Ajaxreviews_Block_Review_Product_View_List</product_view_list>
+                    <product_view>Magpleasure_Ajaxreviews_Block_Review_Product_View</product_view>
+                    <customer_recent>Magpleasure_Ajaxreviews_Block_Review_Customer_Recent</customer_recent>
+                    <customer_view>Magpleasure_Ajaxreviews_Block_Review_Customer_View</customer_view>
+                    <customer_list>Magpleasure_Ajaxreviews_Block_Review_Customer_List</customer_list>
+                    <helper>Magpleasure_Ajaxreviews_Block_Review_Helper</helper>
+                </rewrite>
+            </review>
+            <rating>
+                <rewrite>
+                    <entity_detailed>Magpleasure_Ajaxreviews_Block_Rating_Entity_Detailed</entity_detailed>
+                </rewrite>
+            </rating>
+        </blocks>
+        <helpers>
+            <ajaxreviews>
+                <class>Magpleasure_Ajaxreviews_Helper</class>
+            </ajaxreviews>
+        </helpers>
+        <events>
+            <sales_order_save_after>
+                <observers>
+                    <ajaxreviews_status_update>
+                        <type>singleton</type>
+                        <class>ajaxreviews/observer</class>
+                        <method>statusUpdated</method>
+                    </ajaxreviews_status_update>
+                </observers>
+            </sales_order_save_after>
+        </events>
+        <template>
+            <email>
+                <ajaxreviews_pending_template translate="label" module="ajaxreviews">
+                    <label>AjaxReviews - New Pending</label>
+                    <file>ajaxreviews/new_pending.html</file>
+                    <type>html</type>
+                </ajaxreviews_pending_template>
+                <ajaxreviews_emailreview_template translate="label" module="ajaxreviews">
+                    <label>AjaxReviews - Leave Review</label>
+                    <file>ajaxreviews/leave_review.html</file>
+                    <type>html</type>
+                </ajaxreviews_emailreview_template>
+            </email>
+        </template>
+    </global>
+    <default>
+        <ajaxreviews>
+            <general>
+                <display>2</display>
+                <per_page>5</per_page>
+                <use_sorting>1</use_sorting>
+                <sorting_types>1,2,3</sorting_types>
+                <need_purchase>1</need_purchase>
+                <share>1</share>
+                <vote>1</vote>
+                <richsnippets>0</richsnippets>
+            </general>
+            <style>
+                <enabled_icon>1</enabled_icon>
+                <display_icon>3</display_icon>
+                <rounded>1</rounded>
+                <rating_figure>1</rating_figure>
+                <figure_color>3399CC</figure_color>
+                <uppercase>1</uppercase>
+                <first_review>Be the first to review this product</first_review>
+            </style>
+            <how_to_write>
+                <enabled>1</enabled>
+                <title>How to write an awesome review?</title>
+                <message_text>1. Include relevant details and omit the extraneous ones.
+2. Leave out the proper names.
+3. "Good" is not always positive evaluation.
+4. Offer yourself up for validation.
+5. Remember and note that your review is just your experience.
+                </message_text>
+                <button_label>Got It</button_label>
+            </how_to_write>
+            <thank_you>
+                <title>Thank you for posting a review!</title>
+                <message_text>Your review was sent successfully and now is waiting for our staff to publish it.</message_text>
+                <button_label>It's my pleasure</button_label>
+            </thank_you>
+            <purchase>
+                <title>Only purchasers can leave reviews</title>
+                <message_text>Buy this product to leave a review.</message_text>
+                <button_label>Got It</button_label>
+            </purchase>
+            <pending>
+                <sender>1</sender>
+                <template>ajaxreviews_pending_template</template>
+            </pending>
+            <emailreview>
+                <enabled>1</enabled>
+                <sender>1</sender>
+                <template>ajaxreviews_emailreview_template</template>
+                <statuses>complete</statuses>
+                <send_after>3</send_after>
+                <interval>1</interval>
+                <one_product_different_orders>1</one_product_different_orders>
+                <send_by_order>0</send_by_order>
+            </emailreview>
+        </ajaxreviews>
+    </default>
+</config>

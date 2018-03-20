@@ -1,0 +1,285 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $_helper Magpleasure_Ajaxreviews_Helper_Data */
+?>
+<?php $_helper = Mage::helper('ajaxreviews') ?>
+<div class="mp-header" ng-hide="reviewsError">
+    <button ng-show="reviewsCount > 0" class="button mp-add-btn" type="button" ng-click="showForm()"
+            ng-disabled="httpRequest">
+        <span><span><?php echo $_helper->__('Add a Review') ?></span></span>
+    </button>
+    <button ng-hide="reviewsCount > 0" class="button mp-first-btn" type="button" ng-click="showForm()"
+            ng-disabled="httpRequest">
+        <span><span><?php echo $_helper->__($_helper->getConfigValue('style', 'first_review')) ?></span></span>
+    </button>
+    <div class="mp-header-rating-box animated-inline" style="<?php echo $_helper->getRatingFigureImageStyle(true) ?>"
+         ng-show="reviews.length > 0 && averageRating > 0">
+        <div class="mp-header-rating" ng-style="{'width':'{{averageRating}}%'}"
+             style="<?php echo $_helper->getRatingFigureImageStyle(true) ?>"></div>
+    </div>
+    <span class="mp-count animated-inline" style="<?php echo $_helper->getTextStyle() ?>"
+          ng-show="reviews.length > 0">{{reviewsCount}}&nbsp;<?php echo $_helper->__('Review(s)') ?></span>
+
+    <div class="mp-sorting animated-inline" ng-show="reviews.length > 0">
+        <label class="mp-sorting-label"
+               ng-show="useSorting && sortingTypes.length > 1"><?php echo $_helper->__('Sort by:') ?></label>
+        <select class="sbSelectora mp-sorting-select" ng-show="useSorting && sortingTypes.length > 1"
+                ng-model="activeSorting" ng-options="type.title for type in sortingTypes"
+                ng-disabled="httpRequest"></select>
+
+        <div class="mp-arrow-box" ng-show="useSorting">
+            <div class="mp-arrow-asc-box" ng-show="nextDescending" ng-mouseleave="arrowAscHover=false">
+                <span class="mp-arrow asc animated-inline" ng-hide="arrowAscHover"
+                      ng-mouseover="arrowAscHover=true"></span>
+                <span class="mp-arrow mp-arrow-hover asc animated-inline" ng-click="changeOrder()"
+                      ng-show="arrowAscHover" ng-mouseleave="arrowAscHover=false"
+                      title="<?php echo $_helper->__('Set Descending Direction') ?>"></span>
+            </div>
+            <div class="mp-arrow-desc-box" ng-show="!nextDescending" ng-mouseleave="arrowDescHover=false">
+                <span class="mp-arrow desc animated-inline" ng-hide="arrowDescHover"
+                      ng-mouseover="arrowDescHover=true"></span>
+                <span class="mp-arrow mp-arrow-hover desc animated-inline" ng-click="changeOrder()"
+                      ng-show="arrowDescHover" ng-mouseleave="arrowDescHover=false"
+                      title="<?php echo $_helper->__('Set Ascending Direction') ?>"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<table class="data-tabl" id="product-ajax-reviews">
+		 <colgroup><col width="25%"><col width="30%"><col width="50%"><col width="30%"></colgroup>
+						<thead>
+                            <tr>
+								<th>Date</th>
+                                <th>Score</th>
+                                <th>Customer Comment</th>
+                                
+                                
+                            </tr>
+                        </thead>   
+<!--div class="mp-review c-both <?php echo $_helper->getDesignClass() ?>"
+     ng-repeat="review in reviews"-->
+    <?php /*if ($_helper->showIcons()): ?>
+        <div class="mp-icon">
+            <div class="mp-icon-box"
+                 ng-style="{'background-color':'{{getIconBackColor(review)}}','background-image':'{{getIconBackImage(review)}}'}">
+                <span class="mp-icon-letter" ng-show="showLetter(review)">{{review.nickname[0].toUpperCase()}}</span>
+            </div>
+        </div>
+    <?php endif*/ ?>
+              
+    <!--div class="mp-content <?php if (!$_helper->showIcons()) echo 'full-width' ?>"-->
+    
+					<tbody>
+						<tr style="display: table-row;" class="mp-review c-both <?php echo $_helper->getDesignClass() ?>"
+     ng-repeat="review in reviews">
+							<td><span class="mp-date">{{review.date}}</span></td>
+							<td> 
+								<div ng-show="review.rating > 0">
+									<div class="mp-review-rating-box" style="<?php echo $_helper->getRatingFigureImageStyle() ?>">
+										<div class="mp-review-rating"
+											 ng-style="{'width':'{{review.rating}}%'}"
+											 style="<?php echo $_helper->getRatingFigureImageStyle() ?>"></div>
+									</div>
+
+								</div>
+							</td>
+							<td><div style="white-space: pre-wrap">{{review.content}}</div>
+								 <div class="mp-bottom">
+            <?php if ($_helper->isShareEnabled()): ?>
+                <span class="mp-share mp-facebook" title="Facebook">
+                    <a target="_blank"
+                       ng-href="http://www.facebook.com/share.php?u={{review.url}}&title={{review.title}}"></a>
+                </span>
+                <span class="mp-share mp-google" title="Google +">
+                    <a target="_blank" ng-href="https://plus.google.com/share?url={{review.url}}"></a>
+                </span>
+                <span class="mp-share mp-pinterest" title="Pinterest">
+                    <a target="_blank"
+                       ng-href="https://pinterest.com/pin/create/button/?url={{review.url}}&media={{productImgUrl}}&description={{review.content}}"></a>
+                </span>
+                <span class="mp-share mp-twitter" title="Twitter">
+                    <a target="_blank" ng-href="http://twitter.com/home?status={{review.title}}+{{review.url}}"></a>
+                </span>
+                <span class="mp-share mp-tumblr" title="Tumblr">
+                    <a target="_blank"
+                       ng-href="http://www.tumblr.com/share/link?url={{review.encodeUrl}}&amp;name={{review.fullTitle}}&amp;description={{review.content}}"></a>
+                </span>
+            <?php endif ?>
+
+            
+        </div>
+							</td>
+							
+						</tr>
+					</tbody>
+                        
+	</table>
+    
+        
+        
+        <!--<a class="mp-title" ng-href="{{review.url}}">{{review.title}}</a>-->
+
+        
+       
+    <!--/div>
+</div-->
+<div class="mp-more animated-inline" ng-click="loadMore()" style="<?php echo $_helper->getTextStyle() ?>"
+     ng-show="reviews.length < reviewsCount && !reviewsError"><?php echo $_helper->__("Load more") ?></div>
+<span class="mp-error-msg"
+      ng-show="reviewsError"><?php echo $_helper->__('Unable to get product reviews.') ?></span>
+
+<div id="mp-overlay" ng-show="FORMS.HIDE != form"></div>
+<div class="mp-box-container" ng-show="FORMS.REVIEW == form">
+    <div id="mp-add-box" class="mp-form-box">
+        <form id="mp-add-form" autocomplete="off">
+            <div style="margin-bottom: 10px">
+                <p class="mp-form-title d-inline-block" style="<?php echo $_helper->getTextStyle() ?>"><?php echo $_helper->__('Write Your Review') ?></p>
+                <a href="" ng-click="showHowToDialog()" ng-show="howTo.enabled" class="f-right">{{howTo.title}}</a>
+            </div>
+            <div class="mp-add-ratings" ng-show="ratings.length > 0">
+                <label class="v-top d-block" style="<?php echo $_helper->getTextStyle() ?>"><?php echo $_helper->__("How do you rate this product?") ?></label>
+                <ul class="v-top">
+                    <li ng-repeat="rating in ratings" style="<?php echo $_helper->getTextStyle() ?>">
+                        <label class="mp-add-rating-label" style="<?php echo $_helper->getTextStyle() ?>">{{rating.code}}</label>
+
+                        <div class="d-inline-block p-absolute animated-inline" ng-hide="trySubmit && !rating.selected">
+                            <div class="mp-add-rating-box" style="<?php echo $_helper->getRatingFigureImageStyle() ?>"
+                                 ng-repeat="option in rating.options track by option" ng-click="rating.selected=option"
+                                 ng-mouseover="rating.activeOption=option" ng-mouseleave="rating.activeOption=false">
+                                <div class="mp-add-rating" ng-class="getRatingClass(rating,option,false)"
+                                     style="<?php echo $_helper->getRatingFigureImageStyle() ?>"></div>
+                            </div>
+                        </div>
+                        <div class="d-inline-block p-absolute animated-inline" ng-show="trySubmit && !rating.selected">
+                            <div class="mp-add-rating-box mp-add-rating-box-failed"
+                                 ng-repeat="option in rating.options track by option" ng-click="rating.selected=option"
+                                 ng-mouseover="rating.activeOption=option" ng-mouseleave="rating.activeOption=false"
+                                 style="<?php echo $_helper->getRatingFigureFailedImageStyle() ?>">
+                                <div class="mp-add-rating" ng-class="getRatingClass(rating,option,true)"
+                                     style="<?php echo $_helper->getRatingFigureImageStyle() ?>"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="validation-advice rating-advice animated-inline"
+                        ng-show="showRatingValidation()"><?php echo $_helper->__('Please rate this product') ?></li>
+                </ul>
+            </div>
+            <div class="mp-add-input d-inline-block">
+                <label class="d-block" for="nickname" style="<?php echo $_helper->getTextStyle() ?>"><?php echo $_helper->__('Nickname') ?></label>
+                <input id="nickname" class="input-text required-entry" type="text" name="nickname" autocomplete="off"/>
+                <label class="d-block" for="title"
+                       style="margin-top: 14px;<?php echo $_helper->getTextStyle() ?>"><?php echo $_helper->__('Summary of the Review') ?></label>
+                <input id="title" class="input-text required-entry" type="text" name="title" autocomplete="off"/>
+            </div>
+            <div class="p-relative" style="margin-top:14px">
+                <label class="d-block c-both" for="detail"
+                       style="<?php echo $_helper->getTextStyle() ?>"><?php echo $_helper->__('Review') ?></label>
+                <textarea id="detail" class="input-text full-width required-entry" name="detail" rows="5"
+                          autocomplete="off"></textarea>
+            </div>
+            <div style="margin-top: 24px">
+                <button class="button" type="button" ng-click="submitForm()">
+                    <span><span><?php echo $_helper->__('Submit') ?></span></span>
+                </button>
+                <button class="button" type="button" ng-click="hideForm()">
+                    <span><span><?php echo $_helper->__('Cancel') ?></span></span>
+                </button>
+            </div>
+            <span class="mp-error-msg animated-msg" ng-show="MESSAGES.ERROR == messageType">{{message}}</span>
+        </form>
+    </div>
+</div>
+<div class="mp-box-container" ng-show="FORMS.LOGIN == form">
+    <div id="mp-login-box" class="mp-form-box">
+        <form id="mp-login-form">
+            <p class="mp-form-title" style="<?php echo $_helper->getTextStyle() ?>"><?php echo $_helper->__('Please login to add review') ?></p>
+
+            <div class="p-relative">
+                <label class="d-block" for="login-email" style="<?php echo $_helper->getTextStyle() ?>"><?php echo $_helper->__('Email Address') ?></label>
+                <input id="login-email" class="input-text required-entry validate-email" type="text"
+                       name="login-email"/>
+            </div>
+            <div class="p-relative">
+                <label class="d-block" for="login-pass"
+                       style="margin-top: 14px;<?php echo $_helper->getTextStyle() ?>"><?php echo $_helper->__('Password') ?></label>
+                <input id="login-pass" class="input-text required-entry validate-password" type="password"
+                       name="login-pass"/>
+            </div>
+            <a class="d-block" style="margin-top: 34px"
+               href="<?php echo $this->getUrl('customer/account/forgotpassword/') ?>"><?php echo $_helper->__('Forgot Your Password?') ?></a>
+
+            <div style="margin-top: 10px">
+                <button class="button" type="button" ng-click="login()">
+                    <span><span><?php echo $_helper->__('Login') ?></span></span>
+                </button>
+                <button class="button" type="button" ng-click="hideForm()">
+                    <span><span><?php echo $_helper->__('Cancel') ?></span></span>
+                </button>
+                <button class="button f-right" type="button" ng-click="register()">
+                    <span><span><?php echo $_helper->__('Register') ?></span></span>
+                </button>
+            </div>
+            <span class="mp-error-msg animated-msg" ng-show="MESSAGES.ERROR == messageType">{{message}}</span>
+        <span class="mp-error-msg animated-msg"
+              ng-show="MESSAGES.CONFIRM == messageType"><?php
+            echo $_helper->__('This account is not confirmed.') ?>&nbsp;<a
+                href=""
+                ng-click="sendConfirmation()"><?php echo $_helper->__('Click') ?></a>&nbsp;<?php echo $_helper->__('to resend confirmation email.') ?></span>
+        <span class="mp-notification animated-msg"
+              ng-show="MESSAGES.NOTIFICATION == messageType">{{message}}</span>
+        </form>
+    </div>
+</div>
+<div class="mp-box-container" ng-show="FORMS.HOW_TO == form">
+    <div id="mp-how-to-box" class="mp-form-box">
+        <form id="mp-how-to-form">
+            <p class="mp-form-title" style="<?php echo $_helper->getTextStyle() ?>">{{howTo.title}}</p>
+            <span ng-repeat="text in howTo.text track by $index">{{text}}<br></span>
+
+            <div style="text-align:center;margin-top:15px">
+                <button class="button" type="button" ng-click="hideForm()">
+                    <span><span>{{howTo.btnLabel}}</span></span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="mp-box-container" ng-show="FORMS.PURCHASE == form">
+    <div id="mp-purchase-box" class="mp-form-box">
+        <form id="mp-purchase-form">
+            <p class="mp-form-title" style="<?php echo $_helper->getTextStyle() ?>">{{purchase.title}}</p>
+            <span ng-repeat="text in purchase.text track by $index">{{text}}<br></span>
+
+            <div style="text-align:center;margin-top:15px">
+                <button class="button" type="button" ng-click="hideForm()">
+                    <span><span>{{purchase.btnLabel}}</span></span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="mp-box-container" ng-show="FORMS.THANK == form">
+    <div id="mp-thank-box" class="mp-form-box" style="text-align:center">
+        <form id="mp-thank-form">
+            <p class="mp-form-title" style="<?php echo $_helper->getTextStyle() ?>">{{thank.title}}</p>
+
+            <div class="mp-thank-icon"
+                 style="background-image:url('<?php echo $_helper->getThankImgUrl(true) ?>');background-image:url('<?php echo $_helper->getThankImgUrl() ?>'),none"
+                 ng-show="showThankIcon">
+            </div>
+            <span ng-repeat="text in thank.text track by $index">{{text}}<br></span>
+
+            <div style="margin-top:14px">
+                <button class="button" type="button" ng-click="hideForm()">
+                    <span><span>{{thank.btnLabel}}</span></span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+

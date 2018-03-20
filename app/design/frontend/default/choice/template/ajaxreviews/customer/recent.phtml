@@ -1,0 +1,34 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $this Magpleasure_Ajaxreviews_Block_Review_Customer_Recent */
+?>
+<?php if ($this->getCollection() && $this->count()): ?>
+    <div class="box-account box-reviews mp-customer-recent-reviews">
+        <?php $helper = Mage::helper('ajaxreviews') ?>
+        <div class="box-head">
+            <h2><?php echo $this->__('My Recent Reviews') ?></h2>
+            <a href="<?php echo $this->getAllReviewsUrl() ?>"><?php echo $helper->__('View All') ?></a>
+        </div>
+        <ol id="my_recent_reviews" style="margin-top: 5px">
+            <?php foreach ($this->getCollection() as $_review): ?>
+                <li class="item">
+                    <?php if ($_review->getSum()): ?>
+                        <div class="mp-review-rating-box"
+                             style="<?php echo $helper->getRatingFigureImageStyle() ?>">
+                            <div class="mp-review-rating"
+                                 style="width:<?php echo($_review->getSum() / $_review->getCount()) ?>%;<?php echo $helper->getRatingFigureImageStyle() ?>"></div>
+                        </div>
+                    <?php endif; ?>
+                    <a class="mp-review-recent-link"
+                       href="<?php echo $this->getReviewUrl($_review->getReviewId()) ?>"><?php echo $this->escapeHtml($_review->getName()) ?></a>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+        <script type="text/javascript">decorateList('my_recent_reviews');</script>
+    </div>
+<?php endif; ?>

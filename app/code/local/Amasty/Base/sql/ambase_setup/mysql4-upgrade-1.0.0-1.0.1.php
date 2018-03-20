@@ -6,7 +6,7 @@
  */
 
 
-if (!Mage::helper('core')->isModuleEnabled('Mage_AdminNotification')) {
+if (!Mage::helper('ambase')->isModuleEnabled('Mage_AdminNotification')) {
     return;
 }
 

@@ -1,0 +1,39 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+?>
+<?php /** @var $this Magpleasure_Ajaxreviews_Block_Adminhtml_Notification_Review_Edit_Form_Preview */ ?>
+<div class="entry-edit-head">
+    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__("Email Preview"); ?></h4>
+
+    <div class="form-buttons"></div>
+</div>
+<div class="fieldset notification-preview" id="version_notification_preview">
+
+    <div class="email-details">
+        <dl>
+            <dt><?php echo $this->__("To: "); ?></dt>
+
+            <?php if ($customerLink = $this->getCustomerLink()): ?>
+            <dd>
+                <a target="_blank" href="<?php echo $customerLink; ?>">
+                    <?php echo $this->getCustomerName(); ?> &#x3C;<?php echo $this->getCustomerEmail(); ?>&#x3E;
+                </a>
+            </dd>
+            <?php else: ?>
+            <dd>
+                <?php echo $this->getCustomerName(); ?> &#x3C;<?php echo $this->getCustomerEmail(); ?>&#x3E;
+            </dd>
+            <?php endif; ?>
+            <dt><?php echo $this->__("Will be sent at: "); ?></dt>
+            <dd><?php echo $this->getScheduledAt(); ?></dd>
+            <dt><?php echo $this->__("Subject: "); ?></dt>
+            <dd><?php echo $this->getEmailSubject(); ?></dd>
+        </dl>
+    </div>
+    <iframe src="<?php echo $this->getPreviewUrl(); ?>" class="email-body" />
+
+</div>

@@ -1915,6 +1915,34 @@ label.required em { float:right; font-style:normal; color:#f00;  }
 .main-container a[href^='tel:'] { color: #072c73; text-decoration: none; }
 .payment-container .payment-div { padding: 0 15px;text-align: center;}
 
+
+/* Ajax review css*/
+
+#product-ajax-reviews th { border: 1px solid #ececec !important;padding: 12px 0px 12px 20px;font-size: 16px;font-weight: bold;}
+#product-ajax-reviews td { border: 1px solid #ececec !important;}
+.mp-nickname{color:#000 !important;}
+.mp-date{float: none!important;color:#000!important;}
+.mp-vote ng-binding{background-color:#072c73 !import;}
+.sbSelectora {
+    display: block;
+    height: 30px;
+    left: 0px;
+    line-height: 30px;
+    outline: none;
+    overflow: hidden;
+    text-indent: 10px;
+    top: 0;
+    width: 170px;
+    font-size: 13px;
+}
+#product-ajax-reviews tr:nth-child(odd){
+  background-color: #fff;
+  
+}
+#product-ajax-reviews tr:nth-child(even){
+  background-color: #e2e2e2;
+  
+}
 /* Recently viewed slider css*/
 
 .catalog-product-view .qwer .bx-wrapper .bx-prev {left: -52px !important;}

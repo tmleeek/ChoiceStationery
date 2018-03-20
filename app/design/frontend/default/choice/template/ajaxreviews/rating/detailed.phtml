@@ -1,0 +1,33 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $this Magpleasure_Ajaxreviews_Block_Rating_Entity_Detailed */
+/** @var $_helper Magpleasure_Ajaxreviews_Helper_Data */
+?>
+<?php if (!empty($collection) && $collection->getSize()): ?>
+    <table class="ratings-table">
+        <col width="1"/>
+        <col/>
+        <tbody>
+        <?php foreach ($collection as $_rating): ?>
+            <?php if ($_rating->getSummary()): ?>
+                <tr>
+                    <th><?php echo $this->__($this->escapeHtml($_rating->getRatingCode())) ?></th>
+                    <td>
+                        <?php $helper = Mage::helper('ajaxreviews') ?>
+                        <div class="mp-review-rating-box"
+                             style="<?php echo $helper->getRatingFigureImageStyle() ?>">
+                            <div class="mp-review-rating"
+                                 style="width:<?php echo ceil($_rating->getSummary()) ?>%;<?php echo $helper->getRatingFigureImageStyle() ?>"></div>
+                        </div>
+                    </td>
+                </tr>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>

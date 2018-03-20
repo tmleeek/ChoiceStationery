@@ -1,0 +1,161 @@
+<html>
+	<head>
+		<style>
+			table, td, th {    
+            border: 1px solid #ddd;
+            text-align: left;   
+}
+th{
+	background-color:#E73300;
+	color:#FFF5FF;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 15px;
+}
+		</style>
+	</head>
+<body>
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $this Magpleasure_Ajaxreviews_Block_Review_View */
+/** @var $helper Magpleasure_Ajaxreviews_Helper_Data */
+?>
+<?php
+#echo "===========================================";
+$varitest = Mage::getModel('ajaxreviews/resource_review_review_collection');
+//echo "<pre>"; print_r($varitest); echo "</pre>";
+ ?>
+
+    <div class="product-review mp-product-review">
+        <div class="page-title">
+            <h1><?php echo $this->__('Review Details') ?></h1>
+        </div>
+        <?php $productData = $this->getProductData();
+        $name = $this->escapeHtml($productData->getName()) ?>
+        <div class="product-img-box">
+            <a href="<?php echo $productData->getProductUrl() ?>"
+               title="<?php echo $name ?>" class="product-image"><img
+                    src="<?php echo $this->helper('catalog/image')->init($productData, 'small_image')->resize(125, 125); ?>"
+                    height="125" width="125" alt="<?php echo $name ?>"/></a>
+            <?php if ($this->getRating()): ?>
+                <p class="label"><?php echo $this->__('Average Customer Rating') ?>:</p>
+                <?php echo $this->getReviewsSummaryHtml($this->getProductData()) ?>
+            <?php endif; ?>
+        </div>
+        <div class="product-details">
+            <h2 class="product-name"><a href="<?php echo $this->getProduct()->getProductUrl() ?>"><?php echo $this->escapeHtml($this->getProductData()->getName()) ?></a></h2>
+            <?php $_helper = Mage::helper('ajaxreviews') ?>
+            <?php if ($this->getRating()): ?>
+                <h3><?php echo $this->__('Product Rating:') ?></h3>
+                <table class="ratings-table">
+                    <?php foreach ($this->getRating() as $_rating): ?>
+                        <?php if ($_rating->getPercent()): ?>
+                            <tr>
+                                <th><?php echo $this->__($this->escapeHtml($_rating->getRatingCode())) ?></th>
+                                <td>
+                                    <div class="mp-review-rating-box"
+                                         style="<?php echo $_helper->getRatingFigureImageStyle() ?>">
+                                        <div class="mp-review-rating"
+                                             style="width:<?php echo ceil($_rating->getPercent()) ?>%;<?php echo $_helper->getRatingFigureImageStyle() ?>"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </table>
+                </dl>
+            <?php endif; ?>
+            <dl>
+                <dt style="<?php echo $_helper->getTextStyle() ?>">
+                    <?php echo $this->__('Product Review (submitted on %s):', $this->dateFormat($productData->getCreatedAt())) ?>
+                </dt>
+                <dd>
+                    <?php echo nl2br($this->escapeHtml($this->getReviewData()->getDetail())) ?>
+                </dd>
+            </dl>
+        </div>
+    </div>
+<!--  code for all review display in one page -->
+<?php
+
+$con = Mage::getSingleton('core/resource')->getConnection('core_write');
+$re=$con->query('SELECT rd.title, rd.detail, rd.nickname, rd.review_id, r.created_at, sum(vt.percent) as precn, r.entity_pk_value FROM review_detail AS rd LEFT JOIN review AS r USING  (review_id ) LEFT JOIN rating_option_vote AS vt USING ( review_id ) WHERE r.status_id = "1" GROUP BY vt.`review_id` order by r.created_at desc');
+
+/*'SELECT rd.title, rd.detail, rd.nickname, r.created_at, sum(vt.percent) as precn, r.entity_pk_value FROM review_detail AS rd LEFT JOIN review AS r USING  (review_id ) LEFT JOIN rating_option_vote AS vt USING ( review_id ) WHERE r.status_id = "1" GROUP BY vt.`review_id`
+';*/
+?>
+
+<table border="1" class="table table-bordered" id="load_data_table">
+<thead>
+<tr>
+	<th colspan="2">Date</th>	
+	<th>Score</th>	
+	<th>Customer Comment</th>	
+</tr>
+</thead>
+<tbody>
+
+<?php while($rows=$re->fetch()) 
+{
+?>
+
+<?php $productId = $rows['entity_pk_value'];
+$product = Mage::getModel('catalog/product')->load($productId);
+$imageThumbnailUrl = $product->getThumbnailUrl();
+$product_url = $product->getProductUrl();
+
+?>
+
+<?php
+$res_rate=$con->query("SELECT r.rating_code,rt.percent  FROM `rating` as r left join rating_option_vote as rt using(rating_id)  WHERE  
+rt.review_id='".$rows['review_id']."' order by r.rating_code asc ");
+ while($rows_rate=$res_rate->fetch()) 
+{
+?>
+<tr style="display: table-row;" class="mp-review c-both <?php echo $_helper->getDesignClass() ?>"
+     ng-repeat="review in reviews">
+                <div style="width:<?php echo $rows_rate['percent'];  ?>%" class="rating"></div>
+    <?php
+}
+?>
+<td colspan="2"><?php 
+
+  // echo date("d F Y", $rows['created_at']);
+   
+  echo $rows['created_at'];
+?></td>
+
+                    <?php if ($this->getRating()): ?>
+                <p class="label"><?php echo $this->__('Average Customer Rating') ?>:</p>
+                <?php //echo $this->getReviewsSummaryHtml($this->getProduct()) ?>
+                <td><?php echo $this->getReviewsSummaryHtml($product, 'short')?></td>
+            <?php endif; ?>            
+ 
+<td><?php echo $rows['detail']; ?></td>
+<?php
+}
+?>
+  </tr>
+  </tbody>
+   </table>
+<div onclick="myFunction()"></div>
+
+
+<script>
+function myFunction() {
+    alert("I am an alert box!");
+}
+</script>
+
+

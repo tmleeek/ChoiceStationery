@@ -1,0 +1,50 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $this Magpleasure_Ajaxreviews_Block_Adminhtml_Notification_Existing_Edit_Form_Element_Orders_Render */
+?>
+
+<script type="text/javascript">
+    mpCommonAngular.factory('ajaxReviewsExistingOrders', function () {
+        return {
+            getPeriods: function () {
+                <?php $_months = $this->_helper()->__('Months') ?>
+                return {
+                    1: '1 ' + '<?php echo $this->_helper()->__('Month') ?>',
+                    2: '2 ' + '<?php echo $_months ?>',
+                    3: '3 ' + '<?php echo $_months ?>',
+                    4: '4 ' + '<?php echo $_months ?>',
+                    5: '5 ' + '<?php echo $_months ?>',
+                    6: '6 ' + '<?php echo $_months ?>',
+                    7: '7 ' + '<?php echo $_months ?>',
+                    8: '8 ' + '<?php echo $_months ?>',
+                    9: '9 ' + '<?php echo $_months ?>',
+                    10: '10 ' + '<?php echo $_months ?>',
+                    11: '11 ' + '<?php echo $_months ?>',
+                    12: '1 ' + '<?php echo $this->_helper()->__('Year') ?>'
+                }
+            },
+            getFormKey: function () {
+                return '<?php echo $this->getFormKey(); ?>';
+            },
+            getOrdersUrl: function () {
+                return '<?php echo $this->getUrl('adminhtml/ajaxreviews_notification/getExistingOrders'); ?>';
+            },
+            getItemsUrl: function () {
+                return '<?php echo $this->getUrl('adminhtml/ajaxreviews_notification/getExistingItems'); ?>';
+            },
+            getNotificationsUrl: function () {
+                return '<?php echo $this->getUrl('adminhtml/ajaxreviews_notification/getNotificationsCount'); ?>';
+            }
+        }
+    })
+</script>
+<script type="text/ng-template" id="magpleasure/ajaxreviews/adminhtml/notification/existing/template.html">
+    <?php echo $this->getTemplateHtml(); ?>
+</script>
+<div class="mp-ajax-reviews-notification-existing"></div>
+

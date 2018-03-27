@@ -1,0 +1,103 @@
+<?php
+/** Added by Ramsandip
+*/
+?>
+<?php
+$con = Mage::getSingleton('core/resource')->getConnection('core_write');
+$retotc=$con->query('SELECT sum(vt.percent) as precn, `e`.*, `rt`.`review_id`, `rt`.`created_at` AS `review_created_at`, `rt`.`entity_pk_value`, `rt`.`status_id`, `rdt`.`title`, `rdt`.`nickname`, `rdt`.`detail`, `rdt`.`customer_id`, `rdt`.`store_id` FROM `catalog_product_entity` AS `e` INNER JOIN `review` AS `rt` ON rt.entity_pk_value = e.entity_id INNER JOIN `review_detail` AS `rdt` ON rdt.review_id = rt.review_id INNER JOIN rating_option_vote AS vt ON vt.review_id = rt.review_id  where `rt`.`status_id` = 1 GROUP BY vt.`review_id` order by rt.created_at desc');
+$rowstcnt=$retotc->fetchAll();
+$total_records_count = count($rowstcnt);
+$renew=$con->query('SELECT sum(vt.percent) as precn, `e`.*, `rt`.`review_id`, `rt`.`created_at` AS `review_created_at`, `rt`.`entity_pk_value`, `rt`.`status_id`, `rdt`.`title`, `rdt`.`nickname`, `rdt`.`detail`, `rdt`.`customer_id`, `rdt`.`store_id` FROM `catalog_product_entity` AS `e` INNER JOIN `review` AS `rt` ON rt.entity_pk_value = e.entity_id INNER JOIN `review_detail` AS `rdt` ON rdt.review_id = rt.review_id INNER JOIN rating_option_vote AS vt ON vt.review_id = rt.review_id  where `rt`.`status_id` = 1 GROUP BY vt.`review_id` order by rt.created_at desc');
+    while($rowsnew=$renew->fetch()) 
+	{		
+		$precn_avr = round($rowsnew['precn']/3);
+		$review_avr = $review_avr+$precn_avr;
+	}
+$totalavramt = round($review_avr/$total_records_count);
+//if(isset($_REQUEST['testrate'])){ $totalavramt=$_REQUEST['testrate']; }
+if($totalavramt <= 10){
+	echo '<span class="fa fa-star-half-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+}
+elseif($totalavramt > 10 && $totalavramt <= 20){
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+}
+elseif($totalavramt > 20 && $totalavramt <= 30){
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star-half-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+}
+elseif($totalavramt > 30 && $totalavramt <= 40){
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+}
+elseif($totalavramt > 40 && $totalavramt <= 50){
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+}
+elseif($totalavramt > 50 && $totalavramt <= 60){
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+}
+elseif($totalavramt > 60 && $totalavramt <= 70){
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+}
+elseif($totalavramt > 70 && $totalavramt <= 80){
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+}
+elseif($totalavramt > 80 && $totalavramt <= 90){
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star-half-o"></span>';
+}
+elseif($totalavramt > 90){
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star"></span>';
+	echo '<span class="fa fa-star"></span>';
+} else {
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+	echo '<span class="fa fa-star-o"></span>';
+}
+?>
+<?php /* <div class="mp-review-rating-box" 
+style="background-image:url('<?php echo Mage::getBaseUrl('media'); ?>ajaxreviews/default/figure_small.png');
+background-image:url('<?php echo Mage::getBaseUrl('media'); ?>ajaxreviews/default/figure_small.svg'),none">
+<div class="mp-review-rating" ng-style="{'width':'<?php echo $totalavramt."%"; ?>'}" 
+style="background-image: url('<?php echo Mage::getBaseUrl('media'); ?>ajaxreviews/default/figure_small.svg'), none; 
+width: <?php echo $totalavramt."%"; ?>;">
+</div>
+</div> */ ?>
+&nbsp;Rated <?php echo "9.6"; ?> out of 10

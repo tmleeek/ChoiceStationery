@@ -123,19 +123,20 @@ class Mage_Review_Model_Resource_Review extends Mage_Core_Model_Resource_Db_Abst
      * @return Mage_Review_Model_Resource_Review
      */
     protected function _beforeSave(Mage_Core_Model_Abstract $object)
-    {
-        if (!$object->getId()) {
-            $object->setCreatedAt(Mage::getSingleton('core/date')->gmtDate());
-        }
-        if ($object->hasData('stores') && is_array($object->getStores())) {
-            $stores = $object->getStores();
-            $stores[] = 0;
-            $object->setStores($stores);
-        } elseif ($object->hasData('stores')) {
-            $object->setStores(array($object->getStores(), 0));
-        }
-        return $this;
-    }
+	{
+		if (!$object->getId() && !$object->getSkipCreatedAtSet()) { //add an other constraint here
+			$object->setCreatedAt(Mage::getSingleton('core/date')->gmtDate());
+		}
+		if ($object->hasData('stores') && is_array($object->getStores())) {
+			$stores = $object->getStores();
+			$stores[] = 0;
+			$object->setStores($stores);
+		} elseif ($object->hasData('stores')) {
+			$object->setStores(array($object->getStores(), 0));
+		}
+		return $this;
+	}
+
 
     /**
      * Perform actions after object save

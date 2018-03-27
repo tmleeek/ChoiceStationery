@@ -28,7 +28,7 @@
     <div class="mp-sorting animated-inline" ng-show="reviews.length > 0">
         <label class="mp-sorting-label"
                ng-show="useSorting && sortingTypes.length > 1"><?php echo $_helper->__('Sort by:') ?></label>
-        <select class="sbSelectora mp-sorting-select" ng-show="useSorting && sortingTypes.length > 1"
+        <select class="mp-sorting-select" ng-show="useSorting && sortingTypes.length > 1"
                 ng-model="activeSorting" ng-options="type.title for type in sortingTypes"
                 ng-disabled="httpRequest"></select>
 
@@ -50,46 +50,30 @@
         </div>
     </div>
 </div>
-<table class="data-tabl" id="product-ajax-reviews">
-		 <colgroup><col width="15%"><col width="20%"><col width="65%"></colgroup>
-						<thead>
-                            <tr>
-								<th style="background:#e60003; color:#ffffff; padding: 5px 0px 4px 20px;">Date</th>
-                                <th style="background:#e60003; color:#ffffff; padding: 5px 0px 4px 20px;">Score</th>
-                                <th style="background:#e60003; color:#ffffff; padding: 5px 0px 4px 20px;">Customer Comment</th>
-                                
-                                
-                            </tr>
-                        </thead>   
-<!--div class="mp-review c-both <?php echo $_helper->getDesignClass() ?>"
-     ng-repeat="review in reviews"-->
-    <?php /*if ($_helper->showIcons()): ?>
+<div class="mp-review c-both <?php echo $_helper->getDesignClass() ?>"
+     ng-repeat="review in reviews">
+    <?php if ($_helper->showIcons()): ?>
         <div class="mp-icon">
             <div class="mp-icon-box"
                  ng-style="{'background-color':'{{getIconBackColor(review)}}','background-image':'{{getIconBackImage(review)}}'}">
                 <span class="mp-icon-letter" ng-show="showLetter(review)">{{review.nickname[0].toUpperCase()}}</span>
             </div>
         </div>
-    <?php endif*/ ?>
-              
-    <!--div class="mp-content <?php if (!$_helper->showIcons()) echo 'full-width' ?>"-->
-    
-					<tbody>
-						<tr style="display: table-row;" class="mp-review c-both <?php echo $_helper->getDesignClass() ?>"
-     ng-repeat="review in reviews">
-							<td style="padding: 10px 15px;"><span class="mp-date">{{review.date}}</span></td>
-							<td style="padding: 10px 15px;"> 
-								<div ng-show="review.rating > 0">
-									<div class="mp-review-rating-box" style="<?php echo $_helper->getRatingFigureImageStyle() ?>">
-										<div class="mp-review-rating"
-											 ng-style="{'width':'{{review.rating}}%'}"
-											 style="<?php echo $_helper->getRatingFigureImageStyle() ?>"></div>
-									</div>
+    <?php endif ?>
+    <div class="mp-content <?php if (!$_helper->showIcons()) echo 'full-width' ?>">
+        <div class="mp-nickname">{{review.nickname}}</div>
+        <div ng-show="review.rating > 0">
+            <div class="mp-review-rating-box" style="<?php echo $_helper->getRatingFigureImageStyle() ?>">
+                <div class="mp-review-rating"
+                     ng-style="{'width':'{{review.rating}}%'}"
+                     style="<?php echo $_helper->getRatingFigureImageStyle() ?>"></div>
+            </div>
+            <span class="mp-date">{{review.date}}</span>
+        </div>
+        <a class="mp-title" ng-href="{{review.url}}">{{review.title}}</a>
 
-								</div>
-							</td>
-							<td style="padding: 10px 15px;"><div style="white-space: pre-wrap">{{review.content}}</div>
-								 <div class="mp-bottom">
+        <div style="white-space: pre-wrap">{{review.content}}</div>
+        <div class="mp-bottom">
             <?php if ($_helper->isShareEnabled()): ?>
                 <span class="mp-share mp-facebook" title="Facebook">
                     <a target="_blank"
@@ -111,31 +95,30 @@
                 </span>
             <?php endif ?>
 
-            
+            <div class="mp-vote-box" ng-show="vote">
+                <div class="mp-like-box" ng-mouseleave="review.hoverLike=false">
+                    <span class="mp-like animated-inline" ng-hide="review.hoverLike || review.voted"
+                          ng-mouseover="review.hoverLike=true"></span>
+                    <span class="mp-like mp-like-hover animated-inline" ng-click="assesReview(review, true)"
+                          ng-hide="!review.hoverLike || review.voted" ng-mouseleave="review.hoverLike=false"></span>
+                </div>
+                <span class="mp-vote" ecom-back-color="{{getVoteBackColor(review)}}">{{review.votes}}</span>
+
+                <div class="mp-dislike-box" ng-mouseleave="review.hoverDislike=false">
+                    <span class="mp-dislike animated-inline" ng-hide="review.hoverDislike || review.voted"
+                          ng-mouseover="review.hoverDislike=true"></span>
+                    <span class="mp-dislike mp-dislike-hover animated-inline"
+                          ng-click="assesReview(review, false)" ng-hide="!review.hoverDislike || review.voted"
+                          ng-mouseleave="review.hoverDislike=false"></span>
+                </div>
+            </div>
         </div>
-							</td>
-							
-						</tr>
-					</tbody>
-                        
-	</table>
-    
-        
-        
-        <!--<a class="mp-title" ng-href="{{review.url}}">{{review.title}}</a>-->
-
-        
-       
-    <!--/div>
-</div-->
-
+    </div>
+</div>
 <div class="mp-more animated-inline" ng-click="loadMore()" style="<?php echo $_helper->getTextStyle() ?>"
-       ng-show="reviews.length < reviewsCount && !reviewsError && !prireviewsError"><?php echo $_helper->__("Load more") ?></div>
+     ng-show="reviews.length < reviewsCount && !reviewsError"><?php echo $_helper->__("Load more") ?></div>
 <span class="mp-error-msg"
-     ng-show="reviewsError"><?php echo $_helper->__('Unable to get product reviews.') ?></span>
-<span class="mp-error-msg"
-      ng-show="prireviewsError"><?php echo $_helper->__('No more record found!') ?></span>
-      
+      ng-show="reviewsError"><?php echo $_helper->__('Unable to get product reviews.') ?></span>
 
 <div id="mp-overlay" ng-show="FORMS.HIDE != form"></div>
 <div class="mp-box-container" ng-show="FORMS.REVIEW == form">
@@ -286,4 +269,3 @@
         </form>
     </div>
 </div>
-

@@ -131,8 +131,8 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
         if ($sessionCacheLimiter) {
             session_cache_limiter((string)$sessionCacheLimiter);
         }
-
-        session_start();
+ 
+        session_start(); 
 
         if (Mage::app()->getFrontController()->getRequest()->isSecure() && empty($cookieParams['secure'])) {
             // secure cookie check to prevent MITM attack

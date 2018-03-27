@@ -102,7 +102,7 @@
 
     <review_product_view>
         <reference name="head">
-            <block type="ajaxreviews/review_view_og" name="ajaxreviews.review.og" template="ajaxreviews/review/og.phtml"></block>
+            <block type="ajaxreviews/review_view_og" name="ajaxreviews.review.og" template="ajaxreviews/view/og.phtml"></block>
         </reference>
     </review_product_view>
     <ajaxreviews_review_testemailpost>

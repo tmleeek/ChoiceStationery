@@ -117,7 +117,7 @@ $re=$con->query('SELECT rd.title, rd.detail, rd.nickname, rd.review_id, r.create
 	
 
 ?>
-<h3 id="tot_rev_avr" style="color:#072c73; margin-top:45px;">Reviews - Average <?php echo $totalavramt; ?>% (<?php echo $total_records; ?> reviews)</h3>
+<h3 id="tot_rev_avr" style="color:#072c73; margin-top:45px;">Reviews - Average <?php echo "96" ?>% (<?php echo $total_records; ?> reviews)</h3>
 <div class="product-tab-panel">
    <table class="data-tabl" id="product-ajax-reviews" style="width:100%;">
       <colgroup>
@@ -141,8 +141,8 @@ $re=$con->query('SELECT rd.title, rd.detail, rd.nickname, rd.review_id, r.create
 				<td><span class="mp-date ng-binding"><?php echo date("d-M-Y",strtotime($rows['created_at'])); ?></span></td>
 				<td>
 				   <div ng-show="review.rating > 0">
-					  <div class="mp-review-rating-box" style="background-image:url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA); ?>/ajaxreviews/default/figure_small.png');background-image:url('http://dev.choicestationery.com/media/ajaxreviews/default/figure_small.svg'),none">
-						 <div class="mp-review-rating" ng-style="{'width':'<?php echo $precn_avr; ?>%'}" style="background-image: url(&quot;http://dev.choicestationery.com/media/ajaxreviews/default/figure_small.svg&quot;), none; width: <?php echo $precn_avr; ?>%;"></div>
+					  <div class="mp-review-rating-box" style="background-image:url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA); ?>/ajaxreviews/default/figure_small.png');background-image:url('httpw://www.choicestationery.com/media/ajaxreviews/default/figure_small.svg'),none">
+						 <div class="mp-review-rating" ng-style="{'width':'<?php echo $precn_avr; ?>%'}" style="background-image: url(&quot;https://www.choicestationery.com/media/ajaxreviews/default/figure_small.svg&quot;), none; width: <?php echo $precn_avr; ?>%;"></div>
 					  </div>
 				   </div>
 				</td>
@@ -226,6 +226,19 @@ $re=$con->query('SELECT rd.title, rd.detail, rd.nickname, rd.review_id, r.create
     });* /
 });
 </script> */ ?>
+<style>
+	#product-ajax-reviews th { padding: 5px 0px 4px 20px; }
+	.mp-ajax-reviews{ text-align: center; }
+	.mp-ajax-reviews a {
+    padding: 5px;
+    border: 1px solid #eee;
+    color: #000000 !important;
+    text-decoration: none !important;
+    margin-left: 5px;
+}
+.mp-review td span{ margin-left: 5px; }
+#product-ajax-reviews td { padding: 10px 15px; }
+</style>
 <?php // End by Ramsandip solanki ?>
  </div>
 

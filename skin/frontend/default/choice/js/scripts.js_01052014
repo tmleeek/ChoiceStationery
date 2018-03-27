@@ -2,8 +2,7 @@ jQuery(document).ready(function(){
 
 	/*********************************************************************************************************** Superfish Menu *********************************************************************/
         setTimeout(function() {
-	  jQuery("#search").css("padding-left","46px");       
-        },2000);
+	
          /* toggle nav */
 	jQuery("#menu-icon").on("click", function(){
 		jQuery(".sf-menu").slideToggle();

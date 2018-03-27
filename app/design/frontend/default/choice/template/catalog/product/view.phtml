@@ -223,8 +223,10 @@
             
                   </div>
                   <div class="tab-pane" id="review">
+					 
                    <!-- <p class="review-text"><?php //echo $this->getChildHtml('feefo_reviews')?></p>-->
                     <p class="review-text">
+						
 							<div class="product-collateral toggle-content tabs">
 							<?php if ($review = $this->getChildGroup('review_info', 'getChildHtml')):?>
 								<dl id="collateral-tabs" class="collateral-tabs">
@@ -259,3 +261,10 @@
        <?php echo $this->getChildHtml('related'); ?>
       </div>
       <!--end of category-outer--> 
+<style>
+.product-detail-div .amount a{color:#000 !important;float: left !important;}
+.product-code{float: left !important;
+margin: 0px 26px 0px 0px !important;}
+.mp-reviews-rating-summary-short .amount{float:inline-end !important;}
+
+</style>

@@ -70,7 +70,7 @@
 	</resources>
 	<template>
 		<email>
-			<rock_ipad_draw module="Rock_Ipad">
+			<rock_ipad_draw module="ipad">
 				<label>Ipad Draw Confirmation</label>
 				<file>rock_ipad_draw_confirmation.html</file>
 				<type>html</type>

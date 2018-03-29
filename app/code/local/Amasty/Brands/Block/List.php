@@ -72,16 +72,12 @@ class Amasty_Brands_Block_List extends Mage_Core_Block_Template
      */
     protected function _prepareLayout()
     {
-        $attrCode = Mage::helper('ambrands')->getBrandAttributeCode();
-
-        $entityTypeId = Mage::getModel('eav/entity')->setType('catalog_product')->getTypeId();
-        /** @var Mage_Eav_Model_Attribute $attribute */
-        $attribute  = Mage::getModel('catalog/resource_eav_attribute')
-            ->loadByCode($entityTypeId, $attrCode);
-
+        $attribute = Mage::helper('ambrands')->getBrandAttribute();
         if (!$attribute->getId()){
             return parent::_prepareLayout();
         }
+
+        $optionsCounts = Mage::helper('ambrands')->getBrandOptionsCounts();
 
         $options = $attribute->getFrontend()->getSelectOptions();
         array_shift($options);
@@ -120,7 +116,7 @@ class Amasty_Brands_Block_List extends Mage_Core_Block_Template
             if (!isset($titles[$opt['value']])) {
                 continue;
             }
-            $opt['cnt'] = isset($optionsCount[$opt['value']]) ? $optionsCount[$opt['value']] : '0';
+            $opt['cnt'] = isset($optionsCounts[$opt['value']]) ? $optionsCounts[$opt['value']] : '0';
             if (!$this->getDisplayAllBrands() && !$opt['cnt']) {
                 continue;
             }

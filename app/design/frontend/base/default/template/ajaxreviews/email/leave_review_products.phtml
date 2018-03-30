@@ -6,6 +6,7 @@
  */
 ?>
 <?php $products = $this->getProducts(); ?>
+<?php $helper = Mage::helper('ajaxreviews'); ?>
 <!-- Paragraph -->
 <table class="row paragraph first">
     <tr>
@@ -14,22 +15,19 @@
                 <table class="container">
                     <tr>
                         <td class="wrapper last">
-
                             <table class="twelve columns">
                                 <tr>
                                     <td>
                                         <p>
                                             <?php
-                                            $text = '';
-                                            if(count($products) == 1) {
+                                            if (count($products) == 1) {
                                                 $text = '<a href="' . $products[0]['name'] . '">' . $products[0]['name'] . '</a>';
-                                            }
-                                            else {
-                                                $text = '<span>goods</span>';
+                                            } else {
+                                                $text = '<span>' . $helper->__('goods')   . '</span>';
                                             }
                                             ?>
-                                            <span>Hello <?php echo $this->getCustomerName();?>, you've recently bought </span>
-                                            <?php echo $text; ?><span>, what do you think about it?</span>
+                                            <span><?php echo $helper->__('Hello %s, you\'ve recently bought' , $this->getCustomerName())?></span>
+                                            <span><?php echo $helper->__('%s, what do you think about it?' , $text)?></span>
                                         </p>
                                     </td>
                                 </tr>
@@ -85,7 +83,7 @@
                                 <td class="text-pad-left text-pad-right">
 
                                     <h3><?php echo $product['name'];?></h3>
-                                    <span class="purchased">Purchased on <?php echo $product['purchase_date'];?>&nbsp;</span>
+                                    <span class="purchased"><?php echo $helper->__('Purchased on')?> <?php echo $product['purchase_date'];?>&nbsp;</span>
                                     <br/><br/>
 
                                     <!--[if mso]>
@@ -97,7 +95,7 @@
                                                  fillcolor="<?php echo $this->getColor();?>">
                                         <w:anchorlock/>
                                         <center style="color:#ffffff;font-family:Helvetica;font-size:16px;font-weight:bold;">
-                                            Review This Item
+                                            <?php echo $helper->__('Review This Item')?>
                                         </center>
                                     </v:roundrect>
                                     <![endif]-->
@@ -105,7 +103,9 @@
                                     <table class="button medium-button radius">
                                         <tr>
                                             <td>
-                                                <a href="<?php echo $product['review_url'];?>">Review This Item</a>
+                                                <a href="<?php echo $product['review_url'];?>">
+                                                    <?php echo $helper->__('Review This Item')?>
+                                                </a>
                                             </td>
                                         </tr>
                                     </table>
@@ -126,7 +126,7 @@
                                 <td class="text-pad-left text-pad-right">
 
                                     <h3><?php echo $product['name'];?></h3>
-                                    <span class="purchased">Purchased on <?php echo $product['purchase_date'];?>&nbsp;</span>
+                                    <span class="purchased"><?php echo $helper->__('Purchased on')?> <?php echo $product['purchase_date'];?>&nbsp;</span>
                                     <br/><br/>
 
                                 </td>
@@ -151,7 +151,7 @@
                                                  fillcolor="<?php echo $this->getColor();?>">
                                         <w:anchorlock/>
                                         <center style="color:#ffffff;font-family:Helvetica;font-size:16px;font-weight:bold;">
-                                            Review This Item
+                                            <?php echo $helper->__('Review This Item')?>
                                         </center>
                                     </v:roundrect>
                                     <![endif]-->
@@ -159,7 +159,9 @@
                                     <table class="button medium-button radius">
                                         <tr>
                                             <td>
-                                                <a href="<?php echo $product['review_url'];?>">Review This Item</a>
+                                                <a href="<?php echo $product['review_url'];?>">
+                                                    <?php echo $helper->__('Review This Item')?>
+                                                </a>
                                             </td>
                                         </tr>
                                     </table>

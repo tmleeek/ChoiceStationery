@@ -10,7 +10,7 @@ Mage::register('isSecureArea', 1);
 echo "Script start"; echo '<br/>'; 
 
 
-
+/*
 $makerValueFromTable=''; $makerValueFromMagentoAttrbite=''; $makerValuesFinal=array();
 $familyValueFromTable=''; $familyValueFromMagentoAttrbite=''; $familyValuesFinal=array();
 $modelValueFromTable=''; $modelValueFromMagentoAttrbite=''; $modelValuesFinal=array();
@@ -41,7 +41,7 @@ getAddValuesIntoAttribute('printer_family',$familyValuesFinal);
 $modelValueFromTable=getValuesfromTable(3);
 $modelValueFromMagentoAttrbite=getValuesFromMagegntoAttributes('printer_modell');
 $modelValuesFinal=array_diff($modelValueFromTable,$modelValueFromMagentoAttrbite);
-getAddValuesIntoAttribute('printer_modell',$modelValuesFinal);
+getAddValuesIntoAttribute('printer_modell',$modelValuesFinal);*/
 
 $finalValuesWithSku=getFinderValues(1);
 
@@ -135,7 +135,7 @@ function getAddvaluesIntoMagento($valuesData)
 	$j=0;
 	foreach($valuesData as $key=>$vData)
 	{
-		if($j>0)
+		if($j>4215) 
 		{
 		$product=''; 
 		$product=Mage::getModel('catalog/product')->loadByAttribute('sku',$key);
@@ -193,5 +193,4 @@ function getValueIdfromLabel($labelArray,$attributeCode)
 	return $valuesIds;
 			
 }
-
 ?>

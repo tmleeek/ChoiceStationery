@@ -9,7 +9,7 @@
 <config>
     <modules>
         <Magpleasure_Ajaxreviews>
-            <version>1.3.3</version>
+            <version>1.3.5</version>
         </Magpleasure_Ajaxreviews>
     </modules>
     <frontend>

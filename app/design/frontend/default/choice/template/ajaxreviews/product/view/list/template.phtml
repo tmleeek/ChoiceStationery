@@ -7,13 +7,15 @@
 
 /** @var $_helper Magpleasure_Ajaxreviews_Helper_Data */
 ?>
+
+
 <?php $_helper = Mage::helper('ajaxreviews') ?>
 <div class="mp-header" ng-hide="reviewsError">
-    <button ng-show="reviewsCount > 0" class="button mp-add-btn" type="button" ng-click="showForm()"
+    <button ng-show="reviewsCount > 0" class="button showreviewform mp-add-btn" type="button" ng-click="showForm()"
             ng-disabled="httpRequest">
         <span><span><?php echo $_helper->__('Add a Review') ?></span></span>
     </button>
-    <button ng-hide="reviewsCount > 0" class="button mp-first-btn" type="button" ng-click="showForm()"
+    <button ng-hide="reviewsCount > 0" class="button showreviewform mp-first-btn" type="button" ng-click="showForm()"
             ng-disabled="httpRequest">
         <span><span><?php echo $_helper->__($_helper->getConfigValue('style', 'first_review')) ?></span></span>
     </button>

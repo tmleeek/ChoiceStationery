@@ -268,3 +268,12 @@ margin: 0px 26px 0px 0px !important;}
 .mp-reviews-rating-summary-short .amount{float:inline-end !important;}
 
 </style>
+<?php
+if(isset($_REQUEST['leavereview']) && $_REQUEST['leavereview'] != ""){
+	echo "<script>document.getElementById('product-detail-review-tab').click();document.getElementsByClassName('showreviewform').click();</script>";
+}
+?>
+<!--<script>
+	$j("a").attr("href", "#review");
+
+</script>-->

@@ -192,11 +192,7 @@ class Magpleasure_Ajaxreviews_IndexController extends Mage_Review_ProductControl
 
         $response = array();
         $response['reviews'] = array();
-        
-
-
         foreach ($collection->getItems() as $item) {
-			//if($item->getDetail() == ""){continue;}
             $review = array();
             $review['id'] = $item->getId();
             $review['url'] = Mage::getUrl('review/product/view', array('id' => $item->getId()));
@@ -215,7 +211,7 @@ class Magpleasure_Ajaxreviews_IndexController extends Mage_Review_ProductControl
             if ($product->getId()) {
                 $review['fullTitle'] = $review['nickname'] . ' ' . $this->_helper()->__('posted a review of') . ' ' . $product->getName();
             }
-
+ 
             /** Is customer or unauthorized person in this session already voted for this review  */
             if ($customer) {
                 /** @var Magpleasure_Ajaxreviews_Model_Mysql4_Votes_Collection $votesCollection */

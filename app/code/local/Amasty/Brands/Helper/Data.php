@@ -17,12 +17,33 @@ class Amasty_Brands_Helper_Data extends Mage_Core_Helper_Abstract
      */
     const VAR_BRAND_ATTRIBUTE = 'ambrands/general/attribute';
 
+    /** @var Mage_Eav_Model_Attribute */
+    protected $_brandAttribute;
+
+    /** @var array */
+    protected $_brandOptionsCounts;
+
     /**
      * @return string
      */
     public function getBrandAttributeCode()
     {
         return Mage::getStoreConfig(self::VAR_BRAND_ATTRIBUTE);
+    }
+
+    /**
+     * @return Mage_Eav_Model_Attribute
+     */
+    public function getBrandAttribute()
+    {
+        if ($this->_brandAttribute === null) {
+            $attrCode = $this->getBrandAttributeCode();
+            $entityTypeId = Mage::getModel('eav/entity')->setType('catalog_product')->getTypeId();
+            /** @var Mage_Eav_Model_Attribute $attribute */
+            $this->_brandAttribute = Mage::getModel('catalog/resource_eav_attribute')
+                ->loadByCode($entityTypeId, $attrCode);
+        }
+        return $this->_brandAttribute;
     }
 
     /**
@@ -376,4 +397,26 @@ class Amasty_Brands_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
 
+    /**
+     * @return array
+     */
+    public function getBrandOptionsCounts()
+    {
+        if ($this->_brandOptionsCounts === null) {
+            $attribute = $this->getBrandAttribute();
+            $this->_brandOptionsCounts = array();
+            if ($attribute->getId()) {
+                $filter = new Varien_Object();
+                // important when used at category pages
+                $layer = Mage::getModel('catalog/layer')
+                    ->setCurrentCategory(Mage::app()->getStore()->getRootCategoryId());
+                $filter->setLayer($layer);
+                $filter->setStoreId(Mage::app()->getStore()->getId());
+                $filter->setAttributeModel($attribute);
+                $this->_brandOptionsCounts = Mage::getResourceModel('catalog/layer_filter_attribute')->getCount($filter);
+            }
+        }
+
+        return $this->_brandOptionsCounts;
+    }
 }

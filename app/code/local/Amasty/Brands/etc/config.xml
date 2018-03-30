@@ -10,7 +10,7 @@
 <config>
     <modules>
         <Amasty_Brands>
-            <version>1.1.5</version>
+            <version>1.1.7</version>
         </Amasty_Brands>
     </modules>
     <global>
@@ -78,15 +78,15 @@
                     </ambrands>
                 </observers>
             </catalog_entity_attribute_save_after>
-            <catalog_product_save_before>
+            <catalog_product_save_after>
                 <observers>
                     <ambrands>
                         <type>singleton</type>
                         <class>ambrands/observer</class>
-                        <method>catalogProductSaveBefore</method>
+                        <method>catalogProductSaveAfter</method>
                     </ambrands>
                 </observers>
-            </catalog_product_save_before>
+            </catalog_product_save_after>
         </events>
         <resources>
             <ambrands_setup>

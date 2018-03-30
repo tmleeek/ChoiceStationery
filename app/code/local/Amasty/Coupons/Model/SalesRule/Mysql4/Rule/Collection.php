@@ -25,7 +25,7 @@ class Amasty_Coupons_Model_SalesRule_Mysql4_Rule_Collection extends Mage_SalesRu
             $now = Mage::getModel('core/date')->date('Y-m-d');
         }
         
-        $coupons = explode(',', $couponCode);
+        $coupons = explode(', ', $couponCode);
         if (is_array($coupons) && 1 == count($coupons))
         {
             $coupons = $couponCode;
@@ -44,7 +44,7 @@ class Amasty_Coupons_Model_SalesRule_Mysql4_Rule_Collection extends Mage_SalesRu
                 {
                     $couponsForIn[] = "'" . $coupon . "'";
                 }
-                $this->getSelect()->where("coupon_code is null or coupon_code='' or coupon_code IN (" . implode(',', $couponsForIn) . ")");
+                $this->getSelect()->where("coupon_code is null or coupon_code='' or coupon_code IN (" . implode(', ', $couponsForIn) . ")");
             } else 
             {
                 $this->getSelect()->where("coupon_code is null or coupon_code='' or coupon_code='$coupons'");
@@ -62,8 +62,8 @@ class Amasty_Coupons_Model_SalesRule_Mysql4_Rule_Collection extends Mage_SalesRu
             return $this;
         }        
         
-        if ($couponCode)
-            $couponCode = explode(',', $couponCode); // multiple coupon compatibility
+        if ($couponCode && !is_array($couponCode))
+            $couponCode = explode(', ', $couponCode); // multiple coupon compatibility
             
               
         $this->getSelect()->reset();

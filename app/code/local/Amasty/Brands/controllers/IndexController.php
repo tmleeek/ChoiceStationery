@@ -7,6 +7,10 @@
 
 class Amasty_Brands_IndexController extends Mage_Core_Controller_Front_Action
 {
+    const BLOCK_POSITION_LEFT = 'left';
+    const BLOCK_POSITION_LEFT_FIRST = 'left_first';
+    const BLOCK_POSITION_RIGHT  = 'right';
+
     public function viewAction()
     {
         $this->loadLayout();
@@ -52,13 +56,35 @@ class Amasty_Brands_IndexController extends Mage_Core_Controller_Front_Action
 
         $this->_initLayoutMessages('catalog/session');
         $this->_initLayoutMessages('checkout/session');
+
+        /** @var Mage_Page_Block_Html_Breadcrumbs $breadcrumbs */
+        if ($breadcrumbs = $this->getLayout()->getBlock('breadcrumbs')) {
+            $breadcrumbs->addCrumb(
+                'home',
+                array(
+                    'label' => Mage::helper('ambrands')->__('Home'),
+                    'title' => Mage::helper('ambrands')->__('Go to Home Page'),
+                    'link' => Mage::getBaseUrl()
+                )
+            );
+
+            $breadcrumbs->addCrumb(
+                'brand_page',
+                array(
+                    'label' => $brand->getTitle(),
+                    'title' => $brand->getTitle()
+                )
+            );
+        }
+
         $this->renderLayout();
     }
 
 
-    protected function _moveNavigation(){
+    protected function _moveNavigation()
+    {
         $leftnav = null;
-        if ($this->_shopbyEnabled()){
+        if ($this->_shopbyEnabled()) {
             $leftnav = $this->getLayout()->getBlock('amshopby.navleft');
         } else {
             $leftnav = $this->getLayout()->getBlock('ambrands.navleft');
@@ -67,15 +93,17 @@ class Amasty_Brands_IndexController extends Mage_Core_Controller_Front_Action
         $blockPlacement = null;
         $pageLayout = Mage::getStoreConfig('ambrands/brand_page/layout');
         if ($pageLayout == 'two_columns_left') {
-            $blockPlacement = 'left';
+            $blockPlacement = self::BLOCK_POSITION_LEFT;
         } elseif ($pageLayout == 'two_columns_right') {
-            $blockPlacement = 'right';
+            $blockPlacement = self::BLOCK_POSITION_RIGHT;
         } else {
             $blockPlacement = Mage::getStoreConfig('ambrands/brand_page/navigation_pos');
         }
 
-        if($blockPlacement == 'left' && $this->getLayout()->getBlock('left_first')) {
-            $blockPlacement = 'left_first';
+        if ($blockPlacement === self::BLOCK_POSITION_LEFT
+            && $this->getLayout()->getBlock(self::BLOCK_POSITION_LEFT_FIRST)
+        ) {
+            $blockPlacement = self::BLOCK_POSITION_LEFT_FIRST;
         }
 
         $container = $this->getLayout()->getBlock($blockPlacement);
@@ -100,9 +128,7 @@ class Amasty_Brands_IndexController extends Mage_Core_Controller_Front_Action
     protected function _applyLayoutUpdate()
     {
         $layoutUpdate = '';
-
-        $layoutUpdate .= $this->_getNaviationLayoutXml();
-
+        $layoutUpdate .= $this->_getNavigationLayoutXml();
 
         if ($layoutUpdate != '') {
             $this->loadLayoutUpdates();
@@ -111,13 +137,14 @@ class Amasty_Brands_IndexController extends Mage_Core_Controller_Front_Action
         }
     }
 
-    protected function _getNaviationLayoutXml(){
+    protected function _getNavigationLayoutXml()
+    {
         $ret = '';
-
-        if (!Mage::getStoreConfig('ambrands/brand_page/navigation'))
+        if (!Mage::getStoreConfig('ambrands/brand_page/navigation')) {
             return $ret;
+        }
 
-        if (!$this->_shopbyEnabled()){
+        if (!$this->_shopbyEnabled()) {
             $ret .= '<block type="ambrands/catalog_layer_view" name="ambrands.navleft" before="-" after="currency" template="catalog/layer/view.phtml">
                 <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
             </block>';
@@ -150,6 +177,7 @@ class Amasty_Brands_IndexController extends Mage_Core_Controller_Front_Action
     {
         $str = strip_tags($str);
         $str = str_replace('"', '', $str);
+
         return trim($str, " -");
     }
 

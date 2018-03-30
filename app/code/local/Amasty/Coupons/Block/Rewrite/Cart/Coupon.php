@@ -12,8 +12,8 @@ class Amasty_Coupons_Block_Rewrite_Cart_Coupon extends Mage_Checkout_Block_Cart_
         return parent::_toHtml();
     }
     
-    public function getAppliedCoupons()
+    public function _getAppliedCoupons()
     {
-        return $this->getQuote()->getAppliedCoupons();
+        return $this->getQuote()->_getAppliedCoupons();
     }
 }

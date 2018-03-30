@@ -39,7 +39,9 @@ class Amasty_Coupons_CheckoutController extends Mage_Core_Controller_Front_Actio
     public function cancelCouponAction()
     {
         $codeToCancel = $this->getRequest()->getParam('amcoupon_code_cancel');
-        $appliedCoupons = $this->_getQuote()->getAppliedCoupons();
+        $isAjax = $this->getRequest()->getParam('isAjax');
+        
+        $appliedCoupons = $this->_getQuote()->_getAppliedCoupons();
         
         foreach ($appliedCoupons as $i => $coupon)
         {
@@ -48,7 +50,7 @@ class Amasty_Coupons_CheckoutController extends Mage_Core_Controller_Front_Actio
                 unset($appliedCoupons[$i]);
                 try
                 {
-                    if ($this->_getQuote()->setCouponCode($appliedCoupons)->save())
+                    if ($this->_getQuote()->setCouponCode(implode(', ', $appliedCoupons))->save())
                     {
                         $this->_getSession()->addSuccess($this->__('Coupon code %s was canceled.', $codeToCancel));
                     }
@@ -59,10 +61,16 @@ class Amasty_Coupons_CheckoutController extends Mage_Core_Controller_Front_Actio
                 catch (Exception $e) {
                     $this->_getSession()->addError($this->__('Cannot cancel the coupon code.'));
                 }
+                break;
             }
         }
         
-        $this->_redirect('checkout/cart');
+        if ($isAjax && Mage::helper("amcoupons")->isAmastyOnestepcheckoutInstalled()){
+            $this->_redirect('amscheckoutfront/onepage/cancelCoupon', array('_secure' => true));
+        } else {
+            $this->_redirectReferer('*/*');
+        }
+
         return $this;
     }
 }

@@ -33,7 +33,7 @@ class Mirasvit_SearchSphinx_Helper_Query extends Mage_Core_Helper_Abstract
      *
      * @return array
      */
-    public function buildQuery($query, $store, $inverseNot = false)
+	public function buildQuery($query, $store, $inverseNot = false)
     {
         $uid = Mage::helper('mstcore/debug')->start();
 
@@ -52,10 +52,108 @@ class Mirasvit_SearchSphinx_Helper_Query extends Mage_Core_Helper_Abstract
                 $query = str_replace(' '.$word.' ', ' '.$replace.' ', $query);
             }
         }
+		//$query = preg_replace('/(?<=[a-z])(?=\d)|(?<=\d)(?=[a-z])/i', ' ', $query);
 
         $arWords    = Mage::helper('core/string')->splitWords($query, true);
-        $arSynonyms = Mage::getSingleton('searchsphinx/synonym')->getSynonymsByWord($arWords, $store);
-
+        $make = array("Brother", "Canon", "Dell", "Dymo", "Epson", "Hp", "IBM", "Kodak", "Konica", "Minolta", "Konica Minolta", "Kyocera", "Lexmark", "OKI", "Olivetti", "Panasonic", "Philips", "Pitney", "Bowes", "Pitney Bowes", "Ricoh", "Sagem", "Samsung", "Sharp", "Toshiba", "Xerox", "HP");
+        $i=count($arWords);
+       
+       $a=0;
+       //print_r($arWords);
+        foreach($arWords as $key => $values)
+       {
+		   
+		   $arWordsnew[$a]=$values;
+		   $a++;
+		   
+	   }
+	   
+       //$arWordsnew=array_reverse($arWordsnew);
+      
+  
+      $joinword=$arWordsnew[0].' '.$arWordsnew[1];
+     
+      if(in_array(ucfirst($arWordsnew[0]),$make)){
+		 
+	if($joinword=="pitney bowes" || $joinword=="konica minolta")
+	{
+		
+		for($y=0;$y<$i;$y++)
+	   {
+		 
+		   if($y==0 || $y==1)
+		   {
+			   $arWordsa[0]=$arWordsnew[0].' '.$arWordsnew[1];
+		   }
+		   else
+		   {
+			   $arWordsa[1]=$arWordsa[1].''.$arWordsnew[$y];
+		   }
+		   
+		   
+	   }
+	       $arWords=array();
+	       $arWords[$arWordsa[0]]=trim($arWordsa[0]);
+	       $arWords[$arWordsa[1]]=trim($arWordsa[1]);
+		
+	}else{
+	   for($y=0;$y<$i;$y++)
+	   {
+		 
+		   if($y==0)
+		   {
+			   $arWordsa[0]=$arWordsnew[0];
+			   //if(is_numeric($arWordsnew[0]) && $i==3 && strlen($arWordsnew[0])==3)
+			   /*if(is_numeric($arWordsnew[0]) && $i==3)
+			   $is_pass="yes";
+			   else
+			   $is_pass="no";
+			   $arWordsa[$arWordsnew[0]]='';
+			   $arWordsa[$arWordsnew[1]]=$arWordsnew[1].' '.$arWordsnew[0];*/
+			   
+		   }
+		   else
+		   {
+			   $arWordsa[1]=$arWordsa[1].''.$arWordsnew[$y];
+		   }
+		   
+		   
+	   }
+	       $arWords=array();
+	       $arWords[$arWordsa[0]]=trim($arWordsa[0]);
+	       $arWords[$arWordsa[1]]=trim($arWordsa[1]);
+	       
+	   
+   }
+	   
+	   }
+	   else
+	   {
+		    for($y=0;$y<$i;$y++)
+	   {
+		   
+			   $arWordsa[0]=$arWordsa[0].''.$arWordsnew[$y];
+		   
+	   }
+	       $arWords=array();
+	       $arWords[$arWordsa[0]]=trim($arWordsa[0]);
+	   }
+	  
+	  
+	  
+	        
+	  /* if($is_pass=="yes")
+	   $arWords=array_reverse($arWordsa,TRUE);
+	   else
+	   $arWords    = Mage::helper('core/string')->splitWords($query, true);*/
+   
+        
+        //$arSynonyms = Mage::getSingleton('searchsphinx/synonym')->getSynonymsByWord($arWords, $store);
+        //print_r($query);
+//exit();
+//print_r($result);
+//print_r($arWords);
+//exit();
         $logic = 'like';
 
         foreach ($arWords as $word) {
@@ -172,4 +270,93 @@ class Mirasvit_SearchSphinx_Helper_Query extends Mage_Core_Helper_Abstract
 
         ksort($to);
     }
+}
+    
+     public function buildQueryOri($query, $store, $inverseNot = false)
+    {
+        $uid = Mage::helper('mstcore/debug')->start();
+
+        $result = array();
+        $config = Mage::getSingleton('searchsphinx/config');
+
+        $query = strtolower($query);
+
+        // Ð½ÐµÐ¾Ð±ÑÐ¾Ð´Ð¸Ð¼Ð¾ ÐµÑÐ»Ð¸ ÑÐ¸Ð½Ð¾Ð½Ð¸Ð¼ ÑÐ¾ÑÑÐ¾Ð¸Ñ Ð¸Ð· 2Ñ Ð¸ Ð±Ð¾Ð»ÐµÐµ ÑÐ»Ð¾Ð²
+        $query = ' '.$query.' ';
+
+        $replaceWords = Mage::getSingleton('searchsphinx/config')->getReplaceWords();
+      
+        foreach ($replaceWords as $replace => $find) {
+            foreach ($find as $word) {
+                $query = str_replace(' '.$word.' ', ' '.$replace.' ', $query);
+            }
+        }
+		//$query = preg_replace('/(?<=[a-z])(?=\d)|(?<=\d)(?=[a-z])/i', ' ', $query);
+
+        $arWords    = Mage::helper('core/string')->splitWords($query, true);
+        $i=count($arWords);
+       
+       $a=0;
+       //print_r($arWords);
+        foreach($arWords as $key => $values)
+       {
+		   
+		   $arWordsnew[$a]=$values;
+		   $a++;
+		   
+	   }
+	   
+       //$arWordsnew=array_reverse($arWordsnew);
+      
+  
+      $joinword=$arWordsnew[0].' '.$arWordsnew[1];
+      $arSynonyms = Mage::getSingleton('searchsphinx/synonym')->getSynonymsByWord($arWords, $store);
+	 
+        $logic = 'like';
+
+        foreach ($arWords as $word) {
+            if (in_array($word, $config->getNotwords())) {
+                $logic = 'not like';
+                continue;
+            }
+
+            if ($this->isStopword($word, $store)) {
+                continue;
+            }
+
+            $wordArr = array();
+            $this->_addWord($wordArr, $word);
+
+            if ($logic == 'like') {
+                $longTail = $this->longtail($word);
+                $this->_addWord($wordArr, $longTail);
+
+                $singular = Mage::helper('searchsphinx/inflect')->singularize($word);
+                $this->_addWord($wordArr, $singular);
+
+                if (isset($arSynonyms[$word])) {
+                    $this->_addWord($wordArr, $arSynonyms[$word]);
+                }
+
+                $template = Mage::getSingleton('searchsphinx/config')->getSearchTemplate();
+                if (Mage::getSingleton('searchsphinx/config')->getMatchMode() == 1) {
+                    $template = 'or';
+                }
+                $result[$logic][$template][$word] = array('or' => $wordArr);
+
+                Mage::helper('mstcore/debug')->dump($uid, array('$wordArr', $wordArr));
+
+            } else {
+                if (!$inverseNot) {
+                    $result[$logic]['and'][$word] = array('and' => $wordArr);
+                } else {
+                    $result[$logic]['or'][$word] = array('and' => $wordArr);
+                }
+            }
+        }
+
+        Mage::helper('mstcore/debug')->end($uid, $result);
+        return $result;
+    }
+
 }

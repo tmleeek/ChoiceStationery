@@ -33,7 +33,7 @@ class Mirasvit_SearchSphinx_Model_Engine_Fulltext extends Mirasvit_SearchIndex_M
      * @return array Ð¼Ð°ÑÐ¸Ð² ÐÐ ÐµÐ»ÐµÐ¼ÐµÐ½ÑÐ¾Ð², Ð³Ð´Ðµ ÐÐ - ÐºÐ»ÑÑ, ÑÐµÐ»ÐµÐ²Ð°Ð½ÑÐ½Ð¾ÑÑÑ Ð·Ð½Ð°ÑÐµÐ½Ð¸Ðµ
      */
     public function query($query, $store, $index)
-    {
+    { 
         $uid = Mage::helper('mstcore/debug')->start();
 
         $connection = $this->_getReadAdapter();
@@ -44,8 +44,8 @@ class Mirasvit_SearchSphinx_Model_Engine_Fulltext extends Mirasvit_SearchIndex_M
         $select = $connection->select();
         $select->from(array('s' => $table), array($pk));
 
-        $arQuery = Mage::helper('searchsphinx/query')->buildQuery($query, $store);
-
+		$arQuery = Mage::helper('searchsphinx/query')->buildQuery($query, $store);
+		
         if (count($arQuery) == 0 || count($attributes) == 0) {
             return array();
         }
@@ -60,7 +60,7 @@ class Mirasvit_SearchSphinx_Model_Engine_Fulltext extends Mirasvit_SearchIndex_M
         }
 
         if ($whereCondition != '') {
-            $select->where($whereCondition);
+             $select->where($whereCondition);
         }
 
         $select->columns(array('relevance' => $caseCondition));
@@ -79,16 +79,73 @@ class Mirasvit_SearchSphinx_Model_Engine_Fulltext extends Mirasvit_SearchIndex_M
             $result[$row[0]] = $row[1];
             $weight[$row[0]] = $row[2];
         }
-
+		
         $result = $this->_normalize($result);
-
+               
         foreach ($result as $key => $value) {
             $result[$key] += $weight[$key];
         }
-
+        
         Mage::helper('mstcore/debug')->end($uid, $result);
+		//echo "<br />This is ".count($result); print_r($result);
+		//if($defaultsearch == "yes"){ die("Developer is working");}
+		if(count($result) <= 0){
+			$uid = Mage::helper('mstcore/debug')->start();
 
-        return $result;
+			$connection = $this->_getReadAdapter();
+			$table      = $index->getIndexer()->getTableName();
+			$attributes = $this->_getAttributes($index);
+			$pk         = $index->getIndexer()->getPrimaryKey();
+
+			$select = $connection->select();
+			$select->from(array('s' => $table), array($pk));
+        
+			$arQuery = Mage::helper('searchsphinx/query')->buildQueryOri($query, $store);
+			if (count($arQuery) == 0 || count($attributes) == 0) {
+				return array();
+			}
+
+			Mage::helper('mstcore/debug')->dump($uid, array('$query' => $query, '$store' => $store, '$arQuery' => $arQuery));
+
+			$caseCondition  = $this->_getCaseCondition($query, $arQuery, $attributes);
+			$whereCondition = $this->_getWhereCondition($arQuery, $attributes);
+
+			if ($store != null) {
+				$select->where('s.store_id = ?', (int) $store);
+			}
+
+			if ($whereCondition != '') {
+				 $select->where($whereCondition);
+			}
+
+			$select->columns(array('relevance' => $caseCondition));
+			$select->columns('searchindex_weight');
+
+			$select->limit(Mage::getSingleton('searchsphinx/config')->getResultLimit());
+			$select->order('relevance desc');
+
+			Mage::helper('mstcore/debug')->dump($uid, array('$select', $select->__toString()));
+
+			$result = array();
+			$weight = array();
+			// echo $select;
+			$stmt = $connection->query($select);
+			while ($row = $stmt->fetch(Zend_Db::FETCH_NUM)) {
+				$result[$row[0]] = $row[1];
+				$weight[$row[0]] = $row[2];
+			}
+			
+			$result = $this->_normalize($result);
+				   
+			foreach ($result as $key => $value) {
+				$result[$key] += $weight[$key];
+			}
+			
+			Mage::helper('mstcore/debug')->end($uid, $result);
+			//echo "<br />This is second  ".count($result); print_r($result);
+		} 
+		
+		return $result;
     }
 
     /**
@@ -205,7 +262,9 @@ class Mirasvit_SearchSphinx_Model_Engine_Fulltext extends Mirasvit_SearchIndex_M
             } elseif ($key == 'and') {
                 $array[$key] = $this->_buildWhere($type, $subarray);
                 if (is_array($array[$key])) {
-                    $array = '('.implode(' AND ', $array[$key]).')';
+					$array_new=str_replace("% ","%",$array[$key]);
+                   $array_new=str_replace(" %","%",$array_new);
+                   $array = '('.implode(' AND ', $array_new).')'; 
                 }
             } else {
                 $array[$key] = $this->_buildWhere($type, $subarray);

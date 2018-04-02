@@ -19,7 +19,7 @@ $thirdlimit = 0;
 if(isset($_REQUEST['tlim'])){ $thirdlimit = $_REQUEST['tlim']; }
 
 $connection = Mage::getSingleton('core/resource')->getConnection('core_read');
-$sqlparent        = "SELECT value_id, name FROM `am_finder_value` WHERE `dropdown_id`=1";
+$sqlparent        = "SELECT value_id, name FROM `am_finder_value` WHERE `dropdown_id`=1 Limit 2,22";
 $rowsparent       = $connection->fetchAll($sqlparent); 
 
 

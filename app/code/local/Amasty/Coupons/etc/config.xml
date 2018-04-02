@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Amasty_Coupons>
-            <version>1.2.2</version>
+            <version>1.5.0</version>
         </Amasty_Coupons>
     </modules>
     
@@ -18,6 +18,13 @@
                     <frontName>amcoupons</frontName>
                 </args>
             </amcoupons>
+            <checkout>
+                <args>
+                    <modules>
+                        <Amasty_Coupons before="Mage_Checkout">Amasty_Coupons</Amasty_Coupons>
+                    </modules>
+                </args>
+            </checkout>
         </routers>
         <translate>
             <modules>
@@ -62,6 +69,19 @@
                 </admin> 
             </resources>
         </acl>
+        
+        <!-- PGL (petr.glu@hotmail.com) - field added to sales_rule form configuration -->
+	    <events>
+			<adminhtml_promo_quote_edit_tab_main_prepare_form>
+				<observers>
+					<amcoupons_admin>
+						<type>singleton</type>
+						<class>Amasty_Coupons_Model_Admin_Observer</class>
+						<method>salesrulePrepareForm</method>
+					</amcoupons_admin>
+				</observers>
+			</adminhtml_promo_quote_edit_tab_main_prepare_form>
+		</events>			
     </adminhtml>
 
     <global>    
@@ -106,12 +126,17 @@
             <amcoupons>
                 <class>Amasty_Coupons_Block</class>
             </amcoupons>
-            
+
             <checkout>
                 <rewrite>
                     <cart_coupon>Amasty_Coupons_Block_Rewrite_Cart_Coupon</cart_coupon>
                 </rewrite>
             </checkout>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_create_coupons>Amasty_Coupons_Block_Rewrite_Adminhtml_Coupon</sales_order_create_coupons>
+                </rewrite>
+            </adminhtml>
         </blocks>
         <helpers>
             <amcoupons>
@@ -143,6 +168,7 @@
            <codes>
                 <code>111, 222,5ABCD, BIG2</code>
                 <allow_same_rule>0</allow_same_rule>
+                <max_num_coupons>0</max_num_coupons>
            </codes>
         </amcoupons>
     </default>

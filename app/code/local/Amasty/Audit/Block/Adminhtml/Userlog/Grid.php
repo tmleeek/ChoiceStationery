@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
  * @package Amasty_Audit
  */
-class Amasty_Audit_Block_Adminhtml_Userlog_Grid extends Amasty_Audit_Block_Adminhtml_Tabs_DefaultLog
+class Amasty_Audit_Block_Adminhtml_Userlog_Grid extends Amasty_Audit_Block_Adminhtml_DefaultLog
 {
     protected function _prepareCollection()
     {

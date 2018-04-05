@@ -27,6 +27,10 @@ class Amasty_Audit_Model_Mailsender
             'name' => Mage::getStoreConfig('trans_email/ident_general/name', Mage::app()->getStore()->getId()),
             'email' => Mage::getStoreConfig('trans_email/ident_general/email', Mage::app()->getStore()->getId()),
         );
+
+        $mail = str_replace(' ', '', $mail);
+        $mail = explode(',', $mail);
+
         if (isset($template)) {
             $tpl = Mage::getModel('core/email_template');
             $tpl->setDesignConfig(array('area' => 'frontend', 'store' => $store->getId()))

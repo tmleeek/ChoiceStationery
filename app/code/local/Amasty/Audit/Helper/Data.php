@@ -126,4 +126,9 @@ class Amasty_Audit_Helper_Data extends Mage_Core_Helper_Url
         $model->load($userId);
         return $model->getUsername();
     }
+
+    public function allowClear()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('admin/system/amauditmenu/clearlog');
+    }
 }

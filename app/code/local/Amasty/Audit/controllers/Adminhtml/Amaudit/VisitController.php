@@ -38,6 +38,8 @@ class Amasty_Audit_Adminhtml_Amaudit_VisitController extends Mage_Adminhtml_Cont
             ->query("DELETE FROM `$tableVisitDetails` WHERE session_id <> '$sessionId'")
         ;
 
+        Mage::getModel('amaudit/log')->addClearToLog('Page Visit History');
+
         $this->_redirect('adminhtml/amaudit_visit/index');
     }
 

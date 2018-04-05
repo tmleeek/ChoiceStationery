@@ -53,6 +53,8 @@ class Amasty_Audit_Adminhtml_Amaudit_LoginController extends Mage_Adminhtml_Cont
             ->getConnection('core_write')
             ->truncate($table);
 
+        Mage::getModel('amaudit/log')->addClearToLog('Login Attempts');
+
         $this->_redirect('adminhtml/amaudit_login/index');
     }
 

@@ -861,6 +861,7 @@ class Amasty_Acart_Model_Schedule extends Mage_Core_Model_Abstract
         $historyCollection->addFieldToFilter('email', array('eq' => $quote->getTargetEmail()));
         $historyCollection->addFieldToFilter('quote_id', array('neq' => $quote->getId()));
         $historyCollection->addFieldToFilter('status', array('eq' => Amasty_Acart_Model_History::STATUS_PENDING));
+        $historyCollection->addFieldToFilter('store_id', array('eq' => $quote->getStoreId()));
 
         if ($historyCollection->getSize() > 0) {
             foreach ($historyCollection as $historyItem) {

@@ -75,6 +75,11 @@ class Amasty_Acart_MainController extends Mage_Core_Controller_Front_Action
 
             $schedule = Mage::getModel('amacart/schedule')->load($history->getScheduleId());
             $schedule->clickByLink($history);
+
+            if (!$this->_isUrlInternal($target)) {
+                throw new Mage_Exception('External urls redirect to "' . $target . '" denied!');
+            }
+
             Mage::app()->getFrontController()->getResponse()->setRedirect($target);
         } else {
             $this->_customRedirect("/");
@@ -161,6 +166,10 @@ class Amasty_Acart_MainController extends Mage_Core_Controller_Front_Action
 
             foreach ($params as $key => $val) {
                 $target .= (strpos($target, "?") !== false ? "&" : "?") . $key . '=' . $val;
+            }
+
+            if (!$this->_isUrlInternal($target)) {
+                throw new Mage_Exception('External urls redirect to "' . $target . '" denied!');
             }
 
             Mage::app()->getFrontController()->getResponse()->setRedirect($target);

@@ -22,11 +22,13 @@ class Amasty_Audit_Block_Adminhtml_Auditlog extends Mage_Adminhtml_Block_Widget_
                 window.location.href='".$this->getUrl('adminhtml/amaudit_login/clear')."';
         ";
 
-        $this->addButton('clear', array(
-            'label' => Mage::helper('amaudit')->__('Clear Log'),
-            'onclick' => $script,
-            'class' => 'delete',
-        ));
+        if (Mage::helper('amaudit')->allowClear()) {
+            $this->addButton('clear', array(
+                'label' => Mage::helper('amaudit')->__('Clear Log'),
+                'onclick' => $script,
+                'class' => 'delete',
+            ));
+        }
 
         return parent::_prepareLayout();
     }

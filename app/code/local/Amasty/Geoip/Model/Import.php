@@ -10,7 +10,7 @@ class Amasty_Geoip_Model_Import extends Mage_Core_Model_Abstract
 {
     protected static $_sessionKey = 'am_geoip_import_process_%key%';
 
-    protected $_rowsPerTransaction = 11;
+    protected $_rowsPerTransaction = 200;
 
     protected $_rowsPerCsvTransaction = 10000;
 

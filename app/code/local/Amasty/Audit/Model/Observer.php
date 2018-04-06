@@ -93,6 +93,8 @@ class Amasty_Audit_Model_Observer
     {
         $object = $observer->getObject();
         $class = get_class($object);
+        /** @var Amasty_Audit_Helper_Data $helper */
+        $helper = Mage::helper('amaudit');
 
         //product grid compatibility
         if (Mage::app()->getStore()->isAdmin()
@@ -106,7 +108,8 @@ class Amasty_Audit_Model_Observer
         }
 
         if (!$this->_isForSave($observer)
-            || !Mage::registry('amaudit_log_id')) {
+            || !Mage::registry('amaudit_log_id')
+        ) {
             return;
         }
 
@@ -193,7 +196,7 @@ class Amasty_Audit_Model_Observer
                     //product grid compatibility
                     if ($this->_logData['category'] == 'ampgrid/adminhtml_field') {
                         $this->_logData['category'] = 'admin/catalog_product';
-                        $this->_logData['category_name'] = 'Product';
+                        $this->_logData['category_name'] = $helper->__('Product');
                         $this->_logData['parametr_name'] = 'id';
                         $this->_isAmpgrid = true;
                     }
@@ -231,6 +234,12 @@ class Amasty_Audit_Model_Observer
                 Mage::unregister('amaudit_details_before');
                 $newData = $object->getData();
                 $oldData = $object->getOrigData();
+
+                $amPgridData = Mage::registry('amasty_grid_product_data');
+                if (!empty($amPgridData)) {
+                    $oldData = $amPgridData;
+                    Mage::unregister('amasty_grid_product_data');
+                }
 
                 if (is_a($object, 'Mage_Catalog_Model_Product')) {
                     if (!($object->getDescription())) {
@@ -289,6 +298,8 @@ class Amasty_Audit_Model_Observer
      */
     public function modelProductsSaveBefore($observer)
     {
+        /** @var Amasty_Audit_Helper_Data $helper */
+        $helper = Mage::helper('amaudit');
         $class = 'Mage_Catalog_Model_Product';
         $username = Mage::getSingleton('admin/session')->getUser() ? Mage::getSingleton('admin/session')->getUser()->getUsername() : '';
         $productIds = $observer->getProductIds();
@@ -307,7 +318,7 @@ class Amasty_Audit_Model_Observer
                     $this->_logData['element_id'] = $productId;
                     $this->_logData['type'] = "Edit";
                     $this->_logData['category'] = "admin/catalog_product";
-                    $this->_logData['category_name'] = "Product";
+                    $this->_logData['category_name'] = $helper->__('Product');
                     $this->_logData['parametr_name'] = "Edit";
                     $this->_logData['store_id'] = $observer->getStoreId();
                     $this->_logData['username'] = $username;
@@ -449,7 +460,9 @@ class Amasty_Audit_Model_Observer
             $class == "Amasty_Audit_Model_Visit" ||
             $class == "Amasty_Editlock_Model_Lock" ||
             is_a($object, 'Mage_Index_Model_Event') ||
-            $class == 'Mirasvit_SearchIndex_Model_Index') {
+            $class == 'Mirasvit_SearchIndex_Model_Index'||
+            $class == 'AW_Customerattributes_Model_Value'
+        ) {
             $isForSave = false;
         }
 
@@ -459,10 +472,11 @@ class Amasty_Audit_Model_Observer
     protected function _addBlock($block, $createdBlock, $lastElement)
     {
         if (method_exists($block, 'addTabAfter')) {
+            $url = $this->_prepareUrl($createdBlock);
             $block->addTabAfter('tabid', array(
                 'label' => Mage::helper('amaudit')->__('History of Changes'),
-                'content' => $block->getLayout()
-                    ->createBlock('amaudit/' . $createdBlock)->toHtml(),
+                'class' => 'ajax',
+                'url' => Mage::helper("adminhtml")->getUrl($url, array('_current' => true)),
             ), $lastElement);
         } else {
             $block->addTab('tabid', array(
@@ -474,8 +488,30 @@ class Amasty_Audit_Model_Observer
 
     }
 
+    protected function _prepareUrl($cratedBlock)
+    {
+        $baseUrl = 'adminhtml/amaudit_log/';
+        switch ($cratedBlock) {
+            case 'adminhtml_tabs_customer':
+                $url = $baseUrl . 'customer';
+                break;
+            case 'adminhtml_tabs_product':
+                $url = $baseUrl . 'product';
+                break;
+            case 'adminhtml_tabs_order':
+                $url = $baseUrl . 'order';
+                break;
+            default:
+                $url = '';
+        }
+
+        return $url;
+    }
+
     protected function _saveExport($arrPath, $observer)
     {
+        /** @var Amasty_Audit_Helper_Data $helper */
+        $helper = Mage::helper('amaudit');
         $logModel = Mage::getModel('amaudit/log');
         $logData['date_time'] = Mage::getModel('core/date')->gmtDate();
         $username = Mage::getSingleton('admin/session')->getUser() ? Mage::getSingleton('admin/session')->getUser()->getUsername() : '';
@@ -489,7 +525,7 @@ class Amasty_Audit_Model_Observer
         $logData['category_name'] = Mage::helper('amaudit')->getCatNameFromArray($category);
         $logData['parametr_name'] = 'back';
         $logData['element_id'] = 0;
-        $logData['info'] = 'Data was exported';
+        $logData['info'] = $helper->__('Data was exported');
         $logData['store_id'] = $observer->getStoreId();
         $logModel->setData($logData);
         $logModel->save();
@@ -497,6 +533,8 @@ class Amasty_Audit_Model_Observer
 
     protected function _deleteProduct($object)
     {
+        /** @var Amasty_Audit_Helper_Data $helper */
+        $helper = Mage::helper('amaudit');
         $logModel = Mage::getModel('amaudit/log')->load(Mage::registry('amaudit_log_id'));
         $username = Mage::getSingleton('admin/session')->getUser() ? Mage::getSingleton('admin/session')->getUser()->getUsername() : '';
         $this->_logData = $logModel->getData();
@@ -506,7 +544,7 @@ class Amasty_Audit_Model_Observer
             $logData['element_id'] = $object->getEntityId();
             $logData['type'] = 'Delete';
             $ogData['category'] = "admin/catalog_product";
-            $logData['category_name'] = "Product";
+            $logData['category_name'] = $helper->__('Product');
             $logData['parametr_name'] = "delete";
             $logData['store_id'] = 0;
             $logData['username'] = $username;
@@ -560,7 +598,7 @@ class Amasty_Audit_Model_Observer
             $this->_logData['type'] = $arrPath[3];
         }
         $this->_logData['category'] = $arrPath[1] . '/' . $arrPath[2];
-        $this->_logData['category_name'] = Mage::helper('amaudit')->getCatNameFromArray($this->_logData['category']);;
+        $this->_logData['category_name'] = Mage::helper('amaudit')->getCatNameFromArray($this->_logData['category']);
 
         if (isset($arrPath[4])) {
             if ($arrPath[4] == 'store') $arrPath[4] = $arrPath[6];
@@ -704,7 +742,7 @@ class Amasty_Audit_Model_Observer
     {
         $model = null;
 
-        if (!is_null($object)) {
+        if (is_object($object)) {
             $model = get_class($object);
         }
 
@@ -733,9 +771,13 @@ class Amasty_Audit_Model_Observer
 
                         unset($massOld['store_id']);
                         $oldWebsiteIds = Mage::registry('amaudit_old_product_websites_ids');
-                        $massOld['website_ids'] = implode(',', $oldWebsiteIds);
+                        if (is_array($oldWebsiteIds)) {
+                            $massOld['website_ids'] = implode(',', $oldWebsiteIds);
+                        }
                         if (isset ($massNew['website_ids'])) {
-                            $massNew['website_ids'] = implode(',', $massNew['website_ids']);
+                            if (is_array($massNew['website_ids'])) {
+                                $massNew['website_ids'] = implode(',', $massNew['website_ids']);
+                            }
                         } else {
                             $massNew['website_ids'] = $massOld['website_ids'];
                         }
@@ -840,6 +882,11 @@ class Amasty_Audit_Model_Observer
         if (is_object($massNew[$key])) {
             $massNew[$key] = get_class($massNew[$key]);
         }
+        if($key == 'price') {
+            $value = $this->_convertPrice($value);
+            $massNew[$key] = $this->_convertPrice($massNew[$key]);
+        }
+
         if (!$isNew) $detailsModel->setData('old_value', $value);
         $detailsModel->setData('new_value', $massNew[$key]);
         $detailsModel->setData('name', $key);
@@ -848,9 +895,18 @@ class Amasty_Audit_Model_Observer
         return $detailsModel;
     }
 
+    /**
+     * @param $price
+     * @return string
+     */
+    protected function _convertPrice($price)
+    {
+        return number_format($price, 2, '.', '');
+    }
+
     private function _prepareProductCategories($categoryIds)
     {
-        $categoryNames = '';
+        $categoryNames = array();
 
         if (is_array($categoryIds)) {
             foreach ($categoryIds as $id) {
@@ -867,6 +923,8 @@ class Amasty_Audit_Model_Observer
 
     private function _saveCompilation($path, $username)
     {
+        /** @var Amasty_Audit_Helper_Data $helper */
+        $helper = Mage::helper('amaudit');
         if (strpos($path, "compiler/process") !== false
             || strpos($path, "compiler_process") !== false
         ) {
@@ -887,9 +945,9 @@ class Amasty_Audit_Model_Observer
                     $this->_logData['username'] = $username;
                     $this->_logData['type'] = ucfirst($type);
                     $this->_logData['category'] = "compiler/process";
-                    $this->_logData['category_name'] = "Compilation";
+                    $this->_logData['category_name'] = $helper->__('Compilation');
                     $this->_logData['parametr_name'] = 'index';
-                    $this->_logData['info'] = "Compilation";
+                    $this->_logData['info'] = $helper->__('Compilation');
                     $storeId = 0;
                     if ($keyStore = array_search("store", $arrPath)) {
                         $storeId = $arrPath[$keyStore + 1];
@@ -907,6 +965,8 @@ class Amasty_Audit_Model_Observer
 
     private function _saveCache($path, $username)
     {
+        /** @var Amasty_Audit_Helper_Data $helper */
+        $helper = Mage::helper('amaudit');
         $params = Mage::app()->getRequest()->getParams();
         $adminPath = Mage::registry('amaudit_admin_path') ? Mage::registry('amaudit_admin_path') : 'admin';
         if (strpos($path, $adminPath . "/cache") !== false) {
@@ -921,9 +981,9 @@ class Amasty_Audit_Model_Observer
                         $this->_logData['username'] = $username;
                         $this->_logData['type'] = ucfirst($type);
                         $this->_logData['category'] = "admin/cache";
-                        $this->_logData['category_name'] = "Cache";
+                        $this->_logData['category_name'] = $helper->__('Cache');
                         $this->_logData['parametr_name'] = 'index';
-                        $this->_logData['info'] = "Cache";
+                        $this->_logData['info'] = $helper->__('Cache');
                         $storeId = 0;
                         if ($keyStore = array_search("store", $arrPath)) {
                             $storeId = $arrPath[$keyStore + 1];
@@ -947,6 +1007,8 @@ class Amasty_Audit_Model_Observer
 
     private function _saveIndex($path, $username)
     {
+        /** @var Amasty_Audit_Helper_Data $helper */
+        $helper = Mage::helper('amaudit');
         $params = Mage::app()->getRequest()->getParams();
         $adminPath = Mage::registry('amaudit_admin_path') ? Mage::registry('amaudit_admin_path') : 'admin';
         if (strpos($path, $adminPath . "/process") !== false) {
@@ -961,9 +1023,9 @@ class Amasty_Audit_Model_Observer
                         $this->_logData['username'] = $username;
                         $this->_logData['type'] = ucfirst($type);
                         $this->_logData['category'] = "admin/process";
-                        $this->_logData['category_name'] = "Index Management";
+                        $this->_logData['category_name'] = $helper->__('Index Management');
                         $this->_logData['parametr_name'] = 'list';
-                        $this->_logData['info'] = "Index Management";
+                        $this->_logData['info'] = $helper->__('Index Management');
                         $storeId = 0;
                         if ($keyStore = array_search("store", $arrPath)) {
                             $storeId = $arrPath[$keyStore + 1];

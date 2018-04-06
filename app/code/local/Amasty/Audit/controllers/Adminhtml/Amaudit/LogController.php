@@ -78,6 +78,8 @@ class Amasty_Audit_Adminhtml_Amaudit_LogController extends Mage_Adminhtml_Contro
 
         $tableLog->clearLog(false);
 
+        $tableLog->addClearToLog('Action Log');
+
         $this->_redirect('adminhtml/amaudit_log/index');
     }
 
@@ -126,13 +128,38 @@ class Amasty_Audit_Adminhtml_Amaudit_LogController extends Mage_Adminhtml_Contro
                         $oldValue = $this->_prepareUpSellLinkData($oldValue);
                     }
                 }
-                $element->setData($elementKey, $oldValue);
+                if (isset($element) && $element instanceof Mage_Bundle_Model_Option && !$oldValue) {
+                    $newValue = $logDetail->getNewValue();
+                    $optionModel = Mage::getModel('bundle/option');
+                    $optionModel->setId($newValue);
+                    $optionModel->delete();
+                } else {
+                    $element->setData($elementKey, $oldValue);
+                }
             }
             $element->save();
         }
 
         $backUrl = $this->getUrl('adminhtml/amaudit_log');
         $this->getResponse()->setRedirect($backUrl);
+    }
+
+    public function customerAction()
+    {
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+
+    public function productAction()
+    {
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+
+    public function orderAction()
+    {
+        $this->loadLayout();
+        $this->renderLayout();
     }
 
     protected function _prepareUpSellLinkData($oldValue)

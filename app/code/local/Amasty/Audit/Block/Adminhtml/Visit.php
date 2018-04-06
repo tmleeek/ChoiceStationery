@@ -27,11 +27,13 @@ class Amasty_Audit_Block_Adminhtml_Visit extends Mage_Adminhtml_Block_Widget_Gri
                 window.location.href='".$this->getUrl('adminhtml/amaudit_visit/clear')."';
         ";
 
-        $this->addButton('clear', array(
-            'label' => Mage::helper('amaudit')->__('Clear Log'),
-            'onclick' => $script,
-            'class' => 'delete',
-        ));
+        if (Mage::helper('amaudit')->allowClear()) {
+            $this->addButton('clear', array(
+                'label' => Mage::helper('amaudit')->__('Clear Log'),
+                'onclick' => $script,
+                'class' => 'delete',
+            ));
+        }
 
         return parent::_prepareLayout();
     }

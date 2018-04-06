@@ -48,12 +48,14 @@ class Amasty_Audit_Model_Visit extends Mage_Core_Model_Abstract
         $days = Mage::getStoreConfig('amaudit/log/delete_pages_history_after_days');
         $query = "DELETE `main_table`, `d` FROM  `$tableVisitName` AS `main_table`
         LEFT JOIN `$tableVisitDetailName` AS `d` ON main_table.session_id = d.session_id
-        WHERE session_start < NOW() - INTERVAL " . $days . " DAY";
+        WHERE session_start < NOW() - INTERVAL :days DAY";
 
         Mage::getSingleton('core/resource')
             ->getConnection('core_write')
-            ->query($query)
-        ;
+            ->query(
+                $query,
+                array('days' => $days)
+            );
     }
 
     public function getVisitEntity($sessionId)

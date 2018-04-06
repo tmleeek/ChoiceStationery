@@ -40,6 +40,7 @@ class Mirasvit_SearchIndex_Model_Index_Mage_Catalog_Category_Index extends Miras
             'meta_keywords'    => Mage::helper('searchindex')->__('Meta Keywords'),
             'meta_description' => Mage::helper('searchindex')->__('Meta Description'),
             'description'      => Mage::helper('searchindex')->__('Description'),
+            'part_finders'      => Mage::helper('searchindex')->__('Search terms'),
         );
 
         return $result;

@@ -33,14 +33,14 @@ foreach($rowsparent as $rowsparentObj)
 	echo "<br />This is ".$maincatid = addCategoryByp($maincategory, $maincategory, 3, $maincategory);
 	//die("Developer is working");
 	if($maincategoryid > 0){
-		$sqlsecchield = "SELECT value_id, name FROM `am_finder_value` WHERE `dropdown_id`=2 and parent_id=".$maincategoryid." LIMIT ".$secondlimit.",1";
-		//$sqlsecchield = "SELECT value_id, name FROM `am_finder_value` WHERE `dropdown_id`=2 and parent_id=".$maincategoryid;
+		//$sqlsecchield = "SELECT value_id, name FROM `am_finder_value` WHERE `dropdown_id`=2 and parent_id=".$maincategoryid." LIMIT ".$secondlimit.",1";
+		$sqlsecchield = "SELECT value_id, name FROM `am_finder_value` WHERE `dropdown_id`=2 and parent_id=".$maincategoryid;
 		$rowsecchield = $connection->fetchAll($sqlsecchield);
 		foreach($rowsecchield as $rowsecchieldObj){
 			$secondcategory =  $rowsecchieldObj['name'];
 			$secondcategoryid =  $rowsecchieldObj['value_id'];
 			echo "&nbsp;&nbsp;&nbsp;&nbsp;--".$secondcategory."<br />";
-			//$secondcatid = addCategoryByp($maincategory." ".$secondcategory, $secondcategory, $maincatid, $maincategory." ".str_replace(" ", "",$secondcategory));
+			$secondcatid = addCategoryByp($maincategory." ".$secondcategory, $secondcategory, $maincatid, $maincategory." ".str_replace(" ", "",$secondcategory));
 			if($secondcategoryid > 0){
 				//die("Working");
 				//$sqlchield = "SELECT value_id, name FROM `am_finder_value` WHERE `dropdown_id`=3 and parent_id=".$secondcategoryid." LIMIT ".$thirdlimit.",1";
@@ -53,8 +53,9 @@ foreach($rowsparent as $rowsparentObj)
 					echo "---".$thirdcategory."<br />";
 					$thirdcatid = addCategoryByp($maincategory." ".$secondcategory." ".$thirdcategory, $thirdcategory, $secondcatid, $maincategory." ".str_replace(" ", "",$thirdcategory));
 					$stopname = $maincategory." ".$secondcategory." ".$thirdcategory;
-					die("Working");
-					//if($stopname == "Brother DP 300 DP 300"){ die("check for continue"); }
+					//die("Working");
+					if($secondcatid  >= 34967){ die("second done for continue"); }
+					if($thirdcatid  >= 34967){ die("third done for continue"); }
 					//die("Working");
 				}
 			}

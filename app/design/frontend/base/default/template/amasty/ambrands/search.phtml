@@ -20,9 +20,12 @@
 
 <div class="input-box">
   <div class="ambrands-search-wrapper">
+	<span class="fa fa-search"></span>     
     <input href='#' type="text" onkeyup="searchBrands(this.value)" class="input-text ambrands-search-input" id="ambrands-search-input"
-      placeholder="<?php echo Mage::helper('ambrands')->__('Search Brand')?>" value=""/>
-    <div id="livesearch" ></div>
+      placeholder="<?php echo Mage::helper('ambrands')->__('Search Brand')?>" value="" />    
+    <div id="livesearch" >
+    
+    </div>
   </div>
 </div>
 <?php if ($this->getData('side')): ?>

@@ -189,6 +189,16 @@ p.control input.radio { margin-right:6px; }
 .form-list .customer-name-middlename-suffix .name-lastname input.input-text { width:202px; }
 
 .opc .form-list .customer-name-prefix .name-firstname input.input-text,
+/*********** Search Functionality ************/
+.ui-autocomplete {display: block;
+    width: 325px;
+    position: absolute!important;
+    top: 110px;
+    left: 703px;
+    background: #e62806;
+    z-index: 10;
+    border-radius: 0px 0px 5px 5px; }
+
 .opc .form-list .customer-name-suffix .name-lastname input.input-text,
 .opc .form-list .customer-name-middlename .name-firstname input.input-text,
 .opc .form-list .customer-name-middlename-suffix .name-firstname input.input-text,
@@ -396,6 +406,16 @@ tr.summary-details-excluded { font-style:italic; }
 .std ul ol,
 .std ol ul { margin:.5em 0; }
 .std dt { font-weight:bold; }
+/*********** Search Functionality ************/
+.ui-autocomplete {display: block;
+    width: 325px;
+    position: absolute!important;
+    top: 110px;
+    left: 703px;
+    background: #e62806;
+    z-index: 10;
+    border-radius: 0px 0px 5px 5px; }
+
 .std dd { padding:0 0 0 1.5em; }
 .std blockquote { font-style:italic; padding:0 0 0 1.5em; }
 .std address { font-style:normal; }
@@ -1735,6 +1755,19 @@ ul.ul_checkbox li { background: url(../images/choicetick.jpg) no-repeat left top
 /******** About Us Page ********/
 .transition { transition: .3s cubic-bezier(.3, 0, 0, 1.3) }
 .three .transition { transition: .7s cubic-bezier(.3, 0, 0, 1.3) }
+
+
+/*********** Search Functionality ************/
+.ui-autocomplete {display: block;
+    width: 325px;
+    position: absolute!important;
+    top: 110px;
+    left: 703px;
+    background: #e62806;
+    z-index: 10;
+    border-radius: 0px 0px 5px 5px; }
+
+
  
 /* --------- THREE --------- */ 
 .cms-about-choice-stationery-supplies .three { list-style: none; padding: 0; margin: 40px 0; }

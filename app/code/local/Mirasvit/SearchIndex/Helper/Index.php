@@ -26,7 +26,8 @@ class Mirasvit_SearchIndex_Helper_Index extends Mage_Core_Helper_Abstract
             
             $collection = Mage::getModel('searchindex/index')->getCollection()
                 ->addFieldToFilter('is_active', 1);
-
+                $collection->setOrder('position', 'asc');
+              
             foreach ($collection as $index) {
                 $model = $index->getIndexInstance();
                 $this->_indexes[$index->getIndexCode()] = $model;

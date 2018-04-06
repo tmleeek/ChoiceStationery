@@ -20,13 +20,12 @@ $thirdlimit = 0;
 if(isset($_REQUEST['tlim'])){ $thirdlimit = $_REQUEST['tlim']; }
 
 $connection = Mage::getSingleton('core/resource')->getConnection('core_read');
-$sqlparent        = "SELECT value_id, name FROM `am_finder_value` WHERE `dropdown_id`=1 Limit 16,22";
+$sqlparent        = "SELECT value_id, name FROM `am_finder_value` WHERE `dropdown_id`=1 Limit 1,1";
 $rowsparent       = $connection->fetchAll($sqlparent); 
 
 
 foreach($rowsparent as $rowsparentObj)
 {
-	$assignProArry = array();
 	//print_r($rowsparentObj); die("Workring");
 	$maincategory =  $rowsparentObj['name'];
 	$maincategoryid =  $rowsparentObj['value_id'];
@@ -41,7 +40,7 @@ foreach($rowsparent as $rowsparentObj)
 			$secondcategoryid =  $rowsecchieldObj['value_id'];
 			echo "\n--".$secondcategory."<br />";
 			$secondcatid = addCategoryByp($maincategory." ".$secondcategory, $secondcategory, $maincatid, $maincategory." ".str_replace(" ", "",$secondcategory));
-			//if($secondcatid < 44105){ continue; }
+			if($secondcatid < 53466){ continue; }
 			//if($secondcatid == 38387){ die("Updated"); }
 			if($secondcategoryid > 0){
 				//$sqlchield = "SELECT value_id, name FROM `am_finder_value` WHERE `dropdown_id`=3 and parent_id=".$secondcategoryid." LIMIT ".$thirdlimit.",1";
@@ -55,7 +54,7 @@ foreach($rowsparent as $rowsparentObj)
 					$thirdcatid = addCategoryByp($maincategory." ".$thirdcategory, $thirdcategory, $secondcatid, $maincategory." ".str_replace(" ", "",$thirdcategory));
 					//$new_cat_for_prod = array($maincatid, $secondcatid, $thirdcatid);
 					//echo "<br />This is ori <pre>"; print_r($new_cat_for_prod); echo "</pre>";
-					//if($thirdcatid <= 44083){ continue; }
+					if($thirdcatid <= 53857){ continue; }
 					if($thirdcategoryid > 0){
 						$sqlprodsku = "SELECT sku FROM `am_finder_map` WHERE value_id=".$thirdcategoryid;
 						//die("Working");

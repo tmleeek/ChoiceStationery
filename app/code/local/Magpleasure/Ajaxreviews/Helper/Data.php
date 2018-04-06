@@ -1,9 +1,19 @@
 <?php
 
 /**
- * @author Amasty Team
- * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
- * @package Magpleasure_Ajaxreviews
+ * Magpleasure Ltd.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magpleasure.com/LICENSE.txt
+ *
+ * @category   Magpleasure
+ * @package    Magpleasure_Ajaxreviews
+ * @copyright  Copyright (c) 2014-2015 Magpleasure Ltd. (http://www.magpleasure.com)
+ * @license    http://www.magpleasure.com/LICENSE.txt
  */
 class Magpleasure_Ajaxreviews_Helper_Data extends Mage_Core_Helper_Abstract
 {
@@ -631,10 +641,12 @@ class Magpleasure_Ajaxreviews_Helper_Data extends Mage_Core_Helper_Abstract
      * Send notification to leave review as 1 email per order
      *
      * @param array $notificationIds
+     * @param bool $email
      * @param bool $isCopy
+     * @param bool $isFake
      * @return int
      */
-    public function sendOrderNotificationToLeaveReview($notificationIds, $isCopy = false, $isFake = false)
+    public function sendOrderNotificationToLeaveReview($notificationIds, $email = false, $isCopy = false, $isFake = false)
     {
         $notificationCollection = Mage::getModel('ajaxreviews/notification_review')
             ->getCollection()
@@ -680,7 +692,7 @@ class Magpleasure_Ajaxreviews_Helper_Data extends Mage_Core_Helper_Abstract
 
             $sentResult = Magpleasure_Ajaxreviews_Model_System_Config_Source_Notification_Review_Status::FAILED;
             if ($products) {
-                $email = $notification->getSendingEmail();
+                $customeremail = $email ? $email : $notification->getSendingEmail();
                 /** @var Magpleasure_Ajaxreviews_Model_Notifier $notifier */
                 $notifier = Mage::getModel('ajaxreviews/notifier');
                 $orderNotificationIds = array();
@@ -688,7 +700,7 @@ class Magpleasure_Ajaxreviews_Helper_Data extends Mage_Core_Helper_Abstract
                     $orderNotificationIds[] = $notification->getId();
                 }
                 $notifier
-                    ->setCustomer(array('email' => $email,
+                    ->setCustomer(array('email' => $customeremail,
                         'name' => $order->getCustomerFirstname() . ' ' . $order->getCustomerLastname(),
                         'id' => $order->getCustomerId()))
                     ->setProductInfo($products)
@@ -705,8 +717,8 @@ class Magpleasure_Ajaxreviews_Helper_Data extends Mage_Core_Helper_Abstract
                 if (!$isCopy) {
                     $notification->setStatus($sentResult)->setSendDate($this->getCurrentDate());
                     $notification->setHashKey($this->getHashKey());
-                    $result++;
                 }
+                $result++;
                 $notification->save();
             }
         }
@@ -1087,3 +1099,4 @@ class Magpleasure_Ajaxreviews_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
 }
+

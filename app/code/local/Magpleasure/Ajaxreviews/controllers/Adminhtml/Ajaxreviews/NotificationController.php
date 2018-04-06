@@ -1,9 +1,19 @@
 <?php
 
 /**
- * @author Amasty Team
- * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
- * @package Magpleasure_Ajaxreviews
+ * Magpleasure Ltd.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magpleasure.com/LICENSE.txt
+ *
+ * @category   Magpleasure
+ * @package    Magpleasure_Ajaxreviews
+ * @copyright  Copyright (c) 2014-2015 Magpleasure Ltd. (http://www.magpleasure.com)
+ * @license    http://www.magpleasure.com/LICENSE.txt
  */
 class Magpleasure_Ajaxreviews_Adminhtml_Ajaxreviews_NotificationController extends Mage_Adminhtml_Controller_Action
 {
@@ -163,9 +173,14 @@ class Magpleasure_Ajaxreviews_Adminhtml_Ajaxreviews_NotificationController exten
     {
         $notificationIds = $this->getRequest()->getPost('notification_ids', array());
         $success = 0;
-        foreach ($notificationIds as $notificationId) {
-            $result = $this->_helper()->sendNotificationToLeaveReview($notificationId, $this->getRequest()->getParam('copy_email'), true);
-            $success += Magpleasure_Ajaxreviews_Model_System_Config_Source_Notification_Review_Status::FAILED != $result ? 1 : 0;
+        $isByOrder = $this->_helper()->getConfigValue('emailreview', 'send_by_order');
+        if($isByOrder) {
+            $success = $this->_helper()->sendOrderNotificationToLeaveReview($notificationIds, $this->getRequest()->getParam('copy_email'), true);
+        } else {
+            foreach ($notificationIds as $notificationId) {
+                $result = $this->_helper()->sendNotificationToLeaveReview($notificationId, $this->getRequest()->getParam('copy_email'), true);
+                $success += Magpleasure_Ajaxreviews_Model_System_Config_Source_Notification_Review_Status::FAILED != $result ? 1 : 0;
+            }
         }
         $failure = count($notificationIds) - $success;
         if ($failure) {
@@ -347,3 +362,4 @@ class Magpleasure_Ajaxreviews_Adminhtml_Ajaxreviews_NotificationController exten
         return Mage::getSingleton('admin/session')->isAllowed('catalog/reviews_ratings/ajaxreviews');
     }
 }
+

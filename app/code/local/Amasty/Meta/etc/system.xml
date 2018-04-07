@@ -9,10 +9,10 @@
 <config>
     <sections>
         <ammeta translate="label" module="ammeta">
-            <label>Meta Tags Templates</label>
+            <label>SEO Meta Tags Templates</label>
             <tab>amasty</tab>
             <frontend_type>text</frontend_type>
-            <sort_order>13520</sort_order>
+            <sort_order>190513</sort_order>
             <show_in_default>1</show_in_default>
             <show_in_website>1</show_in_website>
             <show_in_store>1</show_in_store>
@@ -40,8 +40,8 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </max_meta_description>                   
-                        
+                        </max_meta_description>
+
                     </fields>
                 </general>
                 <product translate="label">
@@ -58,49 +58,67 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
+                            <show_in_website>0</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </enabled>  
-                        <title translate="label">
-                            <label>Product Meta Title</label>
-                            <frontend_type>textarea</frontend_type> 
+                        </enabled>
+                        <force translate="label">
+                            <label>Replace Filled Metadata</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                             <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </force>
+                        <no_breadcrumbs translate="label comment">
+                            <label>No Breadcrumbs</label>
+                            <comment>Please set to `Yes` if you have no Breadcrumbs on the Product View page.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                            <sort_order>25</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </title>
-                        <description translate="label">
-                            <label>Product Meta Description</label>
-                            <frontend_type>textarea</frontend_type> 
+                        </no_breadcrumbs>
+                        <product_short_description_on_category_page translate="label comment">
+                            <label>Replace Product Short Descriptions on Category Page</label>
+                            <comment>Please set to `No` if you have no Short Descriptions for products on the Category page.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                            <sort_order>27</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </product_short_description_on_category_page>
+                        <url_template translate="label comment">
+                            <label>Product URL Key Template</label>
+                            <frontend_type>text</frontend_type>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </description> 
-                        <keywords translate="label">
-                            <label>Product Keywords</label>
-                            <frontend_type>textarea</frontend_type> 
-                            <sort_order>35</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </keywords>
-                        <full_description translate="label">
-                            <label>Product Full Description</label>
-                            <frontend_type>textarea</frontend_type> 
+                            <comment><![CDATA[
+You can use variables in this template<br>
+Example: {name} - {sku}
+]]></comment>
+                        </url_template>
+                        <apply_template>
+                            <label/>
+                            <frontend_model>ammeta/adminhtml_system_button</frontend_model>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
+                            <show_in_website>0</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </full_description> 
-                        <short_description translate="label">
-                            <label>Product Short Description</label>
-                            <frontend_type>textarea</frontend_type> 
-                            <sort_order>50</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </short_description> 
+                        </apply_template>
                     </fields>
                 </product>
                 <cat translate="label">
@@ -119,74 +137,105 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </enabled>                
-                        <meta_title translate="label">
-                            <label>Top Category Title</label>
-                            <frontend_type>textarea</frontend_type> 
-                            <sort_order>10</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </meta_title>
-                        <meta_description translate="label">
-                            <label>Top Category Meta Description</label>
-                            <frontend_type>textarea</frontend_type> 
+                        </enabled>
+                        <force translate="label">
+                            <label>Replace Filled Metadata</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
+                            <show_in_website>0</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </meta_description> 
-                        <meta_keywords translate="label">
-                            <label>Top Category Keywords</label>
-                            <frontend_type>textarea</frontend_type> 
+                        </force>
+                    </fields>
+                </cat>
+            </groups>
+        </ammeta>
+        <!-- This section is also included in seo google sitemap module. Please modify in both modules if needed. -->
+        <amseotoolkit translate="label" module="amseotoolkit">
+            <groups>
+                <hreflang translate="label">
+                    <label>Hreflang URLs</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <scope translate="label comment">
+                            <label>Hreflang URLs Scope</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>amseotoolkit/source_scope</source_model>
+                            <comment><![CDATA[Choose <b>Website</b> to work within one website only or <b>Global</b> to work between the websites]]></comment>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </scope>
+                        <enabled_for translate="label comment">
+                            <label>Enabled for</label>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>amseotoolkit/source_enabledFor</source_model>
+                            <comment>for Meta Tags Templates</comment>
+                        </enabled_for>
+                        <language translate="label">
+                            <label>Language Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>amseotoolkit/source_language</source_model>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </meta_keywords>
-                        <description translate="label">
-                            <label>Top Category Description</label>
-                            <frontend_type>textarea</frontend_type> 
+                        </language>
+                        <country translate="label">
+                            <label>Country Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>amseotoolkit/source_country</source_model>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </description> 
-                        <sub_meta_title translate="label">
-                            <label>Child Category Title</label>
-                            <frontend_type>textarea</frontend_type> 
+                        </country>
+                        <x_default translate="label comment">
+                            <label>X-default</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>amseotoolkit/source_xdefault</source_model>
+                            <comment><![CDATA[If <b>Hreflang Scope</b> is <b>Global</b>, values from website scope for this setting will be ignored]]></comment>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </x_default>
+                        <cms_relation translate="label comment">
+                            <label>Multi-Stores CMS Pages Relation</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>amseotoolkit/source_CmsRelation</source_model>
+                            <comment>Choose the way how to identify the same CMS page for different views. By Hreflang UUID option is to be specified for each CMS page manually</comment>
                             <sort_order>60</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </sub_meta_title>
-                        <sub_meta_description translate="label">
-                            <label>Child Category Meta Description</label>
-                            <frontend_type>textarea</frontend_type> 
-                            <sort_order>70</sort_order>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </cms_relation>
+                        <preview translate="comment">
+                            <label></label>
+                            <frontend_type>label</frontend_type>
+                            <comment><![CDATA[<a href="#" onclick="showHreflangPreview(); return false;" style="font-size:15px;">Preview</a>]]></comment>
+                            <frontend_model>amseotoolkit/adminhtml_form_field_preview</frontend_model>
+                            <sort_order>100</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </sub_meta_description> 
-                        <sub_meta_keywords translate="label">
-                            <label>Child Category Keywords</label>
-                            <frontend_type>textarea</frontend_type> 
-                            <sort_order>80</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </sub_meta_keywords>
-                        <sub_description translate="label">
-                            <label>Child Category Description</label>
-                            <frontend_type>textarea</frontend_type> 
-                            <sort_order>90</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </sub_description> 
+                        </preview>
                     </fields>
-                </cat>    
+                </hreflang>
             </groups>
-        </ammeta>
+        </amseotoolkit>
     </sections>
 </config>

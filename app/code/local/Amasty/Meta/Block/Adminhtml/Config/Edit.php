@@ -1,8 +1,9 @@
 <?php
 /**
-* @author Amasty Team
-* @copyright Copyright (c) 2010-2011 Amasty (http://www.amasty.com)
-*/
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Amasty_Meta
+ */
 class Amasty_Meta_Block_Adminhtml_Config_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
     public function __construct()
@@ -25,7 +26,7 @@ class Amasty_Meta_Block_Adminhtml_Config_Edit extends Mage_Adminhtml_Block_Widge
     {
         $header = Mage::helper('ammeta')->__('New Template');
         if (Mage::registry('ammeta_config')->getId()){
-            $header = Mage::helper('ammeta')->__('Edit Template');
+            $header = Mage::helper('ammeta')->__('Edit Template') . ' #' . Mage::registry('ammeta_config')->getId();
         }
         return $header;
     }

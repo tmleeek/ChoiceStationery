@@ -97,6 +97,22 @@ ol,ul{list-style:none}
 .free-delivery-div .header-bottom-bottom .order{background:url(../images/order.png) no-repeat;  display:inline-block; margin-right:6px; vertical-align:middle; height:21px; width:21px;}
 
 
+#trustwaveSealImage{
+    position: absolute;
+    right: 12.8%;
+    bottom: 2.8%;
+
+}
+
+.checkout-onepage-success #trustwaveSealImage{
+    position: absolute;
+    right: 12.8%;
+    bottom: 6.8%;
+
+}
+
+
+
 .category-fake {height: 30px !important;font-size: 14px !important;}
 .price-box {margin-bottom: 10px; padding:0 10px;}
 .login-account-container{color:#072c73; font-size:15px; margin-top:20px;}
@@ -2047,8 +2063,27 @@ li.ui-menu-item a:hover{color:#000 !important;}
 .category-outer .col-left.sidebar .block-content .input-box { margin: 10px; }
 .block-content.toggle-content dt.last { background: #072c72; color: #fff; padding:10px; font-size: 18px; text-align: center; }
 .category-outer .col-left.sidebar .sub-category-menu:last-child .navbar-default { padding-bottom: 0px; } 
-.amlabel-div { text-align: center; }
+.amlabel-div { text-align: center; position: relative; }
 .amlabel-div .add-btn { background: #072c73 !important; color: #fff; font-size: 18px; text-align: center!important; font-weight: 700;     position: absolute!important;
     width: 100%;
     bottom: -20px!important }
 .amlabel-div .add-btn:hover { background: #e60003 !important; cursor: pointer;  }
+
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (orientation:portrait){
+#trustwaveSealImage { 
+    right: 15%;
+    bottom: 1.5%;
+}
+	}
+
+	@media only screen
+and (min-device-width:768px)
+and (max-device-width:1024px)
+and (orientation:landscape){
+#trustwaveSealImage { 
+    right: 15%;
+    bottom: 1.5%;
+}
+	}
+
+

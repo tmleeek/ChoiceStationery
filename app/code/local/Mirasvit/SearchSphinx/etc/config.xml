@@ -109,7 +109,7 @@
     <default>
         <searchsphinx>
             <general>
-                <indexer_expr>0 3 * * *</indexer_expr>
+                <indexer_expr>15 3 * * *</indexer_expr>
                 <indexer_delta_expr>*/15 * * * *</indexer_delta_expr>
                 <host>localhost</host>
                 <port>9315</port>

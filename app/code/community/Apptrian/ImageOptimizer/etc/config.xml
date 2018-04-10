@@ -50,7 +50,7 @@
             </general>
             <cron>
                 <enabled_scan>1</enabled_scan>
-                <expression_scan>15 4 * * *</expression_scan>
+                <expression_scan>20 4 * * *</expression_scan>
                 <enabled_optimize>1</enabled_optimize>
                 <expression_optimize>0 * * * *</expression_optimize>
             </cron>

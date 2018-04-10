@@ -22,7 +22,7 @@
             </amfinder_clear_archive_data>
 
             <amfinder_run_import>
-                <schedule><cron_expr>*/30 * * * *</cron_expr></schedule>
+                <schedule><cron_expr>30 2 * * * *</cron_expr></schedule>
                 <run><model>amfinder/import::runAll</model></run>
             </amfinder_run_import>
         </jobs>

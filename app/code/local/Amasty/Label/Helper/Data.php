@@ -55,8 +55,9 @@ class Amasty_Label_Helper_Data extends Mage_Core_Helper_Abstract
         $tableClass = $label->getCssClass();
         
         $tableStyle = '';
-        $tableStyle .= 'height:' . $this->_sizes[$imgUrl]['h'] . 'px; ';
-        $tableStyle .= 'width:'  . $this->_sizes[$imgUrl]['w'] . 'px; ';
+        $tableStyle .= 'height:' . $this->_sizes[$imgUrl]['h'] . '; ';
+        $tableStyle .= 'width:'  . $this->_sizes[$imgUrl]['w'] . '; ';
+        $tableStyle .= 'color: #fff; ';
 
         $customStyle = $label->getStyle();
         if ($customStyle){

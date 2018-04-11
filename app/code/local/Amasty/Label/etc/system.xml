@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <!--
 /**
-* @author Amasty Team
-* @copyright Copyright (c) 2008-2012 Amasty (http://www.amasty.com)
-* @package Amasty_Label
-*/
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Amasty_Label
+ */
 -->
 <config>
 
@@ -18,6 +18,47 @@
             <show_in_website>1</show_in_website>
             <show_in_store>1</show_in_store>
             <groups>
+                <options translate="label">
+                    <label>General Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <!-- Option to choose between JS or PHTML template processing -->
+                        <use_js>
+                            <label>Automatically add labels</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[
+                                If automatic way does not work for your custom theme, please select "No" and manually update templates as per
+                                <a href="http://amasty.com/knowledge-base/product-labels-modify-templates.html">instructions</a>. In all other cases just leave "Yes"
+                                ]]>
+                            </comment>
+                        </use_js>
+                        <selector translate="label">
+                            <label>CSS selector for the image block</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><use_js>1</use_js></depends>
+                            <comment>
+                                <![CDATA[
+                                If you do not see the labels, please check if the CSS selector is correct as described
+                                <a href="http://amasty.com/knowledge-base/product-labels-find-css-selector.html">here</a>.
+                                ]]>
+                            </comment>
+                        </selector>
+                    </fields>
+                </options>
                 <general translate="label">
                     <label>`On Sale` Condition</label>
                     <frontend_type>text</frontend_type>
@@ -85,6 +126,9 @@
                             <comment>In days</comment>
                             <frontend_type>text</frontend_type> 
                             <sort_order>30</sort_order>
+                            <depends>
+                                <creation_date>1</creation_date>
+                            </depends>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>

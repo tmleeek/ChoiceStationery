@@ -21,9 +21,11 @@
             $isProductPage = $helper->isInCatalogProductPage($moduleName, $cntrlName, $this->getProduct()->getId(), Mage::registry('current_product'));
             $productUrl = $this->getProduct()->getProductUrl();
             $tabText = $helper->__('Review'); ?>
-            <a href="<?php echo $this->getReviewsUrl() ?>"
+            <?php /* <a href="<?php echo $this->getReviewsUrl() ?>"
                onclick="return openMpAjaxReviews('<?php echo $isProductPage ?>','<?php echo $productUrl ?>',
-                   '<?php echo $tabText ?>', false)"><?php echo $this->__('%d Review(s)', $this->getReviewsCount()) ?></a>
+                   '<?php echo $tabText ?>', false)"><?php echo $this->__('%d Review(s)', $this->getReviewsCount()) ?></a> */ ?>
+                               <a href="#product-detail-review-tab"
+               onclick="document.getElementById('product-detail-review-tab').click();"><?php echo $this->__('%d Review(s)', $this->getReviewsCount()) ?></a>
         </div>
     </div>
 <?php endif; ?>

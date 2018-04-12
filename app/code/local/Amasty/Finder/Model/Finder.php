@@ -83,7 +83,7 @@ class Amasty_Finder_Model_Finder extends Mage_Core_Model_Abstract
         } else {
             $layer = Mage::getSingleton('catalog/layer');
         }
-
+       // echo $id;echo '--'; echo $finderId; 
         $collection = $layer->getProductCollection();
         $cnt = $this->countEmptyDropdowns();
         $this->getResource()->addConditionToProductCollection($collection, $id, $cnt, $finderId);
@@ -276,7 +276,7 @@ class Amasty_Finder_Model_Finder extends Mage_Core_Model_Abstract
     }
 
 
-	/**
+	/**    
 	 * temporary method
 	 * @return Varien_Db_Adapter_Interface
 	 */

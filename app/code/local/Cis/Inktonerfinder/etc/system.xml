@@ -1,0 +1,141 @@
+<config>
+    <tabs>
+        <inktonerfinder translate="label" module="inktonerfinder">
+            <label>Ink Toner Finder</label>
+            <sort_order>100</sort_order>
+        </inktonerfinder>
+    </tabs> 
+    <sections>
+        <inktonerfinder_options translate="label" module="inktonerfinder">
+            <label>Ink Toner Finder Config Options</label>
+            <tab>inktonerfinder</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <inktonerfinder_group translate="label">
+                    <label>Ink Toner Finder Config Fields</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+			<fields>			
+			    <user_id translate="label tooltip comment">
+			       <label>API-User ID</label>			 
+			       <show_in_default>1</show_in_default>
+			       <show_in_website>1</show_in_website>
+			       <show_in_store>1</show_in_store>
+			       <frontend_type>text</frontend_type>
+			           <sort_order>100</sort_order>
+			    </user_id>
+			    <key translate="label tooltip comment">
+			       <label>API-Securitykey</label>			 
+			       <show_in_default>1</show_in_default>
+			       <show_in_website>1</show_in_website>
+			       <show_in_store>1</show_in_store>
+			       <frontend_type>text</frontend_type>
+			           <sort_order>200</sort_order>
+			    </key>
+			    <password translate="label tooltip comment">
+			       <label>API-Password</label>			 
+			       <show_in_default>1</show_in_default>
+			       <show_in_website>1</show_in_website>
+			       <show_in_store>1</show_in_store>
+			       <frontend_type>password</frontend_type>
+			           <sort_order>300</sort_order>
+			    </password>
+			    <!--<version translate="label tooltip comment">
+			       <label>Version</label>			 
+			       <show_in_default>1</show_in_default>
+			       <show_in_website>1</show_in_website>
+			       <show_in_store>1</show_in_store>
+			       <frontend_type>text</frontend_type>
+			           <sort_order>400</sort_order>
+			    </version>-->
+			    <!--<language translate="label tooltip comment">
+			       <label>Language</label>			 
+			       <show_in_default>1</show_in_default>
+			       <show_in_website>1</show_in_website>
+			       <show_in_store>1</show_in_store>
+			       <frontend_type>text</frontend_type>
+			       <comment>Language should be in format, for example: "en"</comment>
+			       <sort_order>500</sort_order>
+			    </language>-->
+			    
+			     <search_field translate="label tooltip comment">
+			       <label>Select Search Field</label>			 
+			       <show_in_default>1</show_in_default>
+			       <show_in_website>1</show_in_website>
+			       <show_in_store>700</show_in_store>
+			       <frontend_type>select</frontend_type>
+			        <source_model>inktonerfinder/searchfields</source_model>     
+			       <sort_order>600</sort_order>
+			    </search_field>
+			    
+			    <search_dimension translate="label tooltip comment">
+			       <label>Drop-Down Dimension</label>			 
+			       <show_in_default>1</show_in_default>
+			       <show_in_website>1</show_in_website>
+			       <show_in_store>700</show_in_store>
+			       <frontend_type>select</frontend_type>
+			        <source_model>inktonerfinder/dimension</source_model>     
+			       <sort_order>600</sort_order>
+			    </search_dimension>
+			     
+			      <search_by translate="label tooltip comment">
+			       <label>Select Search By</label>
+			        <comment>EAN Or OEM or Articlenumber</comment>
+			       <show_in_default>1</show_in_default>
+			       <show_in_website>1</show_in_website>
+			       <show_in_store>700</show_in_store>
+			       <frontend_type>select</frontend_type>
+			        <source_model>inktonerfinder/searchby</source_model>     
+			       <sort_order>650</sort_order>
+			    </search_by>
+			      
+		    
+			    <remove_modelseries translate="label comment">
+			       <label>Show Second Drop-Down Step</label>
+			       <show_in_default>1</show_in_default>
+			       <show_in_website>1</show_in_website>
+			       <show_in_store>700</show_in_store>
+			       <frontend_type>select</frontend_type>
+			        <source_model>inktonerfinder/secondbox</source_model>     
+			       <sort_order>600</sort_order>
+			    </remove_modelseries>
+			    
+			     <ean_attribute translate="label tooltip comment">
+			       <label>Attribute code of EAN</label>			 
+			       <show_in_default>1</show_in_default>
+			       <show_in_website>1</show_in_website>
+			       <show_in_store>1</show_in_store>
+			       <frontend_type>text</frontend_type>
+			           <sort_order>800</sort_order>
+			    </ean_attribute>
+			      <oem_attribute translate="label tooltip comment">
+			       <label>Attribute code of OEM</label>			 
+			       <show_in_default>1</show_in_default>
+			       <show_in_website>1</show_in_website>
+			       <show_in_store>1</show_in_store>
+			       <frontend_type>text</frontend_type>
+			           <sort_order>900</sort_order>
+			    </oem_attribute>
+			      
+			       <artnum_attribute translate="label tooltip comment">
+			       <label>Attribute code of Article Number</label>			 
+			       <show_in_default>1</show_in_default>
+			       <show_in_website>1</show_in_website>
+			       <show_in_store>1</show_in_store>
+			       <frontend_type>text</frontend_type>
+			           <sort_order>1000</sort_order>
+			    </artnum_attribute>
+			   
+		       </fields>
+                </inktonerfinder_group>
+            </groups>
+        </inktonerfinder_options>
+    </sections>     
+</config>

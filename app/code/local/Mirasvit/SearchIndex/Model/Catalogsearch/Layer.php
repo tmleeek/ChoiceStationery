@@ -47,6 +47,7 @@ class Mirasvit_SearchIndex_Model_Catalogsearch_Layer extends Mirasvit_SearchInde
         Mage::helper('mstcore/debug')->dump($uid, array('collection_sql', $collection->getSelect()->__toString()));
         Mage::helper('mstcore/debug')->end($uid, $this);
 
+  
         return $this;
     }
 

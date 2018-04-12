@@ -182,7 +182,7 @@ class Amasty_Coupons_Model_SalesRule_Validator extends Mage_SalesRule_Model_Vali
             $appliedRuleIds[$rule->getRuleId()] = $rule->getRuleId();
 
             // MODIFICATION BY AMASTY
-            $currentCouponCode = explode(',', $this->getCouponCode());
+            $currentCouponCode = explode(', ', $this->getCouponCode());
             if ($currentCouponCode && $rule->getCouponCode() && in_array($rule->getCouponCode(), $currentCouponCode))
             {
                 $address->setCouponCode($this->getCouponCode());
@@ -197,11 +197,16 @@ class Amasty_Coupons_Model_SalesRule_Validator extends Mage_SalesRule_Model_Vali
                 break;
             }
         }
-        $item->setAppliedRuleIds(join(',',$appliedRuleIds));
+        $item->setAppliedRuleIds(join(', ',$appliedRuleIds));
         $address->setAppliedRuleIds($this->mergeIds($address->getAppliedRuleIds(), $appliedRuleIds));
         $quote->setAppliedRuleIds($this->mergeIds($quote->getAppliedRuleIds(), $appliedRuleIds));
         return $this;
         
+    }
+
+    public function canProcessRule($rule, $address)
+    {
+        return parent::_canProcessRule($rule, $address);
     }
     
     // CE 1.3 compatibility
@@ -272,7 +277,7 @@ class Amasty_Coupons_Model_SalesRule_Validator extends Mage_SalesRule_Model_Vali
             $appliedRuleIds[$rule->getRuleId()] = $rule->getRuleId();
 
             // MODIFICATION BY AMASTY
-            $currentCouponCode = explode(',', $this->getCouponCode());
+            $currentCouponCode = explode(', ', $this->getCouponCode());
             if ($currentCouponCode && $rule->getCouponCode() && in_array($rule->getCouponCode(), $currentCouponCode))
             {
                 $address->setCouponCode($this->getCouponCode());

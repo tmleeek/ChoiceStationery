@@ -9,11 +9,11 @@
 ?>
 <?php $_helper = Mage::helper('ajaxreviews') ?>
 <div class="mp-header" ng-hide="reviewsError">
-    <button ng-show="reviewsCount > 0" class="button mp-add-btn" type="button" ng-click="showForm()"
+    <button ng-show="reviewsCount > 0" class="button showreviewform mp-add-btn" type="button" ng-click="showForm()"
             ng-disabled="httpRequest">
         <span><span><?php echo $_helper->__('Add a Review') ?></span></span>
     </button>
-    <button ng-hide="reviewsCount > 0" class="button mp-first-btn" type="button" ng-click="showForm()"
+    <button ng-hide="reviewsCount > 0" class="button showreviewform mp-first-btn" type="button" ng-click="showForm()"
             ng-disabled="httpRequest">
         <span><span><?php echo $_helper->__($_helper->getConfigValue('style', 'first_review')) ?></span></span>
     </button>
@@ -51,13 +51,13 @@
     </div>
 </div>
 <table class="data-tabl" id="product-ajax-reviews">
-		 <colgroup><col width="25%"><col width="30%"><col width="50%"><col width="30%"></colgroup>
+		 <colgroup><col width="15%"><col width="20%"><col width="65%"></colgroup>
 						<thead>
                             <tr>
-								<th>Date</th>
-                                <th>Score</th>
-                                <th>Customer Comment</th>
-                                <th>Like/Dislike</th>
+								<th style="background:#e60003; color:#ffffff; padding: 5px 0px 4px 20px;">Date</th>
+                                <th style="background:#e60003; color:#ffffff; padding: 5px 0px 4px 20px;">Score</th>
+                                <th style="background:#e60003; color:#ffffff; padding: 5px 0px 4px 20px;">Customer Comment</th>
+                                
                                 
                             </tr>
                         </thead>   
@@ -77,8 +77,8 @@
 					<tbody>
 						<tr style="display: table-row;" class="mp-review c-both <?php echo $_helper->getDesignClass() ?>"
      ng-repeat="review in reviews">
-							<td><span class="mp-date">{{review.date}}</span></td>
-							<td> <div class="mp-nickname">Product:</div>
+							<td style="padding: 10px 15px;"><span class="mp-date">{{review.date}}</span></td>
+							<td style="padding: 10px 15px;"> 
 								<div ng-show="review.rating > 0">
 									<div class="mp-review-rating-box" style="<?php echo $_helper->getRatingFigureImageStyle() ?>">
 										<div class="mp-review-rating"
@@ -88,7 +88,7 @@
 
 								</div>
 							</td>
-							<td><div style="white-space: pre-wrap">{{review.content}}</div>
+							<td style="padding: 10px 15px;"><div style="white-space: pre-wrap">{{review.content}}</div>
 								 <div class="mp-bottom">
             <?php if ($_helper->isShareEnabled()): ?>
                 <span class="mp-share mp-facebook" title="Facebook">
@@ -114,25 +114,7 @@
             
         </div>
 							</td>
-							<td>
-								<div class="mp-vote-box" ng-show="vote">
-                <div class="mp-like-box" ng-mouseleave="review.hoverLike=false">
-                    <span class="mp-like animated-inline" ng-hide="review.hoverLike || review.voted"
-                          ng-mouseover="review.hoverLike=true"></span>
-                    <span class="mp-like mp-like-hover animated-inline" ng-click="assesReview(review, true)"
-                          ng-hide="!review.hoverLike || review.voted" ng-mouseleave="review.hoverLike=false"></span>
-                </div>
-                <span class="mp-vote" ecom-back-color="{{getVoteBackColor(review)}}">{{review.votes}}</span>
-
-                <div class="mp-dislike-box" ng-mouseleave="review.hoverDislike=false">
-                    <span class="mp-dislike animated-inline" ng-hide="review.hoverDislike || review.voted"
-                          ng-mouseover="review.hoverDislike=true"></span>
-                    <span class="mp-dislike mp-dislike-hover animated-inline"
-                          ng-click="assesReview(review, false)" ng-hide="!review.hoverDislike || review.voted"
-                          ng-mouseleave="review.hoverDislike=false"></span>
-                </div>
-            </div>
-							</td>
+							
 						</tr>
 					</tbody>
                         
@@ -146,10 +128,14 @@
        
     <!--/div>
 </div-->
+
 <div class="mp-more animated-inline" ng-click="loadMore()" style="<?php echo $_helper->getTextStyle() ?>"
-     ng-show="reviews.length < reviewsCount && !reviewsError"><?php echo $_helper->__("Load more") ?></div>
+       ng-show="reviews.length < reviewsCount && !reviewsError && !prireviewsError"><?php echo $_helper->__("Load more") ?></div>
 <span class="mp-error-msg"
-      ng-show="reviewsError"><?php echo $_helper->__('Unable to get product reviews.') ?></span>
+     ng-show="reviewsError"><?php echo $_helper->__('Unable to get product reviews.') ?></span>
+<span class="mp-error-msg"
+      ng-show="prireviewsError"><?php echo $_helper->__('No more record found!') ?></span>
+      
 
 <div id="mp-overlay" ng-show="FORMS.HIDE != form"></div>
 <div class="mp-box-container" ng-show="FORMS.REVIEW == form">

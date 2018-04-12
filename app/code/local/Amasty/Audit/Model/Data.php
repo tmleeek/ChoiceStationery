@@ -139,12 +139,14 @@ class Amasty_Audit_Model_Data extends Mage_Core_Model_Abstract
         if ($days > 0) {
             $query = "DELETE FROM `$tableLoginAttemptsName`";
 
-            $query = $query . 'WHERE date_time < NOW() - INTERVAL ' . $days . ' DAY';
+            $query = $query . 'WHERE date_time < NOW() - INTERVAL :days DAY';
 
             Mage::getSingleton('core/resource')
                 ->getConnection('core_write')
-                ->query($query)
-            ;
+                ->query(
+                    $query,
+                    array('days' => $days)
+                );
         }
     }
 

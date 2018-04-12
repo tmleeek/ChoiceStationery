@@ -135,7 +135,7 @@ function getAddvaluesIntoMagento($valuesData)
 	$j=0;
 	foreach($valuesData as $key=>$vData)
 	{
-		if($j>0)
+		if($j>5175)
 		{
 		$product=''; 
 		$product=Mage::getModel('catalog/product')->loadByAttribute('sku',$key);

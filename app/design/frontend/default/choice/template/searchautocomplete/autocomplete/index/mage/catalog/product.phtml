@@ -23,29 +23,7 @@ $_configHelper = Mage::helper('searchautocomplete/config');
         </a>
     <?php endif ?>
     
-    <?php if ($_configHelper->isShowShortDescription()): ?>
-        <a href="<?php echo $_product->getProductUrl() ?>">
-            <div class="highlight">
-                <?php echo 'Printer Make : '.$_product->getResource()->getAttribute('printer_make')->getFrontend()->getValue($_product) ?>
-            </div>
-        </a>
-    <?php endif ?>
-    
-    <?php if ($_configHelper->isShowShortDescription()): ?>
-        <a href="<?php echo $_product->getProductUrl() ?>">
-            <div class="highlight">
-                <?php echo 'Printer Family : '.$_product->getResource()->getAttribute('printer_family')->getFrontend()->getValue($_product) ?>
-            </div>
-        </a>
-    <?php endif ?>
-    
-    <?php if ($_configHelper->isShowShortDescription()): ?>
-        <a href="<?php echo $_product->getProductUrl() ?>">
-            <div class="highlight">
-                <?php echo 'Printer Model : '.$_product->getResource()->getAttribute('printer_modell')->getFrontend()->getValue($_product) ?>
-            </div>
-        </a>
-    <?php endif ?>
+
 
     <?php if ($_configHelper->isShowPrice()): ?>
         <a href="<?php echo $_product->getProductUrl() ?>">

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<layout version="1.0.0">
+	<default translate="label" module="inktonerfinder">
+	<reference name="head">
+		<action method="addItem"><type>skin_css</type><name>css/inktonerfinder.css</name></action>
+		<action method="addItem"><type>skin_css</type><name>js/inktonerfinder_chosen/chosen.css</name></action>
+		<action method="addItem"><type>skin_css</type><name>js/inktonerfinder_jquery-ui-1.11.4.custom/jquery-ui.min.css</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/inktonerfinder.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/inktonerfinder_chosen/chosen.jquery.min.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/inktonerfinder_jquery-ui-1.11.4.custom/jquery-ui.min.js</name></action>
+		<block type="core/text" name="your_external_csv">
+			<action method="setText">
+				<text><![CDATA[<link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">]]></text>
+			</action>
+		</block>
+	</reference>
+	<reference name="content">
+		<block type="core/template"  name="inktonerfinder" template="inktonerfinder/inktonerfinder.phtml" before="-" />
+	</reference>
+	<!--<reference name="header">
+		<block type="core/template" as="inktonerfinder_child"  name="inktonerfinder_child" template="inktonerfinder/inktonerfinder.phtml"/>
+	</reference>-->
+	</default>
+</layout>

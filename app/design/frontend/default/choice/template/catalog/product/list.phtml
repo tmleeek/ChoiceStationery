@@ -66,6 +66,23 @@
                 <div class="row">
  
 <?php foreach ($_productCollection as $_product): ?>
+<?php
+// This is for product default image
+$productimg = $this->helper('catalog/image')->init($_product, 'small_image')->resize(210);
+/*if($productimg):
+$pimage=$productimg->resize(210);
+else:
+$pimage=Mage::getBaseUrl().'skin/frontend/default/default/images/catalog/product/placeholder/image.jpg';
+endif;*/
+
+$handle = @fopen($productimg,'r');
+
+if(!$handle) {
+    $pimage=Mage::getBaseUrl().'skin/frontend/default/default/images/catalog/product/placeholder/image.jpg';
+} else {
+   $pimage=$productimg;
+}
+?>
                     <?php $product = Mage::getModel('catalog/product')->load($_product->getId())?>
 					  <div class="col-md-12"> 
 					 
@@ -73,7 +90,7 @@
 							<div class="amlabel-div"> 
 								 <a href="<?php echo $_product->getProductUrl() ?>"><?php echo Mage::helper('amlabel')->getLabels($_product) ?></a>
 						  <div class="col-md-2">
-							<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img class="lazy" src="<?php echo $this->getSkinUrl('images/mgt_lazy_image_loader/loader.gif'); ?>" data-src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(210); ?>" width="149" height="149" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+							<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img class="lazy" src="<?php echo $this->getSkinUrl('images/mgt_lazy_image_loader/loader.gif'); ?>" data-src="<?php echo $pimage ?>" width="149" height="149" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
 						  </div>
 	</div>
 						  <div class="col-md-10">
@@ -181,13 +198,30 @@
               <div class="product-list-box grid-view">
                 <div class="row">
     <?php $i=0; foreach ($_productCollection as $_product): ?>
+    <?php
+// This is for product default image
+$productimg = $this->helper('catalog/image')->init($_product, 'small_image')->resize(210);
+/*if($productimg):
+$pimage=$productimg->resize(210);
+else:
+$pimage=Mage::getBaseUrl().'skin/frontend/default/default/images/catalog/product/placeholder/image.jpg';
+endif;*/
+
+$handle = @fopen($productimg,'r');
+
+if(!$handle) {
+    $pimage=Mage::getBaseUrl().'skin/frontend/default/default/images/catalog/product/placeholder/image.jpg';
+} else {
+   $pimage=$productimg;
+}
+?>
 <?php $product = Mage::getModel('catalog/product')->load($_product->getId())?>
 <div class="col-md-4">
 				
                     <div class="product-box grids-sec">
                         <div class="amlabel-div"> 
 <?php echo Mage::helper('amlabel')->getLabels($_product) ?>
-						<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image grid-img"><img class="lazy" src="<?php echo $this->getSkinUrl('images/mgt_lazy_image_loader/loader.gif'); ?>" data-src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(242); ?>" width="149" height="149" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+						<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image grid-img"><img class="lazy" src="<?php echo $this->getSkinUrl('images/mgt_lazy_image_loader/loader.gif'); ?>" data-src="<?php echo $pimage; ?>" width="149" height="149" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
                         </div>
 <?php if($product->getColor()):?>
                         <div class="text-on-img-<?php echo strtolower($product->getAttributeText('color'))?>"><?php echo $product->getAttributeText('color')?></div>

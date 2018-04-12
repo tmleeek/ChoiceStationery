@@ -1,0 +1,14 @@
+
+<div class="page-title">
+    <h1><?php echo $this->__('printer_finder') ?></h1>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml();
+ echo $this->getLayout()->createBlock('core/template')->setTemplate('inktonerfinder/search_heading.phtml')->toHtml();
+ ?>
+<?php if($this->getResultCount()):  
+        echo $this->getProductListHtml();
+    else: ?>
+    <p class="error-msg"><?php echo $this->helper('catalogsearch')->__('no_item_found');?>
+<?php endif; ?>
+ 
+ 

@@ -1,6 +1,6 @@
 <config>
     <modules>
-        <Mirasvit_SearchIndex>
+        <Mirasvit_SearchIndex> 
             <active>true</active>
             <codePool>local</codePool>
         </Mirasvit_SearchIndex>

@@ -18,7 +18,7 @@ $feedData[] = array(
     'date_added'  => gmdate('Y-m-d H:i:s', time()),
     'title'       => 'Amasty`s extension has been installed. Remember to flush all cache, recompile, log-out and log back in.',
     'description' => 'You can see versions of the installed extensions right in the admin, as well as configure notifications about major updates.',
-    'url'         => 'http://amasty.com/news/updates-and-notifications-configuration-9.html'
+    'url'         => 'https://amasty.com/knowledge-base/how-to-disable-base-module-notifications-in-magento-1.html'
 );
 
 Mage::getModel('adminnotification/inbox')->parse($feedData);

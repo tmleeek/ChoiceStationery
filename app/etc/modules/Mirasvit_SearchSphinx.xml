@@ -1,8 +1,8 @@
 <config>
     <modules>
         <Mirasvit_SearchSphinx>
-            <active>true</active>
+            <active>true</active> 
             <codePool>local</codePool>
         </Mirasvit_SearchSphinx>
-    </modules>
+    </modules> 
 </config>

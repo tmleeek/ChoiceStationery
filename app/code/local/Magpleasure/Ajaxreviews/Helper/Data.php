@@ -635,7 +635,7 @@ class Magpleasure_Ajaxreviews_Helper_Data extends Mage_Core_Helper_Abstract
      * @param bool $isCopy
      * @return int
      */
-    public function sendOrderNotificationToLeaveReview($notificationIds, $email = null, $isCopy = false, $isFake = false)
+    public function sendOrderNotificationToLeaveReview($notificationIds, $isCopy = false, $isFake = false)
     {
         $notificationCollection = Mage::getModel('ajaxreviews/notification_review')
             ->getCollection()
@@ -645,7 +645,7 @@ class Magpleasure_Ajaxreviews_Helper_Data extends Mage_Core_Helper_Abstract
         foreach ($notificationCollection as $notification) {
             $allNotifications[$notification->getOrderId()][] = $notification;
         }
-        $orderIds = array_keys($allNotifications);
+        $orderIds = array_unique(array_keys($allNotifications));
         $result = 0;
         $this->_refreshPermissionsCache();
 
@@ -660,7 +660,9 @@ class Magpleasure_Ajaxreviews_Helper_Data extends Mage_Core_Helper_Abstract
             
             foreach ($collection as $notification) {
                 /** @var Mage_Catalog_Model_Product $product */
-                $product = Mage::getModel('catalog/product')->load($notification->getProductId());
+                $product = Mage::getModel('catalog/product')
+                    ->setStoreId($order->getStoreId())
+                    ->load($notification->getProductId());
                 if (!$product->getId()) {
                     continue;
                 }
@@ -679,7 +681,7 @@ class Magpleasure_Ajaxreviews_Helper_Data extends Mage_Core_Helper_Abstract
 
             $sentResult = Magpleasure_Ajaxreviews_Model_System_Config_Source_Notification_Review_Status::FAILED;
             if ($products) {
-                $email = $email ? $email : $notification->getSendingEmail();
+                $email = $notification->getSendingEmail();
                 /** @var Magpleasure_Ajaxreviews_Model_Notifier $notifier */
                 $notifier = Mage::getModel('ajaxreviews/notifier');
                 $orderNotificationIds = array();

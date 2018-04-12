@@ -11,14 +11,15 @@ class Amasty_Coupons_Model_Observer
             return $this;
         }
         // default handler works well with 1 code, we don't need to hnabge anything
-        if (!strpos($order->getCouponCode(), ','))
+        if (strpos($order->getCouponCode(), ', ') === false) {
             return $this;
+        }
         $customerId = $order->getCustomerId();
 
         if (version_compare(Mage::getVersion(), '1.4.1.0', '>='))
         {    
             $coupon = Mage::getModel('salesrule/coupon');
-            foreach (explode(',', $order->getCouponCode()) as $code){
+            foreach (explode(', ', $order->getCouponCode()) as $code){
                 $coupon->load($code, 'code');
                 if ($coupon->getId()) {
                     $coupon->setTimesUsed($coupon->getTimesUsed() + 1);
@@ -42,7 +43,7 @@ class Amasty_Coupons_Model_Observer
         if (!$codes)
             return $this;
             
-        $codes = explode(',', $codes);  
+        $codes = explode(', ', $codes);
 
         if (count($codes) < 2 )
             return $this;
@@ -82,7 +83,17 @@ class Amasty_Coupons_Model_Observer
         $rows = $db->fetchPairs($select);
         
         return $rows;
-    }    
+    }   
+
+    /**
+     * PGL (petr.glu@hotmail.com) 
+     * @return bool
+     */
+    protected function _allowSameRule($observer)
+    {
+        $rule = $observer->getEvent()->getRule();
+        return (Mage::getStoreConfig('amcoupons/codes/allow_same_rule') || $rule->getAllowMultipleCoupons(0));
+    }
     
 }
 

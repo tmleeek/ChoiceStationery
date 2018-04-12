@@ -16,7 +16,7 @@ class Amasty_Audit_Model_Visitobserver
             return;
         }
 
-        $sessionId = session_id();
+        $sessionId = Mage::getSingleton('admin/session')->getSessionId();
         $visitEntityData = Mage::getModel('amaudit/visit')->getVisitEntity($sessionId);
 
         /*
@@ -24,7 +24,7 @@ class Amasty_Audit_Model_Visitobserver
          * if session active admin not equally session in table
          * redirect to login menu
          * */
-        $this->_autoLogout($sessionId, $visitEntityData);
+        $this->_autoLogout($visitEntityData, $sessionId);
         
         /*
          * check cookie
@@ -41,13 +41,13 @@ class Amasty_Audit_Model_Visitobserver
      * @param $sessionId
      * @param Amasty_Audit_Model_Visit $visitEntityData
      */
-    protected function _autoLogout($sessionId, $visitEntityData) {
-        if (Mage::getStoreConfig('amaudit/security/logout')) {
+    protected function _autoLogout($visitEntityData, $sessionId) {
+        if (Mage::getStoreConfig('amaudit/log/logout') && Mage::getStoreConfig('amaudit/log/enableVisitHistory')) {
             $adminModel = Mage::getModel('amaudit/active');
             $username = $visitEntityData->getUsername();
             $admin = $adminModel->getCollection()
                                 ->addFieldToFilter('username', $username)
-                                ->getFirstItem();
+                                ->getLastItem();
             $adminSessionId = $admin->getSessionId();
             $actionName = Mage::app()->getRequest()->getActionName();
 
@@ -58,7 +58,10 @@ class Amasty_Audit_Model_Visitobserver
                     $adminSession->getCookie()
                                  ->delete($adminSession->getSessionName());
 
-                    Mage::getSingleton('core/cookie')->set('amasty_autologout_check', 1, time()+86400);
+                    Mage::getSingleton('core/cookie')->set(
+                        'amasty_autologout_check', 1,
+                        Mage::getSingleton('core/date')->date()+86400
+                    );
 
                     $url = Mage::getUrl('adminhtml/index');
                     $response = Mage::app()->getFrontController()->getResponse();
@@ -71,7 +74,7 @@ class Amasty_Audit_Model_Visitobserver
 
     protected function _showMessage()
     {
-        if (Mage::getStoreConfig('amaudit/security/logout')) {
+        if (Mage::getStoreConfig('amaudit/log/logout') && Mage::getStoreConfig('amaudit/log/enableVisitHistory')) {
             $controllerName = Mage::app()->getRequest()->getControllerName();
             $actionName = Mage::app()->getRequest()->getActionName();
 
@@ -81,9 +84,10 @@ class Amasty_Audit_Model_Visitobserver
                 $cookie = Mage::getSingleton('core/cookie')->get('amasty_autologout_check');
 
                 if ($cookie == 1) {
-                    $msg = Mage::helper('adminhtml')
-                        ->__('Someone logged into this account from another device or browser. 
-                                        Your current session is terminated.');
+                    $msg = Mage::helper('adminhtml')->__(
+                        'Someone logged into this account from another device or browser. 
+                                        Your current session is terminated.'
+                    );
                     $block = Mage::app()->getLayout()->getMessagesBlock();
                     $block->addWarning($msg);
                 }

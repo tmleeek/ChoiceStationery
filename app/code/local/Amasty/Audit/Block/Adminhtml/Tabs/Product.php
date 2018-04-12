@@ -16,9 +16,8 @@ class Amasty_Audit_Block_Adminhtml_Tabs_Product extends Amasty_Audit_Block_Admin
         $collection->getSelect()
             ->joinLeft(array('r' => Mage::getSingleton('core/resource')->getTableName('amaudit/log_details')), 'main_table.entity_id = r.log_id', array('is_logged' => 'MAX(r.log_id)'))
             ->where("element_id = ?", $elementId)
-            ->where("category = ?", $url . '/catalog_product')
-            ->group('r.log_id')
-        ;
+            ->where("category IN (?)", array($url . '/catalog_product', $url . '/ampgrid_field'))
+            ->group('r.log_id');
         $this->setCollection($collection);
 
         return parent::_prepareCollection();

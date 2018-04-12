@@ -162,7 +162,7 @@
         <jobs>
             <simplegoogleshopping_generate>
                 <schedule>
-                    <cron_expr>0 10 * * *</cron_expr>
+                    <cron_expr>30 0 * * *</cron_expr>
                 </schedule>
                 <run> 
                     <model>simplegoogleshopping/observer::generateFeeds</model>

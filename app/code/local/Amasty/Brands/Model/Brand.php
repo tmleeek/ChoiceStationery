@@ -163,6 +163,15 @@ class Amasty_Brands_Model_Brand extends Mage_Catalog_Model_Abstract
         return $collection;
     }
 
+    public function deleteOptions($deletedOptions)
+    {
+        $collection = parent::getCollection()->addFieldToFilter(
+            'option_id',
+            array('in' => $deletedOptions)
+        );
+        $collection->delete();
+    }
+
     /**
      * get Brand Page Title
      * @return string
@@ -217,5 +226,12 @@ class Amasty_Brands_Model_Brand extends Mage_Catalog_Model_Abstract
         return $this->getImage()
             ? Mage::helper('ambrands')->getImageUrl() . $this->getImage()
             : null;
+    }
+
+    public function getDescription()
+    {
+        $cmsHelper = Mage::helper('cms');
+        $processor = $cmsHelper->getBlockTemplateProcessor();
+        return $processor->filter($this->getData('description'));
     }
 }

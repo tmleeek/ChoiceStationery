@@ -1,0 +1,41 @@
+<?php    $configOptions = Mage::helper('inktonerfinder')->getStoreConfigvalues();
+    $manufacturersRecords = Mage::helper('inktonerfinder')->getManufacturersRecords(); ?>
+ 
+<div class="inktonerfinder">
+		<?php if($configOptions['search_field'] == 1 || $configOptions['search_field'] == 3) { ?>
+    <div class="toner-text">
+        <input type="text" id="inktonerfinder-search" name="inktonerfinder-search" placeholder="<?php echo $this->__('search_placeholder') ?>" />
+        <i class="loader fa fa-search fa-lg"></i>
+    </div>
+    <?php }
+    //print_r($configOptions);
+    if($configOptions['search_field'] == 1 || $configOptions['search_field'] == 2) { ?>
+    	<div class="dropdowns<?php echo ($configOptions['search_dimension'] == 2 ? ' vertical_drops' : '') ?><?php echo ($configOptions['remove_modelseries'] == 3 ? ' two_drops' : '') ?>">
+		    <div>        
+		        <select onchange="getModelsAndModelSeriesAjax(); getModelsListAjax();" name="inktonerfinder-brands-select" id="inktonerfinder-brands-select" disabled="disabled">
+		            <option value=""><?php echo $this->__('select_manufacturer') ?></option>
+		            <?php /*
+		            foreach( $manufacturersRecords as $manufacturerName){
+		                foreach( $manufacturerName as $manufacturer){ 
+		                  echo '<option value="'.$manufacturer['id'].'">'.$manufacturer['val'].'</option>';
+		                 }
+		            } */ ?>
+		        </select>
+		    </div>
+		    <?php if($configOptions['remove_modelseries'] != 3) { ?>
+		    <div>
+		        <select onchange="getModelsListAjax()" name="inktonerfinder-modelseries-select" id="inktonerfinder-modelseries-select" disabled="disabled">
+		            <option value=""><?php echo ($configOptions['remove_modelseries'] == 1 ? $this->__('select_modelseries') : $this->__('select_devicetype')) ?></option>           
+		        </select>
+		    </div>
+		    <?php } ?>
+		    
+		    <div>
+		        <select onchange="getProductsListAjax()"  name="inktonerfinder-models-select" id="inktonerfinder-models-select" disabled="disabled">
+		            <option value=""><?php echo $this->__('select_model') ?></option>           
+		        </select>
+		    </div>
+		    <div></div>
+		  </div>
+    <?php } ?>
+</div>

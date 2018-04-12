@@ -6,7 +6,7 @@ $_currentIndex    = Mage::getSingleton('core/app')->getRequest()->getParam('inde
 $_filterType      = $this->getFilterType();
 $_url             = $this->getAjaxUrl();
 ?>
-<form class="searchautocomplete UI-SEARCHAUTOCOMPLETE" action="<?php echo $this->helper('catalogsearch')->getResultUrl() ?>" method="get"
+<form class="searchautocomplete UI-SEARCHAUTOCOMPLETE ramsandip1" action="<?php echo $this->helper('catalogsearch')->getResultUrl() ?>" method="get"
     data-tip="<?php echo $this->__(Mage::getStoreConfig('searchautocomplete/general/tip')) ?>"
     data-url="<?php echo $_url ?>"
     data-minchars="<?php echo Mage::getStoreConfig('searchautocomplete/general/min_chars') ?>"

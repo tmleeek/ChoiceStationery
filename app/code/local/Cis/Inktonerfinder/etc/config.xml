@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Cis_Inktonerfinder>
+      <version>0.1.0</version>
+    </Cis_Inktonerfinder>
+  </modules>
+      <admin>	 
+        <routers>
+            <inktonerfinder>
+                <use>admin</use>
+                <args>
+                    <module>Cis_Inktonerfinder</module>
+                    <frontName>inktonerfinder</frontName>
+                </args>
+            </inktonerfinder>
+        </routers>
+    </admin>    
+   <frontend>
+        <routers>
+            <inktonerfinder>
+                <use>standard</use>
+                <args>
+                    <module>Cis_Inktonerfinder</module>
+                    <frontName>inktonerfinder</frontName>
+                </args>
+            </inktonerfinder>
+        </routers>
+        <layout>
+            <updates>
+                <inktonerfinder>
+                    <file>inktonerfinder.xml</file>
+                </inktonerfinder>
+            </updates>
+        </layout>
+	     <translate>
+            <modules>
+                <Cis_Inktonerfinder>
+                    <files>
+                        <default>Cis_Inktonerfinder.csv</default>
+                    </files>
+                </Cis_Inktonerfinder>
+            </modules>
+        </translate>
+    </frontend>
+  <global>    
+    <blocks>
+            <cis_inktonerfinder>
+                <class>Cis_Inktonerfinder_Block</class> 
+            </cis_inktonerfinder>
+        </blocks>    
+    <helpers>
+      <inktonerfinder>
+        <class>Cis_Inktonerfinder_Helper</class>
+      </inktonerfinder>
+    </helpers>
+	<models>
+	  <inktonerfinder>
+		<class>Cis_Inktonerfinder_Model</class>
+		<resourceModel>inktonerfinder_mysql4</resourceModel>
+	  </inktonerfinder>
+	</models>
+	
+  </global>
+<default>
+     <inktonerfinder_options>         
+         <inktonerfinder_group translate="welcome" module="inktonerfinder">
+            <search_field>2</search_field>
+	    <search_by>1</search_by>
+	    <search_dimension>1</search_dimension>
+         </inktonerfinder_group>        
+     </inktonerfinder_options>
+</default>
+</config> 

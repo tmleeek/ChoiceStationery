@@ -90,3 +90,25 @@ if(!$customerSessionModel->isLoggedIn()){
 <?php if ($is_homepage):?>
 	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home-banner')->toHtml();?>
 <?php endif;?>
+
+<script>
+	$j(document).ready(function (){
+		$j( "#search" ).keyup(function() {
+			$j("#ui-id-1").addClass("form-search");
+						
+			//~ $j("#ui-id-1").css("display", "block"); 
+			//~ $j("#ui-id-1").css("top", "92px"); 
+			//~ $j("#ui-id-1").css("left", "395px"); 
+			
+			/*$j(".searchautocomplete-loader").css("display", "block"); 
+			$j("#ui-id-1").change(function(){ 
+			$j(".searchautocomplete-loader").css("display", "none"); 
+			});*/ /*$j("#ui-id-1").html("<li class='ui-menu-item' 
+			style='background-color:#fff; text-align:center;'><img 
+			src='<?php echo 
+			$this->getSkinUrl('images/opc-ajax-loader.gif') ?>' 
+			/></li>");*/ 
+			$j("#ui-id-1").html("<li class='ui-menu-item' style='background-color:#fff; text-align:center;'><img src='<?php echo $this->getSkinUrl('images/mirasvit/loader.gif') ?>' /></li>");
+		});
+	});
+</script>

@@ -1,0 +1,75 @@
+
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Magpleasure_Ajaxreviews
+ */
+
+/** @var $this Magpleasure_Ajaxreviews_Block_Review_View */
+/** @var $helper Magpleasure_Ajaxreviews_Helper_Data */
+?>
+<?php
+#echo "===========================================";
+$varitest = Mage::getModel('ajaxreviews/resource_review_review_collection');
+//echo "<pre>"; print_r($varitest); echo "</pre>";
+ ?>
+<!--  code for all review display in one page -->
+<?php
+
+$con = Mage::getSingleton('core/resource')->getConnection('core_write');
+$re=$con->query('SELECT rd.title, rd.detail, rd.nickname, rd.review_id, r.created_at, sum(vt.percent) as precn, r.entity_pk_value FROM review_detail AS rd LEFT JOIN review AS r USING  (review_id ) LEFT JOIN rating_option_vote AS vt USING ( review_id ) WHERE r.status_id = "1" GROUP BY vt.`review_id` order by r.created_at desc');
+
+/*'SELECT rd.title, rd.detail, rd.nickname, r.created_at, sum(vt.percent) as precn, r.entity_pk_value FROM review_detail AS rd LEFT JOIN review AS r USING  (review_id ) LEFT JOIN rating_option_vote AS vt USING ( review_id ) WHERE r.status_id = "1" GROUP BY vt.`review_id`
+';*/
+?>
+
+<table border="1">
+<tr>
+	<th colspan="2">Date</th>	
+	<th>Score</th>	
+	<th>Customer Comment</th>	
+</tr>
+
+<?php while($rows=$re->fetch()) 
+{
+?>
+
+<?php $productId = $rows['entity_pk_value'];
+$product = Mage::getModel('catalog/product')->load($productId);
+$imageThumbnailUrl = $product->getThumbnailUrl();
+$product_url = $product->getProductUrl();
+
+?>
+ 
+<?php
+$res_rate=$con->query("SELECT r.rating_code,rt.percent  FROM `rating` as r left join rating_option_vote as rt using(rating_id)  WHERE  
+rt.review_id='".$rows['review_id']."' order by r.rating_code asc ");
+ while($rows_rate=$res_rate->fetch()) 
+{
+?>
+<tr>
+                <div class="percentage"style="width:<?php echo $rows_rate['percent'];  ?>%" class="rating"></div>
+    <?php
+
+?>
+<td colspan="2"><?php 
+
+  // echo date("d F Y", $rows['created_at']);
+ 
+  echo $rows['created_at'];
+	
+?></td>
+
+                    <td><?php echo $rows_rate['percent']; ?></td>          
+ 
+<td><?php echo $rows['detail']; ?></td>
+<?php
+}
+}
+
+?>
+  </tr>
+   </table>
+   </div>
+

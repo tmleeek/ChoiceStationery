@@ -12,23 +12,11 @@ $categories = Mage::getModel('catalog/category')->load($category_id)->getChildre
 				$showAttributes = ( $subCategories )?'class="dropdown-toggle" data-toggle="dropdown"':NULL;
 			?>
       		<li>
-          		<a href="<?php echo $_category->getUrl($_category); ?>" <?php echo $showAttributes ;?>  >
+          		<a href="<?php echo $_category->getUrl($_category); ?>" >
           			<?php echo $_category->getName()?>
           		</a>
-                  	<?php if ($subCategories): 
-                  		$inner_id = $_category->getId();
-                  		$categories_inner = Mage::getModel('catalog/category')->load($inner_id)->getChildrenCategories();
-                  	?>
-	                  	<ul class="dropdown-menu" role="menu">
-	                      <?php foreach ( $categories_inner as $inner_category ) :?>
-	                      	<li>
-		                      	<a href="<?php echo $inner_category->getUrl($inner_category);?>">
-		                      		<?php echo $inner_category->getName();?>
-		                      	</a>
-	                      	</li>
-	                      <?php endforeach; ?>
-	                    </ul>
-	                <?php endif; ?>
+                  	
+	                
 				<?php
 					endforeach;
 				?>

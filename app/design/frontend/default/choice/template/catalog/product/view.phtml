@@ -58,6 +58,9 @@
                 <?php echo $this->getTierPriceHtml() ?>
                 <?php echo $this->getChildHtml('extrahint') ?>
 				<p class="product-code"><?php echo $this->__('Code: ')?><?php echo $_helper->productAttribute($_product, $_product->getSku(), 'sku') ?></p>
+				
+    <?php echo $this->getReviewsSummaryHtml($_product, 'short')?>
+
 				<!--end of product-code-->
                 <div class="delivery-option">
                   
@@ -206,7 +209,7 @@
                 <ul class="nav nav-tabs" role="tablist">
                   <li class="active"><a href="#delivery" role="tab" data-toggle="tab"><?php echo $this->__('delivery / returns')?></a></li>
                   <li><a href="#specification" role="tab" data-toggle="tab"><?php echo $this->__('Specification')?></a></li>
-                  <li><a href="#review" role="tab" data-toggle="tab"><?php echo $this->__('reviews')?></a></li>
+                  <li><a href="#review" role="tab" id="product-detail-review-tab" data-toggle="tab"><?php echo $this->__('reviews')?></a></li>
                   
                 </ul>
                 
@@ -256,3 +259,20 @@
        <?php echo $this->getChildHtml('related'); ?>
       </div>
       <!--end of category-outer--> 
+
+<style>
+.product-detail-div .amount a{color:#000 !important;float: left !important;}
+.product-code{float: left !important;
+margin: 0px 26px 0px 0px !important;}
+.mp-reviews-rating-summary-short .amount{float:inline-end !important;}
+
+</style>
+<?php
+if(isset($_REQUEST['leavereview']) && $_REQUEST['leavereview'] != ""){
+	echo "<script>document.getElementById('product-detail-review-tab').click();document.getElementsByClassName('showreviewform').click();</script>";
+}
+?>
+<!--<script>
+	$j("a").attr("href", "#review");
+
+</script>-->

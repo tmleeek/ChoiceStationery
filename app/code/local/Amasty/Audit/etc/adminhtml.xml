@@ -76,6 +76,9 @@
                                         <preview translate="title">
                                             <title>Preview Changes</title>
                                         </preview>
+                                        <clearlog translate="title">
+                                            <title>Allow Clear Log</title>
+                                        </clearlog>
                                     </children>
                                 </amauditmenu>
                             </children>

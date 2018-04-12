@@ -16,7 +16,7 @@ class Amasty_Base_Model_Observer
         $section = Mage::app()->getRequest()->getParam('section');
         $sectionNode = Mage::app()->getConfig()->getNode('adminhtml/amasty_notifications/' . $section);
         if (!$sectionNode) {
-            return;
+            return $this;
         }
 
         $layout = Mage::app()->getLayout();
@@ -31,11 +31,15 @@ class Amasty_Base_Model_Observer
                 break;
             }
         }
-
-        $formBlock = $layout->getBlock($contentBlock);
-        $listBlock = $layout->createBlock('core/text_list', 'amasty_form_container');
-        $listBlock->append($supportBlock);
-        $listBlock->append($formBlock->getChild('form'));
-        $formBlock->setChild('form', $listBlock);
+        
+        if ($contentBlock) {
+            $formBlock = $layout->getBlock($contentBlock);
+            $listBlock = $layout->createBlock('core/text_list', 'amasty_form_container');
+            $listBlock->append($supportBlock);
+            $listBlock->append($formBlock->getChild('form'));
+            $formBlock->setChild('form', $listBlock);
+        }
+        
+        return $this;
     }
 }

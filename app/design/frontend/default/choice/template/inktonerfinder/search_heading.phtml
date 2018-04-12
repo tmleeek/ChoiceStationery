@@ -1,0 +1,19 @@
+<?php
+
+        $model_id = $this->getRequest()->getParam('model_id');       
+        if($model_id){
+        $configOptions = Mage::helper('inktonerfinder')->getStoreConfigvalues();
+        $url = $configOptions['manufacturer_info'].''.$model_id.'?&uid='.$configOptions['user_id'].'&security_key='.$configOptions['key'].'&password='.$configOptions['password'].'&version='.$configOptions['version'].'&language='.$configOptions['language'];
+     
+        $products =  file_get_contents ( $url );           
+        $typesRecords  =  json_decode ( $products, true ) ;       
+       
+        foreach( $typesRecords as $typesName){           
+                $manufacturertext = $typesName['short_description'];
+        }   
+            
+    ?> 
+<div class="printer_info">
+                <h3><?php echo $manufacturertext ?> </h3>
+	</div>
+<?php } ?>

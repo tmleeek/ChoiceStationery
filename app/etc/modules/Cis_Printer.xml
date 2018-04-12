@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Cis_Printer>
+      <active>false</active>
+      <codePool>local</codePool>
+      <version>0.1.0</version>
+    </Cis_Printer>
+  </modules>
+</config>

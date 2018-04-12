@@ -1,0 +1,72 @@
+<?php
+$_collection = $this->getCollection();
+//$url=Mage::helper('searchindex')->prepareCategory();
+  $_helper    = $this->helper('catalog/output');
+  $i=0;
+?>
+<div class="searchindex-result searchindex-result-category">
+   <!-- <ul> -->
+   <div class="product-list-div product-grid">
+              <div class="product-list-box">
+                <div class="row">
+        <?php foreach ($_collection as $_item): 
+        $i++;
+       // echo $i;
+      
+$_category  = Mage::getModel('catalog/category')->load($_item->getId());// get your category here.
+$name=$_category->getName();
+$url=$_category->getUrl();
+$imagemain=$_category->getImageUrl();
+if($imagemain):
+$image=$imagemain;
+else:
+$image=Mage::getBaseUrl().'skin/frontend/default/default/images/catalog/product/placeholder/image.jpg';
+endif;
+ ?>
+
+        <div class="col-md-4">
+				
+                    <div class="product-box grids-sec-new">
+                        <div class="amlabel-div"> 
+					<a href="<?php echo $url;?>" title="<?php echo $name;?>" class="product-image grid-img">
+					
+					<img class="lazy" src="<?php echo $this->getSkinUrl('images/mgt_lazy_image_loader/loader.gif'); ?>" data-src="<?php echo $image;?>" width="149" height="149" alt="<?php echo $name;?>" />
+					
+					
+					</a>
+					
+					<a href="<?php echo $url;?>"></a>
+							
+							<p class="item-name">								
+						<a style="color: #072c73;" href="<?php echo $url;?>">	 <?php echo $name; ?><br/> </a>
+							 </p>
+							 
+							 <div class="view-allgrid">								 
+						<a style="color: #696969;" href="<?php echo $url;?>">	 <?php echo $i. " Ink Cartridges" ?> </a><br/> 
+							 </div>
+							 
+							 <div class="add-btn">
+							<a href="<?php echo $url;?>"> <?php echo "View ink cartridges"?> </a>
+							 </div>
+							 
+							 						</p>
+						
+							</div>
+        
+        </div>
+        </div>
+        <?php /*$_path = $this->getFullPath($_item->getId()) ?>
+        <?php if (is_array($_path)): ?>
+        <li>
+            <?php foreach ($_path as $_topItem): ?>
+            <a href="<?php echo $_topItem->getUrl() ?>"><?php echo $_topItem->getName() ?></a>  >
+            <?php endforeach ?>
+            <a href="<?php echo $_item->getUrl() ?>"><?php echo $_item->getName() ?></a>
+        </li>
+        <?php endif */?>
+        <?php endforeach ?>
+        </div>
+        </div>
+        </div>
+   <!-- </ul>-->
+</div>

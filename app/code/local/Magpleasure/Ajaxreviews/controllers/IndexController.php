@@ -169,6 +169,12 @@ class Magpleasure_Ajaxreviews_IndexController extends Mage_Review_ProductControl
             ->joinLeft(array('reviews_votes' => $votesAggregatedTable), 'main_table.review_id = reviews_votes.review_id', 'IFNULL(vote,0) AS votes')
             ->group('main_table.review_id')
             ->order($order . ' ' . $direction);
+           //echo $collection->getSelect()->__toString();
+            #die("working");
+            $collection->getSelect()->where("detail != ''");
+            $collection->getSelect()->where("percent != ''");
+             // added by Ramsandip
+            //$collection->load(); // added by Ramsandip
         $page = $data->getPost('page');
         if (!empty($page)) {
             $per_page = $this->_helper()->getConfigValue('general', 'per_page');
@@ -186,7 +192,11 @@ class Magpleasure_Ajaxreviews_IndexController extends Mage_Review_ProductControl
 
         $response = array();
         $response['reviews'] = array();
+        
+
+
         foreach ($collection->getItems() as $item) {
+			//if($item->getDetail() == ""){continue;}
             $review = array();
             $review['id'] = $item->getId();
             $review['url'] = Mage::getUrl('review/product/view', array('id' => $item->getId()));
@@ -196,7 +206,7 @@ class Magpleasure_Ajaxreviews_IndexController extends Mage_Review_ProductControl
             $review['content'] = $item->getDetail();
             $review['nickname'] = $item->getNickname();
             $review['email_hash'] = $this->_helper()->getCustomerEmailHash($item->getCustomerId());
-            $review['date'] = $coreHelper->formatDate($item->getCreatedAt(), 'long');
+            $review['date'] = date("d/m/Y", strtotime($coreHelper->formatDate($item->getCreatedAt(), 'long')));
             $review['votes'] = (int)$item->getVotes();
             $review['rating'] = (int)$item->getRating();
             $review['icon_color'] = $this->_helper()->getIconColor($review['nickname']);

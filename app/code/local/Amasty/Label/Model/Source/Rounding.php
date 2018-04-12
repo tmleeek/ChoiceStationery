@@ -1,9 +1,9 @@
 <?php
 /**
-* @author Amasty Team
-* @copyright Copyright (c) Amasty (http://www.amasty.com)
-* @package Amasty_Label
-*/
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Amasty_Label
+ */
 class Amasty_Label_Model_Source_Rounding {
 
     public function toOptionArray() 

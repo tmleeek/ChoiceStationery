@@ -223,37 +223,29 @@ class Amasty_Acart_Model_History extends Mage_Core_Model_Abstract
         $quote = !$quote ? Mage::helper('amacart')->loadQuote($this->getQuoteId()) : $quote;
 
         if ($quote) {
-			$now = time(); // or your date as well
-			$created_at = strtotime($quote->getCreatedAt());
-			$datediff = $now - $created_at;
+            $saveData = array(
+                'history_id'    => $this->getHistoryId(),
+                'quote_id'      => $quote->getId(),
+                'store_id'      => $quote->getStoreId(),
+                'email'         => $quote->getTargetEmail() ? $quote->getTargetEmail() : $quote->getCustomerEmail(),
+                'customer_id'   => $quote->getCustomerId(),
+                'customer_name' => $quote->getCustomerFirstname() . ' ' . $quote->getCustomerLastname(),
+                'public_key'    => uniqid(),
+                'schedule_id'   => $schedule->getId(),
+                'rule_id'       => $schedule->getRuleId(),
+                'scheduled_at'  => $scheduleTime,
+                'status'        => $status
+            );
 
-			$days=floor($datediff / (60 * 60 * 24));
-			
-			if($days <= 45){
-				$saveData = array(
-					'history_id'    => $this->getHistoryId(),
-					'quote_id'      => $quote->getId(),
-					'store_id'      => $quote->getStoreId(),
-					'email'         => $quote->getTargetEmail() ? $quote->getTargetEmail() : $quote->getCustomerEmail(),
-					'customer_id'   => $quote->getCustomerId(),
-					'customer_name' => $quote->getCustomerFirstname() . ' ' . $quote->getCustomerLastname(),
-					'public_key'    => uniqid(),
-					'schedule_id'   => $schedule->getId(),
-					'rule_id'       => $schedule->getRuleId(),
-					'scheduled_at'  => $scheduleTime,
-					'status'        => $status
-				);
+            if (!$this->getHistoryId()) {
+                unset($saveData['history_id']);
+                $saveData['created_at'] = Mage::helper('amacart')->getDate(time());
+            }
 
-				if (!$this->getHistoryId()) {
-					unset($saveData['history_id']);
-					$saveData['created_at'] = Mage::helper('amacart')->getDate(time());
-				}
-
-				if ($quote->getId()) {
-					$this->setData($saveData);
-					$this->save();
-				}
-			}
+            if ($quote->getId()) {
+                $this->setData($saveData);
+                $this->save();
+            }
         }
     }
 

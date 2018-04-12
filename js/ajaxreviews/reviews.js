@@ -587,6 +587,8 @@ var reviewsController = function ($scope, $http, $q, $timeout, $window, ajaxRevi
                 $scope.reviewsError = true;
                 addHash = false;
             } else {
+				//if(response.reviews == ""){$scope.reviewsError = true;}
+				if(response.reviews == ""){$scope.prireviewsError = true;}
                 checkGravatars(response.reviews).then(function () {
                     $scope.reviews = loadMore ? $scope.reviews.concat(response.reviews) : response.reviews;
                     if (addHash) {

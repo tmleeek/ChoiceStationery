@@ -170,6 +170,9 @@ class CommerceExtensions_Categoriesimportexport_Model_Convert_Adapter_Categoryim
 		if(isset($importData['include_in_menu'])) {
 			$includeInMenu = $importData['include_in_menu'];
 		}
+		if(isset($importData['part_finders'])) {
+			$partfinders = $importData['part_finders'];
+		}
 		$verChecksplit = explode(".",Mage::getVersion());
 		// 1.7.x ONLY
 		if ($verChecksplit[1] >= 7) {
@@ -243,6 +246,9 @@ class CommerceExtensions_Categoriesimportexport_Model_Convert_Adapter_Categoryim
 						if(isset($importData['include_in_menu'])) {
 							$generalupdate['include_in_menu'] = $includeInMenu;
 						}
+						if(isset($importData['part_finders'])) {
+							$generalupdate['part_finders'] = $partfinders;
+						}
 						$verChecksplit = explode(".",Mage::getVersion());
 						// 1.7.x ONLY
 						if ($verChecksplit[1] >= 7) {
@@ -288,9 +294,9 @@ class CommerceExtensions_Categoriesimportexport_Model_Convert_Adapter_Categoryim
 								
 								} else {
 									
-									$message = Mage::helper('catalog')->__('PRODUCT DOES NOT EXIST');
-									Mage::throwException($message);
-									Mage::log("PRODUCT DOES NOT EXIST ".$option_parts[0]."", null,'ce_cat_import_export_errors.log');
+									//$message = Mage::helper('catalog')->__('PRODUCT DOES NOT EXIST');
+									//Mage::throwException($message);
+									//Mage::log("PRODUCT DOES NOT EXIST ".$option_parts[0]."", null,'ce_cat_import_export_errors.log');
 								}
 								
 							}
@@ -335,6 +341,9 @@ class CommerceExtensions_Categoriesimportexport_Model_Convert_Adapter_Categoryim
 											}
 											if(isset($importData['include_in_menu'])) {
 												$general['include_in_menu'] = $includeInMenu;
+											}
+											if(isset($importData['part_finders'])) {
+												$general['part_finders'] = $partfinders;
 											}
 											$verChecksplit = explode(".",Mage::getVersion());
 											// 1.7.x ONLY
@@ -421,6 +430,9 @@ class CommerceExtensions_Categoriesimportexport_Model_Convert_Adapter_Categoryim
 							if(isset($importData['include_in_menu'])) {
 								$generalupdateidset['include_in_menu'] = $includeInMenu;
 							}
+							if(isset($importData['part_finders'])) {
+								$generalupdateidset['part_finders'] = $partfinders;
+							}
 							$verChecksplit = explode(".",Mage::getVersion());
 							// 1.7.x ONLY
 							if ($verChecksplit[1] >= 7) {
@@ -474,9 +486,9 @@ class CommerceExtensions_Categoriesimportexport_Model_Convert_Adapter_Categoryim
 										$write_qry =$write->query("INSERT INTO `".$prefix."catalog_category_product` (category_id,product_id,position) VALUES ('$catId','$productId','$cat_product_position')");
 										} else {
 											
-											$message = Mage::helper('catalog')->__('PRODUCT DOES NOT EXIST');
-											Mage::throwException($message);
-											Mage::log("PRODUCT DOES NOT EXIST ".$option_parts[0]."", null,'ce_cat_import_export_errors.log');
+											//$message = Mage::helper('catalog')->__('PRODUCT DOES NOT EXIST');
+											//Mage::throwException($message);
+											//Mage::log("PRODUCT DOES NOT EXIST ".$option_parts[0]."", null,'ce_cat_import_export_errors.log');
 										}
 										
 									}
@@ -539,6 +551,9 @@ class CommerceExtensions_Categoriesimportexport_Model_Convert_Adapter_Categoryim
 								if(isset($importData['include_in_menu'])) {
 									$general['include_in_menu'] = $includeInMenu;
 								}
+								if(isset($importData['part_finders'])) {
+									$general['part_finders'] = $partfinders;
+								}
 								$verChecksplit = explode(".",Mage::getVersion());
 								// 1.7.x ONLY
 								if ($verChecksplit[1] >= 7) {
@@ -581,9 +596,9 @@ class CommerceExtensions_Categoriesimportexport_Model_Convert_Adapter_Categoryim
 										
 										$write_qry =$write->query("INSERT INTO `".$prefix."catalog_category_product` (category_id,product_id,position) VALUES ('$catId','$productId','$cat_product_position')");
 										} else {
-											$message = Mage::helper('catalog')->__('PRODUCT DOES NOT EXIST');
-											Mage::throwException($message);
-											Mage::log("PRODUCT DOES NOT EXIST ".$option_parts[0]."", null,'ce_cat_import_export_errors.log');
+											//$message = Mage::helper('catalog')->__('PRODUCT DOES NOT EXIST');
+											//Mage::throwException($message);
+											//Mage::log("PRODUCT DOES NOT EXIST ".$option_parts[0]."", null,'ce_cat_import_export_errors.log');
 										}
 										
 									}
@@ -643,6 +658,9 @@ class CommerceExtensions_Categoriesimportexport_Model_Convert_Adapter_Categoryim
 				}
 				if(isset($importData['include_in_menu'])) {
 					$generalupdate['include_in_menu'] = $includeInMenu;
+				}
+				if(isset($importData['part_finders'])) {
+					$generalupdate['part_finders'] = $partfinders;
 				}
 				$verChecksplit = explode(".",Mage::getVersion());
 				// 1.7.x ONLY
@@ -722,9 +740,9 @@ class CommerceExtensions_Categoriesimportexport_Model_Convert_Adapter_Categoryim
 						$write_qry =$write->query("INSERT INTO `".$prefix."catalog_category_product` (category_id,product_id,position) VALUES ('$catId','$productId','$cat_product_position')");
 						} else {
 							
-							$message = Mage::helper('catalog')->__('PRODUCT DOES NOT EXIST');
-							Mage::throwException($message);
-							Mage::log("PRODUCT DOES NOT EXIST ".$option_parts[0]."", null,'ce_cat_import_export_errors.log');
+							//$message = Mage::helper('catalog')->__('PRODUCT DOES NOT EXIST');
+							//Mage::throwException($message);
+							//Mage::log("PRODUCT DOES NOT EXIST ".$option_parts[0]."", null,'ce_cat_import_export_errors.log');
 						}
 						
 					}

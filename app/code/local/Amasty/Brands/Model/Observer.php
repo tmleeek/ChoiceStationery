@@ -37,7 +37,7 @@ class Amasty_Brands_Model_Observer
         return $this;
     }
 
-    public function catalogProductSaveBefore($observer)
+    public function catalogProductSaveAfter($observer)
     {
         /** @var $product Mage_Catalog_Model_Product */
         $product = $observer->getEvent()->getProduct();

@@ -1,13 +1,22 @@
+ 
  <div class="main-container col1-layout">
  <div class="container">
  <?php //echo $this->getLayout()->createBlock('reports/product_viewed')->setTemplate('reports/home_product_viewed.phtml')->toHtml(); ?>
  <?php echo $this->getChildHtml('footer.reports.product.viewed'); ?>
  </div>
  </div> 
+ 
 <?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('recently-viewed')->toHtml();?>
 <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('four-boxes')->toHtml();?>
-<footer class="footer">
 
+<script>
+	//$j( "#trustwaveSealImage" ).insertAfter( ".follow-us" );
+	//$j( ".follow-us" ).insertAfter( "#trustwaveSealImage" );
+
+</script>	
+<footer class="footer">
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('trustwave')->toHtml();?>
 <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('new-footer')->toHtml();?>
+
 
 </footer>

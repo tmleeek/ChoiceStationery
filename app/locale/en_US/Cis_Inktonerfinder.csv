@@ -1,0 +1,7 @@
+printer_finder,Printer Finder
+select_manufacturer,Select Manufacturer
+select_modelseries,Select Model Series
+select_devicetype,Select Printer Type
+select_model,Select Model
+no_item_found,No items were found using the following search criteria.
+search_placeholder,Printersearch

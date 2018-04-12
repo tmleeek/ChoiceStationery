@@ -54,14 +54,17 @@ if (!in_array('longitude', $colsBlock)) {
 
 Mage::getConfig()->saveConfig('amgeoip/import/block', 0);
 Mage::getConfig()->saveConfig('amgeoip/import/location', 0);
-$feedData = array();
-$feedData[] = array(
-    'severity'      => 4,
-    'date_added'    => gmdate('Y-m-d H:i:s', time()),
-    'title'         => 'Amasty`s extension Geo Ip Data has been installed. Please import Geo Ip Data.',
-    'description'   => 'You can see versions of the installed extensions right in the admin, as well as configure notifications about major updates.',
-    'url'           => 'http://amasty.com/news/updates-and-notifications-configuration-9.html'
-);
-Mage::getModel('adminnotification/inbox')->parse($feedData);
+
+if ('true' == (string)Mage::getConfig()->getNode('modules/Mage_AdminNotification/active')) {
+    $feedData = array();
+    $feedData[] = array(
+        'severity'      => 4,
+        'date_added'    => gmdate('Y-m-d H:i:s', time()),
+        'title'         => 'Amasty`s extension Geo Ip Data has been installed. Please import Geo Ip Data.',
+        'description'   => 'You can see versions of the installed extensions right in the admin, as well as configure notifications about major updates.',
+        'url'           => 'http://amasty.com/news/updates-and-notifications-configuration-9.html'
+    );
+    Mage::getModel('adminnotification/inbox')->parse($feedData);
+}
 
 $this->endSetup();

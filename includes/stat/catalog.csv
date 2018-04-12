@@ -1,4 +1,4 @@
-Enterprise_PageCache_Model_Observer:2273
+Enterprise_PageCache_Model_Observer:3646
 Extendware_EWPSorting_Model_Override_Mage_Catalog_Config:3
 Mage_Core_Model_Domainpolicy:3
 Mage_XmlConnect_Model_Observer:3
@@ -406,4 +406,5 @@ HS_Defer_Helper_Data:3
 Mage_Core_Model_Resource_Layout:1
 Mage_Admin_Helper_Variable:1
 Mage_Admin_Model_Resource_Variable:1
-Aoe_JsCssTstamp_Block_Head:1933
+Aoe_JsCssTstamp_Block_Head:3330
+Amasty_Finder_Model_Finder:9

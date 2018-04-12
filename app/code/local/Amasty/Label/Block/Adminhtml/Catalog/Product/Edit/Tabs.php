@@ -1,6 +1,8 @@
 <?php
 /**
- * @copyright   Copyright (c) 2010 Amasty (http://www.amasty.com)
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Amasty_Label
  */ 
 class Amasty_Label_Block_Adminhtml_Catalog_Product_Edit_Tabs extends Mage_Adminhtml_Block_Catalog_Product_Edit_Tabs
 {

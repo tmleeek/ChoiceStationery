@@ -1,0 +1,7 @@
+﻿printer_finder,Druckerfinder
+select_manufacturer,Marke auswählen
+select_modelseries,Modellserie auswählen
+select_devicetype,DruckerTyp auswählen
+select_model,Modell auswählen
+no_item_found,Es konnte keine Verbrauchsmaterial zum passenden Drucker gefunden werden
+search_placeholder,Druckersuche

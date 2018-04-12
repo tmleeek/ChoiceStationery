@@ -8,6 +8,7 @@ $_indexes	=$this->getIndexes();
 </div>
 <div class="searchindex-results-list">
 <?php foreach ($_indexes as $_index): ?>
+<?php if($_index->getTitle() == "Printer Listings") continue; ?>
     <?php if ($_index->getCountResults()
         && ($_index->getContentBlock()->getIsVisible() == true || $_index->getCode() == 'mage_catalog_product')): ?>
         <!-- <?php echo $_index->getCode()// if($_index->getCode() == 'mage_catalog_product') {echo 'hello';print_r($_index->getContentBlock());} ?> -->

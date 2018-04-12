@@ -9,7 +9,7 @@ $_indexes	=$this->getIndexes();
 <div class="searchindex-results-list">
 <?php foreach ($_indexes as $_index): ?>
     <?php if ($_index->getCountResults()
-        && ($_index->getContentBlock()->getIsVisible() == true || $_index->getCode() == 'mage_catalog_product')): ?>
+        && ($_index->getContentBlock()->getIsVisible() == true || $_index->getCode() == 'mage_catalog_product')): ?>z
         <!-- <?php echo $_index->getCode()// if($_index->getCode() == 'mage_catalog_product') {echo 'hello';print_r($_index->getContentBlock());} ?> -->
             <h3><?php echo $_index->getTitle() ?>&nbsp;<span>(<?php echo $_index->getCountResults() ?>)</span></h3>
             <?php $x++; echo $_index->getContentBlock()->toHtml() ?>

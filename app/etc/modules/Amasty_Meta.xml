@@ -4,6 +4,10 @@
         <Amasty_Meta>
             <active>true</active>
             <codePool>local</codePool>
+            <edition>community</edition>
+            <depends>
+                <Amasty_SeoToolKit />
+            </depends>
         </Amasty_Meta>
     </modules>
 </config>

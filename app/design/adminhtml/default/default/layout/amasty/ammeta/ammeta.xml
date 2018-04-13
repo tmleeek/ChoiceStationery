@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Amasty_Meta
+ */
+-->
+<layout version="1.0.0">
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="addCss"><name>amasty/ammeta/admin.css</name></action>
+            <action method="addJs"><file>amasty/ammeta/admin.js</file></action>
+        </reference>
+    </adminhtml_system_config_edit>
+    <adminhtml_ammeta_config_edit>
+        <update handle="editor" />
+    </adminhtml_ammeta_config_edit>
+</layout>

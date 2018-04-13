@@ -20,11 +20,11 @@ $i=1;
 
 foreach($csvData as $k=>$csvDataval)
 { 
-	if($i<1669)
+	if($i<6001)
 	{
-	 echo $i.'<br/>';
+	  echo $i.'<br/>';
 	  $i++;
-		continue;
+	  continue;
 	}
 	  $MANUFACTURER = $csvDataval['MANUFACTURER'];	  
       $FAMILY       = $MANUFACTURER.' '.$csvDataval['FAMILY'];

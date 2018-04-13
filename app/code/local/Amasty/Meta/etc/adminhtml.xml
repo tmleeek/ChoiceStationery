@@ -7,51 +7,59 @@
 */
 -->
 <config>
-	<menu>
-        <catalog>
+    <menu>
+        <cms>
             <children>
-                <ammeta translate="title" module="ammeta">
-                    <title>Meta Tags Templates</title>
-                    <sort_order>888</sort_order>
+                <amseotoolkit>
                     <children>
-                        <meta_category translate="title" module="ammeta"> 
-                            <title>Meta Tags by Category</title>
-                            <action>ammeta/adminhtml_config</action>
-                            <sort_order>10</sort_order>
-                        </meta_category>
-                        <settings translate="title" module="ammeta"> 
-                            <title>Settings</title>
-                            <action>adminhtml/system_config/edit/section/ammeta</action>
-                            <sort_order>20</sort_order>
-                        </settings>
+                        <ammeta translate="title" module="ammeta">
+                            <title>Meta Tags Templates</title>
+                            <sort_order>888</sort_order>
+                            <children>
+                                <meta_category translate="title" module="ammeta">
+                                    <title>Meta Tags by Category</title>
+                                    <action>adminhtml/ammeta_config</action>
+                                    <sort_order>10</sort_order>
+                                </meta_category>
+                                <meta_сustom translate="title" module="ammeta">
+                                    <title>Meta Tags by URL</title>
+                                    <action>adminhtml/ammeta_custom</action>
+                                    <sort_order>20</sort_order>
+                                </meta_сustom>
+                            </children>
+                        </ammeta>
                     </children>
-                </ammeta>
+                </amseotoolkit>
             </children>
-        </catalog>
-	</menu>     
+        </cms>
+    </menu>
 
-	<acl>
-		<resources>
-			<all>
-				<title>Allow Everything</title>
-			</all>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
             <admin>
                 <children>
-                    <catalog>
+                    <cms>
                         <children>
-                            <ammeta>
-                                <title>Meta Tags Templates</title>
+                            <amseotoolkit>
                                 <children>
-                                    <meta_category>
-                                        <title>Meta Tags by Catagory</title>
-                                    </meta_category>
-                                    <settings>
-                                        <title>Settings</title>
-                                    </settings>
+                                    <ammeta>
+                                        <title>Meta Tags Templates</title>
+                                        <children>
+                                            <meta_category>
+                                                <title>Meta Tags by Category</title>
+                                            </meta_category>
+                                            <meta_сustom>
+                                                <title>Meta Tags by URL</title>
+                                            </meta_сustom>
+                                        </children>
+                                    </ammeta>
                                 </children>
-                            </ammeta>
+                            </amseotoolkit>
                         </children>
-                    </catalog>    
+                    </cms>
                     <system>
                         <children>
                             <config>
@@ -62,12 +70,12 @@
                                 </children>
                             </config>
                         </children>
-                    </system>                     
-                 </children>
-            </admin> 
-		</resources>
-	</acl>
-    
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+
     <translate>
         <modules>
             <Amasty_Meta>
@@ -77,5 +85,5 @@
             </Amasty_Meta>
         </modules>
     </translate>
-    
+
 </config> 

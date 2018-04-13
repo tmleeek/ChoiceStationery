@@ -1,8 +1,9 @@
 <?php
 /**
-* @author Amasty Team
-* @copyright Copyright (c) 2010-2011 Amasty (http://www.amasty.com)
-*/
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Amasty_Meta
+ */
 class Amasty_Meta_Block_Adminhtml_Config_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
 {
     protected function _prepareForm()
@@ -18,5 +19,13 @@ class Amasty_Meta_Block_Adminhtml_Config_Edit_Form extends Mage_Adminhtml_Block_
         $this->setForm($form);
         
         return parent::_prepareForm();
+    }
+
+    protected function _prepareLayout()
+    {
+        parent::_prepareLayout();
+        if (Mage::getSingleton('ammeta/wysiwygConfig')->isEnabled()) {
+            $this->getLayout()->getBlock('head')->setCanLoadTinyMce(true);
+        }
     }
 }

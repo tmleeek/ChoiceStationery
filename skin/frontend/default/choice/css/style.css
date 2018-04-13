@@ -2099,3 +2099,25 @@ and (orientation:landscape){
 	}
 
 
+.amlabel-table {
+    position: absolute;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.amlabel-table td {
+    vertical-align: middle;
+    text-align: center;
+    border: 0;
+    height: auto;
+}
+.amlabel-div .amlabel-txt {
+    line-height: 11px;
+    font-size: 0.9em;
+    font-weight: bold;
+    display: block;
+    letter-spacing: 0.01px;
+    text-decoration: none;
+    color: #fff;
+}
+

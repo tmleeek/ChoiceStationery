@@ -8,7 +8,8 @@
  */
 .owl-carousel {
   display: none;
-  width: 100%;
+  width: 90%;
+  margin:0 auto; 
   -webkit-tap-highlight-color: transparent;
   /* position relative and z-index fix webkit rendering fonts issue */
   position: relative;

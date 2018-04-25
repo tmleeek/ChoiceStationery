@@ -827,21 +827,24 @@ if (!class_exists('AddThisRegistrationFeature')) {
          *
          * @return null
          */
-        private function kissMetricsAlias($email) {
-            $url = $this->globalOptionsObject->getDarkseidBaseUrl() . 'wordpress/aliasing';
-            $body = array(
-                'email' => $email,
-                'pubId' => $this->globalOptionsObject->getAnonymousProfileId()
-            );
-            $args = array(
-                'headers' => array(
-                    'Content-Type' => 'application/json',
-                    'Accept'       => 'application/json',
-                ),
-                'body' => json_encode($body),
-                'timeout' => $this->requestTimeout,
-            );
-            $response = wp_remote_post($url, $args);
+        private function kissMetricsAlias($email)
+        {
+            if (isset($_COOKIE["km_ai"])) {
+                $url = $this->globalOptionsObject->getDarkseidBaseUrl() . 'wordpress/aliasing';
+                $body = array(
+                    'email' => $email,
+                    'kmId' => $_COOKIE['km_ai']
+                );
+                $args = array(
+                    'headers' => array(
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                    ),
+                    'body' => json_encode($body),
+                    'timeout' => $this->requestTimeout,
+                );
+                $response = wp_remote_post($url, $args);
+            }
         }
     }
 }

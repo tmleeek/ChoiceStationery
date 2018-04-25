@@ -3,7 +3,7 @@ Contributors: abramsm, jgrodel, bradaddthis.com, addthis_paul, addthis_matt, rib
 Tags: share buttons, social sharing, social share, social, social marketing, social tools, WhatsApp
 Requires at least: 3.0
 Tested up to: 4.9
-Stable tag: 6.1.4
+Stable tag: 6.1.5
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -170,6 +170,9 @@ See our <a href="https://plugins.svn.wordpress.org/addthis-all/trunk/documentati
 
 
 == Changelog ==
+
+= 6.1.5 =
+* Updated yaml configs and added script tag to login page
 
 = 6.1.4 =
 * Remove uninstallation hook
@@ -521,6 +524,9 @@ Fixed nondeterministic bug with the_title(), causing the title to occasionally a
 
 
 == Upgrade Notice ==
+
+= 6.1.5 =
+* Updated yaml configs and added script tag to login page
 
 = 6.1.4 =
 * Remove uninstallation hook

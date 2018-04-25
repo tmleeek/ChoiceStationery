@@ -100,20 +100,20 @@ ol,ul{list-style:none}
 #trustwaveSealImage{
     position: absolute;
     right: 12.8%;
-    bottom: 2.5%;
+    bottom: 2.8%;
 
 }
 
 .catalog-category-view #trustwaveSealImage{
     position: absolute;
     right: 12.8%;
-    bottom: 1.3%;
+    bottom: 1.4%;
 
 }
 .catalog-product-view #trustwaveSealImage {
     position: absolute;
     right: 12.8%;
-    bottom: 4%;
+    bottom: 6.1%;
 }
 
 .checkout-onepage-success #trustwaveSealImage{
@@ -122,8 +122,18 @@ ol,ul{list-style:none}
     bottom: 6.8%;
 
 }
+.cms-recruitment #trustwaveSealImage{
+    position: absolute;
+    right: 12.8%;
+    bottom: 5.1%;
 
+}
+ .cms-about-choice-stationery-supplies #trustwaveSealImage{
+    position: absolute;
+    right: 12.8%;
+    bottom: 4.8%;
 
+}
 
 .category-fake {height: 30px !important;font-size: 14px !important;}
 .price-box {margin-bottom: 10px; padding:0 10px;}

@@ -15,7 +15,7 @@ $_url             = $this->getAjaxUrl();
     data-delay="<?php echo Mage::getStoreConfig('searchautocomplete/general/delay') ?>">
 
     <div class="form-search">
-        <?php if ($_filterType == 'index'): ?>
+      <?php if ($_filterType == 'index'): ?>
             <div class="nav-search-in">
                 <span class="category-fake UI-CATEGORY-TEXT"><?php echo $this->__('All') ?></span>
                 <span class="nav-down-arrow"></span>
@@ -30,36 +30,54 @@ $_url             = $this->getAjaxUrl();
             </div>
         <?php endif ?>
 
-        <input id="search" type="text" name="<?php echo $_helper->getQueryParamName() ?>" placeholder="Enter your search here" value="" class="input-text UI-SEARCH UI-NAV-INPUT search" maxlength="<?php echo $_helper->getMaxQueryLength();?>" />
-        
+        <input id="search" type="text" autocomplete="off" name="<?php echo $_helper->getQueryParamName() ?>" placeholder="Enter your search here" value="" class="input-text UI-SEARCH UI-NAV-INPUT search" maxlength="<?php echo $_helper->getMaxQueryLength();?>" />
         <button type="submit" title="<?php echo $this->__('Search') ?>" class="submit"><span class="fa fa-search fa-flip-horizontal"></span></button>
         
-        <?php /* <div class="searchautocomplete-loader UI-LOADER" style="display:none;"></div>
-        <div style="display: none;" id="search_autocomplete" class="UI-PLACEHOLDER search-autocomplete">
-			<div class="top"></div>
-		</div> */ ?>
+        <div class="searchautocomplete-loader UI-LOADER" style="display:none;"></div>
+        <div style="display:none" id="search_autocomplete" class="UI-PLACEHOLDER search-autocomplete"></div>
     </div>
 </form>
 
-
-
 <script>
-	var baseurl="<?php echo $this->getUrl('catalogsearch/advanced/result/'); ?>";
 	$j(document).ready(function (){
-		$j( "#search" ).autocomplete({
-        source: '/featured-products/searchcustom/index'
-        /*select: function( event , ui ) {
-			var suitable='';
-			suitable=ui.item.label;
-			window.location.href = baseurl+'?suitable='+suitable;
-            
-        }*/
+		
+		$j('#search').on('input',function(e){
+			$j('.searchautocomplete-loader').show();
+			$j('#search_autocomplete').hide();
+		});
+		$j('#search_autocomplete').on("DOMSubtreeModified",function(){
+			$j('.searchautocomplete-loader').hide();
+			$j('#search_autocomplete').show();
+		});
+	
+	
+	
+	$j("#search_mini_form").submit(function(){
+	//alert("hi");	
 
-    });
+   // Let's find the input to check
+   var $input = document.getElementById('search').value;
+   //alert($input);
+   if ($input) { 
+	   //alert('yes');
+     // Value is falsey (i.e. null), lets set a new one
+    // $input=replace(/([^\d]*)(\d*)([^\w]*)/, $input);
+     var month = $input.replace(/([a-z])(\d)/gi, '$1 $2');
+     
     
+    
+  // alert(month);
+   $j('#search').val(month);
+  
+   
+   
+  // abc - 12345 - #$*%
+   }
+   
+});
+
 });
 	
 	
 	
 </script>
-

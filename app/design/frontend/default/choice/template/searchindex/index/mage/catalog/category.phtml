@@ -19,7 +19,7 @@ $_category  = Mage::getModel('catalog/category')->load($_item->getId());// get y
 $name=$_category->getName();
 $url=$_category->getUrl();
 $imagemain=$_category->getImageUrl();
-if($imagemain):
+if($imagemain && @getimagesize($imagemain)):
 $image=$imagemain;
 else:
 $image=Mage::getBaseUrl().'skin/frontend/default/default/images/catalog/product/placeholder/printer.jpg';
@@ -48,7 +48,7 @@ endif;
 							 </div>
 							 
 							 <div class="add-btn">
-							<a href="<?php echo $url;?>"> <?php echo "View ink cartridges"?> </a>
+							<a href="<?php echo $url;?>"> <?php echo "View all supplies"?> </a>
 							 </div>
 							 
 							 						</p>

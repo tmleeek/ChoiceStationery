@@ -21,9 +21,11 @@ appAddThisWordPress.config(function($sceDelegateProvider) {
     'https://cache.addthiscdn.com/services/**',
 	  //include local and internal URLs for development purposes
     'http://localhost:3000/**',
+    'http://darkseid/darkseid/**',
     'http://www-test.addthis.com/darkseid/**',
     'http://www-dev.addthis.com/darkseid/**',
     'http://www-local.addthis.com/darkseid/**'
+
   ]);
 });
 

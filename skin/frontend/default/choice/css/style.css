@@ -664,6 +664,9 @@ font-weight: bold;}
 .col-main .product-grid .product-list-box .product-box .price-title{padding-left:0; margin-top:20px; font-weight:400; text-transform:capitalize;}
 .col-main .product-grid .product-list-box .product-box .text-on-img-black{margin-top:0;}
 .col-main .product-grid .product-list-box .product-box .item-name{height:30px; padding-left:0; text-align: center;}
+
+.catalog-category-view .col-main .product-list-div .product-box .item-name{height:30px; padding-left:0; text-align: left;} 
+
 .col-main .product-grid .product-list-box a:hover .add-btn{background:#072c73;}
 .col-main .product-grid .product-list-box .product-box .price-title .free-delivery{background:url(../images/sprite.png) no-repeat -25px 0; display:inline-block; margin-right:6px; vertical-align:middle; height:21px; width:21px;}
 .col-main .product-grid .product-list-box .product-box .price-title .credit{background:url(../images/sprite.png) no-repeat -25px -24px; display:inline-block; margin-right:6px; vertical-align:middle; height:21px; width:21px; margin-left:5px;}
@@ -1890,7 +1893,7 @@ height: 125px !important;
     font-weight: 700;
     line-height: 30px;border-bottom: 5px solid #072c73;
     text-align: left; padding-bottom:7px; margin-bottom:15px;}
-	.home_free_delivery_bottom_text{margin-bottom:30px; padding:0 15px;}
+	.home_free_delivery_bottom_text{margin-bottom:30px; padding:0px;}
 	.blog-container{margin-bottom:0;}
 
 .sku {
@@ -2121,3 +2124,9 @@ and (orientation:landscape){
     color: #fff;
 }
 
+.amlabel-div .view-allgrid {
+    min-height: 65px !important;
+}
+.cms-home .amslider-container {
+    padding: 0px !important;
+}

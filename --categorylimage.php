@@ -16,15 +16,14 @@ foreach($csvData as $k => $v){
 $csvData[$k] = array_combine($columns, array_values($v));
 }
 $i=1;
-//1669
-
+//18354
 foreach($csvData as $k=>$csvDataval)
 { 
-	if($i<6001)
+	if($i<21738)
 	{
-	  echo $i.'<br/>';
+	 echo $i.'<br/>';
 	  $i++;
-	  continue;
+		continue;
 	}
 	  $MANUFACTURER = $csvDataval['MANUFACTURER'];	  
       $FAMILY       = $MANUFACTURER.' '.$csvDataval['FAMILY'];

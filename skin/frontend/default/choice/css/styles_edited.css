@@ -2261,3 +2261,6 @@ and (max-device-width : 480px) {
 
 .product-description-detail ul {list-style: initial;}
 .product-description-detail p a {color: #072c73 !important;text-decoration: underline;}
+
+#search_autocomplete{max-height: 400px;
+    overflow-y: auto;} 

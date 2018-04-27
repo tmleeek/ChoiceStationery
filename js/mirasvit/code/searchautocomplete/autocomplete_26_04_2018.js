@@ -238,8 +238,7 @@ SearchAutocomplete = Backbone.View.extend({
     process: function(query)
     {
         var self = this;
-        $(".searchautocomplete-loader").css("display", "block");
-        $("#search_autocomplete").css("display", "none");
+        
         var cat = '';
         if (self.$category.val() != undefined) {
             cat = '&' + self.$category.attr('name') + '=' + self.$category.val();
@@ -259,8 +258,6 @@ SearchAutocomplete = Backbone.View.extend({
                 clearTimeout(self.processTimer);
 
                 self.$loader.hide();
-                $(".searchautocomplete-loader").css("display", "none");
-        $("#search_autocomplete").css("display", "block");
 
                 if (response.items.length) {
                     self.show(response.items);
